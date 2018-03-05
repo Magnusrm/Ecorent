@@ -1,3 +1,3 @@
 public class adneTest {
-   // hghgfh
+    // min versjon
 }
