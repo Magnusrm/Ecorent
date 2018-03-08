@@ -1,5 +1,4 @@
 package Control;
 
-public class Bike {
-    // HALLAIS
+public class Bike { //Hello
 }
