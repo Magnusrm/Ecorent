@@ -5,14 +5,12 @@ public class Model {
     private Statement statement;
     private String driver;
     private String name;
-    
+
     public Model(String driver, String name){
         this.driver = driver;
         this.name = name;
         startConnection();
     }
-
-    //
     private void startConnection() {
         try {
             Class.forName(driver);
