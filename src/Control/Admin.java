@@ -42,7 +42,7 @@ public class Admin {
 
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null."); }
-        if ((o instanceof Admin)) {
+        if (!(o instanceof Admin)) {
             return false;
         }
 
