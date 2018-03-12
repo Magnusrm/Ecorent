@@ -11,7 +11,7 @@ public class Bike {
     private Type type;
     private final double powerUsage;
     private boolean repairing;
-
+ // test
     public Bike(LocalDate buyDate, int price, String make, Type type, double powerUsage) {
         this.buyDate = buyDate;
         this.price = price;
