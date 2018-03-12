@@ -57,6 +57,10 @@ public class Bike {
         return repairing;
     }
 
+    public void setBikeId(int bikeId) {
+        this.bikeId = bikeId;
+    }
+
     public void setPrice(int price) {
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         this.price = price;
