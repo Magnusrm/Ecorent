@@ -9,10 +9,15 @@ public class Bike {
     private int dockId;
     private String make;
     private Type type;
-    private final double powerUsage;
+    private double powerUsage;
     private boolean repairing;
  // test
     public Bike(LocalDate buyDate, int price, String make, Type type, double powerUsage) {
+        if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
+        if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
+        if (make == null) {throw new IllegalArgumentException("Make cannot be null.");}
+        if (type == null) {throw new IllegalArgumentException("Type cannot be null.");}
+        if (powerUsage < 0) {throw new IllegalArgumentException("Power usage cannot be negative.");}
         this.buyDate = buyDate;
         this.price = price;
         this.make = make;
@@ -55,19 +60,22 @@ public class Bike {
     }
 
     public void setPrice(int price) {
+        if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         this.price = price;
     }
 
-    public void setDockId(int dockId) {
-        this.dockId = dockId;
-    }
-
     public void setMake(String make) {
+        if (make == null) {throw new IllegalArgumentException("Make cannot be null.");}
         this.make = make;
     }
 
     public void setType(Type type) {
+        if (type == null) {throw new IllegalArgumentException("Type cannot be null.");}
         this.type = type;
+    }
+    public void setPowerUsage(double powerUsage) {
+        if (powerUsage < 0) {throw new IllegalArgumentException("Power usage cannot be negative.");}
+        this.powerUsage = powerUsage;
     }
 
     public void setRepairing(boolean repairing) {
@@ -94,7 +102,8 @@ public class Bike {
     }
 
     public boolean equals(Object o){
-        if ((o instanceof Bike)) {
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Bike)) {
             return false;
         }
 
