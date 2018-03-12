@@ -1,4 +1,4 @@
-package Control;
+package bike;
 
 public class BikeModelController {
 

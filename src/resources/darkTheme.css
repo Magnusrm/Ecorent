@@ -1,0 +1,15 @@
+
+* {
+    -fx-primary : #2d2f33;
+    -fx-secondary : #c3c3c3;
+    -fx-primaryText : #B2B2B2;
+    -fx-promptText : #565656
+}
+
+.root{
+    -fx-background-color: -fx-primary;
+}
+
+.text-field {
+    -fx-prompt-text-fill: -fx-promptText;
+}
