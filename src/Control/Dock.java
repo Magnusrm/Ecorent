@@ -27,6 +27,7 @@ public class Dock {
 
     //Access methods
     public String getName(){return name;}
+    public int getDockID(){return dockID;}
     public double getxCoordinates(){return xCoordinates;}
     public double getyCoordinates(){return yCoordinates;}
     public double getPowerUsage() {return powerUsage;}
@@ -48,7 +49,7 @@ public class Dock {
         if(b == null)throw new IllegalArgumentException("Error in Dock.java, equals, argument is null");
         if(!(b instanceof Dock))throw new IllegalArgumentException("Object must be instance of Dock.java");
         Dock a = (Dock)b;
-        if(name.toLowerCase().equals(a.getName().toLowerCase()))return true;
+        if(dockID == a.getDockID())return true;
         else return false;
     }//end method
 
