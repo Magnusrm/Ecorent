@@ -3,7 +3,7 @@ package Control;
 import java.time.LocalDate;
 
 public class Bike {
-    private final int bikeId;
+    private int bikeId = -1; // this will be updated after the bike is added to the database.
     private final LocalDate buyDate;
     private int price;
     private int dockId;
@@ -23,8 +23,6 @@ public class Bike {
         this.make = make;
         this.type = type;
         this.powerUsage = powerUsage;
-
-        this.bikeId = 0;
     }
 
     public int getBikeId() {
