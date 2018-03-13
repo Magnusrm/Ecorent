@@ -1,6 +1,9 @@
 
 import Control.*;
-import org.junit.*;
+
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
 
@@ -22,11 +25,11 @@ class ModelTest {
     void getBike() {
         System.out.println("getBike");
         int bikeID = 1;
-        String date = "2018-03-08";
+        LocalDate date = LocalDate.of(2018,12,12);
         double price = 1000;
         String make = "DBS";
         int typeID = 1;
-        Bike expResult = new Bike(bikeID, date, price, make, typeID);
+        Bike expResult = new Bike(date,price,make,new Type("Racer"),20.2);
         Bike result = instance.getBike(bikeID);
         assertSame(expResult, result);
     }
@@ -49,7 +52,7 @@ class ModelTest {
         double price = 20.43;
         String make = "DBS";
         int expResult = 2;
-        int result = instance.addBike(date, price, make);
+        int result = instance.addBike(date, price, make, "Racer");
         assertEquals(expResult, result);
     }
 
@@ -62,7 +65,7 @@ class ModelTest {
         double xCord = 1.23;
         double yCord = 21.13;
         int expResult = 2;
-        int result = instance.addDock(name, pwrUsg, xCord, yCord);
+        int result = instance.addDock(name, xCord, yCord);
         assertEquals(expResult, result);
     }
 
@@ -75,7 +78,7 @@ class ModelTest {
         double pwrUsg = 25;
         double xCord = 23.1;
         double yCord = 33.2;
-        Dock expResult = new Dock(dockID, name, pwrUsg, xCord, yCord);
+        Dock expResult = new Dock(name, xCord, yCord);
         Dock result = instance.getDock(name);
         assertSame(expResult, result);
     }
@@ -110,7 +113,7 @@ class ModelTest {
         String dateReceived = "2018-03-13";
         String afterDesc = "dsadas";
         double price = 20;
-        Repair expResult = new Repair(repairID, dateSent, beforeDesc, dateReceived, afterDesc);
+        Repair expResult = new Repair(dateSent, beforeDesc, 1);
         Repair result = instance.getRepair(repairID);
         assertSame(expResult, result);
     }
