@@ -16,7 +16,7 @@ public class Repair {
     int bike_id;
 
     public Repair(String dateSent, String beforeDesc, int bikeId){
-        this.repair_id = 0;
+        this.repair_id = -1; //use the database to set repairId
 
         this.date_sent = toDate(dateSent);
         this.before_desc = beforeDesc;
@@ -26,7 +26,7 @@ public class Repair {
         this.bike_id = bikeId;
     }
     public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
-        this.repair_id = 0;
+        this.repair_id = -1; //use the database to set repairId
 
         this.date_sent = toDate(dateSent);
         this.before_desc = beforeDesc;
@@ -62,6 +62,10 @@ public class Repair {
 
     public int getBikeId() {
         return bike_id;
+    }
+
+    public void setRepairId(int id){
+        this.repair_id = id;
     }
 
     public void setPrice(double price){
@@ -117,6 +121,7 @@ public class Repair {
         if(test2.getPrice() == 45){
             System.out.println("Test 2 successful");
         }
+        test2.setRepairId(3);
         test2.setAfterDesc("setTEST");
         test2.setBeforeDesc("setTEST");
         test2.setDateSent("2000-01-01");
