@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.mainController">
+   <children>
+      <Button fx:id="bikesBtn" layoutX="224.0" layoutY="105.0" mnemonicParsing="false" onAction="#changeToBikeScene" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Bikes" textAlignment="CENTER" />
+      <Button fx:id="docksBtn" layoutX="224.0" layoutY="151.0" mnemonicParsing="false" onAction="#changeToDockScene" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Docking stations" textAlignment="CENTER" />
+      <Button fx:id="mapBtn" layoutX="224.0" layoutY="200.0" mnemonicParsing="false" onAction="#changeToMapScene" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Map" textAlignment="CENTER" />
+      <Button fx:id="statsBtn" layoutX="224.0" layoutY="245.0" mnemonicParsing="false" onAction="#changeToStatsScene" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Statistics" textAlignment="CENTER" />
+      <Button fx:id="logoutBtn" layoutX="31.0" layoutY="28.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: -fx-secondary;" text="log out" />
+      <Button fx:id="newAdminBtn" layoutX="205.0" layoutY="335.0" mnemonicParsing="false" onAction="#createNewAdmin" prefHeight="27.0" prefWidth="172.0" style="-fx-background-color: -fx-secondary;" text="Create new admin user" textAlignment="CENTER" />
+   </children>
+</AnchorPane>
