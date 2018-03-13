@@ -14,11 +14,11 @@ import java.util.*;
 import Model.*;
 
 public class Factory {
-    private ArrayList<Dock> docks;
-    private ArrayList<Bike> bikes;
-    private ArrayList<Admin> admins;
-    private ArrayList<Type> types;
-    // private Model.Model model;
+    private ArrayList<Dock> docks = new ArrayList<Dock>();
+    private ArrayList<Bike> bikes = new ArrayList<Bike>();
+    private ArrayList<Admin> admins = new ArrayList<Admin>();
+    private ArrayList<Type> types = new ArrayList<Type>();
+    private Model model = new Model();
 
     public Factory(){}//default constructor
 
@@ -52,12 +52,11 @@ public class Factory {
     public boolean addBike(Bike b){
         if(b == null ) return false;
         bikes.add(b);
-        Model model = new Model();
        String date = b.getBuyDate().toString();
        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
-       b.setBikeId(model.addBike(date,price,make,type));
+       //b.setBikeId(model.addBike(date,price,make,type));
        return true;
     }//end method
 
@@ -68,7 +67,6 @@ public class Factory {
         }//end loop
         types.add(t);
         String name = t.getName();
-        Model model = new Model();
         model.addType(name);
         return true;
     }//end method

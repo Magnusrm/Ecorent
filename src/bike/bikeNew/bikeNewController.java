@@ -26,9 +26,6 @@ public class bikeNewController {
     private TextField buyDateField;
 
     @FXML
-    private TextField pwrUsage;
-
-    @FXML
     private ComboBox<?> typeComboBox;
 
     @FXML
@@ -42,13 +39,29 @@ public class bikeNewController {
 
 
     @FXML
-    void createNewBike(ActionEvent event) throws Exception{
-        ChangeScene change = new ChangeScene();
-        change.setScene(event, "/bike/bikeView.fxml");
-        Factory factory = new Factory();
-        Bike bike = new Bike(LocalDate.now(),Double.parseDouble(priceField.getText()),
-                makeField.getText(),new Type("Racer"), Double.parseDouble(pwrUsage.getText()));
-        factory.addBike(bike);
-    }
+    void createNewBike(ActionEvent event) {
+        try {
+            System.out.println("Funker enda før factory");
+            Factory factory = new Factory();
+            System.out.println("Funker før new bike");
+            System.out.println(priceField.getText());
+            Bike bike = new Bike(LocalDate.now(), Double.parseDouble(priceField.getText()),
+                    makeField.getText(), new Type("Racer"), 22.2);
+            System.out.println(LocalDate.now().toString());
+            System.out.println("Klarer å skifte scene");
+            System.out.println(bike);
+            System.out.println(factory.addBike(bike));
+            for(Bike b: factory.getBikes()){
+                System.out.println(b);
+            }//end loop
+            ChangeScene change = new ChangeScene();
+            change.setScene(event, "/bike/bikeView.fxml");
+        }//end try
+        catch(Exception e){
+                e.printStackTrace();
+            }//end catch
+
+
+    }//end method
 
 }
