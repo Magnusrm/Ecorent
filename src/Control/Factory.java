@@ -16,6 +16,7 @@ public class Factory {
     private ArrayList<Dock> docks;
     private ArrayList<Bike> bikes;
     private ArrayList<Admin> admins;
+    private ArrayList<Type> types;
     // private Model model;
 
     public Factory(){}//default constructor
@@ -24,6 +25,7 @@ public class Factory {
     public ArrayList<Dock> getDocks() {return docks;}
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
+    public ArrayList<Type> getTypes(){return types;}
 
     //Method to get bikes, docks and admins from
     //model classes connected to database.
@@ -32,6 +34,7 @@ public class Factory {
         //fetch bikes and add in array list
         //fetch docks and add in array list
         //fetch admins and add in array list
+        //fetch types and add in array list
     }//end method
 
 
@@ -47,7 +50,18 @@ public class Factory {
 
     public boolean addBike(Bike b){
         //b.setbikeID(model.getBikeIdMax())
+        if(b == null ) return false;
         return true;
-    }
+    }//end method
+
+    public boolean addTypes(Type t){
+        if(t == null)return false;
+        for(Type type:types){
+            if(t.equals(type))return false;
+        }//end loop
+        types.add(t);
+        //model.addType(t);
+        return true;
+    }//end method
 
 }//end class
