@@ -33,4 +33,11 @@ public class bikeNewController {
         cs.setScene(event, "/bike/bikeView.fxml");
     }
 
+    @FXML
+    void createNewBike(ActionEvent event) throws Exception{
+        ChangeScene change = new ChangeScene();
+        change.setScene(event, "/bike/bikeView.fxml");
+
+    }
+
 }
