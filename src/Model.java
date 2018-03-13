@@ -3,8 +3,7 @@ package src;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Date;
-
+import java.util.ArrayList;
 
 
 public class Model {
@@ -28,8 +27,6 @@ public class Model {
             System.out.println(e.getMessage());
         }catch(SQLException e){
             System.out.println(e.getMessage());
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }
     }
 
@@ -41,31 +38,29 @@ public class Model {
             statement.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }
     }
 
-    //Metod that retrieves a bike from the database as an object
+    //Method that retrieves a bike from the database as an object
     public Bike getBike(int bikeID) {
         Type type = null;
         Bike bike = null;
 
         try {
             ResultSet rs1 = statement.executeQuery("SELECT reg_date FROM bike WHERE bike_id = '" + bikeID + "';");
-            LocalDate regDate = rs1.getDate(0).toLocalDate();
+            LocalDate regDate = rs1.getDate("reg_date").toLocalDate();
 
             ResultSet rs2 = statement.executeQuery("SELECT price FROM bike WHERE bike_id = '" + bikeID + "';");
-            Double price = rs2.getDouble(0);
+            Double price = rs2.getDouble("price");
 
             ResultSet rs3 = statement.executeQuery("SELECT make FROM bike WHERE bike_id = '" + bikeID + "';");
-            String make = rs3.getString(0);
+            String make = rs3.getString("make");
 
             ResultSet rs4 = statement.executeQuery("SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id ='" + bikeID + "');");
-            String typeName = rs4.getString(0);
+            String typeName = rs4.getString("name");
 
             ResultSet rs5 = statement.executeQuery("SELECT pwr_usg FROM bike WHERE bike_id = '" + bikeID +"';");
-            Double pwrUsg = rs5.getDouble(0);
+            Double pwrUsg = rs5.getDouble("pwr_usg");
 
             type = new Type(typeName);
             bike = new Bike(regDate, price, make, type, pwrUsg);
@@ -75,6 +70,36 @@ public class Model {
         }
         return bike;
     }
+
+    //Updates the values of a given bike
+    public boolean editBike(int bikeID, String regDate, double price, String make, double pwrUsg, String typeName){
+        int typeID = typeExists(typeName);
+        String bikeInsert = "UPDATE bike SET reg_date = '" + regDate + "', price = '" + price + "', make = '" + make
+                + "', pwr_usg = '" + pwrUsg + "', type_id = '" + typeID + "'WHERE bike_id = '" + bikeID + "';";
+
+        try{
+            connection.setAutoCommit(false);
+
+            if(statement.executeUpdate(bikeInsert) != 0){
+                connection.commit();
+                return true;
+            }else{
+                connection.rollback();
+                return false;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally {
+            try{
+                connection.setAutoCommit(true);
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return false;
+    }
+
+
 
     //Private method that helps check if the type name exists in the database**
     private int typeExists(String name){
@@ -87,7 +112,7 @@ public class Model {
             }
             if(exists){
                 return statement.executeQuery("SELECT type_id FROM type WHERE LOWER(type.name ='" + name.toLowerCase()
-                        + "');").getInt(0);
+                        + "');").getInt("type_id");
             }else{
                 return -1;
             }
@@ -107,7 +132,7 @@ public class Model {
             if(typeExists(name) < 0) { //Checks if given name is in the database already
                 if (statement.executeUpdate(typeInsert) != 0) {
                     connection.commit();
-                    return (statement.executeQuery("SELECT MAX(type_id) FROM type").getInt(0));
+                    return (statement.executeQuery("SELECT MAX(type_id) FROM type").getInt("MAX(type_id)"));
                 } else {
                     connection.rollback();
                     return -1;
@@ -128,6 +153,30 @@ public class Model {
         return -1;
     }
 
+    public boolean editType(int typeID, String name){
+        String typeInsert = "UPDATE type SET name = '" + name + "' WHERE type_id = '" + typeID + "';";
+        try{
+            connection.setAutoCommit(false);
+
+            if(statement.executeUpdate(typeInsert) != 0){
+                connection.commit();
+                return true;
+            }else{
+                connection.rollback();
+                return false;
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                connection.setAutoCommit(true);
+            }catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return false;
+    }
+
     //Adds a new bike to the database
     public int addBike(String date, double price, String make, String type){
         int typeID = typeExists(type);
@@ -139,7 +188,7 @@ public class Model {
 
             if(statement.executeUpdate(bikeInsert) != 0){
                 connection.commit();
-                return (statement.executeQuery("SELECT MAX(bike_id) from bike").getInt(0));
+                return (statement.executeQuery("SELECT MAX(bike_id) from bike").getInt("MAX(bike_id)"));
             }else{
                 connection.rollback();
                 return -1;
@@ -167,7 +216,7 @@ public class Model {
 
             if(statement.executeUpdate(dockInsert) != 0){
                 connection.commit();
-                return (statement.executeQuery("SELECT MAX(dock_id) FROM dock").getInt(0));
+                return (statement.executeQuery("SELECT MAX(dock_id) FROM dock").getInt("MAX(dock_id)"));
             }else{
                 connection.rollback();
                 return -1;
@@ -190,16 +239,16 @@ public class Model {
 
         try{
             ResultSet rs1 = statement.executeQuery("SELECT dock_id FROM dock WHERE name = '" + name + "';");
-            int dockID = rs1.getInt(0);
+            int dockID = rs1.getInt("dock_id");
 
             /*ResultSet rs2 = statement.executeQuery("SELECT pwr_usage FROM dock WHERE name = '" + name + "';");
             double pwrUsg = rs2.getDouble(0);*/
 
             ResultSet rs3 = statement.executeQuery("SELECT x_cord FROM dock WHERE name = '" + name + "';");
-            double xCord = rs3.getDouble(0);
+            double xCord = rs3.getDouble("x_cord");
 
             ResultSet rs4 = statement.executeQuery("SELECT y_cord FROM dock WHERE name = '" + name + "';");
-            double yCord = rs4.getDouble(0);
+            double yCord = rs4.getDouble("y_cord");
 
             dock = new Dock(name, /*pwrUsg,*/ xCord, yCord);
 
@@ -207,6 +256,45 @@ public class Model {
             System.out.println(e.getMessage());
         }
         return dock;
+    }
+
+    public boolean editDock(int dockID, String name, double xCord, double yCord){
+        String dockInsert = "UPDATE dock SET name = '" + name + "', x_cord = '" + xCord + "', y_cord = '"
+                + yCord + "' WHERE dock_id = '" + dockID + "';";
+        try{
+            connection.setAutoCommit(false);
+
+            if(statement.executeUpdate(dockInsert) != 0){
+                connection.commit();
+                return true;
+            }else{
+                connection.rollback();
+                return false;
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }finally{
+            try{
+                connection.setAutoCommit(true);
+            }catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return false;
+    }
+
+    //Returns an ArrayList of bikeID's that are docked at a certain docking station.
+    public ArrayList<Integer> bikesAtDock(int dockID){
+        ArrayList<Integer> bikes = new ArrayList<Integer>();
+        try{
+            ResultSet rs = statement.executeQuery("SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock_id = '" + dockID + "')");
+            while(rs.next()){
+                bikes.add(rs.getInt("bike_id"));
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return bikes;
     }
 
 
@@ -221,7 +309,7 @@ public class Model {
 
             if(statement.executeUpdate(sendInsert) != 0){
                 connection.commit();
-                return (statement.executeQuery("SELECT MAX(repair_id) FROM repair").getInt(0));
+                return (statement.executeQuery("SELECT MAX(repair_id) FROM repair").getInt("MAX(repair_id"));
             } else{
                 connection.rollback();
                 return -1;
@@ -270,24 +358,24 @@ public class Model {
 
         try{
             ResultSet rs1 = statement.executeQuery("SELECT date_sent from repair WHERE repair_id ='" + repairID + "';");
-            Date dateSent = rs1.getDate(0);
+            String dateSent = rs1.getString("date_sent");
 
             ResultSet rs2 = statement.executeQuery("SELECT before_desc from repair WHERE repair_id ='" + repairID + "';");
-            String beforeDesc = rs2.getString(0);
+            String beforeDesc = rs2.getString("before_desc");
 
             ResultSet rs3 = statement.executeQuery("SELECT date_received from repair WHERE repair_id ='" + repairID + "';");
-            Date dateReceived = rs3.getDate(0);
+            String dateReceived = rs3.getString("date_received");
 
             ResultSet rs4 = statement.executeQuery("SELECT after_desc from repair WHERE repair_id ='" + repairID + "';");
-            String afterDesc = rs4.getString(0);
+            String afterDesc = rs4.getString("after_desc");
 
             ResultSet rs5 = statement.executeQuery("SELECT price from repair WHERE repair_id ='" + repairID + "';");
-            double price = rs5.getDouble(0);
+            double price = rs5.getDouble("price");
 
             ResultSet rs6 = statement.executeQuery("SELECT bike_id from repair WHERE repair_id ='" + repairID + "';");
-            int bikeID = rs6.getInt(0);
+            int bikeID = rs6.getInt("bike_id");
 
-            repair = new Repair(repairID, dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
+            repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
 
         }catch (SQLException e){
             System.out.println(e.getMessage());
@@ -324,7 +412,7 @@ public class Model {
         try{
             if(userExists(email)){
                 ResultSet rs = statement.executeQuery("SELECT hash FROM admin WHERE email = '" + email + "';");
-                hash = rs.getString(0);
+                hash = rs.getString("hash");
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
