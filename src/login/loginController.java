@@ -12,8 +12,8 @@ import java.awt.*;
 
 public class loginController {
 
-    private String user = "admin";
-    private String pw = "admin";
+    private String user = "";
+    private String pw = "";
 
     @FXML
     private Button signInBtn;
