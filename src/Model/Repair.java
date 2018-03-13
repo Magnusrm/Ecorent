@@ -1,8 +1,7 @@
-import java.text.DateFormat;
+package Model;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -99,7 +98,7 @@ public class Repair {
     }
 
     public String toString(){
-        return "Repair ID: " + repair_id
+        return "Model.Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id
                 + "\nDate sent: " + date_sent
                 + "\nDescription before: " + before_desc

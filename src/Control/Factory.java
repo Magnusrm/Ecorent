@@ -11,13 +11,14 @@
 package Control;
 
 import java.util.*;
+import Model.*;
 
 public class Factory {
     private ArrayList<Dock> docks;
     private ArrayList<Bike> bikes;
     private ArrayList<Admin> admins;
     private ArrayList<Type> types;
-    // private Model model;
+    // private Model.Model model;
 
     public Factory(){}//default constructor
 
@@ -49,9 +50,15 @@ public class Factory {
     }//end method
 
     public boolean addBike(Bike b){
-        //b.setbikeID(model.getBikeIdMax())
         if(b == null ) return false;
-        return true;
+        bikes.add(b);
+        Model model = new Model();
+       String date = b.getBuyDate().toString();
+       double price = b.getPrice();
+       String make = b.getMake();
+       String type = b.getType().getName();
+       b.setBikeId(model.addBike(date,price,make,type));
+       return true;
     }//end method
 
     public boolean addTypes(Type t){
@@ -60,7 +67,9 @@ public class Factory {
             if(t.equals(type))return false;
         }//end loop
         types.add(t);
-        //model.addType(t);
+        String name = t.getName();
+        Model model = new Model();
+        model.addType(name);
         return true;
     }//end method
 
