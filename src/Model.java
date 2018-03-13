@@ -160,8 +160,8 @@ public class Model {
 
 
     //Adds a new dock to the database
-    public int addDock(String name, double pwrUsg, double xCord, double yCord){
-        String dockInsert = "INSERT INTO dock(dock_id, name, pwr_usage, x_cord, y_cord) VALUES(DEFAULT,'" + name + "','" + pwrUsg +
+    public int addDock(String name, double xCord, double yCord){
+        String dockInsert = "INSERT INTO dock(dock_id, name, x_cord, y_cord) VALUES(DEFAULT,'" + name + "','" +
                 "','" + xCord + "','" + yCord + "';)";
         try{
             connection.setAutoCommit(false);
