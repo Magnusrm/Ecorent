@@ -1,5 +1,6 @@
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -45,11 +46,12 @@ public class Model {
 
     //Metod that retrieves a bike from the database as an object
     public Bike getBike(int bikeID) {
+        Type type = null;
         Bike bike = null;
 
         try {
             ResultSet rs1 = statement.executeQuery("SELECT reg_date FROM bike WHERE bike_id = '" + bikeID + "';");
-            Date regDate = rs1.getDate(0);
+            LocalDate regDate = rs1.getDate(0).toLocalDate();
 
             ResultSet rs2 = statement.executeQuery("SELECT price FROM bike WHERE bike_id = '" + bikeID + "';");
             Double price = rs2.getDouble(0);
@@ -58,9 +60,13 @@ public class Model {
             String make = rs3.getString(0);
 
             ResultSet rs4 = statement.executeQuery("SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id ='" + bikeID + "');");
-            String type = rs4.getString(0);
+            String typeName = rs4.getString(0);
 
-            bike = new Bike(bikeID, regDate, price, make, type);
+            ResultSet rs5 = statement.executeQuery("SELECT pwr_usg FROM bike WHERE bike_id = '" + bikeID +"';");
+            Double pwrUsg = rs5.getDouble(0);
+
+            type = new Type(typeName);
+            bike = new Bike(regDate, price, make, type, pwrUsg);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -69,22 +75,23 @@ public class Model {
     }
 
     //Private method that helps check if the type name exists in the database**
-    private boolean typeExists(String name){
+    private int typeExists(String name){
         try{
-            name.toLowerCase();
-            ResultSet rs = statement.executeQuery("SELECT name FROM type WHERE LOWER(type.name ='" + name + "');");
+            ResultSet rs = statement.executeQuery("SELECT name FROM type WHERE LOWER(type.name ='" + name.toLowerCase()
+                    + "');");
             boolean exists = false;
             while(rs.next()){
                 exists = true;
             }
             if(exists){
-                return true;
+                return statement.executeQuery("SELECT type_id FROM type WHERE LOWER(type.name ='" + name.toLowerCase()
+                        + "');").getInt(0);
             }else{
-                return false;
+                return -1;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
-            return false;
+            return -1;
         }
     }
 
@@ -95,7 +102,7 @@ public class Model {
         try{
             connection.setAutoCommit(false);
 
-            if(!typeExists(name)) { //Checks if given name is in the database already
+            if(typeExists(name) < 0) { //Checks if given name is in the database already
                 if (statement.executeUpdate(typeInsert) != 0) {
                     connection.commit();
                     return (statement.executeQuery("SELECT MAX(type_id) FROM type").getInt(0));
@@ -120,9 +127,10 @@ public class Model {
     }
 
     //Adds a new bike to the database
-    public int addBike(String date, double price, String make){
+    public int addBike(String date, double price, String make, String type){
+        int typeID = typeExists(type);
         String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make) VALUES (DEFAULT,'" + date + "','" + price +
-                "','" + make + "');";
+                "','" + make + "','" + typeID + "');";
 
         try{
             connection.setAutoCommit(false);
@@ -182,8 +190,8 @@ public class Model {
             ResultSet rs1 = statement.executeQuery("SELECT dock_id FROM dock WHERE name = '" + name + "';");
             int dockID = rs1.getInt(0);
 
-            ResultSet rs2 = statement.executeQuery("SELECT pwr_usage FROM dock WHERE name = '" + name + "';");
-            double pwrUsg = rs2.getDouble(0);
+            /*ResultSet rs2 = statement.executeQuery("SELECT pwr_usage FROM dock WHERE name = '" + name + "';");
+            double pwrUsg = rs2.getDouble(0);*/
 
             ResultSet rs3 = statement.executeQuery("SELECT x_cord FROM dock WHERE name = '" + name + "';");
             double xCord = rs3.getDouble(0);
@@ -191,7 +199,7 @@ public class Model {
             ResultSet rs4 = statement.executeQuery("SELECT y_cord FROM dock WHERE name = '" + name + "';");
             double yCord = rs4.getDouble(0);
 
-            dock = new Dock(dockID, name, pwrUsg, xCord, yCord);
+            dock = new Dock(name, /*pwrUsg,*/ xCord, yCord);
 
         }catch(SQLException e){
             System.out.println(e.getMessage());
