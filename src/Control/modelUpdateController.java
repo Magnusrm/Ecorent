@@ -1,44 +1,44 @@
-package bike;
+package Control;
 
-public class BikeModelController {
+public class modelUpdateController {
 
 
-    public BikeModelController() {
+    public modelUpdateController() {
 
     }
     // TO DATABASE
-    public double xToData(int bikeId) {
+    public double bikeXToData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
-    public double yToData(int bikeId) {
+    public double bikeYToData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
-    public double kmToData(int bikeId) {
+    public double bikeKmToData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
-    public int tripsToData(int bikeId) {
+    public int bikeTripsToData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
-    public int batteryToData(int bikeId) {
+    public int bikeBatteryToData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
     // FROM DATABASE
-    public int batteryFromData(int bikeId) {
+    public int bikeBatteryFromData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
-    public double kmFromData(int bikeId) {
+    public double bikeKmFromData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
@@ -48,13 +48,17 @@ public class BikeModelController {
         return 0;
     }
 
-    public double xFromData(int bikeId) {
+    public double bikeXFromData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
 
-    public double yFromData(int bikeId) {
+    public double bikeYFromData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
+        return 0;
+    }
+    public double dockPowerUsagetoData(double powerUsage) {
+        if (powerUsage < 0) throw new IllegalArgumentException("Power usage cannot be negative.");
         return 0;
     }
 }
