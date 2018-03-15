@@ -1,5 +1,6 @@
 package src;
 
+import javax.sound.midi.SysexMessage;
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
@@ -151,6 +152,22 @@ public class Model {
             }
         }
         return -1;
+    }
+
+    //Returns an arraylist of strings with all the types in the database
+    public ArrayList<String> getTypes(int typeID){
+        ArrayList<String> types = new ArrayList<String>();
+
+        try{
+            ResultSet rs = statement.executeQuery("SELECT name FROM type;");
+
+            while(rs.next()){
+                types.add(rs.getString("name"));
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return types;
     }
 
     public boolean editType(int typeID, String name){
@@ -404,6 +421,10 @@ public class Model {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    public String addUser(String email, String salt){
+
     }
 
     //Returns the hash value of a given email
