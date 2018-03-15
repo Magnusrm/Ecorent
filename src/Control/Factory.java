@@ -49,6 +49,17 @@ public class Factory {
         return true;
     }//end method
 
+    public boolean deleteAdmin(Admin a) {
+        for (Admin anAdmin : admins) {
+            if (a.equals(anAdmin)) {
+                //model.deleteAdmin(anAdmin);
+                admins.remove(anAdmin);
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Method to add bikes to database
     public boolean addBike(Bike b){
         if(b == null ) return false;
@@ -62,7 +73,7 @@ public class Factory {
     }//end method
 
     //Method to add types
-    public boolean addTypes(Type t){
+    public boolean addType(Type t){
         if(t == null)return false;
         for(Type type:types){
             if(t.equals(type))return false;
@@ -134,5 +145,27 @@ public class Factory {
     public boolean editDocks(int dockId, Dock d){
         return false;
     }//end method
+
+    public boolean editType(Type type) {
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i).equals(type)) {
+                types.set(i, type);
+                model.addType(type.getName());
+               // model.deleteType(type.getName());
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean deleteType(Type type) {
+        for (int i = 0; i < types.size(); i++) {
+            if (types.get(i).equals(type)) {
+                types.remove(i);
+                //model.deleteType(type.getName());
+                return true;
+            }
+        }
+        return false;
+    }
 
 }//end class
