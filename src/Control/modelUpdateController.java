@@ -43,7 +43,7 @@ public class modelUpdateController {
         return 0;
     }
 
-    public int tripsFromData(int bikeId) {
+    public int bikeTripsFromData(int bikeId) {
         if (bikeId < 0) { throw new IllegalArgumentException("Bike ID must be positive"); }
         return 0;
     }
