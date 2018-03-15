@@ -101,6 +101,7 @@ public class Model {
 
     //Method that lets the user add a new type to the database
     public int addType(String name){
+
         String typeInsert = "INSERT INTO type(type_id, name) VALUES (DEFAULT,'" + name +"');";
         try{
             connection.setAutoCommit(false);
@@ -119,6 +120,7 @@ public class Model {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
+
         }finally {
             try{
                 connection.setAutoCommit(true);

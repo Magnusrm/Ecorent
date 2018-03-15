@@ -49,6 +49,16 @@ public class Factory {
         return true;
     }//end method
 
+    public boolean deleteAdmin(Admin a) {
+        for (Admin anAdmin : admins) {
+            if (a.equals(anAdmin)) {
+                admins.remove(anAdmin);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean addBike(Bike b){
         if(b == null ) return false;
         bikes.add(b);
@@ -70,5 +80,27 @@ public class Factory {
         model.addType(name);
         return true;
     }//end method
+
+    public boolean editType(Type type) {
+        for (int i = 0; i > types.size(); i++) {
+            if (types.get(i).equals(type)) {
+                types.set(i, type);
+                model.addType(type.getName());
+                model.deleteType(type.getName());
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean deleteType(Type type) {
+        for (int i = 0; i > types.size(); i++) {
+            if (types.get(i).equals(type)) {
+                types.remove(i);
+                model.deleteType(type.getName());
+                return true;
+            }
+        }
+        return false;
+    }
 
 }//end class
