@@ -49,16 +49,6 @@ public class Factory {
         return true;
     }//end method
 
-    public boolean deleteAdmin(Admin a) {
-        for (Admin anAdmin : admins) {
-            if (a.equals(anAdmin)) {
-                //model.deleteAdmin(anAdmin);
-                admins.remove(anAdmin);
-                return true;
-            }
-        }
-        return false;
-    }
 
     //Method to add bikes to database
     public boolean addBike(Bike b){
@@ -125,6 +115,17 @@ public class Factory {
         return false;
     }//end method
 
+    public boolean deleteAdmin(Admin a) {
+        for (Admin anAdmin : admins) {
+            if (a.equals(anAdmin)) {
+                //model.deleteAdmin(anAdmin);
+                admins.remove(anAdmin);
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Method to edit bikes
     public boolean editBike(int bikeId, Bike newBike){
         if(bikeId == 0 || bikeId<0) throw new IllegalArgumentException("No bike ID is zero or negative");
@@ -143,6 +144,16 @@ public class Factory {
 
     //Method to edit docks
     public boolean editDocks(int dockId, Dock d){
+        if(dockId<0 ||dockId==0)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
+        for(int i = 0; i<docks.size();i++){
+            if(docks.get(i).getDockID() == dockId){
+                d.setDockID(dockId);
+                docks.set(i,d);
+                //model.editDock(d);
+                return true;
+            }//end if
+        }//end loop
+        if(d.getDockID() == -1)throw new IllegalArgumentException("The dock ID given does not exist");
         return false;
     }//end method
 
