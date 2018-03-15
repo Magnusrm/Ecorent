@@ -10,7 +10,7 @@
 package Control;
 
 public class Dock {
-    private final int dockID = 0; //This will be fetched in the constructor using the model class's methods
+    private int dockID = -1; //This will be fetched from the database
     private String name;
     private double xCoordinates;
     private double yCoordinates;
@@ -19,7 +19,6 @@ public class Dock {
     public Dock(String name, double x, double y){
         if(name == null)throw new IllegalArgumentException("Your dock must have a name!");
         if(x<0 || y<0)throw new IllegalArgumentException("Your coordinates can't be negative numbers");
-        //Remember to fetch dockID from model
         this.name = name;
         xCoordinates = x;
         yCoordinates = y;
@@ -40,6 +39,10 @@ public class Dock {
     public void setPosition(double x,double y){
         xCoordinates = x;
         yCoordinates = y;
+    }//end method
+
+    public void setDockID(int id){
+        dockID = id;
     }//end method
 
     //Equals method.

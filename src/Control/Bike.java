@@ -5,14 +5,14 @@ import java.time.LocalDate;
 public class Bike {
     private int bikeId = -1; // this will be updated after the bike is added to the database.
     private final LocalDate buyDate;
-    private int price;
+    private double price;
     private int dockId;
     private String make;
     private Type type;
     private double powerUsage;
     private boolean repairing;
  // test
-    public Bike(LocalDate buyDate, int price, String make, Type type, double powerUsage) {
+    public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         if (make == null) {throw new IllegalArgumentException("Make cannot be null.");}
@@ -33,7 +33,7 @@ public class Bike {
         return buyDate;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

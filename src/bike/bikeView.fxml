@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeController">
-   <children>
-      <Button fx:id="editBikeBtn" layoutX="352.0" layoutY="146.0" mnemonicParsing="false" onAction="#changeToBikeEditView" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Edit" textAlignment="CENTER" />
-      <Button fx:id="infoBikeBtn" layoutX="352.0" layoutY="195.0" mnemonicParsing="false" onAction="#changetoBikeInfoView" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Info" textAlignment="CENTER" />
-      <Button fx:id="deleteBikeBtn" layoutX="352.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteBike" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Delete" textAlignment="CENTER" />
-      <Button fx:id="repairBikeBtn" layoutX="352.0" layoutY="293.0" mnemonicParsing="false" onAction="#changeToBikeRepairView" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Repair Bike" textAlignment="CENTER" />
-      <Button fx:id="mainViewBtn" layoutX="31.0" layoutY="28.0" mnemonicParsing="false" onAction="#changeToMainView" style="-fx-background-color: -fx-secondary;" text="back" />
-      <Button fx:id="newBikeBtn" layoutX="117.0" layoutY="241.0" mnemonicParsing="false" onAction="#changeToBikeNewView" prefHeight="67.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="New Bike" textAlignment="CENTER" />
-      <Button fx:id="editBikeTypesBtn" layoutX="117.0" layoutY="128.0" mnemonicParsing="false" onAction="#changeToDockScene" prefHeight="67.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" stylesheets="@../resources/darkTheme.css" text="Edit Bike Types" textAlignment="CENTER" />
-      <TextField fx:id="bikeIdField" layoutX="351.0" layoutY="104.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" />
-   </children>
+    <children>
+        <Button fx:id="editBikeBtn" layoutX="352.0" layoutY="146.0" mnemonicParsing="false" onAction="#changeToBikeEditView" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Edit" textAlignment="CENTER" />
+        <Button fx:id="infoBikeBtn" layoutX="352.0" layoutY="195.0" mnemonicParsing="false" onAction="#changetoBikeInfoView" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Info" textAlignment="CENTER" />
+        <Button fx:id="deleteBikeBtn" layoutX="352.0" layoutY="243.0" mnemonicParsing="false" onAction="#deleteBike" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Delete" textAlignment="CENTER" />
+        <Button fx:id="repairBikeBtn" layoutX="352.0" layoutY="293.0" mnemonicParsing="false" onAction="#changeToBikeRepairView" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="Repair Bike" textAlignment="CENTER" />
+        <Button fx:id="mainViewBtn" layoutX="31.0" layoutY="28.0" mnemonicParsing="false" onAction="#changeToMainView" style="-fx-background-color: -fx-secondary;" text="back" />
+        <Button fx:id="newBikeBtn" layoutX="117.0" layoutY="241.0" mnemonicParsing="false" onAction="#changeToBikeNewView" prefHeight="67.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" text="New Bike" textAlignment="CENTER" />
+        <Button fx:id="editBikeTypesBtn" layoutX="117.0" layoutY="128.0" mnemonicParsing="false" onAction="#changeToBikeTypeView" prefHeight="67.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" stylesheets="@../resources/darkTheme.css" text="Edit Bike Types" textAlignment="CENTER" />
+        <TextField fx:id="bikeIdField" layoutX="351.0" layoutY="104.0" prefHeight="27.0" prefWidth="134.0" style="-fx-background-color: -fx-secondary;" />
+    </children>
 </AnchorPane>

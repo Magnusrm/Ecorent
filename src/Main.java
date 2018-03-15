@@ -9,6 +9,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/login/loginView.fxml"));
+        root.getStylesheets().add(getClass().getResource("/resources/darkTheme.css").toString());
         primaryStage.setTitle("Elsykkelutleie");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
