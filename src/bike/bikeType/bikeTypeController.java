@@ -8,8 +8,11 @@ import javafx.scene.control.*;
 
 import javax.swing.*;
 import java.util.Optional;
+import Control.*;
 
 public class bikeTypeController {
+
+    private Factory factory = new Factory();
 
     @FXML
     private Button bikeViewBtn;
@@ -56,15 +59,18 @@ public class bikeTypeController {
     }
 
     @FXML
-    void newType(ActionEvent event) throws Exception {
+    void newType(ActionEvent event) {
+        try {
+            TextInputDialog dialog = new TextInputDialog("wow");
+            dialog.setTitle("New bike type");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Name:");
 
-        TextInputDialog dialog = new TextInputDialog("wow");
-        dialog.setTitle("New bike type");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Name:");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> System.out.println("Name: " + name));
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(name -> factory.addType(new Type(name)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -52,15 +52,15 @@ public class Factory {
     public boolean addBike(Bike b){
         if(b == null ) return false;
         bikes.add(b);
-       String date = b.getBuyDate().toString();
-       double price = b.getPrice();
+        String date = b.getBuyDate().toString();
+        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
        //b.setBikeId(model.addBike(date,price,make,type));
        return true;
     }//end method
 
-    public boolean addTypes(Type t){
+    public boolean addType(Type t){
         if(t == null)return false;
         for(Type type:types){
             if(t.equals(type))return false;
