@@ -5,7 +5,7 @@
 * This class is an aggregate of Dock.java,Bike.java and Admin.java
 * It both updates and retrieves data from the model classes connected to the database
 * concerned the creation and edit of these objects.
-* The class will provide the view control classes with data.
+* The class will provide the view-control classes with data, which is why we add data into private arrays.
  */
 
 package Control;
@@ -49,6 +49,7 @@ public class Factory {
         return true;
     }//end method
 
+    //Method to add bikes to database
     public boolean addBike(Bike b){
         if(b == null ) return false;
         bikes.add(b);
@@ -60,6 +61,7 @@ public class Factory {
        return true;
     }//end method
 
+    //Method to add types
     public boolean addTypes(Type t){
         if(t == null)return false;
         for(Type type:types){
@@ -67,8 +69,70 @@ public class Factory {
         }//end loop
         types.add(t);
         String name = t.getName();
-        model.addType(name);
-        return true;
+        if(model.addType(name) != -1)return true;
+        else return false;
+    }//end method
+
+    //Method to add docks
+    public boolean addDock(Dock d){
+        if(d == null)throw new IllegalArgumentException("Error at Factory.java, addDock, argument is null");
+        for(Dock dock : docks){
+            if(d.equals(dock))return false;
+        }//end loop
+        docks.add(d);
+        String name = d.getName();
+        double x = d.getxCoordinates();
+        double y = d.getyCoordinates();
+        d.setDockID(model.addDock(name,x,y));
+        if(d.getDockID() != -1)return true;
+        else return false;
+    }//end method
+
+    //Method to delete bikes
+    public boolean delBike(int bikeId){
+        if(bikeId == 0 || bikeId<0)throw new IllegalArgumentException("No bike ID is zero or negative");
+        for(int i = 0; i<bikes.size();i++){
+            if(bikes.get(i).getBikeId() == bikeId){
+                bikes.remove(i);
+                //model.delBike(bikeId);
+                return true;
+            }//end if
+        }//end loop
+        return false;
+    }//end method
+
+    //Method to delete docks
+    public boolean delDock(int dockId){
+        if(dockId == 0 || dockId <0)throw new IllegalArgumentException("No dock ID is zero or negative");
+        for(int i = 0;i<docks.size();i++){
+            if(docks.get(i).getDockID() == dockId){
+                docks.remove(i);
+                //model.delDock(dockId);
+                return true;
+            }//end if
+        }//end loop
+        return false;
+    }//end method
+
+    //Method to edit bikes
+    public boolean editBike(int bikeId, Bike newBike){
+        if(bikeId == 0 || bikeId<0) throw new IllegalArgumentException("No bike ID is zero or negative");
+        if(newBike == null) throw new IllegalArgumentException("Error at Factory.java,editBike, argument is null");
+        for(int i = 0; i<bikes.size(); i++){
+            if(bikes.get(i).getBikeId() == bikeId){
+                newBike.setBikeId(bikeId);
+                bikes.set(i,newBike);
+                //model.editBike(newBike);
+                return true;
+            }//end if
+        }//end loop
+        if(newBike.getBikeId() == -1)throw new IllegalArgumentException("The bike ID given does not exist");
+        return false;
+    }//end method
+
+    //Method to edit docks
+    public boolean editDocks(int dockId, Dock d){
+        return false;
     }//end method
 
 }//end class
