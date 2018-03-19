@@ -7,7 +7,7 @@
 * It also allows the client to choose and change the position of the dock.
  */
 
-package Control;
+package control;
 
 public class Dock {
     private int dockID = -1; //This will be fetched from the database

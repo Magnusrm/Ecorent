@@ -1,4 +1,4 @@
-package Control;
+package control;
 
 import java.time.LocalDate;
 
@@ -23,6 +23,7 @@ public class Bike {
         this.make = make;
         this.type = type;
         this.powerUsage = powerUsage;
+        repairing = false;
     }
 
     public int getBikeId() {
@@ -84,8 +85,10 @@ public class Bike {
         this.repairing = repairing;
     }
 
-    public boolean dock() {
-        return false;
+    public void setDockId(int dockId) {
+
+        if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}
+        this.dockId = dockId;
     }
 
     public int updateBatteryPercent(int percent) {
