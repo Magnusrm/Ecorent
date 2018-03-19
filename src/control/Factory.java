@@ -8,7 +8,7 @@
 * The class will provide the view-control classes with data, which is why we add data into private arrays.
  */
 
-package Control;
+package control;
 
 import java.util.*;
 import Model.*;

@@ -1,7 +1,6 @@
 package Model;
 
-import Control.*;
-import Model.Model;
+import control.*;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package Model;
+package control;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -98,7 +98,7 @@ public class Repair {
     }
 
     public String toString(){
-        return "Model.Repair ID: " + repair_id
+        return "control.Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id
                 + "\nDate sent: " + date_sent
                 + "\nDescription before: " + before_desc

@@ -5,7 +5,7 @@
  * Class to define different bike types.
  * The type name can be changed
  */
- package Control;
+ package control;
 public class Type {
     private String name;
 

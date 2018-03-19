@@ -1,9 +1,9 @@
-package Control;
+package control;
 
-public class modelUpdateController {
+public class ModelUpdateController {
 
 
-    public modelUpdateController() {
+    public ModelUpdateController() {
 
     }
     // TO DATABASE

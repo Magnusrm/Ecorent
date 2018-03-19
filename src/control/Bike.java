@@ -1,4 +1,4 @@
-package Control;
+package control;
 
 import java.time.LocalDate;
 
@@ -23,6 +23,7 @@ public class Bike {
         this.make = make;
         this.type = type;
         this.powerUsage = powerUsage;
+        repairing = false;
     }
 
     public int getBikeId() {

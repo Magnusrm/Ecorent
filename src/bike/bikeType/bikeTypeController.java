@@ -1,14 +1,12 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
-import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import javax.swing.*;
 import java.util.Optional;
-import Control.*;
+import control.*;
 
 public class bikeTypeController {
 
@@ -48,6 +46,7 @@ public class bikeTypeController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             // ... IF OK
+
         } else {
             // ... IF CANCEL
         }

@@ -1,13 +1,13 @@
 package bike.bikeNew;
 
-import Control.Factory;
+import control.Factory;
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import Control.*;
+import control.*;
 
 import java.time.LocalDate;
 
