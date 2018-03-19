@@ -26,7 +26,7 @@
                 <TextField fx:id="usernameField" layoutX="227.0" layoutY="271.0" promptText="Username" style="-fx-background-color: -fx-secondary;" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="226.0" />
                 <ImageView fitHeight="216.0" fitWidth="370.0" layoutX="125.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.1639404296875" AnchorPane.topAnchor="38.0">
                <image>
-                  <Image url="@../resources/test.png" />
+                  <Image url="@../resources/logo.png" />
                </image>
                 </ImageView>
             <PasswordField fx:id="passwordField" layoutX="227.0" layoutY="309.0" promptText="Password" style="-fx-background-color: -fx-secondary;" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="226.0" />

@@ -33,9 +33,16 @@ public class bikeController {
     private TextField bikeIdField;
 
     @FXML
-    void changeToBikeEditView(ActionEvent event) {
+    void changeToBikeEditView(ActionEvent event) throws Exception {
 
     }
+
+    @FXML
+    void changeToBikeTypeView(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/bikeType/bikeTypeView.fxml");
+    }
+
 
     @FXML
     void changeToBikeNewView(ActionEvent event) throws Exception {
