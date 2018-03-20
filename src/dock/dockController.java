@@ -1,37 +1,14 @@
-package bike;
+package dock;
 
-import bike.bikeType.bikeTypeController;
+import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import changescene.ChangeScene;
 
-public class bikeController {
-
-    @FXML
-    private Button editBikeBtn;
-
-    @FXML
-    private Button infoBikeBtn;
-
+public class dockController {
     @FXML
     private Button homeBtn;
-
-    @FXML
-    private Button deleteBikeBtn;
-
-    @FXML
-    private Button repairBikeBtn;
-
-    @FXML
-    private Button newBikeBtn;
-
-    @FXML
-    private Button editBikeTypesBtn;
-
-    @FXML
-    private TextField bikeIdField;
 
     @FXML
     private Button bikesBtn;
@@ -52,44 +29,13 @@ public class bikeController {
     private Button adminBtn;
 
     @FXML
-    void changeToBikeEditView(ActionEvent event) throws Exception {
-
-    }
+    private Button newDockBtn;
 
     @FXML
-    void changeToBikeTypeView(ActionEvent event) throws Exception {
-        /*bikeTypeController btc = new bikeTypeController();
-        btc.updateInfo();*/
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeType/bikeTypeView.fxml");
-    }
-
+    private TextField nameField;
 
     @FXML
-    void changeToBikeNewView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeNew/bikeNewView.fxml");
-    }
-
-    @FXML
-    void changeToBikeRepairView(ActionEvent event) {
-
-    }
-
-
-    @FXML
-    void changeToMainView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
-    }
-
-    @FXML
-    void changetoBikeInfoView(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteBike(ActionEvent event) {
+    void createNewDock(ActionEvent event) {
 
     }
 
@@ -104,7 +50,6 @@ public class bikeController {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/dock/dockView.fxml");
     }
-
     @FXML
     void changeToMapScene(ActionEvent event) {
         /*ChangeScene cs = new ChangeScene();
@@ -129,12 +74,10 @@ public class bikeController {
         cs.setScene(event, "/main/mainView.fxml");
     }
 
+
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
-
     }
-
 }

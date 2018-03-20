@@ -69,9 +69,9 @@ public class bikeNewController {
     }
 
     @FXML
-    void changeToDockScene(ActionEvent event) {
-      /*  ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToDockScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/dockView.fxml");
     }
 
     @FXML
@@ -81,15 +81,15 @@ public class bikeNewController {
     }
 
     @FXML
-    void changeToStatsScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToStatsScene(ActionEvent event) throws Exception{
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/statsView.fxml");
     }
 
     @FXML
-    void changeToAdminScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToAdminScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/admin/adminView.fxml");
     }
 
     @FXML

@@ -32,20 +32,13 @@
 
 .button{
     -fx-text-fill: white;
-    -fx-background-color: -fx-primary;
+    -fx-background-color: -fx-secondary;
 }
 
 .button:hover{
-    -fx-text-fill: -fx-secondary;
+    -fx-text-fill: -fx-primary;
 }
 
-#bikesBtn, #docksBtn {
-    -fx-background-color: #696969;
-}
-
-#saveBtn{
-    -fx-background-color: -fx-secondary;
-}
 
 .line{
     -fx-fill: -fx-secondary;
