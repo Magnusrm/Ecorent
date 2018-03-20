@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import control.*;
 
 public class bikeTypeController{
 
@@ -69,7 +70,9 @@ public class bikeTypeController{
 
     @FXML
     void newType(ActionEvent event) {
-
+        Type type = new Type("funk1");
+        Factory factory = new Factory();
+        if(factory.addType(type))System.out.println("Yey");
     }
 
     @FXML
