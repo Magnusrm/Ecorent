@@ -176,7 +176,7 @@ public class AdminModel {
         return null;
     }
 
-    public boolean getPriviliged(String email){
+    public boolean isPriviliged(String email){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
