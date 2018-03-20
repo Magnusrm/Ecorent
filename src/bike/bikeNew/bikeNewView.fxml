@@ -9,28 +9,28 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeNew.bikeNewController">
    <children>
-      <TextField fx:id="makeField" layoutX="217.0" layoutY="104.0" promptText="DBS" style="-fx-background-color: -fx-secondary;" stylesheets="@../../resources/darkTheme.css" />
-      <Button fx:id="bikeViewBtn" layoutX="22.0" layoutY="27.0" mnemonicParsing="false" onAction="#changeToBikeView" style="-fx-background-color: -fx-secondary;" stylesheets="@../../resources/darkTheme.css" text="back" />
-      <TextField fx:id="priceField" layoutX="217.0" layoutY="190.0" promptText="5000" style="-fx-background-color: -fx-secondary;" stylesheets="@../../resources/darkTheme.css" />
-      <TextField fx:id="buyDateField" layoutX="217.0" layoutY="231.0" prefHeight="27.0" prefWidth="167.0" promptText="YYYY-MM-DD" style="-fx-background-color: -fx-secondary;" stylesheets="@../../resources/darkTheme.css" />
-      <ComboBox fx:id="typeComboBox" layoutX="217.0" layoutY="146.0" prefHeight="27.0" prefWidth="167.0" promptText="Type" style="-fx-background-color: -fx-secondary;" stylesheets="@../../resources/darkTheme.css" />
-      <Button fx:id="saveBtn" layoutX="217.0" layoutY="270.0" mnemonicParsing="false" onAction="#createNewBike" prefHeight="27.0" prefWidth="167.0" style="-fx-background-color: -fx-secondary;" stylesheets="@../../resources/darkTheme.css" text="Save" />
-      <Label fx:id="buyDateLbl" layoutX="143.0" layoutY="234.0" style="-fx-text-fill: -fx-secondary;" text="Buy date">
+      <TextField fx:id="makeField" layoutX="217.0" layoutY="104.0" promptText="DBS" stylesheets="@../../resources/darkTheme.css" />
+      <Button fx:id="bikeViewBtn" layoutX="22.0" layoutY="27.0" mnemonicParsing="false" onAction="#changeToBikeView" stylesheets="@../../resources/darkTheme.css" text="back" textFill="#fffdfd" />
+      <TextField fx:id="priceField" layoutX="217.0" layoutY="190.0" promptText="5000" stylesheets="@../../resources/darkTheme.css" />
+      <TextField fx:id="buyDateField" layoutX="217.0" layoutY="231.0" prefHeight="27.0" prefWidth="167.0" promptText="YYYY-MM-DD" stylesheets="@../../resources/darkTheme.css" />
+      <ComboBox fx:id="typeComboBox" layoutX="217.0" layoutY="146.0" prefHeight="27.0" prefWidth="167.0" promptText="Type" stylesheets="@../../resources/darkTheme.css" />
+      <Button fx:id="saveBtn" layoutX="217.0" layoutY="270.0" mnemonicParsing="false" onAction="#createNewBike" prefHeight="27.0" prefWidth="167.0" stylesheets="@../../resources/darkTheme.css" text="Save" textFill="#fffdfd" />
+      <Label fx:id="buyDateLbl" layoutX="143.0" layoutY="234.0" text="Buy date">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="priceLbl" layoutX="167.0" layoutY="195.0" style="-fx-text-fill: -fx-secondary;" text="Price">
+      <Label fx:id="priceLbl" layoutX="167.0" layoutY="195.0" text="Price">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="makeLbl" layoutX="169.0" layoutY="109.0" style="-fx-text-fill: -fx-secondary;" text="Make">
+      <Label fx:id="makeLbl" layoutX="169.0" layoutY="109.0" text="Make">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="krLbl" layoutX="387.0" layoutY="195.0" style="-fx-text-fill: -fx-secondary;" text="kr" textFill="#a19b9b">
+      <Label fx:id="krLbl" layoutX="387.0" layoutY="195.0" text="kr" textFill="WHITE">
          <font>
             <Font name="System Font" size="15.0" />
          </font>
