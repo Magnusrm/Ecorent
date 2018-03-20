@@ -15,6 +15,21 @@
     -fx-prompt-text-fill: -fx-promptText;
 }
 
+.text {
+    -fx-text-fill: white;
+}
+
+.combo-box-base {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -fx-background-color: -fx-secondary;
+
+}
+
+.combo-box-base .text{
+    -fx-fill: white;
+}
+
 .button{
     -fx-text-fill: white;
     -fx-background-color: -fx-primary;
@@ -24,7 +39,11 @@
     -fx-text-fill: -fx-secondary;
 }
 
-#bikeViewBtn{
+#bikesBtn, #docksBtn {
+    -fx-background-color: #696969;
+}
+
+#saveBtn{
     -fx-background-color: -fx-secondary;
 }
 

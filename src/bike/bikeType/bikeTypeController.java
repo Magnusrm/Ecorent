@@ -55,9 +55,6 @@ public class bikeTypeController {
     private ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
 
 
-
-
-
     @FXML
     void changeToBikeView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -148,9 +145,9 @@ public class bikeTypeController {
     }
 
     @FXML
-    void changeToHomeScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/mainView.fxml");
     }
 
 

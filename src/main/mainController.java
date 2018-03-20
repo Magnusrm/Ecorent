@@ -8,8 +8,6 @@ import changescene.ChangeScene;
 
 public class mainController {
 
-    @FXML
-    private Button newAdminBtn;
 
     @FXML
     private Button homeBtn;
