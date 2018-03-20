@@ -34,15 +34,6 @@ public class DBCleanup {
         }
     }
 
-    public static void rollback(Connection con){
-        try{
-            if(con != null){
-                con.rollback();
-            }
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + "rollback()");
-        }
-    }
 
     public static void setAutoCommit(Connection con){
         try{

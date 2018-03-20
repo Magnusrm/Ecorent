@@ -32,7 +32,7 @@ public class RepairModel {
                 resultSet.next();
                 return resultSet.getInt("MAX(repair_id)");
             } else{
-                DBCleanup.rollback(connection);
+                connection.rollback();
                 return -1;
             }
         }catch (SQLException e) {

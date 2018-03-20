@@ -69,7 +69,7 @@ public class TypeModel {
                     resultSet.next();
                     return resultSet.getInt("MAX(type_id)");
                 } else{
-                    DBCleanup.rollback(connection);
+                    connection.rollback();
                 }
             }else{
                 System.out.println("Type already exists");
@@ -77,10 +77,8 @@ public class TypeModel {
             }
         }catch(SQLException e) {
             System.out.println(e.getMessage() + " - addType()");
-            //DBCleanup.rollback(connection);
         }catch (ClassNotFoundException e){
             System.out.println(e.getMessage() + " - addType()");
-            //DBCleanup.rollback(connection);
         }finally {
             DBCleanup.setAutoCommit(connection);
             DBCleanup.closeResultSet(resultSet);
@@ -109,7 +107,7 @@ public class TypeModel {
                 connection.commit();
                 return true;
             }else{
-                DBCleanup.rollback(connection);
+                connection.rollback();
                 return false;
             }
         }catch (SQLException e){

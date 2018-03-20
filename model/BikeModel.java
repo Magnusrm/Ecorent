@@ -130,7 +130,7 @@ public class BikeModel {
                 connection.commit();
                 return true;
             }else{
-                DBCleanup.rollback(connection);
+                connection.rollback();
                 return false;
             }
         }catch(SQLException e) {
@@ -213,7 +213,7 @@ public class BikeModel {
                 resultSet.next();
                 return resultSet.getInt("MAX(bike_id)");
             }else{
-                DBCleanup.rollback(connection);
+                connection.rollback();
                 return -1;
             }
         }catch(SQLException e){

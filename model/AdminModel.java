@@ -175,4 +175,41 @@ public class AdminModel {
         }
         return null;
     }
+
+    public boolean isPriviliged(String email){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String priviligedQuery = "SELECT priviliged FROM admin WHERE email = ?";
+
+        byte priv = 1;
+
+        try{
+            connection = DriverManager.getConnection(dbName);
+            Class.forName(driver);
+
+            if(adminExists(email)){
+                preparedStatement = connection.prepareStatement(priviligedQuery);
+                preparedStatement.setString(1, email);
+                resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                byte res = resultSet.getByte("priviliged");
+                if(res == priv){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getPriviliged()");
+        }catch (ClassNotFoundException e){
+            System.out.println(e.getMessage() + " - getPriviliged()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
 }
