@@ -1,33 +1,31 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
-import java.util.Optional;
+public class bikeTypeController{
 
-public class bikeTypeController {
-    private Factory factory;
-    private Type type;
+    @FXML
+    private TextField makeField;
 
     @FXML
     private Button bikeViewBtn;
 
     @FXML
-    private Button saveChangesBtn;
+    private TextField priceField;
 
     @FXML
-    private Button editTypeNameBtn;
+    private TextField buyDateField;
 
     @FXML
-    private Button deleteTypeBtn;
+    private ComboBox<?> typeComboBox;
 
     @FXML
-    private Button newTypeBtn;
+    private Button saveBtn;
 
     @FXML
     private Button homeBtn;
@@ -50,75 +48,35 @@ public class bikeTypeController {
     @FXML
     private Button adminBtn;
 
-    @FXML
-    private ListView<String> typeListView = new ListView<>();
-    private ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
-
-
-    @FXML
-    void changeToBikeView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
-    }
-
-    @FXML
-    void deleteType(ActionEvent event) throws Exception {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete type");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you would like to delete the selected type?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            // ... IF OK
-        } else {
-            // ... IF CANCEL
-        }
-    }
-
-    @FXML
-    void editTypeName(ActionEvent event) {
-        typeListView.setItems(types);
-    }
-
-    @FXML
-    void newType(ActionEvent event) {
-        try {
-            Type type = new Type("funk1");
-            if(factory.addType(type))System.out.println(type);
-            /* TextInputDialog dialog = new TextInputDialog("");
-            dialog.setTitle("New bike type");
-            dialog.setHeaderText(null);
-            dialog.setContentText("Name:");
-
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> {
-                System.out.println(result.get());
-                System.out.println(name + " blir registrert som en ny type");
-            });*/
-        }catch (Exception e){e.printStackTrace();}
-    }//end method
-
-    @FXML
-    void saveChanges(ActionEvent event) {
-        try {
-            // change to bike scene
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/bike/bikeView.fxml");
-        }//end try
-        catch(Exception e){e.printStackTrace();}
-    }//end method
-
-    public void updateInfo(){
-        typeListView.setItems(types);
-    }
-
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeView.fxml");
     }
+
+
+    @FXML
+    void deleteType(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editTypeName(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void newType(ActionEvent event) {
+
+    }
+
+    @FXML
+    void saveChanges(ActionEvent event) {
+
+    }
+
 
     @FXML
     void changeToDockScene(ActionEvent event) {
