@@ -1,14 +1,20 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import control.*;
+import javafx.scene.control.*;
+
+import java.util.Optional;
 
 public class bikeTypeController{
+
+
+    @FXML
+    private ListView<String> typeListView = new ListView<>();
+    private ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
 
     @FXML
     private TextField makeField;
@@ -58,8 +64,18 @@ public class bikeTypeController{
 
 
     @FXML
-    void deleteType(ActionEvent event) {
+    void deleteType(ActionEvent event) throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete type");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you would like to delete the selected type?");
 
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            // ... IF OK
+        } else {
+            // ... IF CANCEL
+        }
     }
 
     @FXML
@@ -70,16 +86,30 @@ public class bikeTypeController{
 
     @FXML
     void newType(ActionEvent event) {
-        Type type = new Type("funk1");
-        Factory factory = new Factory();
-        if(factory.addType(type))System.out.println("Yey");
+
+        TextInputDialog dialog = new TextInputDialog("wow");
+        dialog.setTitle("New bike type");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Name:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            System.out.println(name + " blir registrert som en ny type");
+        });
+
+
     }
 
     @FXML
-    void saveChanges(ActionEvent event) {
-
+    void saveChanges(ActionEvent event) throws Exception {
+        // change to bike scene
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/bikeView.fxml");
     }
 
+    public void updateInfo(){
+        typeListView.setItems(types);
+    }
 
     @FXML
     void changeToDockScene(ActionEvent event) {
