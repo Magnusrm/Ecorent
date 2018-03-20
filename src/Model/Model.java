@@ -69,6 +69,7 @@ public class Model {
 
             type = new Type(typeName);
             bike = new Bike(regDate, price, make, type, pwrUsg);
+            bike.setBikeId(bikeID);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

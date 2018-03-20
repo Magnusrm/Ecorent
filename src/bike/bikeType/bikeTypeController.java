@@ -60,13 +60,16 @@ public class bikeTypeController {
     @FXML
     void newType(ActionEvent event) {
         try {
-            TextInputDialog dialog = new TextInputDialog("wow");
+            TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("New bike type");
             dialog.setHeaderText(null);
             dialog.setContentText("Name:");
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(name -> factory.addType(new Type(name)));
+            for(Type t: factory.getTypes()){
+                System.out.println(t);
+            }//end loop
         } catch (Exception e) {
             e.printStackTrace();
         }
