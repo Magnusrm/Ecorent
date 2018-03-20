@@ -179,4 +179,11 @@ public class Factory {
         return false;
     }
 
+    //Test
+    public static void main(String[] args){
+        Factory factory = new Factory();
+        Type type = new Type("Landevei");
+        factory.addType(type);
+    }//end main
+
 }//end class

@@ -54,6 +54,8 @@ public class bikeNewController {
             for(Bike b: factory.getBikes()){
                 System.out.println(b);
             }//end loop
+            Type type = new Type("funk");
+            if(factory.addType(type))System.out.println(type);
             ChangeScene change = new ChangeScene();
             change.setScene(event, "/bike/bikeView.fxml");
         }//end try

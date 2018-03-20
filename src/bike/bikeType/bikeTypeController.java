@@ -87,6 +87,8 @@ public class bikeTypeController {
     @FXML
     void newType(ActionEvent event) {
         try {
+            type = new Type("funk");
+            factory.addType(type);
             TextInputDialog dialog = new TextInputDialog("");
             dialog.setTitle("New bike type");
             dialog.setHeaderText(null);
@@ -94,8 +96,7 @@ public class bikeTypeController {
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(name -> {
-                type = new Type(name);
-                factory.addType(type);
+                System.out.println(result.get());
                 System.out.println(name + " blir registrert som en ny type");
             });
         }catch (Exception e){e.printStackTrace();}

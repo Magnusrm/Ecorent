@@ -15,7 +15,7 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base64;
 public class Password {
-    private static final int iteratations = 20*1000; //More iterations = More expensive computing the hash(For us and attackers)
+    private static final int iterations = 20*1000; //More iterations = More expensive computing the hash(For us and attackers)
     private static final int saltLen = 32; //The salt will be 32 random bytes
     private static final int desiredKeyLen = 256;
 
@@ -58,7 +58,7 @@ public class Password {
         if(password == null || password.length() == 0)throw new
                 IllegalArgumentException("Passord kan ikke være tomt");
         try{
-            PBEKeySpec pbe = new PBEKeySpec(password.toCharArray(),salt,iteratations,desiredKeyLen);//What we want hashed
+            PBEKeySpec pbe = new PBEKeySpec(password.toCharArray(),salt, iterations,desiredKeyLen);//What we want hashed
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");//Hash algorithm
             SecretKey key = factory.generateSecret(pbe);
             return Base64.encodeBase64String(key.getEncoded());
