@@ -1,6 +1,7 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
+import changescene.popupScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,6 +57,16 @@ public class bikeTypeController implements Initializable{
     @FXML
     private Button adminBtn;
 
+    @FXML
+    private Button createTypeBtn;
+
+    @FXML
+    private Button deleteTypeBtn;
+
+    @FXML
+    private TextField newTypeField;
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
@@ -87,11 +98,6 @@ public class bikeTypeController implements Initializable{
         }
     }
 
-    @FXML
-    void editTypeName(ActionEvent event) {
-
-    }
-
 
     @FXML
     void newType(ActionEvent event) {
@@ -105,7 +111,10 @@ public class bikeTypeController implements Initializable{
         result.ifPresent(name -> {
             System.out.println(name + " blir registrert som en ny type");
         });
+    }
 
+    @FXML
+    void editTypeName(ActionEvent event) {
 
     }
 
@@ -116,9 +125,27 @@ public class bikeTypeController implements Initializable{
         cs.setScene(event, "/bike/bikeView.fxml");
     }
 
-    public void updateInfo(){
+/*    @FXML
+    void deleteType(ActionEvent event) throws Exception{
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeType/bikeTypeDeleteView.fxml");
+    }
+
+    @FXML
+    void newType(ActionEvent event) throws Exception{
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeType/bikeTypeNewView.fxml");
+    }
+
+    @FXML
+    void createNewTypeConfirm(){
 
     }
+
+    @FXML
+    void deleteTypeConfirm(){
+
+    }*/
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
