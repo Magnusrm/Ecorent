@@ -1,37 +1,15 @@
-package bike;
+package admin;
 
-import bike.bikeType.bikeTypeController;
+import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import changescene.ChangeScene;
 
-public class bikeController {
+public class adminController {
 
-    @FXML
-    private Button editBikeBtn;
-
-    @FXML
-    private Button infoBikeBtn;
 
     @FXML
     private Button homeBtn;
-
-    @FXML
-    private Button deleteBikeBtn;
-
-    @FXML
-    private Button repairBikeBtn;
-
-    @FXML
-    private Button newBikeBtn;
-
-    @FXML
-    private Button editBikeTypesBtn;
-
-    @FXML
-    private TextField bikeIdField;
 
     @FXML
     private Button bikesBtn;
@@ -51,47 +29,6 @@ public class bikeController {
     @FXML
     private Button adminBtn;
 
-    @FXML
-    void changeToBikeEditView(ActionEvent event) throws Exception {
-
-    }
-
-    @FXML
-    void changeToBikeTypeView(ActionEvent event) throws Exception {
-        /*bikeTypeController btc = new bikeTypeController();
-        btc.updateInfo();*/
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeType/bikeTypeView.fxml");
-    }
-
-
-    @FXML
-    void changeToBikeNewView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeNew/bikeNewView.fxml");
-    }
-
-    @FXML
-    void changeToBikeRepairView(ActionEvent event) {
-
-    }
-
-
-    @FXML
-    void changeToMainView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
-    }
-
-    @FXML
-    void changetoBikeInfoView(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteBike(ActionEvent event) {
-
-    }
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -129,12 +66,11 @@ public class bikeController {
         cs.setScene(event, "/main/mainView.fxml");
     }
 
+
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
-
     }
 
 }
