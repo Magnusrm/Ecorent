@@ -38,7 +38,7 @@
                   <Font name="System Font" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="makeField1" layoutX="142.0" layoutY="143.0" promptText="DBS" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <TextField fx:id="priceField" layoutX="142.0" layoutY="143.0" promptText="DBS" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
             <Line endX="100.0" layoutX="210.0" layoutY="171.0" startX="-70.0" stroke="WHITE" styleClass="line" />
             <Line endX="100.0" layoutX="210.0" layoutY="208.0" startX="-70.0" stroke="WHITE" styleClass="line" />
             <Line endX="100.0" layoutX="210.0" layoutY="136.0" startX="-70.0" stroke="WHITE" styleClass="line" />

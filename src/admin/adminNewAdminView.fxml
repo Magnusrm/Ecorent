@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="222.0" prefWidth="273.0" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.adminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="334.0" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="admin.adminController">
    <children>
-      <TextField fx:id="newAdminEmailField" layoutX="53.0" layoutY="90.0" promptText="Email" style="-fx-background-color: -fx-primary;" />
-      <Button layoutX="86.0" layoutY="158.0" mnemonicParsing="false" onAction="#createNewAdminConfirm" text="Create admin" />
-      <CheckBox layoutX="94.0" layoutY="125.0" mnemonicParsing="false" text="Main admin" textFill="WHITE" />
-      <Line endX="80.0" layoutX="146.0" layoutY="117.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
+      <TextField fx:id="newAdminEmailField" layoutX="89.0" layoutY="50.0" promptText="Email" style="-fx-background-color: -fx-primary;" />
+      <Button layoutX="122.0" layoutY="117.0" mnemonicParsing="false" onAction="#createNewAdminConfirm" text="Create admin" />
+      <CheckBox layoutX="125.0" layoutY="89.0" mnemonicParsing="false" text="Main admin" textFill="WHITE" />
+      <Line endX="80.0" layoutX="182.0" layoutY="77.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
    </children>
 </AnchorPane>
