@@ -5,16 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class bikeTypeController{
-
+public class bikeTypeController implements Initializable{
 
     @FXML
-    private ListView<String> typeListView = new ListView<>();
-    private ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
+    private ListView<String> typeListView;
 
     @FXML
     private TextField makeField;
@@ -55,6 +56,12 @@ public class bikeTypeController{
     @FXML
     private Button adminBtn;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
+        typeListView.setItems(types);
+        System.out.println("test2");
+    }
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -65,6 +72,8 @@ public class bikeTypeController{
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
+
+        System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
         alert.setHeaderText(null);
@@ -108,7 +117,7 @@ public class bikeTypeController{
     }
 
     public void updateInfo(){
-        typeListView.setItems(types);
+
     }
 
     @FXML

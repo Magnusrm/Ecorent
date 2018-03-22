@@ -1,9 +1,19 @@
 package admin;
 
 import changescene.ChangeScene;
+import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.BorderPane;
+
+import java.io.IOException;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class adminController {
 
@@ -28,6 +38,18 @@ public class adminController {
 
     @FXML
     private Button adminBtn;
+
+    @FXML
+    private Button createNewAdminBtn;
+
+    private BorderPane borderpane;
+
+
+    @FXML
+    void createNewAdmin(ActionEvent event) throws Exception {
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/admin/adminNewAdminView.fxml");
+    }
 
 
     @FXML
@@ -72,5 +94,20 @@ public class adminController {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }
+
+    void changeScene(String fxmlname) throws Exception {
+        Parent root = null;
+        try{
+            root = FXMLLoader.load(getClass().getResource(fxmlname));
+        } catch (IOException ex){
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        borderpane.setCenter(root);
+    }
+
+    static void regNewAdmin(){
+
+    }
+
 
 }

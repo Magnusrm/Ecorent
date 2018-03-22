@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,11 +11,11 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <TextField layoutX="53.0" layoutY="81.0" prefHeight="245.0" prefWidth="191.0" />
             <Button fx:id="newTypeBtn" layoutX="254.0" layoutY="132.0" mnemonicParsing="false" onAction="#newType" prefHeight="27.0" prefWidth="167.0" text="New Type" />
             <Button fx:id="deleteTypeBtn" layoutX="254.0" layoutY="171.0" mnemonicParsing="false" onAction="#deleteType" prefHeight="27.0" prefWidth="167.0" text="Delete Type" />
             <Button fx:id="editTypeNameBtn" layoutX="254.0" layoutY="210.0" mnemonicParsing="false" onAction="#editTypeName" prefHeight="27.0" prefWidth="167.0" text="Edit Type Name" />
             <Button fx:id="saveChangesBtn" layoutX="254.0" layoutY="249.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="27.0" prefWidth="167.0" text="Save Changes" />
+            <ListView fx:id="typeListView" layoutX="42.0" layoutY="79.0" prefHeight="248.0" prefWidth="176.0" />
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
