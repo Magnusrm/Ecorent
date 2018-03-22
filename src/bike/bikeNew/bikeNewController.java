@@ -62,10 +62,21 @@ public class bikeNewController {
     @FXML
     void createNewBike(ActionEvent event) {
         try {
-            double price = Double.parseDouble(priceField.getText());
+            System.out.println("Funker her");
+            System.out.println(priceField.getText());
+            /*System.out.println("Funker her");
             String make = makeField.getText();
-            
-            double powerUsage;
+            //Type type = typeComboBox.getItems().addListener();
+            //double powerUsage = Double.parseDouble()
+            System.out.println("Funker her også");
+            LocalDate date = LocalDate.now();
+            System.out.println("Funker med localdate");
+            Bike bike = new Bike(date,price,make,new Type("Racer"),0);
+            System.out.println("Laget objekt av bike");
+            Factory factory = new Factory();
+            System.out.println("Laget factory-objekt");
+            factory.addBike(bike);
+            System.out.println("Funker og adde bike");*/
             ChangeScene change = new ChangeScene();
             change.setScene(event, "/bike/bikeView.fxml");
         }//end try

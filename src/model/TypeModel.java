@@ -7,7 +7,7 @@ public class TypeModel {
     private static String driver = "com.mysql.jdbc.Driver";
     private static String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
-    //Private method that helps check if the type name exists in the database**
+    //method that helps check if the type name exists in the database**
     public static int typeExists(String name){
         Connection connection = null;
         ResultSet resultSet = null;
@@ -124,13 +124,13 @@ public class TypeModel {
 
         int typeID = typeExists(typeName);
 
-        String deleteQuery = "DELETE FROM type WHERE type_id = ?";
+        String deleteUpdate = "DELETE FROM type WHERE type_id = ?";
 
         try{
             connection = DriverManager.getConnection(dbName);
             Class.forName(driver);
 
-            preparedStatement = connection.prepareStatement(deleteQuery);
+            preparedStatement = connection.prepareStatement(deleteUpdate);
             preparedStatement.setInt(1, typeID);
             if(preparedStatement.executeUpdate() != 0){
                 return true;
@@ -149,7 +149,7 @@ public class TypeModel {
     }
 
     //Returns an arraylist of strings with all the types in the database
-    public ArrayList<String> getTypes(int typeID){
+    public ArrayList<String> getTypes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

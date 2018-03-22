@@ -43,10 +43,13 @@ public class Factory {
     //model classes connected to database.
     //This is used every time the user starts the application
     public void updateSystem(){
-        //fetch bikes and add in array list
-        //fetch docks and add in array list
-        //fetch admins and add in array list
-        //fetch types and add in array list
+       bikes = bikeModel.getAllBikes();
+       docks = dockModel.getAllDocks();
+       for(String name:typeModel.getTypes()){
+           Type type = new Type(name);
+           types.add(type);
+       }//end loop
+       admins = adminModel.getAllAdmins();
     }//end method
 
     //Method to add admin. If mainAdmin is true
@@ -58,7 +61,7 @@ public class Factory {
             if(a.equals(admin)) return false;
         }//end loop
         admins.add(a);
-        return adminModel.addAdmin(a.getEmail(),null,a.getPassword(),mainAdmin);
+        return adminModel.addAdmin(a.getEmail(), a.getPassword(),mainAdmin);
     }//end method
 
 
@@ -97,7 +100,7 @@ public class Factory {
         String name = d.getName();
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
-        //d.setDockID(dockModel.);
+        d.setDockID(dockModel.addDock(name,x,y));
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
@@ -119,8 +122,9 @@ public class Factory {
         if(dockId == 0 || dockId <0)throw new IllegalArgumentException("No dock ID is zero or negative");
         for(int i = 0;i<docks.size();i++){
             if(docks.get(i).getDockID() == dockId){
+                dockModel.deleteDock(docks.get(i).getName());
                 docks.remove(i);
-                return dockModel.deleteDock(dockId);
+                return true;
             }//end if
         }//end loop
         return false;
