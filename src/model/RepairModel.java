@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.*;
+import control.*;
 
 public class RepairModel {
     private String driver = "com.mysql.jdbc.Driver";

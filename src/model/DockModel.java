@@ -1,6 +1,6 @@
 package model;
 
-import Control.Dock;
+import control.Dock;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -104,6 +104,7 @@ public class DockModel {
         }
         return false;
     }
+
 
     public boolean deleteDock(int dockID){
         Connection connection = null;

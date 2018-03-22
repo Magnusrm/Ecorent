@@ -1,7 +1,7 @@
 package model;
 
-import Control.Bike;
-import Control.Type;
+import control.Bike;
+import control.Type;
 
 import java.sql.*;
 import java.time.LocalDate;

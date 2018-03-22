@@ -10,17 +10,28 @@
 
 package control;
 
+import java.sql.SQLException;
 import java.util.*;
-import Model.*;
+import model.*;
 
 public class Factory {
     private ArrayList<Dock> docks = new ArrayList<Dock>();
     private ArrayList<Bike> bikes = new ArrayList<Bike>();
     private ArrayList<Admin> admins = new ArrayList<Admin>();
     private ArrayList<Type> types = new ArrayList<Type>();
-    private Model model = new Model();
+    private AdminModel adminModel;
+    private BikeModel bikeModel;
+    private DockModel dockModel;
+    private RepairModel repairModel;
+    private TypeModel typeModel;
 
-    public Factory(){}//default constructor
+    public Factory(){
+        adminModel = new AdminModel();
+        bikeModel = new BikeModel();
+        dockModel = new DockModel();
+        repairModel = new RepairModel();
+        typeModel = new TypeModel();
+    }//end constructor
 
     //Access methods
     public ArrayList<Dock> getDocks() {return docks;}
@@ -38,15 +49,16 @@ public class Factory {
         //fetch types and add in array list
     }//end method
 
-
-    public boolean addAdmin(Admin a){
+    //Method to add admin. If mainAdmin is true
+    //the admin will have access to add and delete
+    //other admins
+    public boolean addAdmin(Admin a, boolean mainAdmin){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
         for(Admin admin:admins){
             if(a.equals(admin)) return false;
         }//end loop
         admins.add(a);
-        //model.addAdmin(a);
-        return true;
+        return adminModel.addAdmin(a.getEmail(),null,a.getPassword(),mainAdmin);
     }//end method
 
 
@@ -58,7 +70,8 @@ public class Factory {
        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
-       //b.setBikeId(model.addBike(date,price,make,type));
+       double pwrUsage = b.getPowerUsage();
+       b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
        return true;
     }//end method
 
@@ -70,7 +83,7 @@ public class Factory {
         }//end loop
         types.add(t);
         String name = t.getName();
-        if(model.addType(name) != -1)return true;
+        if(typeModel.addType(name) != -1)return true;
         else return false;
     }//end method
 
@@ -84,7 +97,7 @@ public class Factory {
         String name = d.getName();
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
-        d.setDockID(model.addDock(name,x,y));
+        //d.setDockID(dockModel.);
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
@@ -95,8 +108,7 @@ public class Factory {
         for(int i = 0; i<bikes.size();i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 bikes.remove(i);
-                //model.delBike(bikeId);
-                return true;
+                return bikeModel.deleteBike(bikeId);
             }//end if
         }//end loop
         return false;
@@ -108,8 +120,7 @@ public class Factory {
         for(int i = 0;i<docks.size();i++){
             if(docks.get(i).getDockID() == dockId){
                 docks.remove(i);
-                //model.delDock(dockId);
-                return true;
+                return dockModel.deleteDock(dockId);
             }//end if
         }//end loop
         return false;
@@ -118,13 +129,13 @@ public class Factory {
     public boolean deleteAdmin(Admin a) {
         for (Admin anAdmin : admins) {
             if (a.equals(anAdmin)) {
-                //model.deleteAdmin(anAdmin);
+                adminModel.deleteAdmin(anAdmin.getEmail());
                 admins.remove(anAdmin);
                 return true;
-            }
-        }
+            }//end if
+        }//end loop
         return false;
-    }
+    }//end method
 
     //Method to edit bikes
     public boolean editBike(int bikeId, Bike newBike){
@@ -134,8 +145,12 @@ public class Factory {
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
                 bikes.set(i,newBike);
-                //model.editBike(newBike);
-                return true;
+                String regDate = newBike.getBuyDate().toString();
+                double price = newBike.getPrice();
+                String make = newBike.getMake();
+                double pwrUsage = newBike.getPowerUsage();
+                String typeName = newBike.getType().toString();
+                return bikeModel.editBike(bikeId,regDate,price,make,pwrUsage,typeName);
             }//end if
         }//end loop
         if(newBike.getBikeId() == -1)throw new IllegalArgumentException("The bike ID given does not exist");
@@ -143,39 +158,46 @@ public class Factory {
     }//end method
 
     //Method to edit docks
-    public boolean editDocks(int dockId, Dock d){
+    public boolean editDocks (int dockId, Dock d)throws SQLException,ClassNotFoundException{
         if(dockId<0 ||dockId==0)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
             if(docks.get(i).getDockID() == dockId){
                 d.setDockID(dockId);
                 docks.set(i,d);
-                //model.editDock(d);
-                return true;
+                String name = d.getName();
+                double x = d.getxCoordinates();
+                double y = d.getyCoordinates();
+                return dockModel.editDock(dockId,name,x,y);
             }//end if
         }//end loop
         if(d.getDockID() == -1)throw new IllegalArgumentException("The dock ID given does not exist");
         return false;
     }//end method
 
+    //Method to edit types
     public boolean editType(Type type) {
+        if(type == null||type.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(type)) {
                 types.set(i, type);
-                model.addType(type.getName());
-               // model.deleteType(type.getName());
-                return true;
-            }
-        }
+                int j = TypeModel.typeExists(type.getName());
+                return typeModel.editType(j,type.getName());
+            }//end if
+        }//end loop
+        if(TypeModel.typeExists(type.getName())==-1)throw new IllegalArgumentException("The type does not exist");
         return false;
-    }
+    }//end method
+
+    //Method to delete types
     public boolean deleteType(Type type) {
+        if(type == null||type.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).equals(type)) {
+            if (types.get(i).equals(type)){
                 types.remove(i);
-                //model.deleteType(type.getName());
-                return true;
-            }
-        }
+                return typeModel.deleteType(type.getName());
+            }//end if
+        }//end loop
+        if(TypeModel.typeExists(type.getName()) == -1)throw new IllegalArgumentException("The type does not exist");
         return false;
     }
 
