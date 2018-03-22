@@ -1,5 +1,7 @@
 package model;
 
+import control.Repair;
+
 import java.sql.*;
 
 public class RepairModel {
