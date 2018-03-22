@@ -1,6 +1,6 @@
 package model;
-import Control.Bike;
-import Control.Type;
+import control.Bike;
+import control.Type;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
