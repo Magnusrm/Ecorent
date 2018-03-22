@@ -8,11 +8,12 @@
     </style>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
     </script>
+
     <script type="text/javascript">
         function initialize() {
-            var latlng = new google.maps.LatLng(37.39822, -121.9643936);
+            var latlng = new google.maps.LatLng(63.429276, 10.392517);
             var myOptions = {
-                zoom: 14,
+                zoom: 16,
                 center: latlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControl: false,
@@ -56,7 +57,44 @@
                     }
                 });
             }
-        }
+            /*
+            MARKER EXAMPLE
+             */
+
+
+            var latlngMarker = new google.maps.LatLng(63.426929, 10.397179);  // NIDAROS
+            document.marker = new google.maps.Marker({
+                position: latlngMarker,
+                map: document.map,
+                draggable : false,
+                title : "Dock 1",
+                visible: true
+            });
+
+            document.map.addListener("click", function(event){
+                  updateMarker(event.latLng) });
+
+            document.updateMarker = function updateMarker(latitude, longitude){
+                var position = new google.maps.LatLng(latitude, longitude);
+
+                document.marker.setPosition(position);
+
+                var myData = {"latitude" : position.latitude, "longitude" : position.longitude};
+
+                var jsonData = JSON.stringify(myData);
+
+               // console.log("halla");
+
+                // localStorage.setItem("posJSON", myJSON);
+            }
+
+        }// initialize end
+
+
+
+
+
+
     </script>
 </head>
 <body onload="initialize()">
