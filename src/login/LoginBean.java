@@ -4,6 +4,7 @@ public class LoginBean {
     private String email;
     private String password;
     private boolean privileged;
+    public static LoginBean obj;
 
     public LoginBean(String email, String password){
         this.email = email;
@@ -34,6 +35,17 @@ public class LoginBean {
     public void setPrivileged(boolean privileged) {
         this.privileged = privileged;
     }
+
+    public String toString(){
+        return "e: " + email + "p: " + password + "priv: " + privileged;
+    }
+
+    public static LoginBean getInstance(String email, String password){
+        if(obj == null){
+            obj = new LoginBean(email, password);
+        }return obj;
+    }
 }
+
 
 
