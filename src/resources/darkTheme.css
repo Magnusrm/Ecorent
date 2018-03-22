@@ -1,8 +1,8 @@
 
 * {
-    -fx-primary : #2d2f33;
-    -fx-secondary : #c3c3c3;
-    -fx-primaryText : #B2B2B2;
+    -fx-primary : #34474e;
+    -fx-secondary : #2dd96b;
+    -fx-mainMenu : #233239;
     -fx-promptText : #565656
 }
 
@@ -11,5 +11,35 @@
 }
 
 .text-field {
+    -fx-text-fill: white;
     -fx-prompt-text-fill: -fx-promptText;
+}
+
+.text {
+    -fx-text-fill: white;
+}
+
+.combo-box-base {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+    -fx-background-color: -fx-secondary;
+
+}
+
+.combo-box-base .text{
+    -fx-fill: white;
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-background-color: -fx-secondary;
+}
+
+.button:hover{
+    -fx-text-fill: -fx-primary;
+}
+
+
+.line{
+    -fx-fill: -fx-secondary;
 }

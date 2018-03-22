@@ -1,39 +1,67 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
-import changescene.popupScene;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import javax.swing.*;
 import java.util.Optional;
 
-public class bikeTypeController {
+public class bikeTypeController{
+
+
+    @FXML
+    private ListView<String> typeListView = new ListView<>();
+    private ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
+
+    @FXML
+    private TextField makeField;
 
     @FXML
     private Button bikeViewBtn;
 
     @FXML
-    private Button saveChangesBtn;
+    private TextField priceField;
 
     @FXML
-    private Button editTypeNameBtn;
+    private TextField buyDateField;
 
     @FXML
-    private Button deleteTypeBtn;
+    private ComboBox<?> typeComboBox;
 
     @FXML
-    private Button newTypeBtn;
+    private Button saveBtn;
 
     @FXML
-    private ListView<?> typeListView;
+    private Button homeBtn;
 
     @FXML
-    void changeToBikeView(ActionEvent event) throws Exception {
+    private Button bikesBtn;
+
+    @FXML
+    private Button docksBtn;
+
+    @FXML
+    private Button mapBtn;
+
+    @FXML
+    private Button statsBtn;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Button adminBtn;
+
+
+    @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeView.fxml");
     }
+
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
@@ -55,8 +83,9 @@ public class bikeTypeController {
 
     }
 
+
     @FXML
-    void newType(ActionEvent event) throws Exception {
+    void newType(ActionEvent event) {
 
         TextInputDialog dialog = new TextInputDialog("wow");
         dialog.setTitle("New bike type");
@@ -64,16 +93,59 @@ public class bikeTypeController {
         dialog.setContentText("Name:");
 
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> System.out.println("Name: " + name));
+        result.ifPresent(name -> {
+            System.out.println(name + " blir registrert som en ny type");
+        });
+
 
     }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
-
         // change to bike scene
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeView.fxml");
+    }
+
+    public void updateInfo(){
+        typeListView.setItems(types);
+    }
+
+    @FXML
+    void changeToDockScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/dockView.fxml");
+    }
+
+    @FXML
+    void changeToMapScene(ActionEvent event) {
+        /*ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "");*/
+    }
+
+    @FXML
+    void changeToStatsScene(ActionEvent event)throws Exception{
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/statsView.fxml");
+    }
+
+    @FXML
+    void changeToAdminScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/admin/adminView.fxml");
+    }
+
+    @FXML
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/mainView.fxml");
+    }
+
+
+    @FXML
+    void logOut(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/login/loginView.fxml");
     }
 
 }
