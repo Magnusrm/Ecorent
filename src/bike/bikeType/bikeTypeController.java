@@ -6,10 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import control.*;
 
 import java.util.Optional;
 
 public class bikeTypeController{
+    private Type type;
+    private Factory factory = new Factory();
 
 
     @FXML
@@ -87,7 +90,7 @@ public class bikeTypeController{
     @FXML
     void newType(ActionEvent event) {
 
-        TextInputDialog dialog = new TextInputDialog("wow");
+        TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New bike type");
         dialog.setHeaderText(null);
         dialog.setContentText("Name:");
@@ -95,6 +98,7 @@ public class bikeTypeController{
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             System.out.println(name + " blir registrert som en ny type");
+            type = new Type(result.get());
         });
 
 
@@ -102,6 +106,24 @@ public class bikeTypeController{
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save changes");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want save your type?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            if(factory.addType(type)){
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Saved!");
+                alert1.setHeaderText(null);
+                alert1.setContentText(type.getName() + " has been saved as a new type!");
+                alert1.showAndWait();
+            }//end if
+            type = null;
+        }//end if
+        else{
+            type = null;
+        }//end else
         // change to bike scene
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeView.fxml");

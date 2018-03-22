@@ -37,7 +37,7 @@ public class Password {
 
     //public method to check if password corresponds
     //to a stored salted hash of the password.
-    public boolean check(String password, String stored){
+    public static boolean check(String password, String stored){
         String[] findSaltAndHash = stored.split("\\$");
         if(findSaltAndHash.length != 2){
             throw new IllegalStateException("Lagret passord har formen 'salt$hash'.");

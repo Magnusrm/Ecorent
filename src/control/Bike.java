@@ -11,7 +11,7 @@ public class Bike {
     private Type type;
     private double powerUsage;
     private boolean repairing;
- // test
+
     public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}

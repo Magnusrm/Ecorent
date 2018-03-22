@@ -62,21 +62,10 @@ public class bikeNewController {
     @FXML
     void createNewBike(ActionEvent event) {
         try {
-            System.out.println("Funker enda før factory");
-            Factory factory = new Factory();
-            System.out.println("Funker før new bike");
-            System.out.println(priceField.getText());
-            Bike bike = new Bike(LocalDate.now(), Double.parseDouble(priceField.getText()),
-                    makeField.getText(), new Type("Racer"), 22.2);
-            System.out.println(LocalDate.now().toString());
-            System.out.println("Klarer å skifte scene");
-            System.out.println(bike);
-            System.out.println(factory.addBike(bike));
-            for(Bike b: factory.getBikes()){
-                System.out.println(b);
-            }//end loop
-            Type type = new Type("funk");
-            if(factory.addType(type))System.out.println(type);
+            double price = Double.parseDouble(priceField.getText());
+            String make = makeField.getText();
+            
+            double powerUsage;
             ChangeScene change = new ChangeScene();
             change.setScene(event, "/bike/bikeView.fxml");
         }//end try
