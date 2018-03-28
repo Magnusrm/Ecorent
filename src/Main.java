@@ -1,7 +1,9 @@
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 public class Main extends Application {
 
@@ -10,7 +12,9 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/login/loginView.fxml"));
         root.getStylesheets().add(getClass().getResource("/resources/darkTheme.css").toString());
         primaryStage.setTitle("Elsykkelutleie");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
@@ -19,4 +23,5 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

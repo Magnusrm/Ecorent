@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import control.*;
 
 import java.time.LocalDate;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class bikeNewController {
 
@@ -64,19 +66,7 @@ public class bikeNewController {
         try {
             System.out.println("Funker her");
             System.out.println(priceField.getText());
-            /*System.out.println("Funker her");
-            String make = makeField.getText();
-            //Type type = typeComboBox.getItems().addListener();
-            //double powerUsage = Double.parseDouble()
-            System.out.println("Funker her også");
-            LocalDate date = LocalDate.now();
-            System.out.println("Funker med localdate");
-            Bike bike = new Bike(date,price,make,new Type("Racer"),0);
-            System.out.println("Laget objekt av bike");
-            Factory factory = new Factory();
-            System.out.println("Laget factory-objekt");
-            factory.addBike(bike);
-            System.out.println("Funker og adde bike");*/
+
             ChangeScene change = new ChangeScene();
             change.setScene(event, "/bike/bikeView.fxml");
         }//end try
@@ -86,7 +76,7 @@ public class bikeNewController {
 
 
     }//end method
-
+    
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

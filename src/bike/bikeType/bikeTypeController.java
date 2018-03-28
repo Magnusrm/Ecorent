@@ -1,23 +1,25 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
+import changescene.popupScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import control.*;
 
-import java.util.Optional;
-
-public class bikeTypeController{
+public class bikeTypeController implements Initializable{
     private Type type;
     private Factory factory = new Factory();
 
-
     @FXML
-    private ListView<String> typeListView = new ListView<>();
-    private ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
+    private ListView<String> typeListView;
 
     @FXML
     private TextField makeField;
@@ -58,6 +60,22 @@ public class bikeTypeController{
     @FXML
     private Button adminBtn;
 
+    @FXML
+    private Button createTypeBtn;
+
+    @FXML
+    private Button deleteTypeBtn;
+
+    @FXML
+    private TextField newTypeField;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
+        typeListView.setItems(types);
+        System.out.println("test2");
+    }
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -68,6 +86,8 @@ public class bikeTypeController{
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
+
+        System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
         alert.setHeaderText(null);
@@ -79,11 +99,6 @@ public class bikeTypeController{
         } else {
             // ... IF CANCEL
         }
-    }
-
-    @FXML
-    void editTypeName(ActionEvent event) {
-
     }
 
 
@@ -100,38 +115,56 @@ public class bikeTypeController{
             System.out.println(name + " blir registrert som en ny type");
             type = new Type(result.get());
         });
+    }
 
+    @FXML
+    void editTypeName(ActionEvent event) {
 
     }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Save changes");
+        alert.setTitle("Save type");
         alert.setHeaderText(null);
-        alert.setContentText("Do you want save your type?");
+        alert.setContentText("Would you like to save your type?");
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
-            if(factory.addType(type)){
+            if(factory.addType(type)) {
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert1.setTitle("Saved!");
                 alert1.setHeaderText(null);
-                alert1.setContentText(type.getName() + " has been saved as a new type!");
-                alert1.showAndWait();
+                alert1.setContentText(type.getName() + " has been saved!");
             }//end if
             type = null;
         }//end if
-        else{
-            type = null;
-        }//end else
+        else type = null;
         // change to bike scene
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeView.fxml");
     }
 
-    public void updateInfo(){
-        typeListView.setItems(types);
+/*    @FXML
+    void deleteType(ActionEvent event) throws Exception{
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeType/bikeTypeDeleteView.fxml");
     }
+
+    @FXML
+    void newType(ActionEvent event) throws Exception{
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeType/bikeTypeNewView.fxml");
+    }
+
+    @FXML
+    void createNewTypeConfirm(){
+
+    }
+
+    @FXML
+    void deleteTypeConfirm(){
+
+    }*/
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
