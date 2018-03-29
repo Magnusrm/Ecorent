@@ -2,18 +2,27 @@ package bike.bikeNew;
 
 import control.Factory;
 import changescene.ChangeScene;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import control.*;
 
+import javax.security.auth.callback.Callback;
+import java.net.URL;
 import java.time.LocalDate;
-import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.ResourceBundle;
 
-public class bikeNewController {
+
+public class bikeNewController implements Initializable{
+    private Factory factory = new Factory();
 
     @FXML
     private TextField makeField;
@@ -28,7 +37,7 @@ public class bikeNewController {
     private TextField buyDateField;
 
     @FXML
-    private ComboBox<?> typeComboBox;
+    private ComboBox<String> typeComboBox;
 
     @FXML
     private Button saveBtn;
@@ -54,6 +63,22 @@ public class bikeNewController {
     @FXML
     private Button adminBtn;
 
+    //Notice the types are converted to String array.
+    //This is to simplify the clicking and fetching process.
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        try {
+            factory.updateSystem();
+            ObservableList<String> types = FXCollections.observableArrayList();
+            String[] visualized = new String[factory.getTypes().size()];
+            for (int i = 0; i < visualized.length; i++) {
+                visualized[i] = factory.getTypes().get(i).getName();
+            }//end loop
+            types.addAll(visualized);
+            typeComboBox.setItems(types);
+        }catch (Exception e){e.printStackTrace();}
+    }//end constructor
+
     @FXML
     void changeToBikeView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -64,17 +89,38 @@ public class bikeNewController {
     @FXML
     void createNewBike(ActionEvent event) {
         try {
-            System.out.println("Funker her");
-            System.out.println(priceField.getText());
-
-            ChangeScene change = new ChangeScene();
-            change.setScene(event, "/bike/bikeView.fxml");
+           Bike bike = new Bike(LocalDate.now(),Double.parseDouble(priceField.getText()),
+                   makeField.getText(),new Type(typeComboBox.getValue()),0);
+           if(factory.addBike(bike)){
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("Bike saved!");
+               alert.setHeaderText(null);
+               alert.setContentText("Bike is now saved and can be rented out");
+               alert.showAndWait();
+               for(Bike b:factory.getBikes()){
+                   System.out.println(b);
+               }//end loop
+               ChangeScene change = new ChangeScene();
+               change.setScene(event, "/bike/bikeView.fxml");
+           }//end if
+            else{
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("Something went wrong!");
+               alert.setHeaderText(null);
+               alert.setContentText("Bike is not saved, make sure to fill out the form in the given format");
+               alert.showAndWait();
+               ChangeScene cs1 = new ChangeScene();
+               cs1.setScene(event, "/bike/bikeNewView.fxml");
+           }//end else
         }//end try
         catch(Exception e){
                 e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Something went wrong!");
+            alert.setHeaderText(null);
+            alert.setContentText("Bike is not saved, make sure to fill out the form in the given format");
+            alert.showAndWait();
             }//end catch
-
-
     }//end method
     
     @FXML
