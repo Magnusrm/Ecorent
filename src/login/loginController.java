@@ -13,8 +13,8 @@ import java.awt.*;
 
 public class loginController {
 
-    private String user = "";
-    private String pw = "";
+    private String user = "admin";
+    private String pw = "root";
 
     @FXML
     private Button signInBtn;

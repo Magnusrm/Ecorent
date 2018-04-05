@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class statsController {
-
+// tester commit etter reformatering
     @FXML
     private Button homeBtn;
 
