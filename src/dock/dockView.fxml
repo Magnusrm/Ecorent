@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,14 +11,14 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <AnchorPane layoutX="205.0" layoutY="57.0" prefHeight="307.0" prefWidth="206.0" style="-fx-background-color: -fx-secondary;">
-               <children>
-                  <Label layoutX="90.0" layoutY="137.0" text="Map" textFill="WHITE" />
-               </children>
-            </AnchorPane>
-            <Button fx:id="newDockBtn" layoutX="48.0" layoutY="219.0" mnemonicParsing="false" onAction="#createNewDock" style="-fx-background-color: -fx-secondary;" text="Create new dock" />
-            <TextField fx:id="nameField" layoutX="24.0" layoutY="176.0" prefHeight="27.0" prefWidth="167.0" promptText="Name" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" />
-            <Line endX="100.0" layoutX="95.0" layoutY="203.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+            <AnchorPane layoutX="228.0" layoutY="69.0" prefHeight="268.0" prefWidth="181.0" style="-fx-background-color: -fx-secondary;" />
+            <TextField fx:id="deleteAdminEmailField2" alignment="TOP_LEFT" layoutX="30.0" layoutY="136.0" promptText="Name" style="-fx-background-color: -fx-primary;" />
+            <Line endX="80.0" layoutX="126.0" layoutY="161.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
+            <TextField fx:id="deleteAdminEmailField" alignment="TOP_LEFT" layoutX="30.0" layoutY="176.0" promptText="X-COORDINATES" style="-fx-background-color: -fx-primary;" />
+            <Line endX="80.0" layoutX="126.0" layoutY="201.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
+            <TextField fx:id="deleteAdminEmailField1" alignment="TOP_LEFT" layoutX="30.0" layoutY="216.0" promptText="Y-COORDINATES" style="-fx-background-color: -fx-primary;" />
+            <Line endX="80.0" layoutX="126.0" layoutY="241.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
+            <Button fx:id="deleteAdmintn" layoutX="55.0" layoutY="262.0" mnemonicParsing="false" onAction="#createNewDockConfirm" text="Create new dock" />
          </children></AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">

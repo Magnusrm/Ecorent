@@ -13,8 +13,8 @@ import java.awt.*;
 
 public class loginController {
 
-    private String user = "admin";
-    private String pw = "root";
+    private String user = "";
+    private String pw = "";
 
     @FXML
     private Button signInBtn;
@@ -42,8 +42,4 @@ public class loginController {
         }
 
     }
-
-
-
-
 }

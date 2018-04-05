@@ -1,6 +1,8 @@
 package dock;
 
 import changescene.ChangeScene;
+import changescene.CloseWindow;
+import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,8 +36,10 @@ public class dockController {
     @FXML
     private TextField nameField;
 
+
     @FXML
-    void createNewDock(ActionEvent event) {
+    void createNewDockConfirm(ActionEvent event){
+        System.out.println("New dock made");
 
     }
 

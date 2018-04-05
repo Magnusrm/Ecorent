@@ -38,7 +38,7 @@ public class WebMap extends Application {
         final Button testButton = new Button("test");
 
 
-        // create root
+        // create rooot
         BorderPane root = new BorderPane();
         root.setCenter(webView);
         root.setTop(testButton);
