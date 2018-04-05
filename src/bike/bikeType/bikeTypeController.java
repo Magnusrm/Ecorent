@@ -108,9 +108,6 @@ public class bikeTypeController implements Initializable{
         if (result.get() == ButtonType.OK){
             //... IF OK
             factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
-            factory.updateSystem();
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event,"/bike/bikeView.fxml");
         } else {
             // ... IF CANCEL
         }
@@ -134,7 +131,15 @@ public class bikeTypeController implements Initializable{
 
     @FXML
     void editTypeName(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("New type name");
+        dialog.setHeaderText(null);
+        dialog.setContentText("New name:");
 
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            System.out.println(name + " har blitt sattsom nytt navn.");
+        });
     }
 
     @FXML
