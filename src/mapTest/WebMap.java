@@ -3,7 +3,6 @@ package mapTest;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
@@ -12,34 +11,31 @@ import javafx.stage.Stage;
 
 import netscape.javascript.JSObject;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.util.Arrays;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Iterator;
 
 public class WebMap extends Application {
+    public double[][] bikePos = {
+            {0, 63.435000, 10.397185},
+            {1, 63.430000, 10.397185},
+            {2, 63.423000, 10.397185},
+            {3, 63.429000, 10.334485},
+            {4, 63.427000, 10.339385},
+            {5, 63.427000, 10.300085}
+    };
 
     @Override public void start(Stage mapStage) {
-        final ScriptEngineManager manager = new ScriptEngineManager();
-        final ScriptEngine engine = manager.getEngineByName("JavaScript");
         // create web engine and view
         final WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
-        final Invocable inv = (Invocable) engine;
         // create scene
         mapStage.setTitle("Web Map");
 
         final Button testButton = new Button("test");
+
+        // get bike and dock positions
+
+
 
 
         // create root
@@ -53,6 +49,13 @@ public class WebMap extends Application {
         webEngine.load(WebMap.class.getResource("googlemap.html").toExternalForm());
         webEngine.setJavaScriptEnabled(true);
 
+        class JavaBridge {
+
+            public String log(String pos) {
+                System.out.println("okokokok");
+                return pos;
+            }
+        }
 
         webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) ->
         {
@@ -65,13 +68,15 @@ public class WebMap extends Application {
                     "};");
         });
 
-
-       // int position = (int)(webEngine.executeScript("document.updateMarker(63.426929, 10.397185));   // oppdatere posisjon på kart med data fra java.
-        //System.out.println(position);
+        // int position = (int)(webEngine.executeScript("document.updateMarker(63.426929, 10.397185));   // oppdatere posisjon på kart med data fra java.
+        // System.out.println(position);
 
 
         testButton.setOnAction(e -> {
-            webEngine.executeScript("document.updateMarker(63.427000, 10.397185)");
+            System.out.println(arrayToString(bikePos));
+            webEngine.executeScript("document.createMarker(0, 63.435000, 10.397185);");
+            webEngine.executeScript("var items = " + arrayToString(bikePos) + ";" +
+                                    "document.addMarkers(items);");
 
         });
 
@@ -83,12 +88,19 @@ public class WebMap extends Application {
     static { // use system proxy settings when standalone application
         System.setProperty("java.net.useSystemProxies", "true");
     }
-
-    public String log(String message) {
-        System.out.println(message);
-        return message;
+    public String arrayToString(double[][] data){
+        String res = "[[";
+        for (int i = 0; i < bikePos.length; i++){
+            for (int j = 0; j < data[i].length; j++){
+                res += data[i][j] + ", ";
+            }
+            res = res.substring(0, res.length() - 2);
+            res += "], [";
+        }
+        res = res.substring(0, res.length() - 3);
+        res += "]";
+        return res;
     }
-
 
     public static void main(String[] args){
         Application.launch(args);

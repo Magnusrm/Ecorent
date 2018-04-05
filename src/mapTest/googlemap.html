@@ -60,21 +60,44 @@
             /*
             MARKER EXAMPLE
              */
+            var markers = [];
+
+            document.createMarker = function createMarker(id, latitude, longitude) {
+                var latlngMarker = new google.maps.LatLng(latitude, longitude);
+                document.marker = new google.maps.Marker({
+                    position: latlngMarker,
+                    map: document.map,
+                    draggable: false,
+                    title: id,
+                    visible: true
+                });
+                markers.push(document.marker);
+            }
 
 
-            var latlngMarker = new google.maps.LatLng(63.426929, 10.397179);  // NIDAROS
-            document.marker = new google.maps.Marker({
-                position: latlngMarker,
-                map: document.map,
-                draggable : false,
-                title : "Dock 1",
-                visible: true
-            });
-
+            /*
             document.map.addListener("click", function(event){
                   updateMarker(event.latLng) });
 
-            document.updateMarker = function updateMarker(latitude, longitude){
+            */
+            document.addMarkers = function addMarkers(posData){
+
+                for (var i = 0; i < posData.length; i++){
+                    document.createMarker(posData[i][0], posData[i][1], posData[i][2]);
+                }
+
+                document.testMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(63.435000, 10.397185),
+                    map: document.map,
+                    draggable: false,
+                    title: "test",
+                    visible: true
+                });
+
+            }
+
+            document.updateMultipleMarkers = function updateMultipleMarkers(markers){
+
                 var position = new google.maps.LatLng(latitude, longitude);
 
                 document.marker.setPosition(position);
@@ -83,7 +106,7 @@
 
                 var jsonData = JSON.stringify(myData);
 
-               // console.log("halla");
+               //console.log("halla");
 
                 // localStorage.setItem("posJSON", myJSON);
             }
