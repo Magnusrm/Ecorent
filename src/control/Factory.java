@@ -24,6 +24,7 @@ public class Factory {
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
+    private String isLoggedIn;
 
     public Factory(){
         adminModel = new AdminModel();
@@ -38,6 +39,7 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
+    public String getIsLoggedIn(){return isLoggedIn;}
 
     //Method to get bikes, docks and admins from
     //model classes connected to database.
@@ -208,16 +210,13 @@ public class Factory {
     //Method to get an user's password
     public String password(String email){
         for(Admin a:admins){
-            if(a.getEmail().toLowerCase().equals(email.toLowerCase()))return a.getPassword();
-        }//end if
+            if(a.getEmail().toLowerCase().equals(email.toLowerCase())){
+                isLoggedIn = email;
+                return a.getPassword();
+            }//end if
+        }//end loop
         return null;
     }//end method
 
-    //Test
-    public static void main(String[] args){
-        Factory factory = new Factory();
-        Type type = new Type("Landevei");
-        factory.addType(type);
-    }//end main
 
 }//end class

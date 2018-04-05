@@ -3,6 +3,7 @@ package admin;
 import changescene.ChangeScene;
 import changescene.CloseWindow;
 import changescene.popupScene;
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +20,10 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import control.*;
 
 public class adminController {
-// test
+    Factory factory = new Factory();
 
     @FXML
     private Button homeBtn;
@@ -68,7 +70,14 @@ public class adminController {
     void createNewAdmin(ActionEvent event) throws Exception {
         popupScene ps = new popupScene();
         ps.setScene(event, "/admin/adminNewAdminView.fxml");
-    }
+        for(Admin a:factory.getAdmins()){
+            if(a.getEmail().equals(factory.getIsLoggedIn())){
+                if(a.isMainAdmin() && newAdminEmailField.getText() != null){
+
+                }//end if
+            }//end if
+        }//end loop
+    }//end method
 
     @FXML
     void deleteAdmin(ActionEvent event) throws Exception {
