@@ -12,10 +12,6 @@ import javafx.stage.Stage;
 
 import netscape.javascript.JSObject;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -66,7 +62,7 @@ public class WebMap extends Application {
         });
 
 
-       // int position = (int)(webEngine.executeScript("document.updateMarker(63.426929, 10.397185));   // oppdatere posisjon på kart med data fra java.
+        // int position = (int)(webEngine.executeScript("document.updateMarker(63.426929, 10.397185));   // oppdatere posisjon på kart med data fra java.
         //System.out.println(position);
 
 
@@ -94,6 +90,7 @@ public class WebMap extends Application {
         Application.launch(args);
     }
 }
+
 
 
 
