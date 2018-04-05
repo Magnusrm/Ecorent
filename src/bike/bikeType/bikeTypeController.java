@@ -12,8 +12,11 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import control.*;
 
 public class bikeTypeController implements Initializable{
+    private Type type;
+    private Factory factory = new Factory();
 
     @FXML
     private ListView<String> typeListView;
@@ -67,11 +70,22 @@ public class bikeTypeController implements Initializable{
     private TextField newTypeField;
 
 
+
+    //Notice the types are converted to String array.
+    //This is to simplify the clicking and fetching process.
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
-        typeListView.setItems(types);
-        System.out.println("test2");
+        try {
+            factory.updateSystem();
+            ObservableList<String> types = FXCollections.observableArrayList();
+            String[] visualized = new String[factory.getTypes().size()];
+            for (int i = 0; i < visualized.length; i++) {
+                visualized[i] = factory.getTypes().get(i).getName();
+            }//end loop
+            types.addAll(visualized);
+            typeListView.setItems(types);
+            System.out.println(factory.getTypes().get(0).getName());
+        }catch (Exception e){e.printStackTrace();}
     }
 
     @FXML
@@ -92,7 +106,11 @@ public class bikeTypeController implements Initializable{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            // ... IF OK
+            //... IF OK
+            factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            factory.updateSystem();
+            ChangeScene cs = new ChangeScene();
+            cs.setScene(event,"/bike/bikeView.fxml");
         } else {
             // ... IF CANCEL
         }
@@ -102,7 +120,7 @@ public class bikeTypeController implements Initializable{
     @FXML
     void newType(ActionEvent event) {
 
-        TextInputDialog dialog = new TextInputDialog("wow");
+        TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New bike type");
         dialog.setHeaderText(null);
         dialog.setContentText("Name:");
@@ -110,6 +128,7 @@ public class bikeTypeController implements Initializable{
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             System.out.println(name + " blir registrert som en ny type");
+            type = new Type(result.get());
         });
     }
 
@@ -120,6 +139,21 @@ public class bikeTypeController implements Initializable{
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save type");
+        alert.setHeaderText(null);
+        alert.setContentText("Would you like to save your type?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            if(factory.addType(type)) {
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Saved!");
+                alert1.setHeaderText(null);
+                alert1.setContentText(type.getName() + " has been saved!");
+            }//end if
+            type = null;
+        }//end if
+        else type = null;
         // change to bike scene
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeView.fxml");
