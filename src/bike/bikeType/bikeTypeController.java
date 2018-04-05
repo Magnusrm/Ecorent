@@ -107,6 +107,10 @@ public class bikeTypeController implements Initializable{
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             //... IF OK
+            factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            factory.updateSystem();
+            ChangeScene cs = new ChangeScene();
+            cs.setScene(event,"/bike/bikeView.fxml");
         } else {
             // ... IF CANCEL
         }

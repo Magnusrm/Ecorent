@@ -205,6 +205,14 @@ public class Factory {
         return false;
     }
 
+    //Method to get an user's password
+    public String password(String email){
+        for(Admin a:admins){
+            if(a.getEmail().toLowerCase().equals(email.toLowerCase()))return a.getPassword();
+        }//end if
+        return null;
+    }//end method
+
     //Test
     public static void main(String[] args){
         Factory factory = new Factory();
