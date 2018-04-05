@@ -74,7 +74,6 @@ public class WebMap extends Application {
 
         testButton.setOnAction(e -> {
             System.out.println(arrayToString(bikePos));
-            webEngine.executeScript("document.createMarker(0, 63.435000, 10.397185);");
             webEngine.executeScript("var items = " + arrayToString(bikePos) + ";" +
                                     "document.addMarkers(items);");
 
