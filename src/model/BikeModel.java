@@ -56,7 +56,7 @@ public class BikeModel {
         String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
         String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
         String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
+        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?";
         String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
@@ -171,6 +171,27 @@ public class BikeModel {
         return false;
     }
 
+    public boolean deleteBikesWhereTypeIsNULL(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String deleteUpdate = "DELETE FROM bike WHERE type_id IS NULL";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(deleteUpdate);
+
+            return preparedStatement.executeUpdate() != 0;
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
     public boolean deleteBike(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -183,11 +204,7 @@ public class BikeModel {
                 preparedStatement = connection.prepareStatement(deleteUpdate);
                 preparedStatement.setInt(1, bikeID);
 
-                if (preparedStatement.executeUpdate() != 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - deleteBike()");
@@ -278,4 +295,3 @@ public class BikeModel {
         return null;
     }
 }
-

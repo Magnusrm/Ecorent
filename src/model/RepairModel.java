@@ -1,7 +1,8 @@
 package model;
 
+import control.Repair;
+
 import java.sql.*;
-import control.*;
 
 public class RepairModel {
 
@@ -172,3 +173,4 @@ public class RepairModel {
         return null;
     }
 }
+
