@@ -1,33 +1,18 @@
-package bike.bikeEdit;
+package bike.bikeInfo;
 
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class bikeEditController {
-    @FXML
-    private TextField makeField;
+public class BikeInfoController {
 
     @FXML
-    private Button bikeViewBtn;
+    private Button showInfoBtn;
 
     @FXML
-    private TextField priceField;
-
-    @FXML
-    private TextField buyDateField;
-
-    @FXML
-    private ComboBox<String> typeComboBox;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button homeBtn;
+    private TextField bikeIdField;
 
     @FXML
     private Button bikesBtn;
@@ -48,16 +33,16 @@ public class bikeEditController {
     private Button adminBtn;
 
     @FXML
-    private TextField powerUsageField;
+    private Button homeBtn;
+
 
 
 
 
     @FXML
-    void saveChanges(ActionEvent event){
+    void showInfo(){
 
     }
-
 
 
     // main buttons below
@@ -105,5 +90,4 @@ public class bikeEditController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }

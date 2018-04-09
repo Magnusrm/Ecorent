@@ -12,8 +12,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import model.TypeModel;
 
-public class bikeTypeController implements Initializable{
+public class BikeTypeController implements Initializable{
     private Type type;
     private Factory factory = new Factory();
 
@@ -80,13 +81,16 @@ public class bikeTypeController implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeListView.setItems(types);
+
+            //System.out.println(factory.getTypes().get(0).getName());
+
         }catch (Exception e){e.printStackTrace();}
     }
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
 
-        System.out.println(typeListView);
+        //System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
         alert.setHeaderText(null);
@@ -105,22 +109,22 @@ public class bikeTypeController implements Initializable{
 
         } else {
             // ... IF CANCEL
+
         }
     }
 
     @FXML
     void newType(ActionEvent event) {
 
-        TextInputDialog dialog = new TextInputDialog("wow");
+        TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New bike type");
         dialog.setHeaderText(null);
         dialog.setContentText("Name:");
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
-            System.out.println(name + " blir registrert som en ny type");
-
-            type = new Type(result.get());
+           // System.out.println(name + " blir registrert som en ny type");
+            type = new Type(name);
             try{
                 saveChanges(event);
                 updateList();
@@ -131,24 +135,40 @@ public class bikeTypeController implements Initializable{
     }
 
     @FXML
-    void editTypeName(ActionEvent event) throws Exception {
-        TextInputDialog dialog = new TextInputDialog("");
-        dialog.setTitle("New type name");
-        dialog.setHeaderText(null);
-        dialog.setContentText("New name:");
+    void editTypeName(ActionEvent event) throws Exception{
+       TextInputDialog dialog = new TextInputDialog("");
+       dialog.setTitle("Edit the name of the type");
+       dialog.setHeaderText(null);
+       dialog.setContentText("Put in the new name of the selected type. NB! " +
+       "All bikes under this type will be changed");
+       Optional<String> result = dialog.showAndWait();
+       result.ifPresent(name ->{
+           Type originial = new Type(typeListView.getSelectionModel().getSelectedItem());
+           Type edit = new Type(name);
+           if(factory.editType(originial,edit)){
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("Edit the name of the type");
+               alert.setHeaderText(null);
+               alert.setContentText("Your type has now a new name: " + name);
+               alert.showAndWait();
+           }//end if
+           else{
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("Edit the name of the type");
+               alert.setHeaderText(null);
+               alert.setContentText("Something went wrong! Please make sure to fill in the name of the type");
+               alert.showAndWait();
+           }//end else
+           try{
+               saveChanges(event);
+               updateList();
+           } catch(Exception e){
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            System.out.println(name + " har blitt sattsom nytt navn.");
-            try{
-                saveChanges(event);
-                updateList();
-            } catch(Exception e){
+           }
 
-            }
-        });
+       });
+    }//end method
 
-    }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
@@ -162,6 +182,7 @@ public class bikeTypeController implements Initializable{
             alert1.setHeaderText(null);
             alert1.setContentText(type.getName() + " has been saved!");
         }//end if
+
         type = null;
     }
 
@@ -194,6 +215,7 @@ public class bikeTypeController implements Initializable{
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/BikeView.fxml");
     }
+
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
