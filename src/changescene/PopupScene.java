@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class popupScene {
+public class PopupScene {
 
     private Stage popup;
 

@@ -43,13 +43,13 @@ public class loginController {
             //if((usernameField.getText().equals(user[i]) && Password.check(passwordField.getText(),factory.password(user[i])))) {
                 System.out.println("Nice!");
                 ChangeScene cs = new ChangeScene();
-                cs.setScene(event, "/main/mainView.fxml");
+                cs.setScene(event, "/main/MainView.fxml");
            // }//end if
         } //end loop
         */
         System.out.println("Nice!");
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
         incorrectLbl.setTextFill(Color.web("#ff0000"));
         incorrectLbl.setText("Your password is incorrect!");
     }//end method

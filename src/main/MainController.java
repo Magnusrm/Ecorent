@@ -1,14 +1,14 @@
-package dock;
+package main;
 
-import changescene.ChangeScene;
-import changescene.CloseWindow;
-import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import changescene.ChangeScene;
 
-public class dockController {
+
+public class MainController {
+
+
     @FXML
     private Button homeBtn;
 
@@ -30,68 +30,51 @@ public class dockController {
     @FXML
     private Button adminBtn;
 
-    @FXML
-    private Button newDockBtn;
-
-    @FXML
-    private TextField nameField;
-
-
-    @FXML
-    void createNewDockConfirm(ActionEvent event){
-        System.out.println("New dock made");
-
-    }
-
-
-
-
-
-
 
     // main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockView.fxml");
+        cs.setScene(event, "/dock/DockView.fxml");
     }
 
     @FXML
     void changeToMapScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/mapView.fxml");
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
     void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsView.fxml");
+        cs.setScene(event, "/stats/StatsView.fxml");
     }
 
     @FXML
     void changeToAdminScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/adminView.fxml");
+        cs.setScene(event, "/admin/AdminView.fxml");
     }
 
     @FXML
     void changeToHomeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
     }
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
 
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/loginView.fxml");
+        cs.setScene(event, "/login/LoginView.fxml");
 
     }
+
 }

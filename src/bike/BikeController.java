@@ -1,13 +1,12 @@
 package bike;
 
-import bike.bikeType.bikeTypeController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import changescene.ChangeScene;
 
-public class bikeController {
+public class BikeController {
 
     @FXML
     private Button editBikeBtn;
@@ -59,20 +58,20 @@ public class bikeController {
     @FXML
     void changeToBikeTypeView(ActionEvent event) throws Exception {
             ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/bike/bikeType/bikeTypeView.fxml");
+            cs.setScene(event, "/bike/bikeType/BikeTypeView.fxml");
     }
 
 
     @FXML
     void changeToBikeNewView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeNew/bikeNewView.fxml");
+        cs.setScene(event, "/bike/bikeNew/BikeNewView.fxml");
     }
 
     @FXML
     void changeToBikeRepairView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeRepair/bikeRepairView.fxml");
+        cs.setScene(event, "/bike/bikeRepair/BikeRepairView.fxml");
     }
 
     @FXML
@@ -101,44 +100,44 @@ public class bikeController {
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockView.fxml");
+        cs.setScene(event, "/dock/DockView.fxml");
     }
 
     @FXML
     void changeToMapScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/mapView.fxml");
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
     void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsView.fxml");
+        cs.setScene(event, "/stats/StatsView.fxml");
     }
 
     @FXML
     void changeToAdminScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/adminView.fxml");
+        cs.setScene(event, "/admin/AdminView.fxml");
     }
 
     @FXML
     void changeToHomeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
     }
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
 
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/loginView.fxml");
+        cs.setScene(event, "/login/LoginView.fxml");
 
     }
 

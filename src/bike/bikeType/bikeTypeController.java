@@ -1,7 +1,6 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
-import changescene.popupScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -193,44 +192,44 @@ public class bikeTypeController implements Initializable{
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockView.fxml");
+        cs.setScene(event, "/dock/DockView.fxml");
     }
 
     @FXML
     void changeToMapScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/mapView.fxml");
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
     void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsView.fxml");
+        cs.setScene(event, "/stats/StatsView.fxml");
     }
 
     @FXML
     void changeToAdminScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/adminView.fxml");
+        cs.setScene(event, "/admin/AdminView.fxml");
     }
 
     @FXML
     void changeToHomeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
     }
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
 
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/loginView.fxml");
+        cs.setScene(event, "/login/LoginView.fxml");
 
     }
 }
