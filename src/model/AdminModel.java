@@ -25,11 +25,7 @@ public class AdminModel {
             while(resultSet.next()){
                 exists = true;
             }
-            if(exists){
-                return true;
-            }else{
-                return false;
-            }
+            return exists;
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - userExists()");
         }finally {
@@ -242,11 +238,8 @@ public class AdminModel {
                 resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 byte res = resultSet.getByte("priviliged");
-                if(res == priv){
-                    return true; //User is priviliged
-                }else{
-                    return false;//User is not priviliged
-                }
+
+                return res == priv;
             }else{
                 System.out.println("Given email does not exist");
                 return false;
@@ -289,4 +282,3 @@ public class AdminModel {
         return null;
     }
 }
-
