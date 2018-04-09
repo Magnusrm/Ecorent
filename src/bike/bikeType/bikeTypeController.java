@@ -92,7 +92,18 @@ public class bikeTypeController implements Initializable{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
+
             // ... IF OK
+
+            //... IF OK
+            factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            try{
+                saveChanges(event);
+                updateList();
+            } catch(Exception e){
+
+            }
+
         } else {
             // ... IF CANCEL
         }
@@ -110,42 +121,68 @@ public class bikeTypeController implements Initializable{
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             System.out.println(name + " blir registrert som en ny type");
+
+            type = new Type(result.get());
+            try{
+                saveChanges(event);
+                updateList();
+            } catch(Exception e){
+                System.out.println("Error:" + e);
+            }
         });
     }
 
     @FXML
-    void editTypeName(ActionEvent event) {
+    void editTypeName(ActionEvent event) throws Exception {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("New type name");
+        dialog.setHeaderText(null);
+        dialog.setContentText("New name:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            System.out.println(name + " har blitt sattsom nytt navn.");
+            try{
+                saveChanges(event);
+            } catch(Exception e){
+
+            }
+        });
 
     }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
-        // change to bike scene
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
-    }
-
-/*    @FXML
-    void deleteType(ActionEvent event) throws Exception{
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/bike/bikeType/bikeTypeDeleteView.fxml");
-    }
-
-    @FXML
-    void newType(ActionEvent event) throws Exception{
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/bike/bikeType/bikeTypeNewView.fxml");
-    }
-
-    @FXML
-    void createNewTypeConfirm(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save type");
+        alert.setHeaderText(null);
+        alert.setContentText("Would you like to save your type?");
+        if(factory.addType(type)) {
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Saved!");
+            alert1.setHeaderText(null);
+            alert1.setContentText(type.getName() + " has been saved!");
+        }//end if
+        type = null;
 
     }
 
     @FXML
-    void deleteTypeConfirm(){
+    void updateList(){
 
-    }*/
+        ObservableList<String> types = FXCollections.observableArrayList();
+        String[] visualized = new String[factory.getTypes().size()];
+        for (int i = 0; i < visualized.length; i++) {
+            visualized[i] = factory.getTypes().get(i).getName();
+        }//end loop
+
+        for (int i = 0; i < visualized.length; i++) {
+            types.add(visualized[i]); // add nytt innhold
+        }
+
+        typeListView.setItems(types);
+    }
+
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
