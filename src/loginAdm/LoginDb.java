@@ -1,4 +1,4 @@
-package login;
+package loginAdm;
 
 import java.sql.*;
 
@@ -7,11 +7,11 @@ import static control.Password.*;
 
 public class LoginDb {
 
-    private String driver = "com.mysql.jdbc.Driver";
-    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
+    private static final String driver = "com.mysql.jdbc.Driver";
+    private static final String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
 
-    public boolean authenticateUser(LoginBean loginBean) {
+    public static boolean authenticateUser(LoginBean loginBean) {
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet resultSet;
@@ -19,9 +19,6 @@ public class LoginDb {
 
         String email = loginBean.getEmail();
         String password = loginBean.getPassword();
-        boolean privileged = loginBean.getPrivileged();
-
-        //String hash = hashPassword(password);
 
         String selectQuery = "SELECT hash, email FROM admin WHERE email = ?";
 

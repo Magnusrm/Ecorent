@@ -1,15 +1,12 @@
-package login;
+package loginAdm;
 
 public class LoginBean {
     private String email;
     private String password;
-    private boolean privileged;
-    public static LoginBean obj;
 
     public LoginBean(String email, String password){
         this.email = email;
         this.password = password;
-        this.privileged = false;
     }
 
     public String getEmail() {
@@ -20,10 +17,6 @@ public class LoginBean {
         return password;
     }
 
-    public boolean getPrivileged() {
-        return privileged;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -32,19 +25,10 @@ public class LoginBean {
         this.password = password;
     }
 
-    public void setPrivileged(boolean privileged) {
-        this.privileged = privileged;
-    }
-
     public String toString(){
-        return "e: " + email + "p: " + password + "priv: " + privileged;
+        return "e: " + email + "p: " + password;
     }
 
-    public static LoginBean getInstance(String email, String password){
-        if(obj == null){
-            obj = new LoginBean(email, password);
-        }return obj;
-    }
 }
 
 
