@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BikeModel {
+    private String driver = "com.mysql.jdbc.Driver";
+    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
 
     public boolean bikeExists(int bikeID){

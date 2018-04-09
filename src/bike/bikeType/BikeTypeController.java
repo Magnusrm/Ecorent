@@ -219,9 +219,9 @@ public class BikeTypeController implements Initializable{
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
@@ -249,5 +249,4 @@ public class BikeTypeController implements Initializable{
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
     }
-
 }

@@ -1,5 +1,6 @@
 package bike.bikeNew;
 
+import control.Factory;
 import changescene.ChangeScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -86,11 +87,7 @@ public class BikeNewController implements Initializable{
     @FXML
     void createNewBike(ActionEvent event) {
         try {
-            String buyDate = buyDateField.getText().substring(0,4)+"-" +
-                buyDateField.getText().substring(4,6) + "-" +
-                buyDateField.getText().substring(6); //Getting the right format
-            LocalDate localDate = LocalDate.parse(buyDate);
-           Bike bike = new Bike(localDate,Double.parseDouble(priceField.getText()),
+           Bike bike = new Bike(LocalDate.now(),Double.parseDouble(priceField.getText()),
                    makeField.getText(),new Type(typeComboBox.getValue()),0);
            if(factory.addBike(bike)){
                Alert alert = new Alert(Alert.AlertType.INFORMATION);

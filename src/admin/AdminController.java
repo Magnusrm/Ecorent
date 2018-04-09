@@ -92,9 +92,9 @@ public class AdminController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
@@ -227,6 +227,4 @@ public class AdminController {
 
         CloseWindow cw = new CloseWindow(event);
     }
-
-
 }
