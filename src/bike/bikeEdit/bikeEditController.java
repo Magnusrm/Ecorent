@@ -47,7 +47,8 @@ public class bikeEditController {
     @FXML
     private Button adminBtn;
 
-
+    @FXML
+    private TextField powerUsageField;
 
 
 
