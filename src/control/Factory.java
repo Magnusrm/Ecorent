@@ -181,16 +181,16 @@ public class Factory {
     }//end method
 
     //Method to edit types
-    public boolean editType(Type type) {
-        if(type == null||type.getName().length() == 0)throw new IllegalArgumentException("No input");
+    public boolean editType(Type typeOriginal, Type typeEdit) {
+        if(typeEdit == null||typeEdit.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).equals(type)) {
-                types.set(i, type);
-                int j = TypeModel.typeExists(type.getName());
-                return typeModel.editType(j,type.getName());
+            if (types.get(i).equals(typeOriginal)) {
+                int j = TypeModel.typeExists(typeOriginal.getName());
+                types.set(i, typeEdit);
+                return typeModel.editType(j,typeEdit.getName());
             }//end if
         }//end loop
-        if(TypeModel.typeExists(type.getName())==-1)throw new IllegalArgumentException("The type does not exist");
+        if(TypeModel.typeExists(typeOriginal.getName())==-1)throw new IllegalArgumentException("The type does not exist");
         return false;
     }//end method
 

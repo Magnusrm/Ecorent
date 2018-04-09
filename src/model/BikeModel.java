@@ -61,7 +61,7 @@ public class BikeModel {
         String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
         String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
         String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?";
+        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
         String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
