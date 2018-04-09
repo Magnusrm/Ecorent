@@ -11,14 +11,14 @@ import javax.mail.internet.*;
 public class SendEmail {
 
     public static String sendFromGmail(String to){
-        File file = new File("C:/Users/Sander/eclipse-workspace//Project task/src/DBProp");
+        File file = new File("C:/Users/Ilia/Documents/Systemutvikling 1 (innføringsemne 2.0)/PROSJEKT ELSYKKEL/src/DBProp");
         PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true).useLower(true).useUpper(true).build();
         String password = passwordGenerator.generate(16);
 
 
         String subject = "Your randomly generated password";
         String body = "Your password is " + password + ". Use this alongside your email to rent bikes" +
-                "\n (note: please do not reply to this email." ;
+                "\n(note: please do not reply to this email)." ;
 
         try(FileInputStream fileInputStream = new FileInputStream(file)) {
 

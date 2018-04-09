@@ -4,6 +4,7 @@ import changescene.ChangeScene;
 import changescene.CloseWindow;
 import changescene.popupScene;
 import control.Factory;
+import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -137,7 +138,7 @@ public class adminController {
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
             String email = newAdminEmailField.getText();
             boolean main = mainAdminCheck.isSelected();
-            String defaultPassword = "Team007";
+            String defaultPassword = SendEmail.sendFromGmail(email);
             String hashed = Password.hashPassword(defaultPassword);
             Admin admin = new Admin(email, hashed, main);
             if (factory.addAdmin(admin, main)) System.out.println(admin);
