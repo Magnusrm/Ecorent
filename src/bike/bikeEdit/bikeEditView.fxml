@@ -15,8 +15,8 @@
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
             <TextField fx:id="makeField" layoutX="143.0" layoutY="109.0" promptText="currentnamefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
-            <TextField fx:id="buyDateField" layoutX="142.0" layoutY="187.0" prefHeight="27.0" prefWidth="167.0" promptText="currentnamefixthiscurrentnamefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
-            <ComboBox fx:id="typeComboBox" layoutX="143.0" layoutY="227.0" prefHeight="27.0" prefWidth="167.0" promptText="currentnamefixthiscurrentnamefixthis" stylesheets="@../../resources/darkTheme.css" />
+            <TextField fx:id="buyDateField" layoutX="142.0" layoutY="187.0" prefHeight="27.0" prefWidth="167.0" promptText="currentdatefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <ComboBox fx:id="typeComboBox" layoutX="143.0" layoutY="227.0" prefHeight="27.0" prefWidth="167.0" promptText="currenttypefix" stylesheets="@../../resources/darkTheme.css" />
             <Button fx:id="saveBtn" layoutX="143.0" layoutY="271.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="27.0" prefWidth="167.0" stylesheets="@../../resources/darkTheme.css" text="Save" textFill="#fffdfd" />
             <Label fx:id="buyDateLbl" layoutX="67.0" layoutY="191.0" text="Buy date" textFill="WHITE">
                <font>
@@ -38,7 +38,7 @@
                   <Font name="System Font" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="priceField" layoutX="142.0" layoutY="143.0" promptText="currentnamefixthiscurrentnamefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <TextField fx:id="priceField" layoutX="142.0" layoutY="143.0" promptText="currentprisefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
             <Line endX="100.0" layoutX="210.0" layoutY="171.0" startX="-70.0" stroke="WHITE" styleClass="line" />
             <Line endX="100.0" layoutX="210.0" layoutY="208.0" startX="-70.0" stroke="WHITE" styleClass="line" />
             <Line endX="100.0" layoutX="210.0" layoutY="136.0" startX="-70.0" stroke="WHITE" styleClass="line" />
