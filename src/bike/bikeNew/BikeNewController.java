@@ -10,19 +10,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import java.time.format.DateTimeFormatter;
 import control.*;
 import loginAdm.CurrentAdmin;
 
-import javax.security.auth.callback.Callback;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.ResourceBundle;
 
 
-public class bikeNewController implements Initializable{
+public class BikeNewController implements Initializable{
     private Factory factory = new Factory();
 
     @FXML
@@ -83,7 +79,7 @@ public class bikeNewController implements Initializable{
     @FXML
     void changeToBikeView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
 
@@ -106,7 +102,7 @@ public class bikeNewController implements Initializable{
                    System.out.println(b);
                }//end loop
                ChangeScene change = new ChangeScene();
-               change.setScene(event, "/bike/bikeView.fxml");
+               change.setScene(event, "/bike/BikeView.fxml");
            }//end if
             else{
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -115,7 +111,7 @@ public class bikeNewController implements Initializable{
                alert.setContentText("Bike is not saved, make sure to fill out the form in the given format");
                alert.showAndWait();
                ChangeScene cs1 = new ChangeScene();
-               cs1.setScene(event, "/bike/bikeNewView.fxml");
+               cs1.setScene(event, "/bike/BikeNewView.fxml");
            }//end else
         }//end try
         catch(Exception e){
@@ -131,13 +127,13 @@ public class bikeNewController implements Initializable{
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockView.fxml");
+        cs.setScene(event, "/dock/DockView.fxml");
     }
 
     @FXML
@@ -149,19 +145,19 @@ public class bikeNewController implements Initializable{
     @FXML
     void changeToStatsScene(ActionEvent event) throws Exception{
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsView.fxml");
+        cs.setScene(event, "/stats/StatsView.fxml");
     }
 
     @FXML
     void changeToAdminScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/adminView.fxml");
+        cs.setScene(event, "/admin/AdminView.fxml");
     }
 
     @FXML
     void changeToHomeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
     }
 
 
@@ -169,7 +165,7 @@ public class bikeNewController implements Initializable{
     void logOut(ActionEvent event) throws Exception {
         CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/loginView.fxml");
+        cs.setScene(event, "/login/LoginView.fxml");
     }
 
 }

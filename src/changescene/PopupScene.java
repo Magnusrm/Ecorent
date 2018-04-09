@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class popupScene {
+public class PopupScene {
 
     private Stage popup;
 

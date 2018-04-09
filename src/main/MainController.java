@@ -1,36 +1,21 @@
-package bike;
+package main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import changescene.ChangeScene;
+import javafx.scene.control.TextField;
+import loginAdm.CurrentAdmin;
 
-public class bikeController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    private Button editBikeBtn;
 
-    @FXML
-    private Button infoBikeBtn;
+public class MainController implements Initializable{
 
     @FXML
     private Button homeBtn;
-
-    @FXML
-    private Button deleteBikeBtn;
-
-    @FXML
-    private Button repairBikeBtn;
-
-    @FXML
-    private Button newBikeBtn;
-
-    @FXML
-    private Button editBikeTypesBtn;
-
-    @FXML
-    private TextField bikeIdField;
 
     @FXML
     private Button bikesBtn;
@@ -51,45 +36,12 @@ public class bikeController {
     private Button adminBtn;
 
     @FXML
-    void changeToBikeEditView(ActionEvent event) throws Exception {
+    private TextField current;
 
-    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
 
-    @FXML
-    void changeToBikeTypeView(ActionEvent event) throws Exception {
-
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/bike/bikeType/BikeTypeView.fxml");
-
-    }
-
-
-    @FXML
-    void changeToBikeNewView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeNew/BikeNewView.fxml");
-    }
-
-    @FXML
-    void changeToBikeRepairView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeRepair/BikeRepairView.fxml");
-    }
-
-    @FXML
-    void changetoBikeInfoView(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteBike(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteAllBikesWithoutType(ActionEvent event){
-
-    }
+    }//end method
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -122,17 +74,17 @@ public class bikeController {
     }
 
     @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
+    void changeToHomeScene(ActionEvent event) {
+        /*ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "");*/
     }
+
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
-
     }
 
 }

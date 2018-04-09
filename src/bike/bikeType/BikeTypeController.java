@@ -1,7 +1,6 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
-import changescene.popupScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,9 +13,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
 import loginAdm.CurrentAdmin;
-import model.TypeModel;
 
-public class bikeTypeController implements Initializable{
+public class BikeTypeController implements Initializable{
     private Type type;
     private Factory factory = new Factory();
 
@@ -93,7 +91,7 @@ public class bikeTypeController implements Initializable{
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
 
@@ -217,7 +215,7 @@ public class bikeTypeController implements Initializable{
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockView.fxml");
+        cs.setScene(event, "/dock/DockView.fxml");
     }
 
     @FXML
@@ -229,19 +227,19 @@ public class bikeTypeController implements Initializable{
     @FXML
     void changeToStatsScene(ActionEvent event)throws Exception{
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsView.fxml");
+        cs.setScene(event, "/stats/StatsView.fxml");
     }
 
     @FXML
     void changeToAdminScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/adminView.fxml");
+        cs.setScene(event, "/admin/AdminView.fxml");
     }
 
     @FXML
     void changeToHomeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
     }
 
 
@@ -249,7 +247,7 @@ public class bikeTypeController implements Initializable{
     void logOut(ActionEvent event) throws Exception {
         CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/loginView.fxml");
+        cs.setScene(event, "/login/LoginView.fxml");
     }
 
 }

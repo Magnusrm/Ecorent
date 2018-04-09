@@ -2,28 +2,18 @@ package admin;
 
 import changescene.ChangeScene;
 import changescene.CloseWindow;
-import changescene.popupScene;
+import changescene.PopupScene;
 import control.Factory;
 import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import control.*;
 import loginAdm.CurrentAdmin;
 import model.AdminModel;
 
-public class adminController {
+public class AdminController {
     Factory factory = new Factory();
     AdminModel model = new AdminModel();
     @FXML
@@ -72,33 +62,33 @@ public class adminController {
 
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/admin/adminNewAdminView.fxml");
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/admin/AdminNewAdminView.fxml");
     }//end method
 
     @FXML
     void deleteAdmin(ActionEvent event) throws Exception {
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/admin/adminDeleteAdminView.fxml");
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/admin/AdminDeleteAdminView.fxml");
     }
 
     @FXML
     void changePassword(ActionEvent event) throws Exception {
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/admin/adminChangePasswordView.fxml");
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/admin/AdminChangePasswordView.fxml");
     }
 
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockView.fxml");
+        cs.setScene(event, "/dock/DockView.fxml");
     }
 
     @FXML
@@ -110,19 +100,19 @@ public class adminController {
     @FXML
     void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsView.fxml");
+        cs.setScene(event, "/stats/StatsView.fxml");
     }
 
     @FXML
     void changeToAdminScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/adminView.fxml");
+        cs.setScene(event, "/admin/AdminView.fxml");
     }
 
     @FXML
     void changeToHomeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/main/MainView.fxml");
     }
 
 
@@ -130,7 +120,7 @@ public class adminController {
     void logOut(ActionEvent event) throws Exception {
         CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/loginView.fxml");
+        cs.setScene(event, "/login/LoginView.fxml");
     }
 
     @FXML
