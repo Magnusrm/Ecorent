@@ -27,7 +27,8 @@ public class Admin {
 
     public void setPassword(String password) {
         if (password == null) { throw new IllegalArgumentException("Password cannot be null."); }
-        this.password = password;
+        String hashed = Password.hashPassword(password);
+        this.password = hashed;
     }
 
     public String toString() {
