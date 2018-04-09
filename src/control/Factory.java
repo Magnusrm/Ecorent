@@ -24,6 +24,7 @@ public class Factory {
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
+    private String isLoggedIn;
 
     public Factory(){
         adminModel = new AdminModel();
@@ -38,6 +39,7 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
+    public String getIsLoggedIn(){return isLoggedIn;}
 
     //Method to get bikes, docks and admins from
     //model classes connected to database.
@@ -179,16 +181,16 @@ public class Factory {
     }//end method
 
     //Method to edit types
-    public boolean editType(Type type) {
-        if(type == null||type.getName().length() == 0)throw new IllegalArgumentException("No input");
+    public boolean editType(Type typeOriginal, Type typeEdit) {
+        if(typeEdit == null||typeEdit.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).equals(type)) {
-                types.set(i, type);
-                int j = TypeModel.typeExists(type.getName());
-                return typeModel.editType(j,type.getName());
+            if (types.get(i).equals(typeOriginal)) {
+                int j = TypeModel.typeExists(typeOriginal.getName());
+                types.set(i, typeEdit);
+                return typeModel.editType(j,typeEdit.getName());
             }//end if
         }//end loop
-        if(TypeModel.typeExists(type.getName())==-1)throw new IllegalArgumentException("The type does not exist");
+        if(TypeModel.typeExists(typeOriginal.getName())==-1)throw new IllegalArgumentException("The type does not exist");
         return false;
     }//end method
 
@@ -208,16 +210,13 @@ public class Factory {
     //Method to get an user's password
     public String password(String email){
         for(Admin a:admins){
-            if(a.getEmail().toLowerCase().equals(email.toLowerCase()))return a.getPassword();
-        }//end if
+            if(a.getEmail().toLowerCase().equals(email.toLowerCase())){
+                isLoggedIn = email;
+                return a.getPassword();
+            }//end if
+        }//end loop
         return null;
     }//end method
 
-    //Test
-    public static void main(String[] args){
-        Factory factory = new Factory();
-        Type type = new Type("Landevei");
-        factory.addType(type);
-    }//end main
 
 }//end class

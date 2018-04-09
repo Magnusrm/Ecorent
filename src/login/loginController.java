@@ -41,7 +41,7 @@ public class loginController {
         }//end loop
         for(int i = 0; i<user.length;i++){
             //if((usernameField.getText().equals(user[i]) && Password.check(passwordField.getText(),factory.password(user[i])))) {
-                System.out.println("Nice!");
+                //System.out.println("Nice!");
                 ChangeScene cs = new ChangeScene();
                 cs.setScene(event, "/main/MainView.fxml");
            // }//end if

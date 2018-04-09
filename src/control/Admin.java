@@ -48,7 +48,7 @@ public class Admin {
 
         Admin a = (Admin) o;
 
-        return (this.email.toLowerCase() == a.getEmail().toLowerCase());
+        return (this.email.equals(a.getEmail()));
 
     }
 }

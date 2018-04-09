@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AdminModel {
-    private String driver = "com.mysql.jdbc.Driver";
-    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
     //Checks if an email already exists in the database
     public boolean adminExists(String email){
@@ -17,8 +15,7 @@ public class AdminModel {
 
         String emailQuery = "SELECT email FROM admin WHERE email = ?";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(emailQuery);
             preparedStatement.setString(1, email);
@@ -28,14 +25,8 @@ public class AdminModel {
             while(resultSet.next()){
                 exists = true;
             }
-            if(exists){
-                return true;
-            }else{
-                return false;
-            }
+            return exists;
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - userExists()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - userExists()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -65,8 +56,7 @@ public class AdminModel {
         boolean isPriviliged;
 
         try {
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(adminExists(email)) {
                 getHash = connection.prepareStatement(hashQuery);
@@ -91,8 +81,6 @@ public class AdminModel {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getAdmin()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - getAdmin()");
         }finally{
             DBCleanup.closeStatement(getHash);
             DBCleanup.closeStatement(getPriviliged);
@@ -113,8 +101,7 @@ public class AdminModel {
         byte notPriv = 0;
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(!adminExists(email)){
                 preparedStatement = connection.prepareStatement(userInsert);
@@ -133,8 +120,6 @@ public class AdminModel {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - addUser()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - addUser()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
@@ -149,8 +134,7 @@ public class AdminModel {
         String deleteQuery = "DELETE FROM admin WHERE email = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(adminExists(email)) {
                 preparedStatement = connection.prepareStatement(deleteQuery);
@@ -165,8 +149,6 @@ public class AdminModel {
                 System.out.println("Given email does not exist");
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - deleteAdmin()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - deleteAdmin()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -185,8 +167,7 @@ public class AdminModel {
         String saltQuery = "SELECT hash FROM admin WHERE email = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(adminExists(email)){
                 preparedStatement = connection.prepareStatement(saltQuery);
@@ -200,8 +181,6 @@ public class AdminModel {
                 return null;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getSalt()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getSalt()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -221,8 +200,7 @@ public class AdminModel {
 
         String hashQuery = "SELECT hash FROM admin WHERE email = ?";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(adminExists(email)){
                 preparedStatement = connection.prepareStatement(hashQuery);
@@ -233,8 +211,6 @@ public class AdminModel {
                 return hash;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getHash()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getHash()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -254,8 +230,7 @@ public class AdminModel {
         byte priv = 1;
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(adminExists(email)){
                 preparedStatement = connection.prepareStatement(priviligedQuery);
@@ -263,18 +238,13 @@ public class AdminModel {
                 resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 byte res = resultSet.getByte("priviliged");
-                if(res == priv){
-                    return true; //User is priviliged
-                }else{
-                    return false;//User is not priviliged
-                }
+
+                return res == priv;
             }else{
                 System.out.println("Given email does not exist");
                 return false;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getPriviliged()");
-        }catch (ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getPriviliged()");
         }finally{
             DBCleanup.closeResultSet(resultSet);
@@ -294,8 +264,7 @@ public class AdminModel {
         String docksQuery = "SELECT email FROM admin";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(docksQuery);
             resultSet = preparedStatement.executeQuery();
@@ -305,8 +274,6 @@ public class AdminModel {
             return allAdmins;
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getAllAdmins()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - getAllAdmins()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
@@ -315,4 +282,3 @@ public class AdminModel {
         return null;
     }
 }
-
