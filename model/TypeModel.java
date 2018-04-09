@@ -4,8 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class TypeModel {
-    private static String driver = "com.mysql.jdbc.Driver";
-    private static String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
     //method that helps check if the type name exists in the database**
     public static int typeExists(String name){
@@ -17,8 +15,7 @@ public class TypeModel {
         String idQuery = "SELECT type_id FROM type WHERE LOWER(type.name = ?)";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(existsQuery);
             preparedStatement.setString(1, name.toLowerCase());
@@ -36,8 +33,6 @@ public class TypeModel {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - typeExists()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - typeExists()");
         }finally{
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeStatement(preparedStatement);
@@ -54,8 +49,7 @@ public class TypeModel {
         String typeInsert = "INSERT INTO type(type_id, name) VALUES (DEFAULT, ?);";
         String maxType = "SELECT MAX(type_id) FROM type";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
 
             preparedStatement = connection.prepareStatement(typeInsert);
@@ -70,14 +64,13 @@ public class TypeModel {
                     return resultSet.getInt("MAX(type_id)");
                 } else{
                     connection.rollback();
+                    return -1;
                 }
             }else{
                 System.out.println("Type already exists");
                 return -1;
             }
         }catch(SQLException e) {
-            System.out.println(e.getMessage() + " - addType()");
-        }catch (ClassNotFoundException e){
             System.out.println(e.getMessage() + " - addType()");
         }finally {
             DBCleanup.setAutoCommit(connection);
@@ -94,26 +87,22 @@ public class TypeModel {
 
         String typeInsert = "UPDATE type SET name = ? WHERE type_id = ?;";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
-            connection.setAutoCommit(false);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(typeInsert);
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, typeID);
 
-
             if(preparedStatement.executeUpdate() != 0){
-                connection.commit();
                 return true;
             }else{
-                connection.rollback();
                 return false;
             }
         }catch (SQLException e){
             System.out.println(e.getMessage() + " - editType()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - editType()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
         }
         return false;
     }
@@ -127,19 +116,17 @@ public class TypeModel {
         String deleteUpdate = "DELETE FROM type WHERE type_id = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(deleteUpdate);
             preparedStatement.setInt(1, typeID);
+
             if(preparedStatement.executeUpdate() != 0){
                 return true;
             }else{
                 return false;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - deleteType()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - deleteType()");
         }finally{
             DBCleanup.closeStatement(preparedStatement);
@@ -158,8 +145,7 @@ public class TypeModel {
 
         String typesQuery = "SELECT name FROM type";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(typesQuery);
             resultSet = preparedStatement.executeQuery();
@@ -169,8 +155,6 @@ public class TypeModel {
             }
             return types;
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getTypes()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getTypes()");
         }finally {
             DBCleanup.closeResultSet(resultSet);

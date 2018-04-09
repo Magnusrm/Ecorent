@@ -63,7 +63,7 @@ public class AdminModelTest {
         String hash = "people";
         boolean priviliged = false;
 
-        instance.addAdmin(email, salt, hash, priviliged);
+        instance.addAdmin(email, hash, priviliged);
 
         boolean expResult = true;
         boolean result = instance.adminExists(email);
