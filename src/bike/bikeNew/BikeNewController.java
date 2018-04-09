@@ -88,7 +88,7 @@ public class BikeNewController implements Initializable{
     void createNewBike(ActionEvent event) {
         try {
            Bike bike = new Bike(LocalDate.now(),Double.parseDouble(priceField.getText()),
-                   makeField.getText(),new Type(typeComboBox.getValue()),0);
+                   makeField.getText(),new Type(typeComboBox.getValue()),Double.parseDouble(powerUsageField.getText()));
            if(factory.addBike(bike)){
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                alert.setTitle("Bike saved!");
