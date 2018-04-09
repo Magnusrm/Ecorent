@@ -1,12 +1,15 @@
 package bike;
 
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import changescene.ChangeScene;
 
 public class BikeController {
+    Factory factory = new Factory();
 
     @FXML
     private Button editBikeBtn;
@@ -90,7 +93,20 @@ public class BikeController {
 
     @FXML
     void deleteAllBikesWithoutType(ActionEvent event){
-
+        if(factory.deleteAllBikes()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("All bikes with type null deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("Operation successful! All bikes have a type");
+            alert.showAndWait();
+        }//end if
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("OOPS");
+            alert.setHeaderText(null);
+            alert.setContentText("Something went wrong! Please check your internet access");
+            alert.showAndWait();
+        }//end else
     }
 
     @FXML

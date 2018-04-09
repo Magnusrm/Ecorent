@@ -220,5 +220,12 @@ public class Factory {
         return null;
     }//end method
 
+    public boolean deleteAllBikes(){
+        for(int i = 0; i<bikes.size();i++){
+            if(bikes.get(i).getType() == null)bikes.remove(i);
+        }
+        return bikeModel.deleteBikesWhereTypeIsNULL();
+    }//end
+
 
 }//end class
