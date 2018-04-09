@@ -58,10 +58,8 @@ public class bikeController {
 
     @FXML
     void changeToBikeTypeView(ActionEvent event) throws Exception {
-
             ChangeScene cs = new ChangeScene();
             cs.setScene(event, "/bike/bikeType/bikeTypeView.fxml");
-
     }
 
 

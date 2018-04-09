@@ -66,20 +66,23 @@ public class adminController {
 
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         popupScene ps = new popupScene();
-        ps.setScene(event, "/admin/adminNewAdminView.fxml");
+        ps.setScene(window, event, "/admin/adminNewAdminView.fxml");
     }
 
     @FXML
     void deleteAdmin(ActionEvent event) throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         popupScene ps = new popupScene();
-        ps.setScene(event, "/admin/adminDeleteAdminView.fxml");
+        ps.setScene(window, event, "/admin/adminDeleteAdminView.fxml");
     }
 
     @FXML
     void changePassword(ActionEvent event) throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         popupScene ps = new popupScene();
-        ps.setScene(event, "/admin/adminChangePasswordView.fxml");
+        ps.setScene(window, event, "/admin/adminChangePasswordView.fxml");
     }
 
 

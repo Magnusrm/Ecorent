@@ -1,10 +1,13 @@
 package bike.bikeRepair;
 
 import changescene.ChangeScene;
+import changescene.CloseWindow;
 import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class bikeRepairController {
 
@@ -38,35 +41,35 @@ public class bikeRepairController {
 
     @FXML
     void changeToRepairReturnedView(ActionEvent event)throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         popupScene ps = new popupScene();
-        ps.setScene(event, "/bike/bikeRepair/bikeRepairReturnedView.fxml");
+        ps.setScene(window, event, "/bike/bikeRepair/bikeRepairReturnedView.fxml");
         ps.setTitle("Register returned repair");
     }
 
     @FXML
     void changeToRepairSentView(ActionEvent event) throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         popupScene ps = new popupScene();
-        ps.setScene(event, "/bike/bikeRepair/bikeRepairSentView.fxml");
+        ps.setScene(window, event, "/bike/bikeRepair/bikeRepairSentView.fxml");
         ps.setTitle("Register sent repair");
     }
 
     @FXML
-    void registerRepairSentConfirm(){
-
+    void registerRepairSentConfirm(ActionEvent event){
+        CloseWindow cw = new CloseWindow(event);
     }
 
     @FXML
-    void registerRepairReturnedConfirm(){
-
+    void registerRepairReturnedConfirm(ActionEvent event){
+        CloseWindow cw = new CloseWindow(event);
     }
-
-
 
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-      //  cs.setScene(event, "/bike/bikeView.fxml");
+        cs.setScene(event, "/bike/bikeView.fxml");
     }
 
     @FXML
