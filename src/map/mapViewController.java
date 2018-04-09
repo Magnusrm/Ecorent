@@ -1,48 +1,23 @@
-package dock;
+package map;
 
 import changescene.ChangeScene;
-import changescene.CloseWindow;
-import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
-public class dockController {
-    @FXML
-    private Button homeBtn;
+public class mapViewController {
 
     @FXML
-    private Button bikesBtn;
+    private Button showBikeBtn;
 
     @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button newDockBtn;
-
-    @FXML
-    private TextField nameField;
+    private TextField bikeIdField;
 
 
     @FXML
-    void createNewDockConfirm(ActionEvent event){
-        System.out.println("New dock made");
+    void showBike(ActionEvent event) {
 
     }
-
 
 
 

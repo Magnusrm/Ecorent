@@ -33,6 +33,8 @@ public class mainController {
     private Button adminBtn;
 
 
+    // main buttons below
+
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -46,9 +48,9 @@ public class mainController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/mapView.fxml");
     }
 
     @FXML
@@ -64,16 +66,17 @@ public class mainController {
     }
 
     @FXML
-    void changeToHomeScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/mainView.fxml");
     }
-
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
+
     }
 
 }

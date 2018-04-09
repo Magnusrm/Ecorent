@@ -85,13 +85,6 @@ public class bikeTypeController implements Initializable{
     }
 
     @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
-    }
-
-
-    @FXML
     void deleteType(ActionEvent event) throws Exception {
 
         System.out.println(typeListView);
@@ -115,7 +108,6 @@ public class bikeTypeController implements Initializable{
             // ... IF CANCEL
         }
     }
-
 
     @FXML
     void newType(ActionEvent event) {
@@ -190,6 +182,20 @@ public class bikeTypeController implements Initializable{
         typeListView.setItems(types);
     }
 
+
+
+
+
+
+
+    // main buttons below
+
+    @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/bikeView.fxml");
+    }
+
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -197,13 +203,13 @@ public class bikeTypeController implements Initializable{
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/mapView.fxml");
     }
 
     @FXML
-    void changeToStatsScene(ActionEvent event)throws Exception{
+    void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/stats/statsView.fxml");
     }
@@ -220,11 +226,11 @@ public class bikeTypeController implements Initializable{
         cs.setScene(event, "/main/mainView.fxml");
     }
 
-
     @FXML
     void logOut(ActionEvent event) throws Exception {
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
-    }
 
+    }
 }
