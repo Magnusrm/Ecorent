@@ -37,9 +37,6 @@ public class bikeTypeController implements Initializable{
     private ComboBox<?> typeComboBox;
 
     @FXML
-    private Button saveBtn;
-
-    @FXML
     private Button homeBtn;
 
     @FXML
@@ -84,7 +81,6 @@ public class bikeTypeController implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeListView.setItems(types);
-            System.out.println(factory.getTypes().get(0).getName());
         }catch (Exception e){e.printStackTrace();}
     }
 
@@ -108,6 +104,13 @@ public class bikeTypeController implements Initializable{
         if (result.get() == ButtonType.OK){
             //... IF OK
             factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            try{
+                saveChanges(event);
+                updateList();
+            } catch(Exception e){
+
+            }
+
         } else {
             // ... IF CANCEL
         }
@@ -117,7 +120,7 @@ public class bikeTypeController implements Initializable{
     @FXML
     void newType(ActionEvent event) {
 
-        TextInputDialog dialog = new TextInputDialog("");
+        TextInputDialog dialog = new TextInputDialog("wow");
         dialog.setTitle("New bike type");
         dialog.setHeaderText(null);
         dialog.setContentText("Name:");
@@ -125,12 +128,19 @@ public class bikeTypeController implements Initializable{
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             System.out.println(name + " blir registrert som en ny type");
+
             type = new Type(result.get());
+            try{
+                saveChanges(event);
+                updateList();
+            } catch(Exception e){
+                System.out.println("Error:" + e);
+            }
         });
     }
 
     @FXML
-    void editTypeName(ActionEvent event) {
+    void editTypeName(ActionEvent event) throws Exception {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New type name");
         dialog.setHeaderText(null);
@@ -139,7 +149,14 @@ public class bikeTypeController implements Initializable{
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             System.out.println(name + " har blitt sattsom nytt navn.");
+            try{
+                saveChanges(event);
+                updateList();
+            } catch(Exception e){
+
+            }
         });
+
     }
 
     @FXML
@@ -148,43 +165,30 @@ public class bikeTypeController implements Initializable{
         alert.setTitle("Save type");
         alert.setHeaderText(null);
         alert.setContentText("Would you like to save your type?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK){
-            if(factory.addType(type)) {
-                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                alert1.setTitle("Saved!");
-                alert1.setHeaderText(null);
-                alert1.setContentText(type.getName() + " has been saved!");
-            }//end if
-            type = null;
+        if (factory.addType(type)) {
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Saved!");
+            alert1.setHeaderText(null);
+            alert1.setContentText(type.getName() + " has been saved!");
         }//end if
-        else type = null;
-        // change to bike scene
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
-    }
-
-/*    @FXML
-    void deleteType(ActionEvent event) throws Exception{
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/bike/bikeType/bikeTypeDeleteView.fxml");
+        type = null;
     }
 
     @FXML
-    void newType(ActionEvent event) throws Exception{
-        popupScene ps = new popupScene();
-        ps.setScene(event, "/bike/bikeType/bikeTypeNewView.fxml");
+    void updateList(){
+
+        ObservableList<String> types = FXCollections.observableArrayList();
+        String[] visualized = new String[factory.getTypes().size()];
+        for (int i = 0; i < visualized.length; i++) {
+            visualized[i] = factory.getTypes().get(i).getName();
+        }//end loop
+
+        for (int i = 0; i < visualized.length; i++) {
+            types.add(visualized[i]); // add nytt innhold
+        }
+
+        typeListView.setItems(types);
     }
-
-    @FXML
-    void createNewTypeConfirm(){
-
-    }
-
-    @FXML
-    void deleteTypeConfirm(){
-
-    }*/
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {

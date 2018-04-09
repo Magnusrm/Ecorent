@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class ChangeScene {
 
+
     public void setScene(ActionEvent event, String fxmlname) throws Exception{
 
         Parent parent = FXMLLoader.load(getClass().getResource(fxmlname));
@@ -21,4 +22,5 @@ public class ChangeScene {
         window.show();
 
     }
+
 }

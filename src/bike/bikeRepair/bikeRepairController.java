@@ -1,37 +1,18 @@
-package bike;
+package bike.bikeRepair;
 
-import bike.bikeType.bikeTypeController;
+import changescene.ChangeScene;
+import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import changescene.ChangeScene;
 
-public class bikeController {
+public class bikeRepairController {
 
     @FXML
-    private Button editBikeBtn;
+    private Button bikeRepairReturnedBtn;
 
     @FXML
-    private Button infoBikeBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button deleteBikeBtn;
-
-    @FXML
-    private Button repairBikeBtn;
-
-    @FXML
-    private Button newBikeBtn;
-
-    @FXML
-    private Button editBikeTypesBtn;
-
-    @FXML
-    private TextField bikeIdField;
+    private Button bikeRepairSentBtn;
 
     @FXML
     private Button bikesBtn;
@@ -52,50 +33,40 @@ public class bikeController {
     private Button adminBtn;
 
     @FXML
-    void changeToBikeEditView(ActionEvent event) throws Exception {
+    private Button homeBtn;
+
+
+    @FXML
+    void changeToRepairReturnedView(ActionEvent event)throws Exception {
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeRepair/bikeRepairReturnedView.fxml");
+        ps.setTitle("Register returned repair");
+    }
+
+    @FXML
+    void changeToRepairSentView(ActionEvent event) throws Exception {
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeRepair/bikeRepairSentView.fxml");
+        ps.setTitle("Register sent repair");
+    }
+
+    @FXML
+    void registerRepairSentConfirm(){
 
     }
 
     @FXML
-    void changeToBikeTypeView(ActionEvent event) throws Exception {
-
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/bike/bikeType/bikeTypeView.fxml");
+    void registerRepairReturnedConfirm(){
 
     }
 
 
-    @FXML
-    void changeToBikeNewView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeNew/bikeNewView.fxml");
-    }
 
-    @FXML
-    void changeToBikeRepairView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeRepair/bikeRepairView.fxml");
-    }
-
-    @FXML
-    void changetoBikeInfoView(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteBike(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteAllBikesWithoutType(ActionEvent event){
-
-    }
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+      //  cs.setScene(event, "/bike/bikeView.fxml");
     }
 
     @FXML
@@ -135,5 +106,4 @@ public class bikeController {
         cs.setScene(event, "/login/loginView.fxml");
 
     }
-
 }
