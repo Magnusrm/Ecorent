@@ -185,20 +185,15 @@ public class adminController {
 
     @FXML
     void changePasswordConfirm(ActionEvent event) {
+        boolean continiue = true;//Makes it easier to choose which error message to display
         String oldPassword = oldPasswordField.getText();
         String newPassword = newPasswordField.getText();
         String newPassword2 = newPasswordField2.getText();
 
-        if(newPassword.length()<8 || newPassword.length()>30){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Wrong format");
-            alert.setHeaderText(null);
-            alert.setContentText("Your password must be between 8 and 30 characters");
-            alert.showAndWait();
-            CloseWindow cw = new CloseWindow(event);
-        }//end if
+        if(newPassword.length()<8 || newPassword.length()>30)continiue = false;
 
-        if(Password.check(oldPassword,CurrentAdmin.getInstance().getAdmin().getPassword())&&newPassword.equals(newPassword2)){
+        if(Password.check(oldPassword,CurrentAdmin.getInstance().getAdmin().getPassword())&&newPassword.equals(newPassword2)&&
+                continiue){
             String email = CurrentAdmin.getInstance().getAdmin().getEmail();
             boolean main = CurrentAdmin.getInstance().getAdmin().isMainAdmin();
             String password = Password.hashPassword(newPassword);
@@ -222,12 +217,22 @@ public class adminController {
         }//end if
 
         else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Your passwords do not match!");
-            alert.showAndWait();
-            CloseWindow cw = new CloseWindow(event);
+            if(continiue) { //if the passwords do not match
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Something went wrong!");
+                alert.setHeaderText(null);
+                alert.setContentText("Your passwords do not match!");
+                alert.showAndWait();
+                CloseWindow cw = new CloseWindow(event);
+            }//end if
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Something went wrong!");
+                alert.setHeaderText(null);
+                alert.setContentText("Your password must be between 8 and 30 characters!");
+                alert.showAndWait();
+                CloseWindow cw = new CloseWindow(event);
+            }//end else
         }//end else
 
         CloseWindow cw = new CloseWindow(event);
