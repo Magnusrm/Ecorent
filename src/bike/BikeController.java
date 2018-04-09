@@ -52,7 +52,8 @@ public class BikeController {
 
     @FXML
     void changeToBikeEditView(ActionEvent event) throws Exception {
-
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/bikeEdit/bikeEditView.fxml");
     }
 
     @FXML
@@ -75,8 +76,9 @@ public class BikeController {
     }
 
     @FXML
-    void changetoBikeInfoView(ActionEvent event) {
-
+    void changetoBikeInfoView(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/bikeInfo/BikeInfoView.fxml");
     }
 
     @FXML

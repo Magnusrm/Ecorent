@@ -1,24 +1,61 @@
-package map;
+package bike.bikeEdit;
 
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
-public class MapViewController {
+public class bikeEditController {
+    @FXML
+    private TextField makeField;
 
     @FXML
-    private Button showBikeBtn;
+    private Button bikeViewBtn;
 
     @FXML
-    private TextField bikeIdField;
+    private TextField priceField;
+
+    @FXML
+    private TextField buyDateField;
+
+    @FXML
+    private ComboBox<String> typeComboBox;
+
+    @FXML
+    private Button saveBtn;
+
+    @FXML
+    private Button homeBtn;
+
+    @FXML
+    private Button bikesBtn;
+
+    @FXML
+    private Button docksBtn;
+
+    @FXML
+    private Button mapBtn;
+
+    @FXML
+    private Button statsBtn;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Button adminBtn;
+
+
+
+
 
 
     @FXML
-    void showBike(ActionEvent event) {
+    void saveChanges(ActionEvent event){
 
     }
-
 
 
 
@@ -67,4 +104,5 @@ public class MapViewController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
+
 }
