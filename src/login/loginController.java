@@ -44,8 +44,6 @@ public class loginController {
             Admin admin = adminModel.getAdmin(loginBean.getEmail());
             CurrentAdmin currentAdmin = CurrentAdmin.getInstance();
             currentAdmin.setAdmin(admin);
-
-            System.out.println("Nice!");
             ChangeScene cs = new ChangeScene();
             cs.setScene(event, "/main/mainView.fxml");
 

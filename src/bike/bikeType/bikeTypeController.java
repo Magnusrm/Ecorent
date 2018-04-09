@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import loginAdm.CurrentAdmin;
 import model.TypeModel;
 
 public class bikeTypeController implements Initializable{
@@ -246,6 +247,7 @@ public class bikeTypeController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }
