@@ -1,5 +1,6 @@
 package login;
 
+import control.Admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,12 +10,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
+import loginAdm.CurrentAdmin;
+import loginAdm.LoginBean;
+import loginAdm.LoginDb;
+import java.security.GeneralSecurityException;
+import model.AdminModel;
+
 import java.awt.*;
 
 public class loginController {
-
-    private String user = "";
-    private String pw = "";
 
     @FXML
     private Button signInBtn;
@@ -30,20 +34,22 @@ public class loginController {
 
     @FXML
     void signIn(ActionEvent event) throws Exception {
-        if(usernameField.getText().equals(user) && passwordField.getText().equals(pw)){
+        LoginBean loginBean = new LoginBean(usernameField.getText(),passwordField.getText());
+        if(LoginDb.authenticateUser(loginBean)){
+
+            AdminModel adminModel = new AdminModel();
+            Admin admin = adminModel.getAdmin(loginBean.getEmail());
+            CurrentAdmin currentAdmin = CurrentAdmin.getInstance();
+            currentAdmin.setAdmin(admin);
 
             System.out.println("Nice!");
             ChangeScene cs = new ChangeScene();
             cs.setScene(event, "/main/mainView.fxml");
 
-        } else {
+        }else{
             incorrectLbl.setTextFill(Color.web("#ff0000"));
             incorrectLbl.setText("Your password is incorrect!");
+            throw new GeneralSecurityException("Feil passord eller email");
         }
-
     }
-
-
-
-
 }
