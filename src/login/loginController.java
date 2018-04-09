@@ -1,6 +1,7 @@
 package login;
 
 import control.Admin;
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,10 +16,12 @@ import loginAdm.LoginBean;
 import loginAdm.LoginDb;
 import java.security.GeneralSecurityException;
 import model.AdminModel;
+import control.*;
 
 import java.awt.*;
 
 public class loginController {
+    Factory factory = new Factory();
 
     @FXML
     private Button signInBtn;
@@ -34,9 +37,9 @@ public class loginController {
 
     @FXML
     void signIn(ActionEvent event) throws Exception {
+        factory.updateSystem();
         LoginBean loginBean = new LoginBean(usernameField.getText(),passwordField.getText());
         if(LoginDb.authenticateUser(loginBean)){
-
             AdminModel adminModel = new AdminModel();
             Admin admin = adminModel.getAdmin(loginBean.getEmail());
             CurrentAdmin currentAdmin = CurrentAdmin.getInstance();

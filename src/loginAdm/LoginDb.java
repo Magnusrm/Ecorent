@@ -33,7 +33,7 @@ public class LoginDb {
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                emailDB = resultSet.getString("username");
+                emailDB = resultSet.getString("email");
                 hashDB = resultSet.getString("hash");
             }
             if (email.equals(emailDB) && check(password, hashDB)) {
