@@ -10,7 +10,7 @@ import java.util.Properties;
 public class DBCleanup {
 
     public static Connection getConnection(){
-        File file = new File("C:/Users/Sander/eclipse-workspace//Project task/src/DBProp");
+        File file = new File("C:/Users/Sander/eclipse-workspace//Project task/src/DBProps");
 
         try(FileInputStream fileInputStream = new FileInputStream(file)) {
 
@@ -27,11 +27,7 @@ public class DBCleanup {
             String password = properties.getProperty("jdbc.password");
 
             return DriverManager.getConnection(url, username, password);
-        }catch(IOException e){
-            System.out.println(e.getMessage() + " - getConnection()");
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getConnection()");
-        }catch(ClassNotFoundException e){
+        }catch(IOException | SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getConnection()");
         }
         return null;
