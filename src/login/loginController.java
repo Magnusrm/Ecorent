@@ -30,6 +30,8 @@ public class loginController {
     @FXML
     void signIn(ActionEvent event) throws Exception {
         factory.updateSystem();
+
+        /*
         //Getting user names and password from database
         for(int i = 0; i<factory.getAdmins().size();i++){
             user = new String[factory.getAdmins().size()];
@@ -44,6 +46,10 @@ public class loginController {
                 cs.setScene(event, "/main/mainView.fxml");
            // }//end if
         } //end loop
+        */
+        System.out.println("Nice!");
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/mainView.fxml");
         incorrectLbl.setTextFill(Color.web("#ff0000"));
         incorrectLbl.setText("Your password is incorrect!");
     }//end method
