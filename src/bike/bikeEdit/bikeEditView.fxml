@@ -1,21 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeType.bikeTypeController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeEdit.bikeEditController">
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <Button fx:id="newTypeBtn" layoutX="233.0" layoutY="151.0" mnemonicParsing="false" onAction="#newType" prefHeight="27.0" prefWidth="167.0" text="New Type" />
-            <Button fx:id="deleteTypeBtn" layoutX="233.0" layoutY="190.0" mnemonicParsing="false" onAction="#deleteType" prefHeight="27.0" prefWidth="167.0" text="Delete Type" />
-            <Button fx:id="editTypeNameBtn" layoutX="233.0" layoutY="229.0" mnemonicParsing="false" onAction="#editTypeName" prefHeight="27.0" prefWidth="167.0" text="Edit Type Name" />
-            <ListView fx:id="typeListView" layoutX="36.0" layoutY="79.0" prefHeight="248.0" prefWidth="176.0" />
-         </children></AnchorPane>
+            <TextField fx:id="makeField" layoutX="143.0" layoutY="109.0" promptText="currentnamefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <TextField fx:id="buyDateField" layoutX="142.0" layoutY="187.0" prefHeight="27.0" prefWidth="167.0" promptText="currentdatefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <ComboBox fx:id="typeComboBox" layoutX="143.0" layoutY="264.0" prefHeight="27.0" prefWidth="167.0" promptText="currenttypefix" stylesheets="@../../resources/darkTheme.css" />
+            <Button fx:id="saveBtn" layoutX="143.0" layoutY="308.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="27.0" prefWidth="167.0" stylesheets="@../../resources/darkTheme.css" text="Save" textFill="#fffdfd" />
+            <Label fx:id="buyDateLbl" layoutX="67.0" layoutY="191.0" text="Buy date" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="priceLbl" layoutX="92.0" layoutY="151.0" text="Price" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="makeLbl" layoutX="91.0" layoutY="113.0" text="Make" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="krLbl" layoutX="318.0" layoutY="151.0" text="kr" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="priceField" layoutX="142.0" layoutY="143.0" promptText="currentprisefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <Line endX="100.0" layoutX="210.0" layoutY="171.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+            <Line endX="100.0" layoutX="210.0" layoutY="208.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+            <Line endX="100.0" layoutX="210.0" layoutY="136.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+            <TextField fx:id="powerUsageField" layoutX="142.0" layoutY="221.0" prefHeight="27.0" prefWidth="167.0" promptText="3200" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <Label fx:id="buyDateLbl1" alignment="CENTER_RIGHT" layoutX="38.0" layoutY="225.0" prefHeight="19.0" prefWidth="99.0" text="Power usage" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="210.0" layoutY="242.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+            <Label fx:id="krLbl1" layoutX="318.0" layoutY="225.0" text="kwh" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
             <ImageView fitHeight="117.0" fitWidth="88.0" layoutX="45.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
@@ -60,7 +100,7 @@
                   <Image url="@../../resources/key.png" />
                </image>
             </ImageView>
-            <Button fx:id="homeBtn" mnemonicParsing="false" onAction="#changeToHomeScene" opacity="0.0" prefHeight="149.0" prefWidth="176.0" text="home" />
+            <Button fx:id="homeBtn" layoutX="1.0" layoutY="-3.0" mnemonicParsing="false" onAction="#changeToHomeScene" opacity="0.0" prefHeight="149.0" prefWidth="176.0" text="home" />
          </children>
       </AnchorPane>
    </children>

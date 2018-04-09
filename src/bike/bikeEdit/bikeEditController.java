@@ -1,13 +1,30 @@
-package main;
+package bike.bikeEdit;
 
+import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import changescene.ChangeScene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
+public class bikeEditController {
+    @FXML
+    private TextField makeField;
 
-public class MainController {
+    @FXML
+    private Button bikeViewBtn;
 
+    @FXML
+    private TextField priceField;
+
+    @FXML
+    private TextField buyDateField;
+
+    @FXML
+    private ComboBox<String> typeComboBox;
+
+    @FXML
+    private Button saveBtn;
 
     @FXML
     private Button homeBtn;
@@ -29,6 +46,18 @@ public class MainController {
 
     @FXML
     private Button adminBtn;
+
+    @FXML
+    private TextField powerUsageField;
+
+
+
+
+    @FXML
+    void saveChanges(ActionEvent event){
+
+    }
+
 
 
     // main buttons below

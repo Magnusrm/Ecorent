@@ -1,16 +1,21 @@
-package main;
+package bike.bikeRepair;
 
+import changescene.ChangeScene;
+import changescene.CloseWindow;
+import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
-import changescene.ChangeScene;
+import javafx.stage.Stage;
 
-
-public class MainController {
-
+public class BikeRepairController {
 
     @FXML
-    private Button homeBtn;
+    private Button bikeRepairReturnedBtn;
+
+    @FXML
+    private Button bikeRepairSentBtn;
 
     @FXML
     private Button bikesBtn;
@@ -29,6 +34,42 @@ public class MainController {
 
     @FXML
     private Button adminBtn;
+
+    @FXML
+    private Button homeBtn;
+
+
+    @FXML
+    void changeToRepairReturnedView(ActionEvent event)throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        PopupScene ps = new PopupScene();
+        ps.setScene(window, event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
+        ps.setTitle("Register returned repair");
+    }
+
+    @FXML
+    void changeToRepairSentView(ActionEvent event) throws Exception {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        PopupScene ps = new PopupScene();
+        ps.setScene(window, event, "/bike/bikeRepair/BikeRepairSentView.fxml");
+        ps.setTitle("Register sent repair");
+    }
+
+    @FXML
+    void registerRepairSentConfirm(ActionEvent event){
+        CloseWindow cw = new CloseWindow(event);
+    }
+
+    @FXML
+    void registerRepairReturnedConfirm(ActionEvent event){
+        CloseWindow cw = new CloseWindow(event);
+    }
+
+
+
+
+
+
 
 
     // main buttons below
@@ -76,5 +117,4 @@ public class MainController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }

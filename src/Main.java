@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,7 +8,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/login/loginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/login/LoginView.fxml"));
         root.getStylesheets().add(getClass().getResource("/resources/darkTheme.css").toString());
         primaryStage.setTitle("Elsykkelutleie");
         Scene scene = new Scene(root);

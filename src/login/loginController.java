@@ -1,18 +1,13 @@
 package login;
 
-import control.Admin;
 import control.Factory;
-import control.Password;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import changescene.ChangeScene;
-import javafx.event.ActionEvent;
-import java.awt.*;
 
 public class loginController {
 
@@ -35,6 +30,8 @@ public class loginController {
     @FXML
     void signIn(ActionEvent event) throws Exception {
         factory.updateSystem();
+
+        /*
         //Getting user names and password from database
         for(int i = 0; i<factory.getAdmins().size();i++){
             user = new String[factory.getAdmins().size()];
@@ -46,9 +43,13 @@ public class loginController {
             //if((usernameField.getText().equals(user[i]) && Password.check(passwordField.getText(),factory.password(user[i])))) {
                 System.out.println("Nice!");
                 ChangeScene cs = new ChangeScene();
-                cs.setScene(event, "/main/mainView.fxml");
+                cs.setScene(event, "/main/MainView.fxml");
            // }//end if
         } //end loop
+        */
+        System.out.println("Nice!");
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/MainView.fxml");
         incorrectLbl.setTextFill(Color.web("#ff0000"));
         incorrectLbl.setText("Your password is incorrect!");
     }//end method

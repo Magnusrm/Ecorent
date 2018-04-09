@@ -1,14 +1,12 @@
-package main;
+package dock;
 
+import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import changescene.ChangeScene;
+import javafx.scene.control.TextField;
 
-
-public class MainController {
-
-
+public class DockController {
     @FXML
     private Button homeBtn;
 
@@ -29,6 +27,24 @@ public class MainController {
 
     @FXML
     private Button adminBtn;
+
+    @FXML
+    private Button newDockBtn;
+
+    @FXML
+    private TextField nameField;
+
+
+    @FXML
+    void createNewDockConfirm(ActionEvent event){
+        System.out.println("New dock made");
+
+    }
+
+
+
+
+
 
 
     // main buttons below
@@ -76,5 +92,4 @@ public class MainController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }

@@ -1,34 +1,25 @@
-package main;
+package map;
 
+import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import changescene.ChangeScene;
+import javafx.scene.control.*;
 
+public class MapViewController {
 
-public class MainController {
+    @FXML
+    private Button showBikeBtn;
+
+    @FXML
+    private TextField bikeIdField;
 
 
     @FXML
-    private Button homeBtn;
+    void showBike(ActionEvent event) {
 
-    @FXML
-    private Button bikesBtn;
+    }
 
-    @FXML
-    private Button docksBtn;
 
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
 
 
     // main buttons below
@@ -76,5 +67,4 @@ public class MainController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }
