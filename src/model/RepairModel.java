@@ -4,8 +4,6 @@ import java.sql.*;
 import control.*;
 
 public class RepairModel {
-    private String driver = "com.mysql.jdbc.Driver";
-    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
     //Adds the first part of the repair to the database
     public int sendRepair(int bikeID, String dateSent, String bDescription){
@@ -17,8 +15,7 @@ public class RepairModel {
                 "VALUES(DEFAULT, ?, ?,NULL, NULL, NULL, ?)";
         String maxQuery = "SELECT MAX(repair_id) FROM repair";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
 
             preparedStatement = connection.prepareStatement(sendInsert);
@@ -38,8 +35,6 @@ public class RepairModel {
             }
         }catch (SQLException e) {
             System.out.println(e.getMessage() + " - sendRepair()");
-        }catch (ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - sendRepair()");
         }finally {
             DBCleanup.setAutoCommit(connection);
             DBCleanup.closeResultSet(resultSet);
@@ -57,19 +52,20 @@ public class RepairModel {
 
         String returnInsert = "UPDATE repair SET date_received = ?, after_desc = ?, price = ? WHERE repair_id = ?";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(returnInsert);
             preparedStatement.setString(1, dateReceived);
             preparedStatement.setString(2, aDescription);
             preparedStatement.setDouble(3, price);
             preparedStatement.setInt(4, repairID);
-            preparedStatement.executeUpdate();
+            if(preparedStatement.executeUpdate() != 0){
+                return true;
+            }else{
+                return false;
+            }
 
         }catch(SQLException e) {
-            System.out.println(e.getMessage() + " - returnRepair()");
-        }catch (ClassNotFoundException e){
             System.out.println(e.getMessage() + " - returnRepair()");
         }finally{
             DBCleanup.closeStatement(preparedStatement);
@@ -113,8 +109,7 @@ public class RepairModel {
         String bikeIDQuery = "SELECT bike_id FROM repair WHERE repair_id = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             getDateSent = connection.prepareStatement(dateSentQuery);
             getDateSent.setInt(1, repairID);
@@ -156,8 +151,6 @@ public class RepairModel {
             return repair;
 
         }catch (SQLException e){
-            System.out.println(e.getMessage() + " - getRepair()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getRepair()");
         }finally{
             DBCleanup.closeStatement(getDateSent);
