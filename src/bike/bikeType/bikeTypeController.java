@@ -12,8 +12,11 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import control.*;
 
 public class bikeTypeController implements Initializable{
+    private Type type;
+    private Factory factory = new Factory();
 
     @FXML
     private ListView<String> typeListView;
@@ -67,11 +70,22 @@ public class bikeTypeController implements Initializable{
     private TextField newTypeField;
 
 
+
+    //Notice the types are converted to String array.
+    //This is to simplify the clicking and fetching process.
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        ObservableList<String> types = FXCollections.observableArrayList("DBS","DIAMANT","REDBONE");
-        typeListView.setItems(types);
-        System.out.println("test2");
+        try {
+            factory.updateSystem();
+            ObservableList<String> types = FXCollections.observableArrayList();
+            String[] visualized = new String[factory.getTypes().size()];
+            for (int i = 0; i < visualized.length; i++) {
+                visualized[i] = factory.getTypes().get(i).getName();
+            }//end loop
+            types.addAll(visualized);
+            typeListView.setItems(types);
+            System.out.println(factory.getTypes().get(0).getName());
+        }catch (Exception e){e.printStackTrace();}
     }
 
     @FXML
@@ -144,6 +158,7 @@ public class bikeTypeController implements Initializable{
             System.out.println(name + " har blitt sattsom nytt navn.");
             try{
                 saveChanges(event);
+                updateList();
             } catch(Exception e){
 
             }
@@ -165,8 +180,6 @@ public class bikeTypeController implements Initializable{
         }//end if
         type = null;
 
-    }
-
     @FXML
     void updateList(){
 
@@ -183,6 +196,7 @@ public class bikeTypeController implements Initializable{
         typeListView.setItems(types);
     }
 
+    }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
