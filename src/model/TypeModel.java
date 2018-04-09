@@ -136,7 +136,7 @@ public class TypeModel {
     }
 
     //Returns an arraylist of strings with all the types in the database
-    public ArrayList<String> getTypes(int typeID){
+    public ArrayList<String> getTypes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
