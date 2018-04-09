@@ -132,16 +132,18 @@ public class Factory {
         return false;
     }//end method
 
-    public boolean deleteAdmin(Admin a) {
+    public boolean deleteAdmin(String email) {
         for (Admin anAdmin : admins) {
-            if (a.equals(anAdmin)) {
-                adminModel.deleteAdmin(anAdmin.getEmail());
+            if (email.equals(anAdmin.getEmail())) {
+                adminModel.deleteAdmin(email);
                 admins.remove(anAdmin);
                 return true;
             }//end if
         }//end loop
         return false;
     }//end method
+
+    //Method to change
 
     //Method to edit bikes
     public boolean editBike(int bikeId, Bike newBike){
