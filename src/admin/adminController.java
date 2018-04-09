@@ -141,7 +141,7 @@ public class adminController {
             String defaultPassword = SendEmail.sendFromGmail(email);
             String hashed = Password.hashPassword(defaultPassword);
             Admin admin = new Admin(email, hashed, main);
-            if (factory.addAdmin(admin, main)) System.out.println(admin);
+            if (factory.addAdmin(admin)) System.out.println(admin);
             CloseWindow cw = new CloseWindow(event);
         }//end if
         else{
@@ -203,7 +203,7 @@ public class adminController {
             boolean main = CurrentAdmin.getInstance().getAdmin().isMainAdmin();
             String password = Password.hashPassword(newPassword);
             model.deleteAdmin(CurrentAdmin.getInstance().getAdmin().getEmail());
-            if(factory.addAdmin(new Admin(email,password,main),main)){
+            if(factory.addAdmin(new Admin(email,password,main))){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Password changed");
                 alert.setHeaderText(null);

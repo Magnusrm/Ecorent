@@ -57,13 +57,13 @@ public class Factory {
     //Method to add admin. If mainAdmin is true
     //the admin will have access to add and delete
     //other admins
-    public boolean addAdmin(Admin a, boolean mainAdmin){
+    public boolean addAdmin(Admin a){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
         for(Admin admin:admins){
             if(a.equals(admin)) return false;
         }//end loop
         admins.add(a);
-        return adminModel.addAdmin(a.getEmail(), a.getPassword(),mainAdmin);
+        return adminModel.addAdmin(a.getEmail(), a.getPassword(),a.isMainAdmin());
     }//end method
 
 
