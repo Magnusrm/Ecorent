@@ -210,7 +210,7 @@ public class Factory {
     //Method to get an user's password
     public String password(String email){
         for(Admin a:admins){
-            if(a.getEmail().toLowerCase().equals(email.toLowerCase())){
+            if(a.getEmail().equals(email)){
                 isLoggedIn = email;
                 return a.getPassword();
             }//end if

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
@@ -50,6 +51,9 @@ public class adminController {
     private Button createNewAdminBtn;
 
     @FXML
+    private CheckBox mainAdminCheck;
+
+    @FXML
     private TextField newAdminEmailField;
 
     @FXML
@@ -70,13 +74,6 @@ public class adminController {
     void createNewAdmin(ActionEvent event) throws Exception {
         popupScene ps = new popupScene();
         ps.setScene(event, "/admin/adminNewAdminView.fxml");
-        for(Admin a:factory.getAdmins()){
-            if(a.getEmail().equals(factory.getIsLoggedIn())){
-                if(a.isMainAdmin() && newAdminEmailField.getText() != null){
-
-                }//end if
-            }//end if
-        }//end loop
     }//end method
 
     @FXML
@@ -138,10 +135,12 @@ public class adminController {
     @FXML
     void createNewAdminConfirm(ActionEvent event) throws Exception{
         String email = newAdminEmailField.getText();
-
-        CloseWindow cw = new CloseWindow(event);
-
-        System.out.println(email);
+        boolean main = mainAdminCheck.isSelected();
+        String defaultPassword = "Team007";
+       String hashed = Password.hashPassword(defaultPassword);
+       Admin admin = new Admin(email,hashed,main);
+       if(factory.addAdmin(admin,main))System.out.println(admin);
+       CloseWindow cw = new CloseWindow(event);
     }
 
     @FXML

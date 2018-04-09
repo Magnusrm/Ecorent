@@ -199,7 +199,6 @@ public class bikeTypeController implements Initializable{
 
     @FXML
     void updateList(){
-
         ObservableList<String> types = FXCollections.observableArrayList();
         String[] visualized = new String[factory.getTypes().size()];
         for (int i = 0; i < visualized.length; i++) {

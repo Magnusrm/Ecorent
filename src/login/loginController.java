@@ -42,13 +42,18 @@ public class loginController {
             pw = new String[factory.getAdmins().size()];
             pw[i] = factory.getAdmins().get(i).getPassword();
         }//end loop
-        for(int i = 0; i<user.length;i++){
-            //if((usernameField.getText().equals(user[i]) && Password.check(passwordField.getText(),factory.password(user[i])))) {
+        for(String s:user){
+            System.out.println(s);
+        }
+       /* for(int i = 0; i<user.length;i++){
+            if((usernameField.getText().equals(user[i]) && Password.check(passwordField.getText(),factory.password(user[i])))) {
                 //System.out.println("Nice!");
                 ChangeScene cs = new ChangeScene();
                 cs.setScene(event, "/main/mainView.fxml");
-           // }//end if
-        } //end loop
+            }//end if
+        } //end loop*/
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/mainView.fxml");
         incorrectLbl.setTextFill(Color.web("#ff0000"));
         incorrectLbl.setText("Your password is incorrect!");
     }//end method
