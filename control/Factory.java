@@ -11,14 +11,18 @@
 package control;
 
 import java.util.*;
-import Model.*;
+import model.*;
 
 public class Factory {
     private ArrayList<Dock> docks = new ArrayList<Dock>();
     private ArrayList<Bike> bikes = new ArrayList<Bike>();
     private ArrayList<Admin> admins = new ArrayList<Admin>();
     private ArrayList<Type> types = new ArrayList<Type>();
-    private Model model = new Model();
+    private TypeModel typeModel = new TypeModel();
+    private RepairModel repairModel = new RepairModel();
+    private DockModel dockModel = new DockModel();
+    private AdminModel adminModel = new AdminModel();
+    private BikeModel bikeModel = new BikeModel();
 
     public Factory(){}//default constructor
 
@@ -70,7 +74,7 @@ public class Factory {
         }//end loop
         types.add(t);
         String name = t.getName();
-        if(model.addType(name) != -1)return true;
+        if(typeModel.addType(name) != -1)return true;
         else return false;
     }//end method
 
@@ -84,7 +88,7 @@ public class Factory {
         String name = d.getName();
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
-        d.setDockID(model.addDock(name,x,y));
+        d.setDockID(dockModel.addDock(name,x,y));
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
@@ -161,7 +165,7 @@ public class Factory {
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(type)) {
                 types.set(i, type);
-                model.addType(type.getName());
+                typeModel.addType(type.getName());
                // model.deleteType(type.getName());
                 return true;
             }

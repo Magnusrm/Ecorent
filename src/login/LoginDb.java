@@ -1,7 +1,7 @@
-package login;
+/*package login;
 
 import java.sql.*;
-
+import control.Password;
 
 import static control.Password.*;
 
@@ -51,3 +51,4 @@ public class LoginDb {
         return false;
     }
 }
+*/
