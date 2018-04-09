@@ -1,18 +1,13 @@
 package login;
 
-import control.Admin;
 import control.Factory;
-import control.Password;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import changescene.ChangeScene;
-import javafx.event.ActionEvent;
-import java.awt.*;
 
 public class loginController {
 
