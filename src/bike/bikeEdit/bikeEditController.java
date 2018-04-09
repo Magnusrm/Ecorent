@@ -1,36 +1,33 @@
-package bike;
+package bike.bikeEdit;
 
+import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import changescene.ChangeScene;
 
-public class bikeController {
+public class bikeEditController {
+    @FXML
+    private TextField makeField;
 
     @FXML
-    private Button editBikeBtn;
+    private Button bikeViewBtn;
 
     @FXML
-    private Button infoBikeBtn;
+    private TextField priceField;
+
+    @FXML
+    private TextField buyDateField;
+
+    @FXML
+    private ComboBox<String> typeComboBox;
+
+    @FXML
+    private Button saveBtn;
 
     @FXML
     private Button homeBtn;
-
-    @FXML
-    private Button deleteBikeBtn;
-
-    @FXML
-    private Button repairBikeBtn;
-
-    @FXML
-    private Button newBikeBtn;
-
-    @FXML
-    private Button editBikeTypesBtn;
-
-    @FXML
-    private TextField bikeIdField;
 
     @FXML
     private Button bikesBtn;
@@ -50,46 +47,19 @@ public class bikeController {
     @FXML
     private Button adminBtn;
 
+
+
+
+
+
     @FXML
-    void changeToBikeEditView(ActionEvent event) throws Exception {
-
-    }
-
-    @FXML
-    void changeToBikeTypeView(ActionEvent event) throws Exception {
-
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/bike/bikeType/BikeTypeView.fxml");
+    void saveChanges(ActionEvent event){
 
     }
 
 
-    @FXML
-    void changeToBikeNewView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeNew/BikeNewView.fxml");
-    }
 
-    @FXML
-    void changeToBikeRepairView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeRepair/BikeRepairView.fxml");
-    }
-
-    @FXML
-    void changetoBikeInfoView(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteBike(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteAllBikesWithoutType(ActionEvent event){
-
-    }
+    // main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -104,9 +74,9 @@ public class bikeController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML

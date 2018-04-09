@@ -1,25 +1,48 @@
-package map;
+package bike.bikeInfo;
 
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
-public class MapViewController {
+public class bikeInfoController {
 
     @FXML
-    private Button showBikeBtn;
+    private Button showInfoBtn;
 
     @FXML
     private TextField bikeIdField;
 
+    @FXML
+    private Button bikesBtn;
 
     @FXML
-    void showBike(ActionEvent event) {
+    private Button docksBtn;
+
+    @FXML
+    private Button mapBtn;
+
+    @FXML
+    private Button statsBtn;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Button adminBtn;
+
+    @FXML
+    private Button homeBtn;
+
+
+
+
+
+    @FXML
+    void showInfo(){
 
     }
-
-
 
 
     // main buttons below
