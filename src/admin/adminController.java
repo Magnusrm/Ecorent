@@ -149,8 +149,7 @@ public class adminController {
 
         CloseWindow cw = new CloseWindow(event);
 
-        System.out.println(email);
-    }
+    }//end
 
     @FXML
     void changePasswordConfirm(ActionEvent event) {

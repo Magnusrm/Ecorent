@@ -2,12 +2,16 @@ package main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import changescene.ChangeScene;
+import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class mainController {
-
+public class mainController implements Initializable{
 
     @FXML
     private Button homeBtn;
@@ -29,6 +33,14 @@ public class mainController {
 
     @FXML
     private Button adminBtn;
+
+    @FXML
+    private TextField current;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+
+    }//end method
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {

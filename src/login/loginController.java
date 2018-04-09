@@ -51,7 +51,7 @@ public class loginController {
 
         }else{
             incorrectLbl.setTextFill(Color.web("#ff0000"));
-            incorrectLbl.setText("Your password is incorrect!");
+            incorrectLbl.setText("Your password or email is incorrect!");
             throw new GeneralSecurityException("Feil passord eller email");
         }
     }

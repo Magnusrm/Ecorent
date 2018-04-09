@@ -10,7 +10,7 @@ import java.util.Properties;
 public class DBCleanup {
 
     public static Connection getConnection(){
-        File file = new File("C:/Users/Ilia/Documents/Systemutvikling 1 (innføringsemne 2.0)/PROSJEKT ELSYKKEL/src/DbProp");
+        File file = new File("C:/Users/Ilia/Documents/Systemutvikling 1 (innføringsemne 2.0)/PROSJEKT ELSYKKEL/src/DBProp");
 
         try(FileInputStream fileInputStream = new FileInputStream(file)) {
 
