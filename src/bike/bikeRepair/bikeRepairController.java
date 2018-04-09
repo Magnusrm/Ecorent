@@ -1,21 +1,18 @@
-package main;
+package bike.bikeRepair;
 
+import changescene.ChangeScene;
+import changescene.popupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import changescene.ChangeScene;
-import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-
-public class mainController implements Initializable{
+public class bikeRepairController {
 
     @FXML
-    private Button homeBtn;
+    private Button bikeRepairReturnedBtn;
+
+    @FXML
+    private Button bikeRepairSentBtn;
 
     @FXML
     private Button bikesBtn;
@@ -36,17 +33,40 @@ public class mainController implements Initializable{
     private Button adminBtn;
 
     @FXML
-    private TextField current;
+    private Button homeBtn;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
 
-    }//end method
+    @FXML
+    void changeToRepairReturnedView(ActionEvent event)throws Exception {
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeRepair/bikeRepairReturnedView.fxml");
+        ps.setTitle("Register returned repair");
+    }
+
+    @FXML
+    void changeToRepairSentView(ActionEvent event) throws Exception {
+        popupScene ps = new popupScene();
+        ps.setScene(event, "/bike/bikeRepair/bikeRepairSentView.fxml");
+        ps.setTitle("Register sent repair");
+    }
+
+    @FXML
+    void registerRepairSentConfirm(){
+
+    }
+
+    @FXML
+    void registerRepairReturnedConfirm(){
+
+    }
+
+
+
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/bikeView.fxml");
+      //  cs.setScene(event, "/bike/bikeView.fxml");
     }
 
     @FXML
@@ -74,17 +94,16 @@ public class mainController implements Initializable{
     }
 
     @FXML
-    void changeToHomeScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/mainView.fxml");
     }
-
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
-    }
 
+    }
 }

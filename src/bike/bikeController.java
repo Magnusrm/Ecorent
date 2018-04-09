@@ -72,15 +72,9 @@ public class bikeController {
     }
 
     @FXML
-    void changeToBikeRepairView(ActionEvent event) {
-
-    }
-
-
-    @FXML
-    void changeToMainView(ActionEvent event) throws Exception {
+    void changeToBikeRepairView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/mainView.fxml");
+        cs.setScene(event, "/bike/bikeRepair/bikeRepairView.fxml");
     }
 
     @FXML
@@ -90,6 +84,11 @@ public class bikeController {
 
     @FXML
     void deleteBike(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteAllBikesWithoutType(ActionEvent event){
 
     }
 

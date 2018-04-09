@@ -11,10 +11,10 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <Button fx:id="newTypeBtn" layoutX="245.0" layoutY="151.0" mnemonicParsing="false" onAction="#newType" prefHeight="27.0" prefWidth="167.0" text="New Type" />
-            <Button fx:id="deleteTypeBtn" layoutX="245.0" layoutY="190.0" mnemonicParsing="false" onAction="#deleteType" prefHeight="27.0" prefWidth="167.0" text="Delete Type" />
-            <Button fx:id="editTypeNameBtn" layoutX="245.0" layoutY="229.0" mnemonicParsing="false" onAction="#editTypeName" prefHeight="27.0" prefWidth="167.0" text="Edit Type Name" />
-            <ListView fx:id="typeListView" layoutX="42.0" layoutY="79.0" prefHeight="248.0" prefWidth="176.0" />
+            <Button fx:id="newTypeBtn" layoutX="233.0" layoutY="151.0" mnemonicParsing="false" onAction="#newType" prefHeight="27.0" prefWidth="167.0" text="New Type" />
+            <Button fx:id="deleteTypeBtn" layoutX="233.0" layoutY="190.0" mnemonicParsing="false" onAction="#deleteType" prefHeight="27.0" prefWidth="167.0" text="Delete Type" />
+            <Button fx:id="editTypeNameBtn" layoutX="233.0" layoutY="229.0" mnemonicParsing="false" onAction="#editTypeName" prefHeight="27.0" prefWidth="167.0" text="Edit Type Name" />
+            <ListView fx:id="typeListView" layoutX="36.0" layoutY="79.0" prefHeight="248.0" prefWidth="176.0" />
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>

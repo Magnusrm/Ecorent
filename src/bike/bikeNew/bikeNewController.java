@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import java.time.format.DateTimeFormatter;
 import control.*;
+import loginAdm.CurrentAdmin;
 
 import javax.security.auth.callback.Callback;
 import java.net.URL;
@@ -166,6 +167,7 @@ public class bikeNewController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }

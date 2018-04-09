@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -22,6 +19,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import control.*;
+import loginAdm.CurrentAdmin;
 
 public class adminController {
     Factory factory = new Factory();
@@ -128,20 +126,28 @@ public class adminController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }
 
     @FXML
     void createNewAdminConfirm(ActionEvent event) throws Exception{
-        String email = newAdminEmailField.getText();
-        boolean main = mainAdminCheck.isSelected();
-        String defaultPassword = "Team007";
-       String hashed = Password.hashPassword(defaultPassword);
-       Admin admin = new Admin(email,hashed,main);
-       if(factory.addAdmin(admin,main))System.out.println(admin);
-       CloseWindow cw = new CloseWindow(event);
-    }
+        if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
+            String email = newAdminEmailField.getText();
+            boolean main = mainAdminCheck.isSelected();
+            String defaultPassword = "Team007";
+            String hashed = Password.hashPassword(defaultPassword);
+            Admin admin = new Admin(email, hashed, main);
+            if (factory.addAdmin(admin, main)) System.out.println(admin);
+            CloseWindow cw = new CloseWindow(event);
+        }//end if
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Permission denied");
+            alert.setHeaderText(null);
+        }//end else
+    }//end method
 
     @FXML
     void deleteAdminConfirm(ActionEvent event) throws Exception{
@@ -149,8 +155,7 @@ public class adminController {
 
         CloseWindow cw = new CloseWindow(event);
 
-        System.out.println(email);
-    }
+    }//end
 
     @FXML
     void changePasswordConfirm(ActionEvent event) {

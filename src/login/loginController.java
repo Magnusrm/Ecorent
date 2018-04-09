@@ -44,14 +44,12 @@ public class loginController {
             Admin admin = adminModel.getAdmin(loginBean.getEmail());
             CurrentAdmin currentAdmin = CurrentAdmin.getInstance();
             currentAdmin.setAdmin(admin);
-
-            System.out.println("Nice!");
             ChangeScene cs = new ChangeScene();
             cs.setScene(event, "/main/mainView.fxml");
 
         }else{
             incorrectLbl.setTextFill(Color.web("#ff0000"));
-            incorrectLbl.setText("Your password is incorrect!");
+            incorrectLbl.setText("Your password or email is incorrect!");
             throw new GeneralSecurityException("Feil passord eller email");
         }
     }

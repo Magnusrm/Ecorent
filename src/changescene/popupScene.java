@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 public class popupScene {
 
+    private Stage popup;
+
     public void setScene(ActionEvent event, String fxmlname) throws Exception{
 
 
@@ -16,9 +18,13 @@ public class popupScene {
         Scene scene = new Scene(parent);
 
         // lag ny stage
-        Stage popup = new Stage();
+        popup = new Stage();
         popup.setScene(scene);
         popup.show();
 
+    }
+
+    public void setTitle(String tittel){
+        popup.setTitle(tittel);
     }
 }
