@@ -220,6 +220,7 @@ public class Factory {
         return null;
     }//end method
 
+    //Method to delete all bikes without a type
     public boolean deleteAllBikes(){
         for(int i = 0; i<bikes.size();i++){
             if(bikes.get(i).getType() == null)bikes.remove(i);
@@ -227,5 +228,14 @@ public class Factory {
         return bikeModel.deleteBikesWhereTypeIsNULL();
     }//end
 
+    //Method to get all bikes docked at a given dock
+    public int[] dockedBikes(String dockName){
+        ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
+        int[] dockedBikes = new int[docked.size()];
+        for(int i = 0; i<dockedBikes.length;i++){
+            dockedBikes[i] = docked.get(i);
+        }//end loop
+        return dockedBikes;
+    }//end method
 
 }//end class
