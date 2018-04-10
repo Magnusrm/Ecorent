@@ -56,6 +56,19 @@ public class DockInfoController implements Initializable {
     @FXML
     void showInfo(ActionEvent event){
 
+        String dockName = dockIdComboBox.getValue();
+
+    //    bikesAtDock(dockName);
+
+        // add bikeId's to listview
+        ObservableList<String> bikes= FXCollections.observableArrayList();
+        String[] visualized = new String[factory.getBikes().size()];
+        for (int i = 0; i < visualized.length; i++) {
+            visualized[i] = "" + factory.getBikes().get(i).getBikeId();
+        }//end loop
+        bikes.addAll(visualized);
+        bikeIdListView.setItems(bikes);
+
     }
 
     //Notice the bikes and docks are converted to String array.
@@ -64,16 +77,6 @@ public class DockInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         try {
             factory.updateSystem();
-
-
-            // add bikeId's to listview
-            ObservableList<String> bikes= FXCollections.observableArrayList();
-            String[] visualized = new String[factory.getBikes().size()];
-            for (int i = 0; i < visualized.length; i++) {
-                visualized[i] = "" + factory.getBikes().get(i).getBikeId();
-            }//end loop
-            bikes.addAll(visualized);
-            bikeIdListView.setItems(bikes);
 
             // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
@@ -86,6 +89,8 @@ public class DockInfoController implements Initializable {
 
         }catch (Exception e){e.printStackTrace();}
     }
+
+
 
 
 

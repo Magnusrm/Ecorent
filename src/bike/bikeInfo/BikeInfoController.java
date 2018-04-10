@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import loginAdm.CurrentAdmin;
 
-public class bikeInfoController {
+public class BikeInfoController {
     private Factory factory = new Factory();
 
     @FXML
