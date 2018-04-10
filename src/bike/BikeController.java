@@ -1,5 +1,6 @@
 package bike;
 
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import model.BikeModel;
 import java.util.Optional;
 
 public class BikeController {
+    Factory factory = new Factory();
 
     @FXML
     private Button editBikeBtn;
@@ -63,8 +65,10 @@ public class BikeController {
 
     @FXML
     void changeToBikeTypeView(ActionEvent event) throws Exception {
+
             ChangeScene cs = new ChangeScene();
             cs.setScene(event, "/bike/bikeType/BikeTypeView.fxml");
+
     }
 
 
@@ -103,16 +107,21 @@ public class BikeController {
 
     @FXML
     void deleteAllBikesWithoutType(ActionEvent event){
-
+        if(factory.deleteAllBikes()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("All bikes with type null deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("Operation successful! All bikes have a type");
+            alert.showAndWait();
+        }//end if
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("OOPS");
+            alert.setHeaderText(null);
+            alert.setContentText("Something went wrong! Please check your internet access");
+            alert.showAndWait();
+        }//end else
     }
-
-
-
-
-
-
-
-    // main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -127,9 +136,9 @@ public class BikeController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
+    void changeToMapScene(ActionEvent event) {
+        /*ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "");*/
     }
 
     @FXML

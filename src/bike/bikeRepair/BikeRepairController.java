@@ -1,13 +1,10 @@
 package bike.bikeRepair;
 
 import changescene.ChangeScene;
-import changescene.CloseWindow;
 import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 public class BikeRepairController {
 
@@ -41,43 +38,35 @@ public class BikeRepairController {
 
     @FXML
     void changeToRepairReturnedView(ActionEvent event)throws Exception {
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         PopupScene ps = new PopupScene();
-        ps.setScene(window, event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
+        ps.setScene(event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
         ps.setTitle("Register returned repair");
     }
 
     @FXML
     void changeToRepairSentView(ActionEvent event) throws Exception {
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         PopupScene ps = new PopupScene();
-        ps.setScene(window, event, "/bike/bikeRepair/BikeRepairSentView.fxml");
+        ps.setScene(event, "/bike/bikeRepair/BikeRepairSentView.fxml");
         ps.setTitle("Register sent repair");
     }
 
     @FXML
-    void registerRepairSentConfirm(ActionEvent event){
-        CloseWindow cw = new CloseWindow(event);
+    void registerRepairSentConfirm(){
+
     }
 
     @FXML
-    void registerRepairReturnedConfirm(ActionEvent event){
-        CloseWindow cw = new CloseWindow(event);
+    void registerRepairReturnedConfirm(){
+
     }
 
 
 
-
-
-
-
-
-    // main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
+      cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
@@ -87,7 +76,7 @@ public class BikeRepairController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
+    void changeToMapScene(ActionEvent event) throws Exception{
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/map/MapView.fxml");
     }

@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import loginAdm.CurrentAdmin;
 
 public class BikeTypeController implements Initializable{
     private Type type;
@@ -34,6 +35,9 @@ public class BikeTypeController implements Initializable{
 
     @FXML
     private ComboBox<?> typeComboBox;
+
+    @FXML
+    private Button saveBtn;
 
     @FXML
     private Button homeBtn;
@@ -80,13 +84,21 @@ public class BikeTypeController implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeListView.setItems(types);
+            //System.out.println(factory.getTypes().get(0).getName());
         }catch (Exception e){e.printStackTrace();}
     }
 
     @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/BikeView.fxml");
+    }
+
+
+    @FXML
     void deleteType(ActionEvent event) throws Exception {
 
-        System.out.println(typeListView);
+        //System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
         alert.setHeaderText(null);
@@ -94,33 +106,49 @@ public class BikeTypeController implements Initializable{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            //... IF OK
-            factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            if(factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()))){
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Delete type");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Type deleted!");
+                alert1.showAndWait();
+            }else{
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Delete type");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Something went wrong! Type not deleted");
+                alert1.showAndWait();
+            }//end else
             try{
                 saveChanges(event);
                 updateList();
             } catch(Exception e){
-
+                e.printStackTrace();
             }
 
         } else {
-            // ... IF CANCEL
-        }
-    }
+            //IF CANCEL
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Delete type");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Type will not be deleted");
+            alert1.showAndWait();
+        }//end else
+    }//end method
+
 
     @FXML
     void newType(ActionEvent event) {
 
-        TextInputDialog dialog = new TextInputDialog("wow");
+        TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("New bike type");
         dialog.setHeaderText(null);
         dialog.setContentText("Name:");
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
-            System.out.println(name + " blir registrert som en ny type");
-
-            type = new Type(result.get());
+           // System.out.println(name + " blir registrert som en ny type");
+            type = new Type(name);
             try{
                 saveChanges(event);
                 updateList();
@@ -131,24 +159,40 @@ public class BikeTypeController implements Initializable{
     }
 
     @FXML
-    void editTypeName(ActionEvent event) throws Exception {
-        TextInputDialog dialog = new TextInputDialog("");
-        dialog.setTitle("New type name");
-        dialog.setHeaderText(null);
-        dialog.setContentText("New name:");
+    void editTypeName(ActionEvent event) throws Exception{
+       TextInputDialog dialog = new TextInputDialog("");
+       dialog.setTitle("Edit the name of the type");
+       dialog.setHeaderText(null);
+       dialog.setContentText("Put in the new name of the selected type. NB! " +
+       "All bikes under this type will be changed");
+       Optional<String> result = dialog.showAndWait();
+       result.ifPresent(name ->{
+           Type originial = new Type(typeListView.getSelectionModel().getSelectedItem());
+           Type edit = new Type(name);
+           if(factory.editType(originial,edit)){
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("Edit the name of the type");
+               alert.setHeaderText(null);
+               alert.setContentText("Your type has now a new name: " + name);
+               alert.showAndWait();
+           }//end if
+           else{
+               Alert alert = new Alert(Alert.AlertType.INFORMATION);
+               alert.setTitle("Edit the name of the type");
+               alert.setHeaderText(null);
+               alert.setContentText("Something went wrong! Please make sure to fill in the name of the type");
+               alert.showAndWait();
+           }//end else
+           try{
+               saveChanges(event);
+               updateList();
+           } catch(Exception e){
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            System.out.println(name + " har blitt sattsom nytt navn.");
-            try{
-                saveChanges(event);
-                updateList();
-            } catch(Exception e){
+           }
 
-            }
-        });
+       });
+    }//end method
 
-    }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
@@ -162,12 +206,10 @@ public class BikeTypeController implements Initializable{
             alert1.setHeaderText(null);
             alert1.setContentText(type.getName() + " has been saved!");
         }//end if
-        type = null;
     }
 
     @FXML
     void updateList(){
-
         ObservableList<String> types = FXCollections.observableArrayList();
         String[] visualized = new String[factory.getTypes().size()];
         for (int i = 0; i < visualized.length; i++) {
@@ -182,19 +224,6 @@ public class BikeTypeController implements Initializable{
     }
 
 
-
-
-
-
-
-    // main buttons below
-
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -208,7 +237,7 @@ public class BikeTypeController implements Initializable{
     }
 
     @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
+    void changeToStatsScene(ActionEvent event)throws Exception{
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/stats/StatsView.fxml");
     }
@@ -225,11 +254,11 @@ public class BikeTypeController implements Initializable{
         cs.setScene(event, "/main/MainView.fxml");
     }
 
+
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
-
     }
 }

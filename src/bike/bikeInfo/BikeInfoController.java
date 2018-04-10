@@ -1,13 +1,18 @@
 package bike.bikeInfo;
 
 import changescene.ChangeScene;
+import control.Bike;
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import loginAdm.CurrentAdmin;
 
-public class BikeInfoController {
+public class bikeInfoController {
+    private Factory factory = new Factory();
 
     @FXML
     private Label priceLbl;
@@ -23,7 +28,7 @@ public class BikeInfoController {
 
     @FXML
     private Label batteryLbl;
-
+    
     @FXML
     private Button showInfoBtn;
 
@@ -57,8 +62,33 @@ public class BikeInfoController {
 
     @FXML
     void showInfo(){
-
-    }
+        factory.updateSystem();
+        for(Bike b:factory.getBikes()){System.out.println(b);}
+        Bike bike = null;
+        int bikeID = Integer.parseInt(bikeIdField.getText());
+        for(int i = 0; i<factory.getBikes().size();i++){
+            if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
+        }//end loop
+        if(bike != null){
+            String price = "" + bike.getPrice();
+            String type = "" + bike.getType().getName();
+            String make = "" + bike.getMake();
+            String date = "" + bike.getBuyDate().toString();
+            String battery = "" + bike.getPowerUsage();
+            priceLbl.setText(price);
+            typeLbl.setText(type);
+            makeLbl.setText(make);
+            dateLbl.setText(date);
+            batteryLbl.setText(battery);
+        }//end if
+        if(bike == null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Something went wrong!");
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot find the given bike!");
+            alert.showAndWait();
+        }
+    }//end method
 
 
     // main buttons below
@@ -101,7 +131,7 @@ public class BikeInfoController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

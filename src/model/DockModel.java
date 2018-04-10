@@ -6,8 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DockModel {
-    private String driver = "com.mysql.jdbc.Driver";
-    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
     //Returns a given dock from the database
     public Dock getDock(String name){
@@ -32,8 +30,7 @@ public class DockModel {
         String yCordQuery = "SELECT y_cord FROM dock WHERE name = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             getDockID = connection.prepareStatement(dockIDQuery);
             getDockID.setString(1, name);
@@ -54,11 +51,10 @@ public class DockModel {
             yCord = rsYCord.getDouble("y_cord");
 
             dock = new Dock(name, /*pwrUsg,*/ xCord, yCord);
+            dock.setDockID(dockID);
             return dock;
 
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getDock()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getDock()");
         }finally {
             DBCleanup.closeResultSet(rsDockID);
@@ -81,8 +77,7 @@ public class DockModel {
 
         String nameQuery = "SELECT name FROM dock WHERE LOWER(name = ?)";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(nameQuery);
             preparedStatement.setString(1, name.toLowerCase());
@@ -93,8 +88,6 @@ public class DockModel {
                 return false;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - dockNameExists()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - dockNameExists()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -113,8 +106,8 @@ public class DockModel {
         String maxQuery = "SELECT MAX(dock_id) FROM dock";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
+            connection.setAutoCommit(false);
 
             if(!dockNameExists(name)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
@@ -124,13 +117,12 @@ public class DockModel {
                 if (preparedStatement.executeUpdate() != 0) {
                     preparedStatement = connection.prepareStatement(maxQuery);
                     resultSet = preparedStatement.executeQuery();
+                    connection.commit();
                     resultSet.next();
                     return resultSet.getInt("MAX(dock_id)");
                 }
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - addDock()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - addDock()");
         }finally{
             DBCleanup.closeResultSet(resultSet);
@@ -146,8 +138,7 @@ public class DockModel {
 
         String dockInsert = "UPDATE dock SET name = ?, x_cord = ?, y_cord = ? WHERE dock_id = ?";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(dockNameExists(name)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
@@ -164,8 +155,6 @@ public class DockModel {
             }
         }catch (SQLException e){
             System.out.println(e.getMessage() + " - editDock()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - editDock()");
         }finally{
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
@@ -180,8 +169,7 @@ public class DockModel {
         String deleteQuery = "DELETE FROM dock WHERE name = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(dockNameExists(name)) {
                 preparedStatement = connection.prepareStatement(deleteQuery);
@@ -193,8 +181,6 @@ public class DockModel {
                 }
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - deleteDock()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - deleteDock()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -214,8 +200,7 @@ public class DockModel {
         String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?)";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(dockNameExists(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
@@ -227,8 +212,6 @@ public class DockModel {
                 return bikes;
             }
         }catch (SQLException e){
-            System.out.println(e.getMessage() + " - bikesAtDock()");
-        }catch (ClassNotFoundException e){
             System.out.println(e.getMessage() + " - bikesAtDock()");
         }finally {
             DBCleanup.closeResultSet(resultSet);
@@ -248,8 +231,7 @@ public class DockModel {
         String docksQuery = "SELECT name FROM dock";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(docksQuery);
             resultSet = preparedStatement.executeQuery();
@@ -258,9 +240,7 @@ public class DockModel {
             }
             return allDocks;
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getAllDocks()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - getAllDocks()");
+            System.out.println(e.getMessage() + " - getAllDocks()");;
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
@@ -269,4 +249,3 @@ public class DockModel {
         return null;
     }
 }
-

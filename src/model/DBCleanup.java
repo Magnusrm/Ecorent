@@ -1,8 +1,41 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 
 public class DBCleanup {
+
+    public static Connection getConnection(){
+        File file = new File("C:/Users/Martin/IdeaProjects/Prosjekt/src/DBProp");
+
+        try(FileInputStream fileInputStream = new FileInputStream(file)) {
+
+            Properties properties = new Properties();
+            properties.load(fileInputStream);
+
+            String driver = properties.getProperty("jdbc.driver");
+            if (driver != null) {
+                Class.forName(driver);
+            }
+
+            String url = properties.getProperty("jdbc.url");
+            String username = properties.getProperty("jdbc.username");
+            String password = properties.getProperty("jdbc.password");
+
+            return DriverManager.getConnection(url, username, password);
+        }catch(IOException e){
+            System.out.println(e.getMessage() + " - getConnection()");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getConnection()");
+        }catch(ClassNotFoundException e){
+            System.out.println(e.getMessage() + " - getConnection()");
+        }
+        return null;
+    }
 
     public static void closeResultSet(ResultSet rs){
         try{
