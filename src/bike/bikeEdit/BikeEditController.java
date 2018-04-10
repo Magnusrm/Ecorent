@@ -87,7 +87,7 @@ public class BikeEditController implements Initializable{
         powerUsageField.setText(powerUsage);
         typeComboBox.getSelectionModel().select(bike.getType().getName());
     }//end method
-    
+
 
     @FXML
     void saveChanges(ActionEvent event){
@@ -114,6 +114,7 @@ public class BikeEditController implements Initializable{
             alert.showAndWait();
         }//end else
     }//end method
+   
 
 
 
