@@ -85,10 +85,9 @@ public class BikeEditController implements Initializable{
         priceField.setText(price);
         buyDateField.setText(buyDate);
         powerUsageField.setText(powerUsage);
+        typeComboBox.getSelectionModel().select(bike.getType().getName());
     }//end method
-
-
-
+    
 
     @FXML
     void saveChanges(ActionEvent event){
@@ -105,7 +104,8 @@ public class BikeEditController implements Initializable{
             priceField.setText(price);
             buyDateField.setText(buyDate);
             powerUsageField.setText(powerUsage);
-            typeComboBox.setValue(bike.getType().getName());
+
+
         }else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Something went wrong!");
