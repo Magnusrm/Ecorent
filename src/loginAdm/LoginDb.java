@@ -1,5 +1,7 @@
 package loginAdm;
 
+import model.DBCleanup;
+
 import java.sql.*;
 
 
@@ -7,15 +9,10 @@ import static control.Password.*;
 
 public class LoginDb {
 
-    private static final String driver = "com.mysql.jdbc.Driver";
-    private static final String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
-
-
     public static boolean authenticateUser(LoginBean loginBean) {
-        Connection connection;
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
-
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         String email = loginBean.getEmail();
         String password = loginBean.getPassword();
@@ -26,8 +23,7 @@ public class LoginDb {
         String hashDB = "";
 
         try {
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(selectQuery);
             preparedStatement.setString(1, email);
@@ -44,6 +40,11 @@ public class LoginDb {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
         }
         return false;
     }
