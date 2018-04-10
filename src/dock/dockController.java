@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import loginAdm.CurrentAdmin;
 
 public class dockController {
     @FXML
@@ -81,6 +82,7 @@ public class dockController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }

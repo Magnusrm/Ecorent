@@ -4,16 +4,14 @@ import changescene.ChangeScene;
 import changescene.CloseWindow;
 import changescene.popupScene;
 import control.Factory;
+import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -22,10 +20,12 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import control.*;
+import loginAdm.CurrentAdmin;
+import model.AdminModel;
 
 public class adminController {
     Factory factory = new Factory();
-
+    AdminModel model = new AdminModel();
     @FXML
     private Button homeBtn;
 
@@ -128,25 +128,57 @@ public class adminController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }
 
     @FXML
     void createNewAdminConfirm(ActionEvent event) throws Exception{
-        String email = newAdminEmailField.getText();
-        boolean main = mainAdminCheck.isSelected();
-        String defaultPassword = "Team007";
-       String hashed = Password.hashPassword(defaultPassword);
-       Admin admin = new Admin(email,hashed,main);
-       if(factory.addAdmin(admin,main))System.out.println(admin);
-       CloseWindow cw = new CloseWindow(event);
-    }
+        if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
+            String email = newAdminEmailField.getText();
+            boolean main = mainAdminCheck.isSelected();
+            String defaultPassword = SendEmail.sendFromGmail(email);
+            String hashed = Password.hashPassword(defaultPassword);
+            Admin admin = new Admin(email, hashed, main);
+            if (factory.addAdmin(admin, main)) System.out.println(admin);
+            CloseWindow cw = new CloseWindow(event);
+        }//end if
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Permission denied");
+            alert.setHeaderText(null);
+            alert.setContentText("You do not have main admin privileges and cannot create other admins." +
+            " Contact your supervisor to require more privileges");
+            alert.showAndWait();
+        }//end else
+    }//end method
 
     @FXML
     void deleteAdminConfirm(ActionEvent event) throws Exception{
         String email = deleteAdminEmailField.getText();
-
+        if(email.equals(CurrentAdmin.getInstance().getAdmin().getEmail())){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Permission denied");
+            alert.setHeaderText(null);
+            alert.setContentText("You cannot delete yourself");
+            alert.showAndWait();
+            CloseWindow cw = new CloseWindow(event);
+        }//end if
+        if(model.deleteAdmin(email)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Delete success");
+            alert.setHeaderText(null);
+            alert.setContentText("Admin with email " + email + " is deleted");
+            alert.showAndWait();
+        }//end if
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Failed");
+            alert.setHeaderText(null);
+            alert.setContentText("Something went wrong!");
+            alert.showAndWait();
+        }
         CloseWindow cw = new CloseWindow(event);
 
     }//end
@@ -156,8 +188,47 @@ public class adminController {
         String oldPassword = oldPasswordField.getText();
         String newPassword = newPasswordField.getText();
         String newPassword2 = newPasswordField2.getText();
-        System.out.println("Old password: " + oldPassword + "\n New Password: " + newPassword + "\nRepeated password: " + newPassword2);
-        //+ "\nRepeated password: " + newPassword2
+
+        if(newPassword.length()<8 || newPassword.length()>30){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Wrong format");
+            alert.setHeaderText(null);
+            alert.setContentText("Your password must be between 8 and 30 characters");
+            alert.showAndWait();
+            CloseWindow cw = new CloseWindow(event);
+        }//end if
+
+        if(Password.check(oldPassword,CurrentAdmin.getInstance().getAdmin().getPassword())&&newPassword.equals(newPassword2)){
+            String email = CurrentAdmin.getInstance().getAdmin().getEmail();
+            boolean main = CurrentAdmin.getInstance().getAdmin().isMainAdmin();
+            String password = Password.hashPassword(newPassword);
+            model.deleteAdmin(CurrentAdmin.getInstance().getAdmin().getEmail());
+            if(factory.addAdmin(new Admin(email,password,main),main)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Password changed");
+                alert.setHeaderText(null);
+                alert.setContentText(email + " has now password " + newPassword);
+                alert.showAndWait();
+            }//end if
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Something went wrong!");
+                alert.setHeaderText(null);
+                alert.setContentText("Operation failed. Please make sure you fill out everything in the correct format and" +
+                                " have internet access");
+                alert.showAndWait();
+                CloseWindow cw = new CloseWindow(event);
+            }
+        }//end if
+
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Something went wrong!");
+            alert.setHeaderText(null);
+            alert.setContentText("Your passwords do not match!");
+            alert.showAndWait();
+            CloseWindow cw = new CloseWindow(event);
+        }//end else
 
         CloseWindow cw = new CloseWindow(event);
     }

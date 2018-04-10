@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import changescene.ChangeScene;
 import javafx.scene.control.TextField;
+import loginAdm.CurrentAdmin;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -81,6 +82,7 @@ public class mainController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/loginView.fxml");
     }

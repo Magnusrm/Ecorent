@@ -15,42 +15,44 @@ public class BikeModelTest {
     ResultSet resultSet;
     BikeModel instance;
 
-    @BeforeAll
-    public void before() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true");
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + " - before() in BikeModelTest");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage() + " - before() in BikeModelTest");
-        }
-    }
-
-    @AfterAll
-    public void after() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     @BeforeEach
-    public void setUp() {
+    public void before() {
         instance = new BikeModel();
+        connection = DBCleanup.getConnection();
     }
+
 
     @AfterEach
-    public void tearDown() {
+    public void after() {
+        DBCleanup.closeConnection(connection);
         instance = null;
+    }
+
+    @Test
+    public void testAddBike(){
+        System.out.println("Testing the method addBike()");
+
+        String date = "2018-03-20";
+        LocalDate regDate = LocalDate.parse(date);
+        double price = 1000;
+        String make = "DBS";
+        String typeName = "Racer";
+        Type type = new Type(typeName);
+        double pwrUsg = 100;
+        boolean repairing = false;
+        int dockID = 1;
+
+        int expResult = 55; //Must be changed according to the self-incrementing bike_id in the DB
+        int result = instance.addBike(date, price, make, typeName, dockID, pwrUsg, repairing);
+
+        assertEquals(expResult, result);
     }
 
     @Test
     public void testGetBike(){
         System.out.println("Testing the method getBike()");
 
-        int bikeID = 1;
+        int bikeID = 55; //Must match the expResult above
         String date = "2018-03-20";
         LocalDate regDate = LocalDate.parse(date);
         double price = 1000;
@@ -65,34 +67,11 @@ public class BikeModelTest {
         Bike result = instance.getBike(bikeID);
         assertEquals(expResult, result);
     }
-
-    @Test
-    public void testAddBike(){
-        System.out.println("Testing the method addBike()");
-
-        int bikeID = 2;
-        String date = "2018-03-20";
-        LocalDate regDate = LocalDate.parse(date);
-        double price = 1000;
-        String make = "DBS";
-        String typeName = "Racer";
-        Type type = new Type(typeName);
-        double pwrUsg = 100;
-        boolean repairing = false;
-        int dockID = 1;
-
-        instance.addBike(date, price, make, typeName, pwrUsg, repairing);
-
-        Bike expResult = new Bike(regDate, price, make, type, dockID);
-        Bike result = instance.getBike(bikeID);
-        assertEquals(expResult, result);
-    }
-
     @Test
     public void testEditBike(){
         System.out.println("Testing the method editBike()");
 
-        int bikeID = 2;
+        int bikeID = 55; //This must also match the expResult from addBike()
         String date = "2018-03-20";
         LocalDate regDate = LocalDate.parse(date);
         double price = 1001;
@@ -104,7 +83,7 @@ public class BikeModelTest {
         double pwrUsg = 100;
         boolean repairing = false;
 
-        instance.editBike(1, date, price, make, pwrUsg, typeName);
+        instance.editBike(1, date, price, make, dockID, pwrUsg, typeName);
 
         Bike expResult =new Bike(regDate, price, make, type, dockID);
         Bike result = instance.getBike(bikeID);

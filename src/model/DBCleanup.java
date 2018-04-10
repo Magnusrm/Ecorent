@@ -27,7 +27,11 @@ public class DBCleanup {
             String password = properties.getProperty("jdbc.password");
 
             return DriverManager.getConnection(url, username, password);
-        }catch(IOException | SQLException | ClassNotFoundException e){
+        }catch(IOException e){
+            System.out.println(e.getMessage() + " - getConnection()");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getConnection()");
+        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - getConnection()");
         }
         return null;
