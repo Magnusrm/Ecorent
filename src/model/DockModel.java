@@ -51,6 +51,7 @@ public class DockModel {
             yCord = rsYCord.getDouble("y_cord");
 
             dock = new Dock(name, /*pwrUsg,*/ xCord, yCord);
+            dock.setDockID(dockID);
             return dock;
 
         }catch(SQLException e){

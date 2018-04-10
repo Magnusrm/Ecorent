@@ -86,7 +86,6 @@ public class Bike {
     }
 
     public void setDockId(int dockId) {
-
         if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}
         this.dockId = dockId;
     }
