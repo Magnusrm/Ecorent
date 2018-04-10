@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BikeModel {
+    private String driver = "com.mysql.jdbc.Driver";
+    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
 
     public boolean bikeExists(int bikeID){
@@ -56,7 +58,7 @@ public class BikeModel {
         String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
         String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
         String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?";
+        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
         String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
