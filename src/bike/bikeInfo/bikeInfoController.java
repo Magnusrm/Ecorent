@@ -1,12 +1,15 @@
 package bike.bikeInfo;
 
 import changescene.ChangeScene;
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import loginAdm.CurrentAdmin;
 
 public class bikeInfoController {
+    private Factory factory = new Factory();
 
     @FXML
     private Button showInfoBtn;
@@ -85,7 +88,7 @@ public class bikeInfoController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
