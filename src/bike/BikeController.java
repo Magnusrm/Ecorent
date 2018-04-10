@@ -5,8 +5,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import changescene.ChangeScene;
+import model.BikeModel;
+
+import java.util.Optional;
 
 public class BikeController {
     Factory factory = new Factory();
@@ -89,6 +93,16 @@ public class BikeController {
     @FXML
     void deleteBike(ActionEvent event) {
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Are you sure?");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you would like to delete this bike?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            BikeModel bm = new BikeModel();
+            bm.deleteBike(Integer.parseInt(bikeIdField.getText()));
+        }
     }
 
     @FXML

@@ -54,6 +54,13 @@
                   <Font name="System Font" size="15.0" />
                </font>
             </Label>
+            <TextField fx:id="bikeIdField" layoutX="144.0" layoutY="71.0" promptText="currentnamefixthis" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+            <Label fx:id="makeLbl1" layoutX="88.0" layoutY="75.0" text="bikeID" textFill="WHITE">
+               <font>
+                  <Font name="System Font" size="15.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="211.0" layoutY="98.0" startX="-70.0" stroke="WHITE" styleClass="line" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">

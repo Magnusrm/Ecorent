@@ -56,12 +56,12 @@
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="dateLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl1" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>

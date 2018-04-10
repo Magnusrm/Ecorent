@@ -5,12 +5,28 @@ import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import loginAdm.CurrentAdmin;
 
 public class bikeInfoController {
     private Factory factory = new Factory();
 
+    @FXML
+    private Label priceLbl;
+
+    @FXML
+    private Label typeLbl;
+
+    @FXML
+    private Label makeLbl;
+
+    @FXML
+    private Label dateLbl;
+
+    @FXML
+    private Label batteryLbl;
+    
     @FXML
     private Button showInfoBtn;
 
