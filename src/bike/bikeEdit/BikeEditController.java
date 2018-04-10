@@ -88,6 +88,10 @@ public class BikeEditController implements Initializable{
     }//end method
 
 
+    @FXML
+    void fillInfo(ActionEvent event){
+
+    }
 
 
     @FXML

@@ -53,23 +53,6 @@ public class DockInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
-    @FXML
-    void showInfo(ActionEvent event){
-
-        String dockName = dockIdComboBox.getValue();
-
-    //    bikesAtDock(dockName);
-
-        // add bikeId's to listview
-        ObservableList<String> bikes= FXCollections.observableArrayList();
-        String[] visualized = new String[factory.getBikes().size()];
-        for (int i = 0; i < visualized.length; i++) {
-            visualized[i] = "" + factory.getBikes().get(i).getBikeId();
-        }//end loop
-        bikes.addAll(visualized);
-        bikeIdListView.setItems(bikes);
-
-    }
 
     //Notice the bikes and docks are converted to String array.
     //This is to simplify the clicking and fetching process.
@@ -87,8 +70,31 @@ public class DockInfoController implements Initializable {
             docks.addAll(visualized2);
             dockIdComboBox.setItems(docks);
 
+            dockIdComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
     }
+
+    @FXML
+    void showInfo(ActionEvent event){
+
+        // add bikeId's to listview
+        ObservableList<String> bikes= FXCollections.observableArrayList();
+        int[] visualizedInt = factory.dockedBikes(dockIdComboBox.getValue());
+        String[] visualized = new String[visualizedInt.length];
+        for (int i = 0; i < visualized.length; i++) {
+            visualized[i] = "" + visualizedInt[i];
+        }//end loop
+        bikes.addAll(visualized);
+        bikeIdListView.setItems(bikes);
+
+        // add dockName to dockNameLbl
+        nameLbl.setText(dockIdComboBox.getValue());
+
+        // add powerDraw to powerDrawLbl
+        powerDrawLbl.setText("fix me");
+
+    }
+
 
 
 
