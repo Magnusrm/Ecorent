@@ -111,6 +111,7 @@ public class BikeModel {
 
                 type = new Type(typeName);
                 bike = new Bike(localDate, price, make, type, pwrUsg);
+                bike.setBikeId(bikeID);
                 return bike;
             }
         } catch (SQLException e) {

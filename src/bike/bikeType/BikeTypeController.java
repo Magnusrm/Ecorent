@@ -106,23 +106,35 @@ public class BikeTypeController implements Initializable{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-
-            // ... IF OK
-
-            //... IF OK
-            factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            if(factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()))){
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Delete type");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Type deleted!");
+                alert1.showAndWait();
+            }else{
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Delete type");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Something went wrong! Type not deleted");
+                alert1.showAndWait();
+            }//end else
             try{
                 saveChanges(event);
                 updateList();
             } catch(Exception e){
-
+                e.printStackTrace();
             }
 
         } else {
-            // ... IF CANCEL
-
-        }
-    }
+            //IF CANCEL
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Delete type");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Type will not be deleted");
+            alert1.showAndWait();
+        }//end else
+    }//end method
 
 
     @FXML
