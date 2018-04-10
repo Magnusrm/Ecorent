@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeInfo.bikeInfoController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeInfo.BikeInfoController">
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
@@ -41,27 +41,27 @@
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="priceLbl" layoutX="107.0" layoutY="123.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="priceLbl" layoutX="107.0" layoutY="123.0" prefHeight="21.0" prefWidth="134.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="typeLbl" layoutX="107.0" layoutY="158.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="typeLbl" layoutX="107.0" layoutY="158.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="makeLbl" layoutX="107.0" layoutY="193.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="makeLbl" layoutX="107.0" layoutY="193.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="dateLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="dateLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>

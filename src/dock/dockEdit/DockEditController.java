@@ -1,34 +1,26 @@
-package bike.bikeInfo;
+package dock.dockEdit;
 
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
-public class bikeInfoController {
+public class DockEditController {
 
     @FXML
-    private Label priceLbl;
+    private ComboBox<String> bikeIdComboBox;
 
     @FXML
-    private Label typeLbl;
+    private TextField dockNameField;
 
     @FXML
-    private Label makeLbl;
+    private TextField xCoordField;
 
     @FXML
-    private Label dateLbl;
+    private TextField yCoordField;
 
     @FXML
-    private Label batteryLbl;
-    
-    @FXML
-    private Button showInfoBtn;
-
-    @FXML
-    private TextField bikeIdField;
+    private Button saveChangesBtn;
 
     @FXML
     private Button bikesBtn;
@@ -51,14 +43,13 @@ public class bikeInfoController {
     @FXML
     private Button homeBtn;
 
-
-
-
-
     @FXML
-    void showInfo(){
+    void saveChanges(ActionEvent event) {
 
     }
+
+
+
 
 
     // main buttons below

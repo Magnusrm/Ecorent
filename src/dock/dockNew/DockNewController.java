@@ -1,37 +1,24 @@
-package bike.bikeEdit;
+package dock.dockNew;
 
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class bikeEditController {
+public class DockNewController {
 
     @FXML
-    private TextField bikeIdField;
+    private TextField dockNameField;
 
     @FXML
-    private TextField makeField;
+    private TextField xCoordField;
 
     @FXML
-    private Button bikeViewBtn;
+    private TextField yCoordField;
 
     @FXML
-    private TextField priceField;
-
-    @FXML
-    private TextField buyDateField;
-
-    @FXML
-    private ComboBox<String> typeComboBox;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button homeBtn;
+    private Button createNewDockBtn;
 
     @FXML
     private Button bikesBtn;
@@ -52,15 +39,18 @@ public class bikeEditController {
     private Button adminBtn;
 
     @FXML
-    private TextField powerUsageField;
-
-
-
+    private Button homeBtn;
 
     @FXML
-    void saveChanges(ActionEvent event){
+    void createNewDockConfirm(ActionEvent event){
 
     }
+
+
+
+
+
+
 
 
 
@@ -109,5 +99,4 @@ public class bikeEditController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
 
-public class bikeTypeController implements Initializable{
+public class BikeTypeController implements Initializable{
     private Type type;
     private Factory factory = new Factory();
 

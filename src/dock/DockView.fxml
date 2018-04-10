@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,17 +9,15 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dock.DockController">
    <children>
-      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
+      <AnchorPane layoutX="184.0" layoutY="-3.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <AnchorPane layoutX="228.0" layoutY="69.0" prefHeight="268.0" prefWidth="181.0" style="-fx-background-color: -fx-secondary;" />
-            <TextField fx:id="deleteAdminEmailField2" alignment="TOP_LEFT" layoutX="30.0" layoutY="136.0" promptText="Name" style="-fx-background-color: -fx-primary;" />
-            <Line endX="80.0" layoutX="126.0" layoutY="161.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
-            <TextField fx:id="deleteAdminEmailField" alignment="TOP_LEFT" layoutX="30.0" layoutY="176.0" promptText="X-COORDINATES" style="-fx-background-color: -fx-primary;" />
-            <Line endX="80.0" layoutX="126.0" layoutY="201.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
-            <TextField fx:id="deleteAdminEmailField1" alignment="TOP_LEFT" layoutX="30.0" layoutY="216.0" promptText="Y-COORDINATES" style="-fx-background-color: -fx-primary;" />
-            <Line endX="80.0" layoutX="126.0" layoutY="241.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
-            <Button fx:id="deleteAdmintn" layoutX="55.0" layoutY="262.0" mnemonicParsing="false" onAction="#createNewDockConfirm" text="Create new dock" />
-         </children></AnchorPane>
+            <Button fx:id="editDockBtn" layoutX="60.0" layoutY="222.0" mnemonicParsing="false" onAction="#changeToDockEditView" prefHeight="35.0" prefWidth="134.0" text="Edit Dock" textAlignment="CENTER" />
+            <Button fx:id="dockInfoBtn" layoutX="60.0" layoutY="168.0" mnemonicParsing="false" onAction="#changeToDockInfoView" prefHeight="35.0" prefWidth="134.0" text="Dock Info" textAlignment="CENTER" />
+            <Button fx:id="deleteDockBtn" layoutX="249.0" layoutY="186.0" mnemonicParsing="false" onAction="#deleteDock" prefHeight="35.0" prefWidth="134.0" text="Delete Dock" textAlignment="CENTER" />
+            <Button fx:id="newDockBtn" layoutX="60.0" layoutY="114.0" mnemonicParsing="false" onAction="#changeToNewDockView" prefHeight="35.0" prefWidth="134.0" text="New Dock" textAlignment="CENTER" />
+            <ComboBox fx:id="dockIdComboBox" layoutX="249.0" layoutY="151.0" prefHeight="27.0" prefWidth="134.0" />
+         </children>
+      </AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
