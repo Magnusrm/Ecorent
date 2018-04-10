@@ -1,34 +1,26 @@
-package bike.bikeEdit;
+package dock.dockEdit;
 
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
+import javafx.scene.control.*;
 
-public class bikeEditController {
-    @FXML
-    private TextField makeField;
+public class DockEditController {
 
     @FXML
-    private Button bikeViewBtn;
+    private ComboBox<String> bikeIdComboBox;
 
     @FXML
-    private TextField priceField;
+    private TextField dockNameField;
 
     @FXML
-    private TextField buyDateField;
+    private TextField xCoordField;
 
     @FXML
-    private ComboBox<String> typeComboBox;
+    private TextField yCoordField;
 
     @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button homeBtn;
+    private Button saveChangesBtn;
 
     @FXML
     private Button bikesBtn;
@@ -49,15 +41,14 @@ public class bikeEditController {
     private Button adminBtn;
 
     @FXML
-    private TextField powerUsageField;
-
-
-
+    private Button homeBtn;
 
     @FXML
-    void saveChanges(ActionEvent event){
+    void saveChanges(ActionEvent event) {
 
     }
+
+
 
 
 
@@ -101,10 +92,9 @@ public class bikeEditController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }
