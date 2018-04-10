@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class BikeModelTest {
 
@@ -38,12 +39,12 @@ public class BikeModelTest {
         String make = "DBS";
         String typeName = "Racer";
         Type type = new Type(typeName);
-        double pwrUsg = 100;
+        double pwrUsg = 0.36;
         boolean repairing = false;
-        int dockID = 1;
+        int dockID = -1;
 
         int expResult = 55; //Must be changed according to the self-incrementing bike_id in the DB
-        int result = instance.addBike(date, price, make, typeName, dockID, pwrUsg, repairing);
+        int result = instance.addBike(date, price, make, typeName,dockID, pwrUsg, repairing);
 
         assertEquals(expResult, result);
     }
@@ -59,11 +60,10 @@ public class BikeModelTest {
         String make = "DBS";
         //int typeID = 1;
         Type type = new Type("Racer");
-        int dockID = 1;
-        //double pwrUsg = 100;
+        double pwrUsg = 0.36;
         //boolean repairing = false;
 
-        Bike expResult = new Bike(regDate, price, make, type, dockID) ;
+        Bike expResult = new Bike(regDate, price, make, type, pwrUsg) ;
         Bike result = instance.getBike(bikeID);
         assertEquals(expResult, result);
     }
@@ -79,13 +79,13 @@ public class BikeModelTest {
         //int typeID = 1;
         String typeName = "Racer";
         Type type = new Type("Racer");
-        int dockID = 1;
-        double pwrUsg = 100;
+        double pwrUsg = 0.36;
         boolean repairing = false;
+        int dockID = 1;
 
         instance.editBike(1, date, price, make, dockID, pwrUsg, typeName);
 
-        Bike expResult =new Bike(regDate, price, make, type, dockID);
+        Bike expResult =new Bike(regDate, price, make, type, pwrUsg);
         Bike result = instance.getBike(bikeID);
         assertEquals(expResult, result);
     }
@@ -94,11 +94,10 @@ public class BikeModelTest {
     public void testDeleteBike(){
         System.out.println("Testing the method deleteBike()");
 
-        int bikeID = 2;
+        int bikeID = 55; //Must be the same bikeID as tests above
 
         instance.deleteBike(bikeID);
 
-        Bike expResult = null;
-        Bike result = instance.getBike(bikeID);
+        assertNull(instance.getBike(bikeID));
     }
 }

@@ -81,11 +81,7 @@ public class DockModel {
             preparedStatement = connection.prepareStatement(nameQuery);
             preparedStatement.setString(1, name.toLowerCase());
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }else{
-                return false;
-            }
+            return resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - dockNameExists()");
         }finally {
@@ -146,11 +142,7 @@ public class DockModel {
                 preparedStatement.setDouble(3, yCord);
                 preparedStatement.setInt(4, dockID);
 
-                if (preparedStatement.executeUpdate() != 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }
         }catch (SQLException e){
             System.out.println(e.getMessage() + " - editDock()");
@@ -173,11 +165,7 @@ public class DockModel {
             if(dockNameExists(name)) {
                 preparedStatement = connection.prepareStatement(deleteQuery);
                 preparedStatement.setString(1, name);
-                if (preparedStatement.executeUpdate() != 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - deleteDock()");

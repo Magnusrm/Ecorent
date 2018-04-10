@@ -157,38 +157,6 @@ public class AdminModel {
         return false;
     }
 
-    public String getSalt(String email){
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        String salt;
-
-        String saltQuery = "SELECT hash FROM admin WHERE email = ?";
-
-        try{
-            connection = DBCleanup.getConnection();
-
-            if(adminExists(email)){
-                preparedStatement = connection.prepareStatement(saltQuery);
-                preparedStatement.setString(1, email);
-                resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                salt = resultSet.getString("salt");
-                return salt;
-            }else{
-                System.out.println("Given email does not exist");
-                return null;
-            }
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getSalt()");
-        }finally {
-            DBCleanup.closeStatement(preparedStatement);
-            DBCleanup.closeResultSet(resultSet);
-            DBCleanup.closeConnection(connection);
-        }
-        return null;
-    }
 
     //Returns the hash value of a given email
     public String getHash(String email){

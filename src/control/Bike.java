@@ -6,7 +6,7 @@ public class Bike {
     private int bikeId = -1; // this will be updated after the bike is added to the database.
     private final LocalDate buyDate;
     private double price;
-    private int dockId;
+    private int dockId = -1;
     private String make;
     private Type type;
     private double powerUsage;
