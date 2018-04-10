@@ -4,10 +4,26 @@ import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class bikeInfoController {
 
+    @FXML
+    private Label priceLbl;
+
+    @FXML
+    private Label typeLbl;
+
+    @FXML
+    private Label makeLbl;
+
+    @FXML
+    private Label dateLbl;
+
+    @FXML
+    private Label batteryLbl;
+    
     @FXML
     private Button showInfoBtn;
 
