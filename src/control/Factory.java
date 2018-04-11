@@ -24,6 +24,7 @@ public class Factory {
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
+    private String isLoggedIn;
 
     public Factory(){
         adminModel = new AdminModel();
@@ -38,6 +39,7 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
+    public String getIsLoggedIn(){return isLoggedIn;}
 
     //Method to get bikes, docks and admins from
     //model classes connected to database.
@@ -55,13 +57,13 @@ public class Factory {
     //Method to add admin. If mainAdmin is true
     //the admin will have access to add and delete
     //other admins
-    public boolean addAdmin(Admin a, boolean mainAdmin){
+    public boolean addAdmin(Admin a){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
         for(Admin admin:admins){
             if(a.equals(admin)) return false;
         }//end loop
         admins.add(a);
-        return adminModel.addAdmin(a.getEmail(), a.getPassword(),mainAdmin);
+        return adminModel.addAdmin(a.getEmail(), a.getPassword(),a.isMainAdmin());
     }//end method
 
 
@@ -130,16 +132,18 @@ public class Factory {
         return false;
     }//end method
 
-    public boolean deleteAdmin(Admin a) {
+    public boolean deleteAdmin(String email) {
         for (Admin anAdmin : admins) {
-            if (a.equals(anAdmin)) {
-                adminModel.deleteAdmin(anAdmin.getEmail());
+            if (email.equals(anAdmin.getEmail())) {
+                adminModel.deleteAdmin(email);
                 admins.remove(anAdmin);
                 return true;
             }//end if
         }//end loop
         return false;
     }//end method
+
+    //Method to change
 
     //Method to edit bikes
     public boolean editBike(int bikeId, Bike newBike){
@@ -179,16 +183,16 @@ public class Factory {
     }//end method
 
     //Method to edit types
-    public boolean editType(Type type) {
-        if(type == null||type.getName().length() == 0)throw new IllegalArgumentException("No input");
+    public boolean editType(Type typeOriginal, Type typeEdit) {
+        if(typeEdit == null||typeEdit.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
-            if (types.get(i).equals(type)) {
-                types.set(i, type);
-                int j = TypeModel.typeExists(type.getName());
-                return typeModel.editType(j,type.getName());
+            if (types.get(i).equals(typeOriginal)) {
+                int j = TypeModel.typeExists(typeOriginal.getName());
+                types.set(i, typeEdit);
+                return typeModel.editType(j,typeEdit.getName());
             }//end if
         }//end loop
-        if(TypeModel.typeExists(type.getName())==-1)throw new IllegalArgumentException("The type does not exist");
+        if(TypeModel.typeExists(typeOriginal.getName())==-1)throw new IllegalArgumentException("The type does not exist");
         return false;
     }//end method
 
@@ -208,16 +212,30 @@ public class Factory {
     //Method to get an user's password
     public String password(String email){
         for(Admin a:admins){
-            if(a.getEmail().toLowerCase().equals(email.toLowerCase()))return a.getPassword();
-        }//end if
+            if(a.getEmail().equals(email)){
+                isLoggedIn = email;
+                return a.getPassword();
+            }//end if
+        }//end loop
         return null;
     }//end method
 
-    //Test
-    public static void main(String[] args){
-        Factory factory = new Factory();
-        Type type = new Type("Landevei");
-        factory.addType(type);
-    }//end main
+    //Method to delete all bikes without a type
+    public boolean deleteAllBikes(){
+        for(int i = 0; i<bikes.size();i++){
+            if(bikes.get(i).getType() == null)bikes.remove(i);
+        }
+        return bikeModel.deleteBikesWhereTypeIsNULL();
+    }//end
+
+    //Method to get all bikes docked at a given dock
+    public int[] dockedBikes(String dockName){
+        ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
+        int[] dockedBikes = new int[docked.size()];
+        for(int i = 0; i<dockedBikes.length;i++){
+            dockedBikes[i] = docked.get(i);
+        }//end loop
+        return dockedBikes;
+    }//end method
 
 }//end class
