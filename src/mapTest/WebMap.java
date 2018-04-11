@@ -102,8 +102,8 @@ public class WebMap extends Application {
                                     "document.updateMarkers(items);");
             /*webEngine.executeScript("var paths = [" + arrayToString(path01) + ", " +arrayToString(path02) +
                                     ", " + arrayToString(path03) + ", " + arrayToString(path12) + ", " + arrayToString(path23) +
-                                    "];" + "document.createPaths(paths);"); */
-
+                                    "];" +
+                                    "for (var i = 0; i < paths.length; i++) {document.runSnapToRoad(paths[i]); }");*/
         });
 
 

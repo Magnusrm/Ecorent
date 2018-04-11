@@ -12,10 +12,14 @@
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=drawing">
     </script>
+    <script type ="text/javascript" src="scripts/v3_epoly.js">
+    </script>
+
 
     <script type="text/javascript">
         function initialize() {
             var apiKey = "AIzaSyA44sw3tgul3F1t5xT2PeXkSm0GhQmUa6M";
+            var directionsKey = "AIzaSyAQSLNDYInDRGGXsEDAOl_8sQ2JWQGcw6w";
             var latlng = new google.maps.LatLng(63.429276, 10.392517);
             var myOptions = {
                 zoom: 16,
@@ -52,6 +56,7 @@
             directionsDisplay.setMap(document.map);
             drawingManager.setMap(document.map);
 
+            var bounds = new google.maps.LatLngBounds();
 
             document.zoomIn = function zoomIn() {
                 var zoomLevel = document.map.getZoom();
@@ -64,30 +69,23 @@
             }
 
 
-
-
             var markers = [];
             var snappedCoordinates = [];
+            var snappedWaypoints = [];
             var placeIdArray = [];
+            var polylines = [];
             var destinations = [];
+            var lineSymbol = {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                strokeColor: '#393'
+            };
 
             document.calcRoute = function calcRoute() {
-                var request = {
-                    origin: markers[0].getPosition(),
-                    destination: markers[1].getPosition(),
-                    // Note that Javascript allows us to access the constant
-                    // using square brackets and a string value as its
-                    // "property."
-                    travelMode: google.maps.TravelMode["BICYCLING"]
-                };
-                directionsService.route(request, function(response, status) {
-                    if (status == 'OK') {
-                        directionsDisplay.setDirections(response);
-                    }
-                });
             }
 
-            document.createMarker = function createMarker(id, latitude, longitude) {
+
+            document.createMarkerEgen = function createMarkerEgen(id, latitude, longitude) {
                 var latlngMarker = new google.maps.LatLng(latitude, longitude);
                 document.marker = new google.maps.Marker({
                     position: latlngMarker,
@@ -102,33 +100,35 @@
 
             document.drawSnappedPolyline = function drawSnappedPolyline() {
                 var snappedPolyline = new google.maps.Polyline({
-                    path: snappedCoordinates,
+                    path: snappedWaypoints.join('|'),
+                    icons: [{
+                        icon: lineSymbol,
+                        offset: '100%'
+                    }],
+                    map: document.map,
                     strokeColor: 'black',
                     strokeWeight: 3
                 });
 
-                snappedPolyline.setMap(map);
-                //polylines.push(snappedPolyline);
+                snappedPolyline.setMap(document.map);
+                polylines.push(snappedPolyline);
+                document.animateCircle(snappedPolyline);
             }
 
-            document.createPaths = function createPaths(paths){
-                var pathString = "";
-                for (var i = 0; i < paths.length; i++){
-                    pathString = paths[i][0].join(',') + '|' + paths[i][1].join(',')
+            document.runSnapToRoad = function runSnapToRoad(path){
+
+                var pathValues = [];
+                for (var i = 0; i < path.length; i++){
+                    pathValues.push(path[i].toUrlValue());
+
                     $.get('https://roads.googleapis.com/v1/snapToRoads', {
                         interpolate: true,
                         key: apiKey,
-                        path: pathString,
+                        path: pathValues.join('|')
                     }, function(data) {
                         document.processSnapToRoadResponse(data);
-                        var snappedPolyline = new google.maps.Polyline({
-                            path: pathString,
-                            strokeColor: 'black',
-                            strokeWeight: 3
-                        });
 
-                        snappedPolyline.setMap(document.map);
-                        //document.drawSnappedPolyline();
+                        document.drawSnappedPolyline();
                         //getAndDrawSpeedLimits();
                     });
                 }
@@ -149,13 +149,13 @@
 
             /*
             document.map.addListener("click", function(event){
-                  updateMarker(event.latLng) });
+                  createMarker(event.latLng) });
 
             */
 
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(map);
+                    markers[i].setMap(document.map);
                 }
 
             }
@@ -165,25 +165,53 @@
 
 
                 for (var j = 0; j < posData.length; j++){
-                    document.createMarker(posData[j][0], posData[j][1], posData[j][2]);
+                    document.createMarkerEgen(posData[j][0], posData[j][1], posData[j][2]);
                 }
+                var en = [destinations[0], destinations[1]];
+                var to = [destinations[0], destinations[2]];
+                var tre = [destinations[2], destinations[3]];
+                var fire = [destinations[1], destinations[2]];
+                var fem = [destinations[3], destinations[0]];
 
-                var polylineOptions = {path : destinations};
-                var polyline = new google.maps.Polyline(polylineOptions);
+                document.drawPolyline(en);
+                document.drawPolyline(to);
+                document.drawPolyline(tre);
+                document.drawPolyline(fire);
+                document.drawPolyline(fem);
+
+                document.drawPolyline();
+
+
+
+            }
+            document.drawPolyline = function drawPolyline(joda){
                 var p = new google.maps.Polyline({
-                   path: destinations,
-                   geodesic: true,
-                   strokeColor:'#FF0000'
+                    path: joda,
+                    icons: [{
+                        icon: lineSymbol,
+                        offset: '100%'
+                    }],
+                    map: document.map,
+                    strokeColor: 'black',
+                    strokeWeight: 3
                 });
                 p.setMap(document.map);
+                document.animateCircle(p);
+            }
+
+            document.animateCircle = function animateCircle(line) {
+                var count = 0;
+                window.setInterval(function() {
+                    count = (count + 1) % 200;
+
+                    var icons = line.get('icons');
+                    icons[0].offset = (count / 2) + '%';
+                    line.set('icons', icons);
+                }, 1000);
             }
 
 
         }// initialize end
-
-
-
-
 
     </script>
 </head>
