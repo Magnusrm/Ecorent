@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 
 import netscape.javascript.JSObject;
 
-import java.util.Arrays;
-
 
 public class WebMap extends Application {
     public double[][] bikePos = {
