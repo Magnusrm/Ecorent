@@ -13,6 +13,8 @@ import netscape.javascript.JSObject;
 
 import java.util.Arrays;
 
+import static java.lang.Thread.sleep;
+
 
 public class WebMap extends Application {
 
@@ -109,6 +111,13 @@ public class WebMap extends Application {
 
         System.out.println("ok");
         mapStage.show();
+        try {
+            sleep(2000);
+        } catch(InterruptedException e){
+            System.out.println("sleep interrupted");
+        }
+
+
     }
 
     static { // use system proxy settings when standalone application
@@ -132,9 +141,6 @@ public class WebMap extends Application {
 
     public static void main(String[] args){
         Application.launch(args);
+
     }
 }
-
-
-
-

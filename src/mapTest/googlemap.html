@@ -22,7 +22,7 @@
             var directionsKey = "AIzaSyAQSLNDYInDRGGXsEDAOl_8sQ2JWQGcw6w";
             var latlng = new google.maps.LatLng(63.429276, 10.392517);
             var myOptions = {
-                zoom: 16,
+                zoom: 18,
                 center: latlng,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControl: false,
@@ -179,24 +179,23 @@
                 document.drawPolyline(fire);
                 document.drawPolyline(fem);
 
-                document.drawPolyline();
-
+                //document.drawPolyline();
 
 
             }
             document.drawPolyline = function drawPolyline(joda){
                 var p = new google.maps.Polyline({
                     path: joda,
-                    icons: [{
+                  /*  icons: [{
                         icon: lineSymbol,
                         offset: '100%'
-                    }],
+                    }],*/
                     map: document.map,
                     strokeColor: 'black',
                     strokeWeight: 3
                 });
                 p.setMap(document.map);
-                document.animateCircle(p);
+                //document.animateCircle(p);
             }
 
             document.animateCircle = function animateCircle(line) {
