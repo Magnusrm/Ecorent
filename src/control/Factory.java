@@ -1,4 +1,4 @@
-/*
+/**
 * Factory.java
 * @Team007
 *
@@ -44,6 +44,10 @@ public class Factory {
     //Method to get bikes, docks and admins from
     //model classes connected to database.
     //This is used every time the user starts the application
+
+    /**
+     * test
+     * */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();
        docks = dockModel.getAllDocks();
