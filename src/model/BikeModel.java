@@ -120,6 +120,7 @@ public class BikeModel {
                 type = new Type(typeName);
                 bike = new Bike(localDate, price, make, type,pwrUsg);
                 bike.setBikeId(bikeID);
+                //bike.setDockId(dockID);
                 return bike;
             }
         } catch (SQLException e) {
@@ -309,5 +310,10 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
+    }
+    public static void main(String[] args){
+        BikeModel bikeModel = new BikeModel();
+
+        bikeModel.editBike(56, "2018-04-10", 3000,"DBS",1 , 3200, "Landevei");
     }
 }
