@@ -93,6 +93,30 @@ public class DockModel {
         return false;
     }
 
+    private boolean dockIDExists(int dockID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String IDQuery = "SELECT dock_id FROM dock WHERE dock_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(IDQuery);
+            preparedStatement.setInt(1, dockID);
+            resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - dockIDExists()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
     public int addDock(String name, double xCord, double yCord){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -136,7 +160,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameExists(name)) {
+            if(dockIDExists(dockID)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, xCord);

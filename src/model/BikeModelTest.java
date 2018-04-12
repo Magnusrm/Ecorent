@@ -15,6 +15,21 @@ public class BikeModelTest {
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     BikeModel instance;
+    private final int BIKEID = 62;
+
+    @Override
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Bike)) {
+            return false;
+        }
+
+        Bike b = (Bike) o;
+
+        return (((Bike) o).getBikeId() == b.getBikeId() && ((Bike) o).getMake().equals(b.getMake()) &&
+                ((Bike) o).getPrice() == b.getPrice());
+
+    }
 
     @BeforeEach
     public void before() {
@@ -34,17 +49,14 @@ public class BikeModelTest {
         System.out.println("Testing the method addBike()");
 
         String date = "2018-03-20";
-        LocalDate regDate = LocalDate.parse(date);
         double price = 1000;
         String make = "DBS";
         String typeName = "Racer";
-        Type type = new Type(typeName);
         double pwrUsg = 0.36;
         boolean repairing = false;
-        int dockID = -1;
 
-        int expResult = 55; //Must be changed according to the self-incrementing bike_id in the DB
-        int result = instance.addBike(date, price, make, typeName,dockID, pwrUsg, repairing);
+        int expResult = BIKEID; //Must be changed according to the self-incrementing bike_id in the DB
+        int result = instance.addBike(date, price, make, typeName, pwrUsg, repairing);
 
         assertEquals(expResult, result);
     }
@@ -53,40 +65,34 @@ public class BikeModelTest {
     public void testGetBike(){
         System.out.println("Testing the method getBike()");
 
-        int bikeID = 55; //Must match the expResult above
         String date = "2018-03-20";
         LocalDate regDate = LocalDate.parse(date);
         double price = 1000;
         String make = "DBS";
-        //int typeID = 1;
         Type type = new Type("Racer");
         double pwrUsg = 0.36;
-        //boolean repairing = false;
 
         Bike expResult = new Bike(regDate, price, make, type, pwrUsg) ;
-        Bike result = instance.getBike(bikeID);
+        Bike result = instance.getBike(BIKEID);
         assertEquals(expResult, result);
     }
     @Test
     public void testEditBike(){
         System.out.println("Testing the method editBike()");
 
-        int bikeID = 55; //This must also match the expResult from addBike()
         String date = "2018-03-20";
         LocalDate regDate = LocalDate.parse(date);
         double price = 1001;
         String make = "DBS";
-        //int typeID = 1;
         String typeName = "Racer";
-        Type type = new Type("Racer");
+        Type type = new Type(typeName);
         double pwrUsg = 0.36;
-        boolean repairing = false;
         int dockID = 1;
 
-        instance.editBike(1, date, price, make, dockID, pwrUsg, typeName);
+        instance.editBike(62, date, price, make, dockID, pwrUsg, typeName);
 
-        Bike expResult =new Bike(regDate, price, make, type, pwrUsg);
-        Bike result = instance.getBike(bikeID);
+        Bike expResult = new Bike(regDate, price, make, type, pwrUsg);
+        Bike result = instance.getBike(BIKEID);
         assertEquals(expResult, result);
     }
 
@@ -94,10 +100,8 @@ public class BikeModelTest {
     public void testDeleteBike(){
         System.out.println("Testing the method deleteBike()");
 
-        int bikeID = 55; //Must be the same bikeID as tests above
+        instance.deleteBike(BIKEID);
 
-        instance.deleteBike(bikeID);
-
-        assertNull(instance.getBike(bikeID));
+        assertNull(instance.getBike(BIKEID));
     }
 }

@@ -57,7 +57,7 @@ public class BikeModel {
         String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
         String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
         String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?";
+        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
         String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
         //String dockIDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
 
@@ -144,14 +144,16 @@ public class BikeModel {
     //Updates the values of a given bike
     public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?,pwr_usg = ?, type_id = ? " +
-                "WHERE bike_id = ?;";
+        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
+                "WHERE bike_id = ?";
         try{
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
+
 
             if(bikeExists(bikeID)) {
                 preparedStatement = connection.prepareStatement(bikeInsert);
@@ -160,10 +162,11 @@ public class BikeModel {
                 preparedStatement.setString(3, make);
                 preparedStatement.setInt(4, dockID);
                 preparedStatement.setDouble(5, pwrUsg);
-                preparedStatement.setDouble(6, typeID);
+                preparedStatement.setInt(6, typeID);
                 preparedStatement.setInt(7, bikeID);
 
-                if (preparedStatement.executeUpdate(bikeInsert) != 0) {
+
+                if (preparedStatement.executeUpdate() != 0) {
                     connection.commit();
                     return true;
                 } else {
@@ -227,15 +230,15 @@ public class BikeModel {
     }
 
     //Adds a new bike to the database
-    public int addBike(String date, double price, String make, String type, int dockID, double pwrUsg, boolean repair){
+    public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         int typeID = TypeModel.typeExists(type);
 
-        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, dock_id, pwr_usg, repairing) VALUES " +
-                "(DEFAULT, ?, ?, ?, ?, ?, ?, ?);";
+        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing) VALUES " +
+                "(DEFAULT, ?, ?, ?, ?, ?, ?);";
         String maxBikeID = "SELECT MAX(bike_id) from bike";
 
         byte rep = 1;
@@ -251,11 +254,11 @@ public class BikeModel {
             preparedStatement.setString(3, make);
             preparedStatement.setInt(4, typeID);
             preparedStatement.setDouble(5, pwrUsg);
-            preparedStatement.setInt(6, dockID);
+            //preparedStatement.setInt(6, dockID);
             if(repair){
-                preparedStatement.setByte(7, rep);
+                preparedStatement.setByte(6, rep);
             }else{
-                preparedStatement.setByte(7, notRep);
+                preparedStatement.setByte(6, notRep);
             }
 
             if(preparedStatement.executeUpdate() != 0){
