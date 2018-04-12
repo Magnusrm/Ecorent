@@ -2,12 +2,17 @@ package main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import changescene.ChangeScene;
+import javafx.scene.control.TextField;
+import loginAdm.CurrentAdmin;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class MainController {
-
+public class MainController implements Initializable{
 
     @FXML
     private Button homeBtn;
@@ -30,8 +35,13 @@ public class MainController {
     @FXML
     private Button adminBtn;
 
+    @FXML
+    private TextField current;
 
-    // main buttons below
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+
+    }//end method
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -46,7 +56,7 @@ public class MainController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
+    void changeToMapScene(ActionEvent event) throws Exception{
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/map/MapView.fxml");
     }
@@ -64,17 +74,17 @@ public class MainController {
     }
 
     @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
+    void changeToHomeScene(ActionEvent event) {
+        /*ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "");*/
     }
+
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
-
     }
 
 }

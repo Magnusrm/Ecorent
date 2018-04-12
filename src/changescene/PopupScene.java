@@ -12,25 +12,16 @@ public class PopupScene {
 
     private Stage popup;
 
-    public void setScene(Stage st, ActionEvent event, String fxmlname) throws Exception{
-
+    public void setScene(ActionEvent event, String fxmlname) throws Exception{
 
         Parent parent = FXMLLoader.load(getClass().getResource(fxmlname));
         Scene scene = new Scene(parent);
 
-
-
         // lag ny stage
         popup = new Stage();
-
-        popup.initOwner(st);
-        popup.initModality(Modality.WINDOW_MODAL);
-
+        popup.initModality(Modality.APPLICATION_MODAL);
         popup.setScene(scene);
-        popup.requestFocus();
         popup.show();
-
-
 
     }
 

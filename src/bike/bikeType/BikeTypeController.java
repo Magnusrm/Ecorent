@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
 import model.TypeModel;
+import loginAdm.CurrentAdmin;
 
 public class BikeTypeController implements Initializable{
     private Type type;
@@ -35,6 +36,9 @@ public class BikeTypeController implements Initializable{
 
     @FXML
     private ComboBox<?> typeComboBox;
+
+    @FXML
+    private Button saveBtn;
 
     @FXML
     private Button homeBtn;
@@ -81,16 +85,13 @@ public class BikeTypeController implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeListView.setItems(types);
-
-            //System.out.println(factory.getTypes().get(0).getName());
-
         }catch (Exception e){e.printStackTrace();}
     }
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
 
-        //System.out.println(typeListView);
+        System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
         alert.setHeaderText(null);
@@ -98,20 +99,36 @@ public class BikeTypeController implements Initializable{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            //... IF OK
-            factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()));
+            if(factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()))){
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Delete type");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Type deleted!");
+                alert1.showAndWait();
+            }else{
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Delete type");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Something went wrong! Type not deleted");
+                alert1.showAndWait();
+            }//end else
             try{
                 saveChanges(event);
                 updateList();
             } catch(Exception e){
-
+                e.printStackTrace();
             }
 
         } else {
-            // ... IF CANCEL
+            //IF CANCEL
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Delete type");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Type will not be deleted");
+            alert1.showAndWait();
+        }//end else
+    }//end method
 
-        }
-    }
 
     @FXML
     void newType(ActionEvent event) {
@@ -164,11 +181,10 @@ public class BikeTypeController implements Initializable{
                updateList();
            } catch(Exception e){
 
-           }
+            }
+        });
 
-       });
-    }//end method
-
+    }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
@@ -182,7 +198,6 @@ public class BikeTypeController implements Initializable{
             alert1.setHeaderText(null);
             alert1.setContentText(type.getName() + " has been saved!");
         }//end if
-
         type = null;
     }
 
@@ -216,7 +231,6 @@ public class BikeTypeController implements Initializable{
         cs.setScene(event, "/bike/BikeView.fxml");
     }
 
-
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -249,7 +263,7 @@ public class BikeTypeController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

@@ -41,27 +41,27 @@
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="priceLbl" layoutX="107.0" layoutY="123.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="priceLbl" layoutX="107.0" layoutY="123.0" prefHeight="21.0" prefWidth="134.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="typeLbl" layoutX="107.0" layoutY="158.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="typeLbl" layoutX="107.0" layoutY="158.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="makeLbl" layoutX="107.0" layoutY="193.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="makeLbl" layoutX="107.0" layoutY="193.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="dateLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl1" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="50.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>

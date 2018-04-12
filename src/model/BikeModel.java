@@ -9,11 +9,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BikeModel {
-    private String driver = "com.mysql.jdbc.Driver";
-    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
 
-    private boolean bikeExists(int bikeID){
+    public boolean bikeExists(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -21,8 +19,7 @@ public class BikeModel {
         String existsQuery = "SELECT bike_id FROM bike WHERE bike_id = ?";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(existsQuery);
             preparedStatement.setInt(1, bikeID);
@@ -33,8 +30,6 @@ public class BikeModel {
                 return false;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - bikeExists()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - bikeExists()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -57,18 +52,21 @@ public class BikeModel {
         PreparedStatement getMake = null;
         PreparedStatement getType = null;
         PreparedStatement getPwr = null;
+        //PreparedStatement getDockID = null;
 
         String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
         String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
         String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
         String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
         String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
+        //String dockIDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
         ResultSet rsPrice = null;
         ResultSet rsMake = null;
         ResultSet rsType = null;
         ResultSet rsPwr = null;
+        //ResultSet rsDockID = null;
 
         String regDate;
         LocalDate localDate;
@@ -76,10 +74,10 @@ public class BikeModel {
         String make;
         String typeName;
         double pwrUsg;
+        //int dockID;
 
         try {
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(bikeExists(bikeID)) {
                 getDate = connection.prepareStatement(dateQuery);
@@ -113,14 +111,20 @@ public class BikeModel {
                 rsPwr.next();
                 pwrUsg = rsPwr.getDouble("pwr_usg");
 
+                /*getDockID = connection.prepareStatement(dockIDQuery);
+                getDockID.setInt(1, bikeID);
+                rsDockID = getDockID.executeQuery();
+                rsDockID.next();
+                dockID = rsDockID.getInt("dock_id");*/
+
                 type = new Type(typeName);
-                bike = new Bike(localDate, price, make, type, pwrUsg);
+                bike = new Bike(localDate, price, make, type,pwrUsg);
+                bike.setBikeId(bikeID);
+                //bike.setDockId(dockID);
                 return bike;
             }
         } catch (SQLException e) {
-             System.out.println(e.getMessage() + " - getBike()");
-        } catch(ClassNotFoundException e){
-              System.out.println(e.getMessage() + " - getBike()");
+            System.out.println(e.getMessage() + " - getBike()");
         }finally{
             DBCleanup.closeStatement(getDate);
             DBCleanup.closeStatement(getPrice);
@@ -140,28 +144,31 @@ public class BikeModel {
     }
 
     //Updates the values of a given bike
-    public boolean editBike(int bikeID, String regDate, double price, String make, double pwrUsg, String typeName) {
+    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ? ,pwr_usg = ?, type_id = ? " +
-                "WHERE bike_id = ?;";
+        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
+                "WHERE bike_id = ?";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
+
 
             if(bikeExists(bikeID)) {
                 preparedStatement = connection.prepareStatement(bikeInsert);
                 preparedStatement.setString(1, regDate);
                 preparedStatement.setDouble(2, price);
                 preparedStatement.setString(3, make);
-                preparedStatement.setDouble(4, pwrUsg);
-                preparedStatement.setDouble(5, typeID);
-                preparedStatement.setInt(6, bikeID);
+                preparedStatement.setInt(4, dockID);
+                preparedStatement.setDouble(5, pwrUsg);
+                preparedStatement.setInt(6, typeID);
+                preparedStatement.setInt(7, bikeID);
 
-                if (preparedStatement.executeUpdate(bikeInsert) != 0) {
+
+                if (preparedStatement.executeUpdate() != 0) {
                     connection.commit();
                     return true;
                 } else {
@@ -171,12 +178,31 @@ public class BikeModel {
             }
         }catch(SQLException e) {
             System.out.println(e.getMessage() + " - editBike()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - editBike()");
         }finally {
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.setAutoCommit(connection);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
+    public boolean deleteBikesWhereTypeIsNULL(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String deleteUpdate = "DELETE FROM bike WHERE type_id IS NULL";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(deleteUpdate);
+
+            return preparedStatement.executeUpdate() != 0;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - deleteBikesWhereTypeIsNULL()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
         }
         return false;
@@ -188,22 +214,15 @@ public class BikeModel {
 
         String deleteUpdate = "DELETE FROM bike WHERE bike.bike_id = ?";
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             if(bikeExists(bikeID)) {
                 preparedStatement = connection.prepareStatement(deleteUpdate);
                 preparedStatement.setInt(1, bikeID);
 
-                if (preparedStatement.executeUpdate() != 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - deleteBike()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - deleteBike()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -213,7 +232,7 @@ public class BikeModel {
     }
 
     //Adds a new bike to the database
-    public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repairing){
+    public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -228,8 +247,7 @@ public class BikeModel {
         byte notRep = 0;
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
 
             preparedStatement = connection.prepareStatement(bikeInsert);
@@ -238,7 +256,8 @@ public class BikeModel {
             preparedStatement.setString(3, make);
             preparedStatement.setInt(4, typeID);
             preparedStatement.setDouble(5, pwrUsg);
-            if(repairing){
+            //preparedStatement.setInt(6, dockID);
+            if(repair){
                 preparedStatement.setByte(6, rep);
             }else{
                 preparedStatement.setByte(6, notRep);
@@ -255,8 +274,6 @@ public class BikeModel {
                 return -1;
             }
         }catch(SQLException e){
-            System.out.println(e.getMessage() + " - addBike()");
-        }catch(ClassNotFoundException e){
             System.out.println(e.getMessage() + " - addBike()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
@@ -277,8 +294,7 @@ public class BikeModel {
         String bikesQuery = "SELECT bike_id FROM bike";
 
         try{
-            connection = DriverManager.getConnection(dbName);
-            Class.forName(driver);
+            connection = DBCleanup.getConnection();
 
             preparedStatement = connection.prepareStatement(bikesQuery);
             resultSet = preparedStatement.executeQuery();
@@ -288,8 +304,6 @@ public class BikeModel {
             return allBikes;
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getAllBikes()");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - getAllBikes()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
@@ -297,5 +311,9 @@ public class BikeModel {
         }
         return null;
     }
-}
+    public static void main(String[] args){
+        BikeModel bikeModel = new BikeModel();
 
+        bikeModel.editBike(56, "2018-04-10", 3000,"DBS",1 , 3200, "Landevei");
+    }
+}

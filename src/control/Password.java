@@ -17,7 +17,7 @@ import org.apache.commons.codec.binary.Base64;
 public class Password {
     private static final int iterations = 20*1000; //More iterations = More expensive computing the hash(For us and attackers)
     private static final int saltLen = 32; //The salt will be 32 random bytes
-    private static final int desiredKeyLen = 256;
+    private static final int desiredKeyLen = 64;
 
     public Password(){}//Default constructor
 

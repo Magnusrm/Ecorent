@@ -1,39 +1,34 @@
-package bike.bikeInfo;
+package dock.dockNew;
 
 import changescene.ChangeScene;
-import control.Bike;
+import control.Dock;
 import control.Factory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
 
-public class BikeInfoController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DockNewController{
     private Factory factory = new Factory();
 
     @FXML
-    private Label priceLbl;
+    private TextField dockNameField;
 
     @FXML
-    private Label typeLbl;
+    private TextField xCoordField;
 
     @FXML
-    private Label makeLbl;
+    private TextField yCoordField;
 
     @FXML
-    private Label dateLbl;
-
-    @FXML
-    private Label batteryLbl;
-
-    @FXML
-    private Button showInfoBtn;
-
-    @FXML
-    private TextField bikeIdField;
+    private Button createNewDockBtn;
 
     @FXML
     private Button bikesBtn;
@@ -56,39 +51,48 @@ public class BikeInfoController {
     @FXML
     private Button homeBtn;
 
-
-
-
-
     @FXML
-    void showInfo(){
-        factory.updateSystem();
-        for(Bike b:factory.getBikes()){System.out.println(b);}
-        Bike bike = null;
-        int bikeID = Integer.parseInt(bikeIdField.getText());
-        for(int i = 0; i<factory.getBikes().size();i++){
-            if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
-        }//end loop
-        if(bike != null){
-            String price = "" + bike.getPrice();
-            String type = "" + bike.getType().getName();
-            String make = "" + bike.getMake();
-            String date = "" + bike.getBuyDate().toString();
-            String battery = "" + bike.getPowerUsage();
-            priceLbl.setText(price);
-            typeLbl.setText(type);
-            makeLbl.setText(make);
-            dateLbl.setText(date);
-            batteryLbl.setText(battery);
-        }//end if
-        if(bike == null){
+    void createNewDockConfirm(ActionEvent event){ // created a new dock
+        try{
+            Dock dock = new Dock(dockNameField.getText(), Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));
+
+            if(factory.addDock(dock)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("New dock saved!");
+                alert.setHeaderText(null);
+                alert.setContentText("Dock is now saved and can be used to store bikes.");
+                alert.showAndWait();
+                for (Dock d : factory.getDocks()) {
+                    System.out.println(d);
+                }
+                ChangeScene cs = new ChangeScene();
+                cs.setScene(event, "/dock/DockView.fxml");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Something went wrong!");
+                alert.setHeaderText(null);
+                alert.setContentText("Dock is not saved, make sure to fill out the form in the given format.");
+                alert.showAndWait();
+                ChangeScene cs1 = new ChangeScene();
+                cs1.setScene(event, "/dock/DockNew/DockNewView.fxml");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Something went wrong!");
             alert.setHeaderText(null);
-            alert.setContentText("Cannot find the given bike!");
+            alert.setContentText("Dock is not saved, make sure to fill out the form in the given format");
             alert.showAndWait();
+            System.out.println("Error createNewDockConfirm: " + e);
         }
-    }//end method
+    }
+
+
+
+
+
+
+
 
 
     // main buttons below
@@ -131,7 +135,7 @@ public class BikeInfoController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

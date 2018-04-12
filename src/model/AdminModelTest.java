@@ -1,9 +1,11 @@
 package model;
+import control.Admin;
+import control.Bike;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminModelTest {
 
@@ -12,41 +14,23 @@ public class AdminModelTest {
     ResultSet resultSet;
     AdminModel instance;
 
-    @BeforeAll
-    public void before() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true");
-            Class.forName("com.mysql.jdbc.Driver");
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + " - before() in AdminModelTest");
-        }catch(ClassNotFoundException e){
-            System.out.println(e.getMessage() + " - before() in AdminModelTest");
-        }
-    }
-
-    @AfterAll
-    public void after(){
-        try{
-            connection.close();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-    }
-
     @BeforeEach
-    public void setUp(){
+    public void before() {
         instance = new AdminModel();
+        connection = DBCleanup.getConnection();
     }
+
 
     @AfterEach
-    public void tearDown(){
+    public void after() {
+        DBCleanup.closeConnection(connection);
         instance = null;
     }
 
+
     @Test
-    public void testAdminExists(){
+    public void testAdminExists() {
         System.out.println("Testing the method adminExists()");
-        System.out.println("The test admin must be in the database for this test to work");
 
         String email = "testadmin@test.test";
         boolean expResult = true;
@@ -55,11 +39,10 @@ public class AdminModelTest {
     }
 
     @Test
-    public void testAddAdmin(){
+    public void testAddAdmin() {
         System.out.println("Testing the method addAdmin()");
 
         String email = "testadmin1@test.test";
-        String salt = "hello";
         String hash = "people";
         boolean priviliged = false;
 
@@ -72,7 +55,7 @@ public class AdminModelTest {
     }
 
     @Test
-    public void testDeleteAdmin(){
+    public void testDeleteAdmin() {
         System.out.println("Testing the method deleteAdmin()");
 
         String email = "testadmin1@test.test"; //Same as above so addAdmin must work for this to work
@@ -86,19 +69,17 @@ public class AdminModelTest {
     }
 
     @Test
-    public void testGetSalt(){
-        System.out.println("Testing the method getSalt()");
+    public void testGetAdmin() {
+        System.out.println("Testing the method getAdmin()");
 
         String email = "testadmin@test.test";
 
-        String expResult = "testsalt";
-        String result = instance.getSalt(email);
-
-        assertEquals(expResult, result);
+        Admin result = instance.getAdmin(email);
+        assertNotNull(result);
     }
 
     @Test
-    public void testGetHash(){
+    public void testGetHash() {
         System.out.println("Testing the method getHash()");
 
         String email = "testadmin@test.test";
@@ -109,4 +90,14 @@ public class AdminModelTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    public void testIsPriviliged() {
+        System.out.println("Testing the method IsPriviliged()");
+
+        String email = "testadmin@test.test";
+
+        assertFalse(instance.isPriviliged(email));
+    }
 }
+
+

@@ -1,41 +1,38 @@
-package dock;
+package dock.dockEdit;
 
 import changescene.ChangeScene;
+import control.Dock;
 import control.Factory;
-import control.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.DockModel;
 
 import java.net.URL;
-import java.util.Optional;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class DockController implements Initializable {
-
+public class DockEditController implements Initializable {
     private Factory factory = new Factory();
+    @FXML
+    private ComboBox<String> bikeIdComboBox;
+
+    @FXML
+    private TextField dockNameField;
+
+    @FXML
+    private TextField xCoordField;
+
+    @FXML
+    private TextField yCoordField;
 
     @FXML
     private ComboBox<String> dockNameComboBox;
 
     @FXML
-    private Button editDockBtn;
-
-    @FXML
-    private Button dockInfoBtn;
-
-    @FXML
-    private Button deleteDockBtn;
-
-    @FXML
-    private Button newDockBtn;
-
-    @FXML
-    private TextField dockIdField;
+    private Button saveChangesBtn;
 
     @FXML
     private Button bikesBtn;
@@ -58,16 +55,11 @@ public class DockController implements Initializable {
     @FXML
     private Button homeBtn;
 
-    @FXML
-    private Button deleteDockConfirmBtn;
-
-
-    //Notice the docks are converted to String array.
-    //This is to simplify the clicking and fetching process.
     @Override
     public void initialize(URL url, ResourceBundle rb){
         try {
             factory.updateSystem();
+            // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
             String[] visualized = new String[factory.getDocks().size()];
             for (int i = 0; i < visualized.length; i++) {
@@ -75,48 +67,36 @@ public class DockController implements Initializable {
             }//end loop
             docks.addAll(visualized);
             dockNameComboBox.setItems(docks);
+
+            dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
-    }//end constructor
-
-
-    @FXML
-    void changeToNewDockView(ActionEvent event) throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockNew/DockNewView.fxml");
     }
 
     @FXML
-    void changeToDockEditView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockEdit/DockEditView.fxml");
-    }
+    void saveChanges(ActionEvent event) throws SQLException,ClassNotFoundException{
+        String dockName = dockNameComboBox.getValue();
+        Dock editDock = new Dock(dockNameField.getText(),Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));
 
-    @FXML
-    void changeToDockInfoView(ActionEvent event) throws Exception {
-       ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockInfo/DockInfoView.fxml");
-    }
-
-    @FXML
-    void deleteDock(ActionEvent event) throws Exception{
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete dock");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you would like to delete the selected dock?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            DockModel dm = new DockModel();
-            dm.deleteDock(dockNameComboBox.getValue());
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/dock/DockView.fxml");
+        System.out.println("test0");
+        if(factory.editDocks(dockName, editDock)){
+            System.out.println("test02");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("The info about dock " + dockNameComboBox.getValue() + " is now updated!");
+            alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Something went wrong!");
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot connect to system, please check your connection");
+            alert.showAndWait();
+            System.out.println("test3");
         }
+
+        System.out.println("test4");
+
     }
-
-
-
-
 
 
 

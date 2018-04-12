@@ -1,41 +1,36 @@
-package dock;
+package dock.dockInfo;
 
 import changescene.ChangeScene;
-import control.Factory;
-import control.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.DockModel;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import control.*;
 
-public class DockController implements Initializable {
+public class DockInfoController implements Initializable {
 
     private Factory factory = new Factory();
+
+    @FXML
+    private Button showInfoBtn;
+
+    @FXML
+    private Label nameLbl;
+
+    @FXML
+    private Label powerDrawLbl;
 
     @FXML
     private ComboBox<String> dockNameComboBox;
 
     @FXML
-    private Button editDockBtn;
-
-    @FXML
-    private Button dockInfoBtn;
-
-    @FXML
-    private Button deleteDockBtn;
-
-    @FXML
-    private Button newDockBtn;
-
-    @FXML
-    private TextField dockIdField;
+    private ListView<String> bikeIdListView;
 
     @FXML
     private Button bikesBtn;
@@ -58,64 +53,47 @@ public class DockController implements Initializable {
     @FXML
     private Button homeBtn;
 
-    @FXML
-    private Button deleteDockConfirmBtn;
 
-
-    //Notice the docks are converted to String array.
+    //Notice the bikes and docks are converted to String array.
     //This is to simplify the clicking and fetching process.
     @Override
     public void initialize(URL url, ResourceBundle rb){
         try {
             factory.updateSystem();
+
+            // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
-            String[] visualized = new String[factory.getDocks().size()];
-            for (int i = 0; i < visualized.length; i++) {
-                visualized[i] = factory.getDocks().get(i).getName();
+            String[] visualized2 = new String[factory.getDocks().size()];
+            for (int i = 0; i < visualized2.length; i++) {
+                visualized2[i] = factory.getDocks().get(i).getName();
             }//end loop
-            docks.addAll(visualized);
+            docks.addAll(visualized2);
             dockNameComboBox.setItems(docks);
+
+            dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
-    }//end constructor
-
-
-    @FXML
-    void changeToNewDockView(ActionEvent event) throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockNew/DockNewView.fxml");
     }
 
     @FXML
-    void changeToDockEditView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockEdit/DockEditView.fxml");
+    void showInfo(ActionEvent event){
+
+        // add bikeId's to listview
+        ObservableList<String> bikes= FXCollections.observableArrayList();
+        int[] visualizedInt = factory.dockedBikes(dockNameComboBox.getValue());
+        String[] visualized = new String[visualizedInt.length];
+        for (int i = 0; i < visualized.length; i++) {
+            visualized[i] = "" + visualizedInt[i];
+        }//end loop
+        bikes.addAll(visualized);
+        bikeIdListView.setItems(bikes);
+
+        // add dockName to dockNameLbl
+        nameLbl.setText(dockNameComboBox.getValue());
+
+        // add powerDraw to powerDrawLbl
+        powerDrawLbl.setText("fix me");
+
     }
-
-    @FXML
-    void changeToDockInfoView(ActionEvent event) throws Exception {
-       ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockInfo/DockInfoView.fxml");
-    }
-
-    @FXML
-    void deleteDock(ActionEvent event) throws Exception{
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete dock");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you would like to delete the selected dock?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            DockModel dm = new DockModel();
-            dm.deleteDock(dockNameComboBox.getValue());
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/dock/DockView.fxml");
-        }
-    }
-
-
-
 
 
 

@@ -13,6 +13,8 @@ import netscape.javascript.JSObject;
 
 import java.util.Arrays;
 
+import static java.lang.Thread.sleep;
+
 
 public class WebMap extends Application {
 
@@ -102,13 +104,20 @@ public class WebMap extends Application {
                                     "document.updateMarkers(items);");
             /*webEngine.executeScript("var paths = [" + arrayToString(path01) + ", " +arrayToString(path02) +
                                     ", " + arrayToString(path03) + ", " + arrayToString(path12) + ", " + arrayToString(path23) +
-                                    "];" + "document.createPaths(paths);"); */
-
+                                    "];" +
+                                    "for (var i = 0; i < paths.length; i++) {document.runSnapToRoad(paths[i]); }");*/
         });
 
 
         System.out.println("ok");
         mapStage.show();
+        try {
+            sleep(2000);
+        } catch(InterruptedException e){
+            System.out.println("sleep interrupted");
+        }
+
+
     }
 
     static { // use system proxy settings when standalone application
@@ -132,9 +141,6 @@ public class WebMap extends Application {
 
     public static void main(String[] args){
         Application.launch(args);
+
     }
 }
-
-
-
-
