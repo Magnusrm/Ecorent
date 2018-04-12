@@ -242,4 +242,14 @@ public class Factory {
         return dockedBikes;
     }//end method
 
+    //Method to get power usage to a given dock
+    public double powerUsage(String dockName){
+        int[] docked = dockedBikes(dockName);
+        double pwr = 0;
+        for(int i = 0; i<bikes.size();i++){
+            if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
+        }//end loop
+        return pwr;
+    }//end method
+
 }//end class

@@ -155,7 +155,7 @@ public class BikeModel {
                 preparedStatement.setDouble(5, typeID);
                 preparedStatement.setInt(6, bikeID);
 
-                if (preparedStatement.executeUpdate(bikeInsert) != 0) {
+                if (preparedStatement.executeUpdate() != 0) {
                     connection.commit();
                     return true;
                 } else {
