@@ -7,7 +7,13 @@ import java.util.ArrayList;
 
 public class AdminModel {
 
-    //Checks if an email already exists in the database
+    /**
+     * @Author Sander Nicolausson
+     * Checks if an admin is in the database by searching by email.
+     * Returns true/false.
+     * @param  email
+     * @return boolean
+     */
     public boolean adminExists(String email){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -37,7 +43,11 @@ public class AdminModel {
     }
 
 
-    //Creates an admin object
+    /**
+     *
+     * @param email
+     * @return
+     */
     public Admin getAdmin(String email){
         Connection connection = null;
 
