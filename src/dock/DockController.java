@@ -1,15 +1,40 @@
 package dock;
 
 import changescene.ChangeScene;
+import control.Factory;
+import control.Type;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 
-public class DockController {
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
+public class DockController implements Initializable {
+
+    private Factory factory = new Factory();
+
     @FXML
-    private Button homeBtn;
+    private ComboBox<String> dockIdComboBox;
+
+    @FXML
+    private Button editDockBtn;
+
+    @FXML
+    private Button dockInfoBtn;
+
+    @FXML
+    private Button deleteDockBtn;
+
+    @FXML
+    private Button newDockBtn;
+
+    @FXML
+    private TextField dockIdField;
 
     @FXML
     private Button bikesBtn;
@@ -30,17 +55,73 @@ public class DockController {
     private Button adminBtn;
 
     @FXML
-    private Button newDockBtn;
+    private Button homeBtn;
 
     @FXML
-    private TextField nameField;
+    private Button deleteDockConfirmBtn;
+
+
+    //Notice the docks are converted to String array.
+    //This is to simplify the clicking and fetching process.
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        try {
+            factory.updateSystem();
+            ObservableList<String> docks = FXCollections.observableArrayList();
+            String[] visualized = new String[factory.getDocks().size()];
+            for (int i = 0; i < visualized.length; i++) {
+                visualized[i] = factory.getDocks().get(i).getName();
+            }//end loop
+            docks.addAll(visualized);
+            dockIdComboBox.setItems(docks);
+        }catch (Exception e){e.printStackTrace();}
+    }//end constructor
 
 
     @FXML
-    void createNewDockConfirm(ActionEvent event){
-        System.out.println("New dock made");
-
+    void changeToNewDockView(ActionEvent event) throws Exception{
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/dockNew/DockNewView.fxml");
     }
+
+    @FXML
+    void changeToDockEditView(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/dockEdit/DockEditView.fxml");
+    }
+
+    @FXML
+    void changeToDockInfoView(ActionEvent event) throws Exception {
+       /* ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/dockInfo/DockInfoView.fxml");*/
+    }
+
+    @FXML
+    void deleteDock(ActionEvent event){
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete dock");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you would like to delete the selected dock?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            //... IF OK
+
+        } else {
+            // ... IF CANCEL
+        }
+    }
+
+
+
+
+
+
+
+
+
+    // main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -53,10 +134,11 @@ public class DockController {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/dock/DockView.fxml");
     }
+
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
@@ -77,11 +159,11 @@ public class DockController {
         cs.setScene(event, "/main/MainView.fxml");
     }
 
-
     @FXML
     void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
+
     }
 }
