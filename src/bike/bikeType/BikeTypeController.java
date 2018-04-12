@@ -88,12 +88,6 @@ public class BikeTypeController implements Initializable{
         }catch (Exception e){e.printStackTrace();}
     }
 
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
@@ -223,6 +217,19 @@ public class BikeTypeController implements Initializable{
         typeListView.setItems(types);
     }
 
+
+
+
+
+
+
+    // main buttons below
+
+    @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/BikeView.fxml");
+    }
 
     @FXML
     void changeToDockScene(ActionEvent event) throws Exception {

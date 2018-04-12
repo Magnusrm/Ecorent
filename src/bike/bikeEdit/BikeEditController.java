@@ -90,6 +90,12 @@ public class BikeEditController implements Initializable{
 
 
     @FXML
+    void fillInfo(ActionEvent event){
+
+    }
+
+
+    @FXML
     void saveChanges(ActionEvent event){
         int bikeID = Integer.parseInt(bikeIdField.getText());
         for(int i = 0;i<factory.getBikes().size();i++){
