@@ -11,6 +11,7 @@ import loginAdm.CurrentAdmin;
 import control.*;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class BikeEditController implements Initializable{
@@ -85,18 +86,17 @@ public class BikeEditController implements Initializable{
         priceField.setText(price);
         buyDateField.setText(buyDate);
         powerUsageField.setText(powerUsage);
+        typeComboBox.getSelectionModel().select(bike.getType().getName());
     }//end method
 
 
-
-
     @FXML
-    void saveChanges(ActionEvent event){
+    void fillInfo(ActionEvent event) {
         int bikeID = Integer.parseInt(bikeIdField.getText());
-        for(int i = 0;i<factory.getBikes().size();i++){
-            if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
+        for (int i = 0; i < factory.getBikes().size(); i++) {
+            if (factory.getBikes().get(i).getBikeId() == bikeID) bike = factory.getBikes().get(i);
         }//end loop
-        if(bike != null){
+        if (bike != factory.getBikes().get(0)) {
             String make = bike.getMake();
             String price = "" + bike.getPrice();
             String buyDate = "" + bike.getBuyDate();
@@ -105,15 +105,34 @@ public class BikeEditController implements Initializable{
             priceField.setText(price);
             buyDateField.setText(buyDate);
             powerUsageField.setText(powerUsage);
-            typeComboBox.setValue(bike.getType().getName());
+            typeComboBox.getSelectionModel().select(bike.getType().getName());
+        }//end if
+    }//end method
+
+    @FXML
+    void saveChanges(ActionEvent event){
+        int bikeID = Integer.parseInt(bikeIdField.getText());
+        String make = makeField.getText();
+        double price = Double.parseDouble(priceField.getText());
+        LocalDate localDate = LocalDate.parse(buyDateField.getText());
+        double pwr = Double.parseDouble(powerUsageField.getText());
+        Type type = new Type(typeComboBox.getSelectionModel().getSelectedItem());
+        Bike editBike = new Bike(localDate,price,make,type,pwr);
+        if(factory.editBike(bikeID,editBike)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("The info about bike with bike ID " + bikeID + " is now updated!");
+            alert.showAndWait();
         }else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Something went wrong!");
             alert.setHeaderText(null);
-            alert.setContentText("Cannot find the given bike!");
+            alert.setContentText("Cannot connect to system, please check your connection");
             alert.showAndWait();
         }//end else
     }//end method
+
 
 
 
