@@ -153,13 +153,14 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
+               int dockID = newBike.getDockId();
+               //newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
                 String make = newBike.getMake();
-                int dockID = newBike.getDockId();
                 double pwrUsage = newBike.getPowerUsage();
-                String typeName = newBike.getType().toString();
+                String typeName = newBike.getType().getName();
                 return bikeModel.editBike(bikeId,regDate,price,make,dockID,pwrUsage,typeName);
             }//end if
         }//end loop
