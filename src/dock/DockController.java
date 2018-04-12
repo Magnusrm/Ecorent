@@ -93,8 +93,8 @@ public class DockController implements Initializable {
 
     @FXML
     void changeToDockInfoView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockInfo/DockInfoView.fxml");
+       /* ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/dockInfo/DockInfoView.fxml");*/
     }
 
     @FXML

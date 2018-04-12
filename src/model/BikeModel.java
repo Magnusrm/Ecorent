@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class BikeModel {
-    private String driver = "com.mysql.jdbc.Driver";
-    private String dbName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true";
 
 
     public boolean bikeExists(int bikeID){
@@ -54,18 +52,21 @@ public class BikeModel {
         PreparedStatement getMake = null;
         PreparedStatement getType = null;
         PreparedStatement getPwr = null;
+        //PreparedStatement getDockID = null;
 
         String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
         String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
         String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
         String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
         String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
+        //String dockIDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
         ResultSet rsPrice = null;
         ResultSet rsMake = null;
         ResultSet rsType = null;
         ResultSet rsPwr = null;
+        //ResultSet rsDockID = null;
 
         String regDate;
         LocalDate localDate;
@@ -73,6 +74,7 @@ public class BikeModel {
         String make;
         String typeName;
         double pwrUsg;
+        //int dockID;
 
         try {
             connection = DBCleanup.getConnection();
@@ -109,9 +111,16 @@ public class BikeModel {
                 rsPwr.next();
                 pwrUsg = rsPwr.getDouble("pwr_usg");
 
+                /*getDockID = connection.prepareStatement(dockIDQuery);
+                getDockID.setInt(1, bikeID);
+                rsDockID = getDockID.executeQuery();
+                rsDockID.next();
+                dockID = rsDockID.getInt("dock_id");*/
+
                 type = new Type(typeName);
-                bike = new Bike(localDate, price, make, type, pwrUsg);
+                bike = new Bike(localDate, price, make, type,pwrUsg);
                 bike.setBikeId(bikeID);
+                //bike.setDockId(dockID);
                 return bike;
             }
         } catch (SQLException e) {
@@ -135,25 +144,29 @@ public class BikeModel {
     }
 
     //Updates the values of a given bike
-    public boolean editBike(int bikeID, String regDate, double price, String make, double pwrUsg, String typeName) {
+    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ? ,pwr_usg = ?, type_id = ? " +
-                "WHERE bike_id = ?;";
+        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
+                "WHERE bike_id = ?";
         try{
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
+
 
             if(bikeExists(bikeID)) {
                 preparedStatement = connection.prepareStatement(bikeInsert);
                 preparedStatement.setString(1, regDate);
                 preparedStatement.setDouble(2, price);
                 preparedStatement.setString(3, make);
-                preparedStatement.setDouble(4, pwrUsg);
-                preparedStatement.setDouble(5, typeID);
-                preparedStatement.setInt(6, bikeID);
+                preparedStatement.setInt(4, dockID);
+                preparedStatement.setDouble(5, pwrUsg);
+                preparedStatement.setInt(6, typeID);
+                preparedStatement.setInt(7, bikeID);
+
 
                 if (preparedStatement.executeUpdate() != 0) {
                     connection.commit();
@@ -187,7 +200,7 @@ public class BikeModel {
 
             return preparedStatement.executeUpdate() != 0;
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + " - deleteBikesWhereTypeIsNULL()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
@@ -219,7 +232,7 @@ public class BikeModel {
     }
 
     //Adds a new bike to the database
-    public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repairing){
+    public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -243,7 +256,8 @@ public class BikeModel {
             preparedStatement.setString(3, make);
             preparedStatement.setInt(4, typeID);
             preparedStatement.setDouble(5, pwrUsg);
-            if(repairing){
+            //preparedStatement.setInt(6, dockID);
+            if(repair){
                 preparedStatement.setByte(6, rep);
             }else{
                 preparedStatement.setByte(6, notRep);
@@ -296,5 +310,10 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
+    }
+    public static void main(String[] args){
+        BikeModel bikeModel = new BikeModel();
+
+        bikeModel.editBike(56, "2018-04-10", 3000,"DBS",1 , 3200, "Landevei");
     }
 }

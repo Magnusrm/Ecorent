@@ -7,7 +7,13 @@ import java.util.ArrayList;
 
 public class AdminModel {
 
-    //Checks if an email already exists in the database
+    /**
+     * @Author Sander Nicolausson
+     * Checks if an admin is in the database by searching by email.
+     * Returns true/false.
+     * @param  email
+     * @return boolean
+     */
     public boolean adminExists(String email){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -37,7 +43,13 @@ public class AdminModel {
     }
 
 
-    //Creates an admin object
+    /**
+     *@Author Sander Nicolausson
+     * Returns an admin object from the database
+     *
+     * @param email
+     * @return
+     */
     public Admin getAdmin(String email){
         Connection connection = null;
 
@@ -157,38 +169,6 @@ public class AdminModel {
         return false;
     }
 
-    public String getSalt(String email){
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        String salt;
-
-        String saltQuery = "SELECT hash FROM admin WHERE email = ?";
-
-        try{
-            connection = DBCleanup.getConnection();
-
-            if(adminExists(email)){
-                preparedStatement = connection.prepareStatement(saltQuery);
-                preparedStatement.setString(1, email);
-                resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                salt = resultSet.getString("salt");
-                return salt;
-            }else{
-                System.out.println("Given email does not exist");
-                return null;
-            }
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getSalt()");
-        }finally {
-            DBCleanup.closeStatement(preparedStatement);
-            DBCleanup.closeResultSet(resultSet);
-            DBCleanup.closeConnection(connection);
-        }
-        return null;
-    }
 
     //Returns the hash value of a given email
     public String getHash(String email){

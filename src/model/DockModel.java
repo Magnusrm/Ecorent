@@ -82,13 +82,33 @@ public class DockModel {
             preparedStatement = connection.prepareStatement(nameQuery);
             preparedStatement.setString(1, name.toLowerCase());
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }else{
-                return false;
-            }
+            return resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - dockNameExists()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
+    private boolean dockIDExists(int dockID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String IDQuery = "SELECT dock_id FROM dock WHERE dock_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(IDQuery);
+            preparedStatement.setInt(1, dockID);
+            resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - dockIDExists()");
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
@@ -140,18 +160,14 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameExists(name)) {
+            if(dockIDExists(dockID)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, xCord);
                 preparedStatement.setDouble(3, yCord);
                 preparedStatement.setInt(4, dockID);
 
-                if (preparedStatement.executeUpdate() != 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }
         }catch (SQLException e){
             System.out.println(e.getMessage() + " - editDock()");
@@ -160,6 +176,31 @@ public class DockModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
+    }
+
+    public int getDockID(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String IDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(IDQuery);
+            preparedStatement.setInt(1, bikeID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("dock_id");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getDockID()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
     }
 
     public boolean deleteDock(String name){
@@ -174,11 +215,7 @@ public class DockModel {
             if(dockNameExists(name)) {
                 preparedStatement = connection.prepareStatement(deleteQuery);
                 preparedStatement.setString(1, name);
-                if (preparedStatement.executeUpdate() != 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - deleteDock()");

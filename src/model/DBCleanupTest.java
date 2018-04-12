@@ -12,36 +12,21 @@ public class DBCleanupTest {
     ResultSet resultSet;
     DBCleanup instance;
 
-    @BeforeAll
-    public void before() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true");
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + " - before() in DBCleanupTest");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage() + " - before() in DBCleanupTest");
-        }
-    }
-
-    @AfterAll
-    public void after() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     @BeforeEach
-    public void setUp() {
+    public void before() {
         instance = new DBCleanup();
+        connection = DBCleanup.getConnection();
     }
 
+
     @AfterEach
-    public void tearDown() {
+    public void after() {
+        DBCleanup.closeConnection(connection);
         instance = null;
     }
+
+
 
     @Test
     public void testCloseResultSet(){
@@ -54,7 +39,7 @@ public class DBCleanupTest {
             DBCleanup.closeResultSet(resultSet);
             assertTrue(resultSet.isClosed());
         }catch (SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + " - testCloseResultSet");
         }
     }
 
@@ -68,7 +53,7 @@ public class DBCleanupTest {
             DBCleanup.closeStatement(preparedStatement);
             assertTrue(preparedStatement.isClosed());
         }catch (SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + " - testCloseStatement");
         }
     }
 
@@ -77,7 +62,7 @@ public class DBCleanupTest {
         System.out.println("Testing the method closeConnection()");
 
         try{
-            connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true");
+
             DBCleanup.closeConnection(connection);
             assertTrue(connection.isClosed());
         }catch (SQLException e){
