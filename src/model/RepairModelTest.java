@@ -17,34 +17,25 @@ public class RepairModelTest {
     ResultSet resultSet;
     RepairModel instance;
 
-    @BeforeAll
-    public void before() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true");
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + " - before() in RepairModelTest");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage() + " - before() in RepairModelTest");
-        }
-    }
-
-    @AfterAll
-    public void after() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    private int max = 2; //Change this before running tests.
+    private int bikeId = 56; //ID of the test bike
+    //Information about the repair that is tested
+    private String dateSent = "2018-04-10";
+    private String beforeDescription = "Broken wheel";
+    private String dateReceived = "2018-04-11";
+    private String afterDescription = "Fixed wheel";
+    double price = 2000;
 
     @BeforeEach
-    public void setUp() {
+    public void before() {
         instance = new RepairModel();
+        connection = DBCleanup.getConnection();
     }
 
+
     @AfterEach
-    public void tearDown() {
+    public void after() {
+        DBCleanup.closeConnection(connection);
         instance = null;
     }
 
@@ -52,12 +43,12 @@ public class RepairModelTest {
     public void testSendRepair(){
         System.out.println("Testing the method sendRepair()");
 
-        int bikeID = 1;
-        String dateSent = "2018-03-22";
-        String description = "Broken wheel";
+        int bikeID = bikeId;
+        String date = dateSent;
+        String description = beforeDescription;
 
-        int expResult = 1;
-        int result = instance.sendRepair(bikeID, dateSent, description);
+        int expResult = max; //This needs to be the next number in
+        int result = instance.sendRepair(bikeID, date, description);
         assertEquals(expResult, result);
     }
 
@@ -65,29 +56,29 @@ public class RepairModelTest {
     public void testReturnRepair(){
         System.out.println("Testing the method returnRepair()");
 
-        int repairID = 1;
-        String dateReceived = "2018-03-23";
-        String rDescription = "Fixed wheel";
-        double price = 2000;
+        int repairID = max;
+        String date = dateReceived;
+        String description = afterDescription;
+        double pr = price;
 
 
-        assertTrue(instance.returnRepair(repairID, dateReceived, rDescription, price));
+        assertTrue(instance.returnRepair(repairID, date, description, pr));
     }
 
     @Test
     public void testGetRepair(){
         System.out.println("Testing the method getRepair()");
 
-        int repairID = 1;
-        String dateSent = "2018-03-22";
-        String description = "Broken wheel";
-        String dateReceived = "2018-03-23";
-        String rDescription = "Fixed wheel";
-        double price = 2000;
-        int bikeID = 1;
+        int repairID = max;
+        String dateS = dateSent;
+        String descriptionBefore = beforeDescription;
+        String dateR = dateReceived;
+        String descriptionAfter = afterDescription;
+        double pr = price;
+        int bikeID = bikeId;
 
 
-        Repair expResult = new Repair(dateSent, description, dateReceived, rDescription, price, bikeID);
+        Repair expResult = new Repair(dateS, descriptionBefore, dateR, descriptionAfter, pr, bikeID);
         expResult.setRepairId(repairID);
         Repair result = instance.getRepair(repairID);
         assertEquals(expResult, result);

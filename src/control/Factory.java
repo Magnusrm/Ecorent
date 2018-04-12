@@ -75,6 +75,7 @@ public class Factory {
        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
+       int dockID = b.getDockId();
        double pwrUsage = b.getPowerUsage();
        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
        return true;
@@ -156,9 +157,10 @@ public class Factory {
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
                 String make = newBike.getMake();
+                int dockID = newBike.getDockId();
                 double pwrUsage = newBike.getPowerUsage();
                 String typeName = newBike.getType().toString();
-                return bikeModel.editBike(bikeId,regDate,price,make,pwrUsage,typeName);
+                return bikeModel.editBike(bikeId,regDate,price,make,dockID,pwrUsage,typeName);
             }//end if
         }//end loop
         if(newBike.getBikeId() == -1)throw new IllegalArgumentException("The bike ID given does not exist");
