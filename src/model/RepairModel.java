@@ -12,7 +12,7 @@ public class RepairModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String sendInsert = "INSERT INTO repair(repair_id, date_sent, before_desc, date_received, after_desc, price, bike_id)" +
+        String sendInsert = "INSERT INTO repair(repair_id, date_sent, before_desc, date_recieved, after_desc, price, bike_id)" +
                 "VALUES(DEFAULT, ?, ?,NULL, NULL, NULL, ?)";
         String maxQuery = "SELECT MAX(repair_id) FROM repair";
         try{
@@ -51,7 +51,7 @@ public class RepairModel {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String returnInsert = "UPDATE repair SET date_received = ?, after_desc = ?, price = ? WHERE repair_id = ?";
+        String returnInsert = "UPDATE repair SET date_recieved = ?, after_desc = ?, price = ? WHERE repair_id = ?";
         try{
             connection = DBCleanup.getConnection();
 
@@ -104,7 +104,7 @@ public class RepairModel {
 
         String dateSentQuery = "SELECT date_sent FROM repair WHERE repair_id = ?";
         String beforeDescQuery = "SELECT before_desc FROM repair WHERE repair_id = ?";
-        String dateReceivedQuery = "SELECT date_received FROM repair WHERE repair_id = ?";
+        String dateReceivedQuery = "SELECT date_recieved FROM repair WHERE repair_id = ?";
         String afterDescQuery = "SELECT after_desc FROM repair WHERE repair_id = ?";
         String priceQuery = "SELECT price FROM repair WHERE repair_id = ?";
         String bikeIDQuery = "SELECT bike_id FROM repair WHERE repair_id = ?";
@@ -128,7 +128,7 @@ public class RepairModel {
             getDateReceived.setInt(1, repairID);
             rsDateReceived = getDateReceived.executeQuery();
             rsDateReceived.next();
-            dateReceived = rsDateReceived.getString("date_received");
+            dateReceived = rsDateReceived.getString("date_recieved");
 
             getAfterDesc = connection.prepareStatement(afterDescQuery);
             getAfterDesc.setInt(1, repairID);
@@ -149,6 +149,7 @@ public class RepairModel {
             bikeID = rsBikeID.getInt("bike_id");
 
             repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
+            repair.setRepairId(repairID);
             return repair;
 
         }catch (SQLException e){
