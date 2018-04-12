@@ -5,6 +5,8 @@ import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class BikeRepairController {
 
@@ -34,6 +36,30 @@ public class BikeRepairController {
 
     @FXML
     private Button homeBtn;
+
+    @FXML
+    private TextArea descReturnedTextArea;
+
+    @FXML
+    private TextField priceReturnedField;
+
+    @FXML
+    private TextField dateReturnedField;
+
+    @FXML
+    private Button submitSentBtn;
+
+    @FXML
+    private Button returnedSubmitBtn;
+
+    @FXML
+    private TextArea descSentTextArea;
+
+    @FXML
+    private TextField dateSentField;
+
+    @FXML
+    private TextField bikeIdField;
 
 
     @FXML

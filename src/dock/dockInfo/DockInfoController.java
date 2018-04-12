@@ -27,7 +27,7 @@ public class DockInfoController implements Initializable {
     private Label powerDrawLbl;
 
     @FXML
-    private ComboBox<String> dockIdComboBox;
+    private ComboBox<String> dockNameComboBox;
 
     @FXML
     private ListView<String> bikeIdListView;
@@ -68,9 +68,9 @@ public class DockInfoController implements Initializable {
                 visualized2[i] = factory.getDocks().get(i).getName();
             }//end loop
             docks.addAll(visualized2);
-            dockIdComboBox.setItems(docks);
+            dockNameComboBox.setItems(docks);
 
-            dockIdComboBox.getSelectionModel().selectFirst();
+            dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
     }
 
@@ -79,7 +79,7 @@ public class DockInfoController implements Initializable {
 
         // add bikeId's to listview
         ObservableList<String> bikes= FXCollections.observableArrayList();
-        int[] visualizedInt = factory.dockedBikes(dockIdComboBox.getValue());
+        int[] visualizedInt = factory.dockedBikes(dockNameComboBox.getValue());
         String[] visualized = new String[visualizedInt.length];
         for (int i = 0; i < visualized.length; i++) {
             visualized[i] = "" + visualizedInt[i];
@@ -88,7 +88,7 @@ public class DockInfoController implements Initializable {
         bikeIdListView.setItems(bikes);
 
         // add dockName to dockNameLbl
-        nameLbl.setText(dockIdComboBox.getValue());
+        nameLbl.setText(dockNameComboBox.getValue());
 
         // add powerDraw to powerDrawLbl
         powerDrawLbl.setText("fix me");

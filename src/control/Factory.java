@@ -170,11 +170,12 @@ public class Factory {
     }//end method
 
     //Method to edit docks
-    public boolean editDocks (int dockId, Dock d)throws SQLException,ClassNotFoundException{
-        if(dockId<0 ||dockId==0)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
+    public boolean editDocks(String dockName, Dock d)throws SQLException,ClassNotFoundException{
+        if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
-            if(docks.get(i).getDockID() == dockId){
-                d.setDockID(dockId);
+            if(docks.get(i).getName().equals(dockName)){
+                d.setName(dockName);
+                int dockId = dockModel.getDock(dockName).getDockID();
                 docks.set(i,d);
                 String name = d.getName();
                 double x = d.getxCoordinates();
