@@ -44,6 +44,8 @@ public class AdminModel {
 
 
     /**
+     *@Author Sander Nicolausson
+     * Returns an admin object from the database
      *
      * @param email
      * @return
