@@ -4,9 +4,14 @@ import changescene.ChangeScene;
 import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class BikeRepairController {
 
@@ -67,6 +72,7 @@ public class BikeRepairController {
         PopupScene ps = new PopupScene();
         ps.setScene(event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
         ps.setTitle("Register returned repair");
+
     }
 
     @FXML
