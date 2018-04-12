@@ -118,7 +118,6 @@ public class BikeEditController implements Initializable{
         double pwr = Double.parseDouble(powerUsageField.getText());
         Type type = new Type(typeComboBox.getSelectionModel().getSelectedItem());
         Bike editBike = new Bike(localDate,price,make,type,pwr);
-        editBike.setDockId(1);
         if(factory.editBike(bikeID,editBike)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
