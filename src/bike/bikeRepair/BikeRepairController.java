@@ -4,7 +4,14 @@ import changescene.ChangeScene;
 import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class BikeRepairController {
 
@@ -35,12 +42,37 @@ public class BikeRepairController {
     @FXML
     private Button homeBtn;
 
+    @FXML
+    private TextArea descReturnedTextArea;
+
+    @FXML
+    private TextField priceReturnedField;
+
+    @FXML
+    private TextField dateReturnedField;
+
+    @FXML
+    private Button submitSentBtn;
+
+    @FXML
+    private Button returnedSubmitBtn;
+
+    @FXML
+    private TextArea descSentTextArea;
+
+    @FXML
+    private TextField dateSentField;
+
+    @FXML
+    private TextField bikeIdField;
+
 
     @FXML
     void changeToRepairReturnedView(ActionEvent event)throws Exception {
         PopupScene ps = new PopupScene();
         ps.setScene(event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
         ps.setTitle("Register returned repair");
+
     }
 
     @FXML

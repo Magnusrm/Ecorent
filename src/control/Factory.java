@@ -1,4 +1,4 @@
-/*
+/**
 * Factory.java
 * @Team007
 *
@@ -44,6 +44,10 @@ public class Factory {
     //Method to get bikes, docks and admins from
     //model classes connected to database.
     //This is used every time the user starts the application
+
+    /**
+     * test
+     * */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();
        docks = dockModel.getAllDocks();
@@ -75,6 +79,7 @@ public class Factory {
        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
+       int dockID = b.getDockId();
        double pwrUsage = b.getPowerUsage();
        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
        return true;
@@ -152,13 +157,15 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
+               int dockID = dockModel.getDockID(bikeId);
+               newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
                 String make = newBike.getMake();
                 double pwrUsage = newBike.getPowerUsage();
-                String typeName = newBike.getType().toString();
-                return bikeModel.editBike(bikeId,regDate,price,make,pwrUsage,typeName);
+                String typeName = newBike.getType().getName();
+                return bikeModel.editBike(bikeId,regDate,price,make,dockID,pwrUsage,typeName);
             }//end if
         }//end loop
         if(newBike.getBikeId() == -1)throw new IllegalArgumentException("The bike ID given does not exist");
@@ -166,11 +173,12 @@ public class Factory {
     }//end method
 
     //Method to edit docks
-    public boolean editDocks (int dockId, Dock d)throws SQLException,ClassNotFoundException{
-        if(dockId<0 ||dockId==0)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
+    public boolean editDocks(String dockName, Dock d)throws SQLException,ClassNotFoundException{
+        if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
-            if(docks.get(i).getDockID() == dockId){
-                d.setDockID(dockId);
+            if(docks.get(i).getName().equals(dockName)){
+                d.setName(dockName);
+                int dockId = dockModel.getDock(dockName).getDockID();
                 docks.set(i,d);
                 String name = d.getName();
                 double x = d.getxCoordinates();
@@ -236,6 +244,16 @@ public class Factory {
             dockedBikes[i] = docked.get(i);
         }//end loop
         return dockedBikes;
+    }//end method
+
+    //Method to get power usage to a given dock
+    public double powerUsage(String dockName){
+        int[] docked = dockedBikes(dockName);
+        double pwr = 0;
+        for(int i = 0; i<bikes.size();i++){
+            if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
+        }//end loop
+        return pwr;
     }//end method
 
 }//end class

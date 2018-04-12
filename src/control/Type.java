@@ -36,6 +36,6 @@ public class Type {
 
     @Override
     public String toString() {
-        return "Type is " + name;
+        return name;
     }//end method
 }//end class
