@@ -1,11 +1,12 @@
 /**
 * Factory.java
-* @author Ilia Rad Saadat
+* @author Team 007
 *
 * This class is an aggregate of Dock.java,Bike.java and Admin.java
 * It both updates and retrieves data from the model classes connected to the database
 * concerned the creation and edit of these objects.
-* The class will provide the view-control classes with data, which is why we add data into private arrays.
+* The class will provide the view-control classes with data, which is why we add data from the
+ * database into private arrays.
  */
 
 package control;
