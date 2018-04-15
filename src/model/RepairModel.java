@@ -3,6 +3,7 @@ package model;
 import control.Repair;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RepairModel {
 
@@ -96,6 +97,35 @@ public class RepairModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
+    }
+
+    public ArrayList<Integer> getRepairIDs(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<Integer> repIDs = new ArrayList<>();
+
+        String IDQuery = "SELECT repair_id FROM repair WHERE date_recieved IS NULL";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(IDQuery);
+
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                repIDs.add(resultSet.getInt("repair_id"));
+            }
+            return repIDs;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getRepairIDs()");
+        }finally{
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
     }
 
     /**
