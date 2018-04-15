@@ -65,12 +65,9 @@ public class BikeController {
 
     @FXML
     void changeToBikeTypeView(ActionEvent event) throws Exception {
-
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/bike/bikeType/BikeTypeView.fxml");
-
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/bikeType/BikeTypeView.fxml");
     }
-
 
     @FXML
     void changeToBikeNewView(ActionEvent event) throws Exception {
@@ -140,6 +137,13 @@ public class BikeController {
             alert.showAndWait();
         }//end else
     }
+
+
+
+
+
+
+    // main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {

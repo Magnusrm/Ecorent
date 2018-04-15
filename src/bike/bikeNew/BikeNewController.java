@@ -77,11 +77,6 @@ public class BikeNewController implements Initializable{
         }catch (Exception e){e.printStackTrace();}
     }//end constructor
 
-    @FXML
-    void changeToBikeView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
 
 
     @FXML
@@ -120,7 +115,14 @@ public class BikeNewController implements Initializable{
             alert.showAndWait();
             }//end catch
     }//end method
-    
+
+
+
+
+
+
+    // main buttons below
+
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -134,13 +136,13 @@ public class BikeNewController implements Initializable{
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception{
+    void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/stats/StatsView.fxml");
     }
@@ -157,12 +159,12 @@ public class BikeNewController implements Initializable{
         cs.setScene(event, "/main/MainView.fxml");
     }
 
-
     @FXML
     void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
+
     }
 
 }
