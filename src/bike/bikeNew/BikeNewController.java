@@ -108,7 +108,7 @@ public class BikeNewController implements Initializable{
                alert.setContentText("Bike is not saved, make sure to fill out the form in the given format");
                alert.showAndWait();
                ChangeScene cs1 = new ChangeScene();
-               cs1.setScene(event, "/bike/BikeNewView.fxml");
+               cs1.setScene(event, "/bike/bikeNew/BikeNewView.fxml");
            }//end else
         }//end try
         catch(Exception e){

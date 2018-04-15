@@ -58,7 +58,7 @@ public class MainController implements Initializable{
     @FXML
     void changeToMapScene(ActionEvent event) throws Exception{
         ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "map/MapView.fxml");
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML

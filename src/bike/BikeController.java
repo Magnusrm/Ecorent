@@ -92,7 +92,7 @@ public class BikeController {
 
     @FXML
     void deleteBike(ActionEvent event) {
-
+        factory.updateSystem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Are you sure?");
         alert.setHeaderText(null);
@@ -100,13 +100,31 @@ public class BikeController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == ButtonType.OK){
-            BikeModel bm = new BikeModel();
-            bm.deleteBike(Integer.parseInt(bikeIdField.getText()));
-        }
-    }
+            if(factory.delBike(Integer.parseInt(bikeIdField.getText()))){
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Success!");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Bike " + bikeIdField.getText() + " is now deleted!");
+                alert1.showAndWait();
+            }else{
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Failed!");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Something went wrong! Please try again");
+                alert1.showAndWait();
+            }//end condition
+        }else{
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Canceling");
+            alert2.setHeaderText(null);
+            alert2.setContentText("Bike " + bikeIdField.getText() + " will not be deleted");
+            alert2.showAndWait();
+        }//end condition
+    }//end method
 
     @FXML
     void deleteAllBikesWithoutType(ActionEvent event){
+        factory.updateSystem();
         if(factory.deleteAllBikes()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("All bikes with type null deleted");
@@ -136,9 +154,9 @@ public class BikeController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML

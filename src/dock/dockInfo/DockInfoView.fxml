@@ -35,7 +35,7 @@
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <ComboBox fx:id="dockIdComboBox" layoutX="47.0" layoutY="70.0" prefHeight="27.0" prefWidth="136.0" />
+            <ComboBox fx:id="dockNameComboBox" layoutX="47.0" layoutY="70.0" prefHeight="27.0" prefWidth="136.0" />
             <ListView fx:id="bikeIdListView" layoutX="243.0" layoutY="70.0" prefHeight="295.0" prefWidth="143.0" />
             <Label layoutX="236.0" layoutY="38.0" text="Bikes currently docked" textFill="WHITE">
                <font>

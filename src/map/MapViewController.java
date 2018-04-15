@@ -3,15 +3,25 @@ package map;
 import changescene.ChangeScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
-public class MapViewController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MapViewController implements Initializable{
 
     @FXML
     private Button showBikeBtn;
 
     @FXML
     private TextField bikeIdField;
+
+    @FXML
+    private WebView root;
+
 
 
     @FXML
@@ -67,4 +77,12 @@ public class MapViewController {
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        WebEngine engine = root.getEngine();
+        root.getEngine().load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        // engine.setJavaScriptEnabled(true);
+    }
+
 }
