@@ -16,7 +16,6 @@ public class BikeModel {
      *
      * Checks if a given bike is in the database.
      * Returns true/false.
-     * Throws IllegalArgumentException if bike does not exist.
      *
      * @param bikeID
      * @return boolean
@@ -179,7 +178,7 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
-                "WHERE bike_id = ?";
+                "WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
@@ -217,13 +216,16 @@ public class BikeModel {
 
     /**
      *
-     * @return
+     * "Deletes" bikes that does not have a type.
+     * Returns true/false.
+     *
+     * @return boolean
      */
     public boolean deleteBikesWhereTypeIsNULL(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String deleteUpdate = "DELETE FROM bike WHERE type_id IS NULL";
+        String deleteUpdate = "UPDATE bike SET active = 0 WHERE type_id IS NULL";
 
         try{
             connection = DBCleanup.getConnection();
@@ -243,7 +245,7 @@ public class BikeModel {
     /**
      * @Author Team 007
      *
-     * Deletes a bike in the database.
+     * "Deletes" a bike from the database by setting the active-bit to 0.
      * Returns true/false.
      *
      * @param bikeID
@@ -297,7 +299,7 @@ public class BikeModel {
 
         String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing, active) VALUES " +
                 "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
-        String maxBikeID = "SELECT MAX(bike_id) from bike";
+        String maxBikeID = "SELECT MAX(bike_id) FROM bike WHERE active = 1";
 
         byte rep = 1;
         byte notRep = 0;
@@ -355,7 +357,7 @@ public class BikeModel {
 
         ArrayList<Bike> allBikes = new ArrayList<Bike>();
 
-        String bikesQuery = "SELECT bike_id FROM bike";
+        String bikesQuery = "SELECT bike_id FROM bike WHERE active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -376,6 +378,49 @@ public class BikeModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Checks if a given bike is repairing.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @return boolean
+     */
+    public boolean isRepairing(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ? AND active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(repairQuery);
+            preparedStatement.setInt(1, bikeID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getByte("repairing") != 0;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getRepair()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
+    /**
+     * @Author Team 007
+     *
+     * Checks what value the repair-bit is and changes it.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @return boolean
+     */
     public boolean changeRepair(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -414,10 +459,10 @@ public class BikeModel {
         }
         return false;
     }
-
     public static void main(String[] args){
         BikeModel bikeModel = new BikeModel();
-
-        bikeModel.changeRepair(56);
+        if(bikeModel.isRepairing(68)){
+            System.out.println("Hei");
+        }
     }
 }

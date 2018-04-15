@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BikeModelTest {
 
@@ -15,7 +16,7 @@ public class BikeModelTest {
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     BikeModel instance;
-    private final int BIKEID = 67;
+    private final int BIKEID = 68;
 
     @Override
     public boolean equals(Object o){
@@ -28,7 +29,7 @@ public class BikeModelTest {
 
         return (((Bike) o).getBikeId() == b.getBikeId() && ((Bike) o).getMake().equals(b.getMake()) &&
                 ((Bike) o).getPrice() == b.getPrice() && ((Bike) o).getPowerUsage() == b.getPowerUsage() &&
-                ((Bike) o).getBuyDate().equals(b.getBuyDate()));
+                ((Bike) o).getBuyDate().equals(b.getBuyDate()) && ((Bike) o).isRepairing() == b.isRepairing());
 
     }
 
@@ -98,6 +99,16 @@ public class BikeModelTest {
         Bike result = instance.getBike(BIKEID);
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testChangeRepair(){
+        System.out.println("Testing the method changeRepair()");
+
+        instance.changeRepair(BIKEID);
+
+        assertTrue(instance.isRepairing(BIKEID));
+    }
+
 
     @Test
     public void testDeleteBike(){
