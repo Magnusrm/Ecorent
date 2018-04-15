@@ -9,6 +9,13 @@ import java.util.Properties;
 
 public class BikeStatsModel {
 
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of the most recent latitudes and longitudes + corresponding bikeID's.
+     *
+     * @return ArrayList
+     */
     public ArrayList<double[]> getRecentCoordinates(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -43,6 +50,14 @@ public class BikeStatsModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns the trip number of a given bike.
+     *
+     * @param bikeID
+     * @return int
+     */
     public int getTripNr(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -75,7 +90,14 @@ public class BikeStatsModel {
         return -1;
     }
 
-
+    /**
+     * @Author Team 007
+     *
+     * Returns the most recent battery percentage of a given bike.
+     *
+     * @param bikeID
+     * @return int
+     */
     public int getChargLvl(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -106,6 +128,51 @@ public class BikeStatsModel {
         return -1;
     }
 
+    public double getDistance(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        BikeModel bikeModel = new BikeModel();
+
+        String distanceQuery = "SELECT distance FROM bike_stats WHERE time >= (now() - INTERVAL 1 MINUTE) AND bike_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            if(bikeModel.bikeExists(bikeID)){
+                preparedStatement = connection.prepareStatement(distanceQuery);
+                preparedStatement.setInt(1, bikeID);
+                resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                return resultSet.getDouble("distance");
+            }else{
+                return -1;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getDistance");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
+    }
+
+    /**
+     * @Author Team 007
+     *
+     * Since all stats are to be saved to the database, this adds new and updated stats to the database.
+     * Returns true/false.
+     *
+     * @param time
+     * @param bikeID
+     * @param chargLvl
+     * @param xCord
+     * @param yCord
+     * @param distance
+     * @param tripNr
+     * @return boolean
+     */
     public boolean updateStats(String time, int bikeID, int chargLvl, double xCord, double yCord, double distance, int tripNr){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -142,15 +209,5 @@ public class BikeStatsModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
-    }
-
-    public static void main(String[] args){
-        BikeStatsModel bms = new BikeStatsModel();
-        for(int i = 0; i < bms.getRecentCoordinates().size(); i++) {
-            double[] doubles = bms.getRecentCoordinates().get(i);
-            System.out.println("BikeID: " + doubles[0] + ", x-coordinate: " + doubles[1] + ", y-coordinate: " + doubles[2]);
-        }
-        System.out.println("Charging lvl: " + bms.getChargLvl(1) + "%");
-        System.out.println("Trip nr: " + bms.getTripNr(1));
     }
 }

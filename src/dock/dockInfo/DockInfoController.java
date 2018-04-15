@@ -91,7 +91,7 @@ public class DockInfoController implements Initializable {
         nameLbl.setText(dockNameComboBox.getValue());
 
         // add powerDraw to powerDrawLbl
-        powerDrawLbl.setText("fix me");
+        powerDrawLbl.setText("" + factory.powerUsage(dockNameComboBox.getValue()));
 
     }
 

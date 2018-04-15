@@ -45,16 +45,18 @@ public class Dock {
         dockID = id;
     }//end method
 
-    //Equals method.
+    //Equals-method.
     //Created to avoid indifference between lower and upper case characters
     @Override
-    public boolean equals(Object b){
-        if(b == null)throw new IllegalArgumentException("Error in Dock.java, equals, argument is null");
-        if(!(b instanceof Dock))throw new IllegalArgumentException("Object must be instance of Dock.java");
-        Dock a = (Dock)b;
-        if(dockID == a.getDockID())return true;
-        else return false;
-    }//end method
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Dock)) { throw new IllegalArgumentException("The object you are comparing must be an instance of Dock");}
+
+        Dock b = (Dock) o;
+
+        return (((Dock) o).getName().equals(b.getName()) && ((Dock) o).getxCoordinates() == (b.getxCoordinates()) &&
+                ((Dock) o).getyCoordinates() == b.getyCoordinates());
+    }
 
     @Override
     public String toString(){

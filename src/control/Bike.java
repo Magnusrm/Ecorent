@@ -11,6 +11,8 @@ public class Bike {
     private Type type;
     private double powerUsage;
     private boolean repairing;
+    private boolean active = true; //whether or not the bike is still in use
+    private int battery;
 
     public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
@@ -24,6 +26,7 @@ public class Bike {
         this.type = type;
         this.powerUsage = powerUsage;
         repairing = false;
+        battery = 100;
     }
 
     public int getBikeId() {
@@ -58,11 +61,13 @@ public class Bike {
         return repairing;
     }
 
+    public boolean isActive(){return active;}
+
     public void setBikeId(int bikeId) {
         this.bikeId = bikeId;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         this.price = price;
     }
@@ -85,14 +90,29 @@ public class Bike {
         this.repairing = repairing;
     }
 
+    /**
+     * Method to deactivate bike (means it is deleted,
+     * still has stats). If param is true then it will deactivate.
+     * @param deactivate
+     */
+    public void deactivate(boolean deactivate){active = !deactivate;}
+
     public void setDockId(int dockId) {
         if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}
         this.dockId = dockId;
     }
 
+
+    /**
+     * Method to update the battery percent.
+     * Subtracts the battery with the argument.
+     * @param percent
+     * @return int
+     */
     public int updateBatteryPercent(int percent) {
-        return 0;
-    }
+        battery -= percent;
+        return battery;
+    }//end method
 
     public String toString() {
         String r = "";
@@ -105,21 +125,17 @@ public class Bike {
                 + "\n Make: " + make + "\n Type: " + type.getName() + "\n Repairing: " + r;
     }
 
+    @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Bike)) {
-            return false;
-        }
+        if (!(o instanceof Bike)) { throw new IllegalArgumentException("The object you are comparing must be an instance of Bike"); }
 
         Bike b = (Bike) o;
 
-        return (this.bikeId == b.getBikeId());
-        /*
-        if (this.bikeId == b.getBikeId()) {
-            return true;
-        }
-        return false;
-        */
+        return (((Bike) o).getBikeId() == b.getBikeId() && ((Bike) o).getMake().equals(b.getMake()) &&
+                ((Bike) o).getPrice() == b.getPrice() && ((Bike) o).getPowerUsage() == b.getPowerUsage() &&
+                ((Bike) o).getBuyDate().equals(b.getBuyDate()) && ((Bike) o).isRepairing() == b.isRepairing());
+
     }
 
 }

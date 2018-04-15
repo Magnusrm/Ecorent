@@ -1,11 +1,12 @@
 /**
 * Factory.java
-* @Team007
+* @author Team007
 *
 * This class is an aggregate of Dock.java,Bike.java and Admin.java
 * It both updates and retrieves data from the model classes connected to the database
 * concerned the creation and edit of these objects.
-* The class will provide the view-control classes with data, which is why we add data into private arrays.
+* The class will provide the view-control classes with data, which is why we add data from the
+ * database into private arrays.
  */
 
 package control;
@@ -19,12 +20,13 @@ public class Factory {
     private ArrayList<Bike> bikes = new ArrayList<Bike>();
     private ArrayList<Admin> admins = new ArrayList<Admin>();
     private ArrayList<Type> types = new ArrayList<Type>();
+    private ArrayList<Repair> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
-    private String isLoggedIn;
+
 
     public Factory(){
         adminModel = new AdminModel();
@@ -39,14 +41,12 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
-    public String getIsLoggedIn(){return isLoggedIn;}
-
-    //Method to get bikes, docks and admins from
-    //model classes connected to database.
-    //This is used every time the user starts the application
+    public ArrayList<Repair> getRepairsNotReturned(){return repairsNotReturned;}
 
     /**
-     * test
+     * Method to get bikes, docks and admins from
+     * model classes connected to database.
+     * This is used every time the user starts the application
      * */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();
@@ -55,12 +55,20 @@ public class Factory {
            Type type = new Type(name);
            types.add(type);
        }//end loop
+        for(Integer i:repairModel.getRepairIDs()){
+           repairsNotReturned.add(repairModel.getRepair(i));
+        }//end loop
+        for(int i = 0; i<repairsNotReturned.size();i++){
+           if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
+        }
        admins = adminModel.getAllAdmins();
     }//end method
 
-    //Method to add admin. If mainAdmin is true
-    //the admin will have access to add and delete
-    //other admins
+    /**
+     * Method to add admin. If mainAdmin is true
+     * the admin will have access to add and delete
+     * ther admins
+     */
     public boolean addAdmin(Admin a){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
         for(Admin admin:admins){
@@ -71,7 +79,13 @@ public class Factory {
     }//end method
 
 
-    //Method to add bikes to database
+    /**
+     * Method to add a bike.
+     *
+     *
+     * @param b is an Bike object
+     * @return boolean
+     */
     public boolean addBike(Bike b){
         if(b == null ) return false;
         bikes.add(b);
@@ -110,6 +124,47 @@ public class Factory {
         d.setDockID(dockModel.addDock(name,x,y));
         if(d.getDockID() != -1)return true;
         else return false;
+    }//end method
+
+    /**
+     * Method to add a repair.
+     * Takes object in as argument and retrieves
+     * the information model class needs.
+     */
+    public boolean repairSent(Repair r){
+        if(r == null) throw new IllegalArgumentException("The repair object is not created");
+        int bikeID = r.getBikeId();
+        String beforeDescription = r.getBeforeDesc();
+        String dateSent = r.getDateSent().toString();
+        r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescription));
+        bikeModel.changeRepair(bikeID);
+        if(r.getRepair_id() != -1){
+            for(Bike b: bikes){
+                if(b.getBikeId() == bikeID)b.setRepairing(true);
+            }//end loop
+            return true;
+        }else return false;
+    }//end method
+
+    /**
+     * Method to receive a repair.
+     * Takes object in as argument and
+     * retrieves what model classes need.
+     * @return boolean.
+     */
+    public boolean repairReturned(Repair r){
+        if(r == null)throw new IllegalArgumentException("Repair object is not created!");
+        int repairId = 0;
+        for(Repair r1: repairsNotReturned){
+            if(r1.getBikeId() == r.getBikeId())repairId = r1.getRepair_id();
+        }//end loop
+        if(repairId != 0) {
+            String date = r.getDateReceived().toString();
+            String desc = r.getAfterDesc();
+            double price = r.getPrice();
+            bikeModel.changeRepair(r.getBikeId());
+            return (repairModel.returnRepair(repairId, date, desc, price));
+        }else return false;
     }//end method
 
     //Method to delete bikes
@@ -177,7 +232,6 @@ public class Factory {
         if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
             if(docks.get(i).getName().equals(dockName)){
-                d.setName(dockName);
                 int dockId = dockModel.getDock(dockName).getDockID();
                 docks.set(i,d);
                 String name = d.getName();
@@ -215,17 +269,6 @@ public class Factory {
         }//end loop
         if(TypeModel.typeExists(type.getName()) == -1)throw new IllegalArgumentException("The type does not exist");
         return false;
-    }
-
-    //Method to get an user's password
-    public String password(String email){
-        for(Admin a:admins){
-            if(a.getEmail().equals(email)){
-                isLoggedIn = email;
-                return a.getPassword();
-            }//end if
-        }//end loop
-        return null;
     }//end method
 
     //Method to delete all bikes without a type
@@ -238,19 +281,33 @@ public class Factory {
 
     //Method to get all bikes docked at a given dock
     public int[] dockedBikes(String dockName){
-        ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
-        int[] dockedBikes = new int[docked.size()];
-        for(int i = 0; i<dockedBikes.length;i++){
-            dockedBikes[i] = docked.get(i);
-        }//end loop
-        return dockedBikes;
+        if(dockModel.bikesAtDock(dockName) != null) {
+            ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
+            if (docked.size() != 0) {
+                int[] dockedBikes = new int[docked.size()];
+                for (int i = 0; i < dockedBikes.length; i++) {
+                    dockedBikes[i] = docked.get(i);
+                }//end loop
+                return dockedBikes;
+            } else {
+                int[] noBikes = new int[0];
+                return noBikes;
+            }//end condition
+        }else {
+            int[] noBikes = new int[0];
+            return noBikes;
+        }//end condition
     }//end method
 
-    //Method to get power usage to a given dock
+    /**
+     * Method to get power usage from a given dock.
+     * It uses the dockedBikes(dockName) method to find all bikes docked at the given dock name.
+     * It then adds their power usage together and returns the value.
+     */
     public double powerUsage(String dockName){
         int[] docked = dockedBikes(dockName);
         double pwr = 0;
-        for(int i = 0; i<bikes.size();i++){
+        for(int i = 0; i<docked.length;i++){
             if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
         }//end loop
         return pwr;

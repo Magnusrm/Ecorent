@@ -5,7 +5,15 @@ import java.util.ArrayList;
 
 public class TypeModel {
 
-    //method that helps check if the type name exists in the database**
+    /**
+     * @Author Team 007
+     *
+     * Method that checks if given type exists (by name) and returns the corresponding typeID.
+     * Returns -1 if method fails.
+     *
+     * @param name
+     * @return int
+     */
     public static int typeExists(String name){
         Connection connection = null;
         ResultSet resultSet = null;
@@ -41,7 +49,17 @@ public class TypeModel {
         return -1;
     }
 
-    //Method that lets the user add a new type to the database
+
+    /**
+     * @Author Team 007
+     *
+     * Adds a new type to the database.
+     * Returns the typeID that is set in the database.
+     * Returns -1 if method fails.
+     *
+     * @param name
+     * @return int
+     */
     public int addType(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -81,6 +99,16 @@ public class TypeModel {
         return -1;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Changes the type name of a given type.
+     * Returns true/false.
+     *
+     * @param typeID
+     * @param name
+     * @return boolean
+     */
     public boolean editType(int typeID, String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -107,6 +135,16 @@ public class TypeModel {
         return false;
     }
 
+
+    /**
+     * @Author Team 007
+     *
+     * Deletes a given type from the database.
+     * Returns true/false.
+     *
+     * @param typeName
+     * @return boolean
+     */
     public boolean deleteType(String typeName){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -135,7 +173,14 @@ public class TypeModel {
         return false;
     }
 
-    //Returns an arraylist of strings with all the types in the database
+
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList with the names of all types that are in the database.
+     *
+     * @return ArrayList
+     */
     public ArrayList<String> getTypes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
