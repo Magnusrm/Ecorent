@@ -288,7 +288,7 @@ public class Factory {
     public double powerUsage(String dockName){
         int[] docked = dockedBikes(dockName);
         double pwr = 0;
-        for(int i = 0; i<bikes.size();i++){
+        for(int i = 0; i<docked.length;i++){
             if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
         }//end loop
         return pwr;
