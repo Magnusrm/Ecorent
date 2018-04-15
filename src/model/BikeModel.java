@@ -133,6 +133,7 @@ public class BikeModel {
                 type = new Type(typeName);
                 bike = new Bike(localDate, price, make, type,pwrUsg);
                 bike.setBikeId(bikeID);
+                bike.setRepairing(isRepairing(bikeID));
                 //bike.setDockId(dockID);
                 return bike;
             }
