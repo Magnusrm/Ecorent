@@ -5,18 +5,13 @@ import changescene.PopupScene;
 import control.Repair;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import loginAdm.CurrentAdmin;
 import control.*;
 import model.BikeModel;
-
-import java.awt.*;
 
 public class BikeRepairController {
     private Factory factory = new Factory();
@@ -93,7 +88,7 @@ public class BikeRepairController {
 
     @FXML
     void registerRepairSentConfirm(){
-        factory.updateSystem();
+        /*factory.updateSystem();
         System.out.println(bikeIdSentField.getText());
         int bikeId = Integer.parseInt(bikeIdSentField.getText());
         BikeModel b = new BikeModel();
@@ -110,7 +105,7 @@ public class BikeRepairController {
             System.out.println(date);
             String description = descSentTextArea.getText();
             Repair repairSent = new Repair(date, description, bikeId);
-            if (factory.addRepair(repairSent)) {
+            if (factory.repairSent(repairSent)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Repair confirmed");
                 alert.setHeaderText(Alert.AlertType.INFORMATION.name());
@@ -124,7 +119,7 @@ public class BikeRepairController {
                         "out the form in the correct format");
                 alert.showAndWait();
             }//end condition
-        }//end condition
+        }//end condition*/
     }//end method
 
     @FXML
@@ -152,8 +147,26 @@ public class BikeRepairController {
                 double price = Double.parseDouble(priceReturnedField.getText());
                 String descreption = descReturnedTextArea.getText();
                 Repair repairReturned = new Repair(date,descreption,price,bikeID);
+                if(factory.repairReturned(repairReturned)){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Repair confirmed");
+                    alert.setHeaderText(Alert.AlertType.INFORMATION.name());
+                    alert.setContentText("Bike with ID " + bikeID + " is now returned from repair");
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("OPERATION FAILED");
+                    alert.setHeaderText(Alert.AlertType.WARNING.name());
+                    alert.setContentText("Something went wrong! Please make sure you fill " +
+                            "out the form in the correct format");
+                    alert.showAndWait();
+                }//end condition
             }else{
-
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("OPERATION FAILED");
+                alert.setHeaderText(Alert.AlertType.WARNING.name());
+                alert.setContentText("The given bike is not in repairing!");
+                alert.showAndWait();
             }//end condition
         }//end condition
     }//end method

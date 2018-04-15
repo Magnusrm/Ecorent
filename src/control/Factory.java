@@ -20,6 +20,7 @@ public class Factory {
     private ArrayList<Bike> bikes = new ArrayList<Bike>();
     private ArrayList<Admin> admins = new ArrayList<Admin>();
     private ArrayList<Type> types = new ArrayList<Type>();
+    private ArrayList<Repair> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private DockModel dockModel;
@@ -40,7 +41,7 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
-
+    public ArrayList<Repair> getRepairsNotReturned(){return repairsNotReturned;}
 
     /**
      * Method to get bikes, docks and admins from
@@ -54,12 +55,17 @@ public class Factory {
            Type type = new Type(name);
            types.add(type);
        }//end loop
+        for(Integer i:repairModel.getRepairIDs()){
+           repairsNotReturned.add(repairModel.getRepair(i));
+        }//end loop
        admins = adminModel.getAllAdmins();
     }//end method
 
-    //Method to add admin. If mainAdmin is true
-    //the admin will have access to add and delete
-    //other admins
+    /**
+     * Method to add admin. If mainAdmin is true
+     * the admin will have access to add and delete
+     * ther admins
+     */
     public boolean addAdmin(Admin a){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
         for(Admin admin:admins){
@@ -116,19 +122,39 @@ public class Factory {
      * Takes object in as argument and retrieves
      * the information model class needs.
      */
-    public boolean addRepair(Repair r){
+    public boolean repairSent(Repair r){
         if(r == null) throw new IllegalArgumentException("The repair object is not created");
         int bikeID = r.getBikeId();
-        String beforeDescreption = r.getBeforeDesc();
+        String beforeDescription = r.getBeforeDesc();
         String dateSent = r.getDateSent().toString();
-        r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescreption));
+        r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescription));
         bikeModel.changeRepair(bikeID);
         if(r.getRepair_id() != -1){
             for(Bike b: bikes){
                 if(b.getBikeId() == bikeID)b.setRepairing(true);
             }//end loop
             return true;
-        } else return false;
+        }else return false;
+    }//end method
+
+    /**
+     * Method to receive a repair.
+     * Takes object in as argument and
+     * retrieves what model classes need.
+     * @return boolean.
+     */
+    public boolean repairReturned(Repair r){
+        if(r == null)throw new IllegalArgumentException("Repair object is not created!");
+        int repairId = 0;
+        for(Repair r1: repairsNotReturned){
+            if(r1.getBikeId() == r.getBikeId())repairId = r1.getRepair_id();
+        }//end loop
+        if(repairId != 0) {
+            String date = r.getDateReceived().toString();
+            String desc = r.getAfterDesc();
+            double price = r.getPrice();
+            return (repairModel.returnRepair(repairId, date, desc, price));
+        }else return false;
     }//end method
 
     //Method to delete bikes

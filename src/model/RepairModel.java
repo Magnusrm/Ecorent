@@ -208,7 +208,7 @@ public class RepairModel {
             rsBikeID.next();
             bikeID = rsBikeID.getInt("bike_id");
 
-            repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
+            repair = new Repair(dateSent, beforeDesc, price, bikeID);
             repair.setRepairId(repairID);
             repair.setBikeId(bikeID);
             return repair;
