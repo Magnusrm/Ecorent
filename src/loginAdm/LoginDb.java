@@ -1,3 +1,9 @@
+/**
+ * Class which is used to authenticate an user trying to login.
+ *
+ * @author Team 007
+ */
+
 package loginAdm;
 
 import model.DBCleanup;
@@ -8,6 +14,13 @@ import java.sql.*;
 import static control.Password.*;
 
 public class LoginDb {
+
+    /**
+     * Checks if the login credentials are identical to the ones stored in the database. Checks if an users email and password correspond.
+     *
+     * @param loginBean
+     * @return boolean
+     */
 
     public static boolean authenticateUser(LoginBean loginBean) {
         Connection connection = null;
