@@ -39,6 +39,7 @@ public class BikeTest {
 
     @Test
     void testSetBikeId(){
+        System.out.println("Testing method to set bike id");
         int bikeId = 36;
         instance.setBikeId(bikeId);
         int expResult = 36;
@@ -46,4 +47,61 @@ public class BikeTest {
         assertEquals(expResult,result);
     }//end method
 
+    @Test
+    void testSetPrice(){
+        System.out.println("Testing method to set price");
+        double price = 3000;
+        instance.setPrice(price);
+        double result = instance.getPrice();
+        assertEquals(price,result);
+    }//end method
+
+    @Test
+    void testSetMake(){
+        System.out.println("Testing method to set make");
+        String make = "notDbs";
+        instance.setMake(make);
+        String result = instance.getMake();
+        assertEquals(make,result);
+    }//end method
+
+    @Test
+    void testSetType(){
+        System.out.println("Testing method to set type");
+        Type type = new Type("Test");
+        instance.setType(type);
+        Type result = instance.getType();
+        assertEquals(type,result);
+    }//end method
+
+    @Test
+    void testSetRepairing(){
+        System.out.println("Testing method to set repairing");
+        instance.setRepairing(true);
+        boolean result = instance.isRepairing();
+        assertEquals(true,result);
+    }//end method
+
+    @Test
+    void testDeactivate(){
+        System.out.println("Testing method to deactivate a bike");
+        instance.deactivate(true);
+        assertEquals(false,instance.isActive());
+    }//end method
+
+    @Test
+    void testUpdateBatteryPercent(){
+        System.out.println("Testing method to update battery percent");
+        int expResult = 30;
+        int result = instance.updateBatteryPercent(70);
+        assertEquals(expResult,result);
+    }//end method
+
+    @Test
+    void testEquals(){
+        System.out.println("Testing equals-method");
+        Bike b = new Bike(date,price,make,type,pwr);
+        boolean result = instance.equals(b);
+        assertEquals(true,result);
+    }//end method
 }//end class
