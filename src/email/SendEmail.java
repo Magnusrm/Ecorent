@@ -11,7 +11,8 @@ import javax.mail.internet.*;
 public class SendEmail {
 
     public static String sendFromGmail(String to){
-        File file = new File("C:/Users/mrmar/IdeaProjects/Elsykkelutleie/src/DBProp");
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DBProp");
+
         PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true).useLower(true).useUpper(true).build();
         String password = passwordGenerator.generate(16);
 
@@ -20,13 +21,10 @@ public class SendEmail {
         String body = "Your password is " + password + ". Use this alongside your email to rent bikes" +
                 "\n(note: please do not reply to this email)." ;
 
-        try(FileInputStream fileInputStream = new FileInputStream(file)) {
+        try {
 
-            Properties properties = new Properties();
-            properties.load(fileInputStream);
-
-            String from = properties.getProperty("gmail.username");
-            String pass = properties.getProperty("gmail.password");
+            String from = rb.getString("gmail.username");
+            String pass = rb.getString("gmail.password");
 
             Properties props = System.getProperties();
             String host = "smtp.gmail.com";
@@ -55,10 +53,8 @@ public class SendEmail {
 
             } catch (AddressException e) {
                 System.out.println(e.getMessage() + " - sendFromGmail()");
-            } catch (MessagingException e) {
-                System.out.println(e.getMessage() + " - sendFromGmail()");
             }
-        }catch(IOException e) {
+        }  catch (MessagingException e) {
             System.out.println(e.getMessage() + " - sendFromGmail()");
         }
         return null;

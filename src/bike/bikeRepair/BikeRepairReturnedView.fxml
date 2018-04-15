@@ -8,11 +8,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="306.0" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeRepair.BikeRepairController">
    <children>
-      <Button fx:id="returnedSubmitBtn" layoutX="109.0" layoutY="319.0" mnemonicParsing="false" onAction="#registerRepairReturnedConfirm" prefWidth="94.0" text="Submit" />
-      <TextArea fx:id="descReturnedTextArea" layoutX="54.0" layoutY="148.0" prefHeight="143.0" prefWidth="205.0" promptText="Description" />
-      <TextField fx:id="priceReturnedField" alignment="TOP_CENTER" layoutX="69.0" layoutY="104.0" promptText="Price" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
-      <Line endX="100.0" layoutX="137.0" layoutY="131.0" startX="-70.0" stroke="WHITE" styleClass="line" />
-      <TextField fx:id="dateReturnedField" alignment="TOP_CENTER" layoutX="69.0" layoutY="66.0" promptText="Date (YYYY-MM-DD)" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
-      <Line endX="100.0" layoutX="137.0" layoutY="93.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+      <Button fx:id="returnedSubmitBtn" layoutX="106.0" layoutY="338.0" mnemonicParsing="false" onAction="#registerRepairReturnedConfirm" prefWidth="94.0" text="Submit" />
+      <TextArea fx:id="descReturnedTextArea" layoutX="51.0" layoutY="167.0" prefHeight="143.0" prefWidth="205.0" promptText="Description" />
+      <TextField fx:id="priceReturnedField" alignment="TOP_CENTER" layoutX="66.0" layoutY="123.0" promptText="Price" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+      <Line endX="100.0" layoutX="134.0" layoutY="150.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+      <TextField fx:id="dateReturnedField" alignment="TOP_CENTER" layoutX="66.0" layoutY="85.0" promptText="Date (YYYY-MM-DD)" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+      <Line endX="100.0" layoutX="134.0" layoutY="112.0" startX="-70.0" stroke="WHITE" styleClass="line" />
+      <TextField fx:id="bikeIdReturnedField" alignment="TOP_CENTER" layoutX="66.0" layoutY="46.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+      <Line endX="100.0" layoutX="134.0" layoutY="72.0" startX="-70.0" stroke="WHITE" styleClass="line" />
    </children>
 </AnchorPane>
