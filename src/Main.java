@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/login/LoginView.fxml"));
         root.getStylesheets().add(getClass().getResource("/resources/darkTheme.css").toString());
-        primaryStage.setTitle("Elsykkelutleie");
+        primaryStage.setTitle("Ecorent");
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);

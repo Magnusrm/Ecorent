@@ -11,7 +11,7 @@ import javax.mail.internet.*;
 public class SendEmail {
 
     public static String sendFromGmail(String to){
-        File file = new File("C:/Users/mrmar/IdeaProjects/Elsykkelutleie/src/DBProp");
+        File file = new File("/Users/adnenystuen/IdeaProjects/Bike/src/DBProp");
         PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true).useLower(true).useUpper(true).build();
         String password = passwordGenerator.generate(16);
 
