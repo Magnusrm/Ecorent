@@ -6,37 +6,41 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * A cleanup class to handle the creation and closing of connection.
+ * Also closes ResultSets and PreparedStatements.
+ */
 public class DBCleanup {
 
 
     /**
-     * @Author Team 007
-     *
      * Uses the property-file to establish connection to the database.
-     * Returns the Connection.
      *
-     * @return Connection
+     * @return connection       the connection to the database.
      */
     public static Connection getConnection(){
-        File file = new File("C:/Users/Ilia/Documents/Systemutvikling 1 (innføringsemne 2.0)/PROSJEKT ELSYKKEL/src/DBProp");
 
-        try(FileInputStream fileInputStream = new FileInputStream(file)) {
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DBProp");
 
-            Properties properties = new Properties();
-            properties.load(fileInputStream);
+        try{
 
-            String driver = properties.getProperty("jdbc.driver");
+            String driver = rb.getString("jdbc.driver");
             if (driver != null) {
                 Class.forName(driver);
             }
 
-            String url = properties.getProperty("jdbc.url");
-            String username = properties.getProperty("jdbc.username");
-            String password = properties.getProperty("jdbc.password");
+            String url = rb.getString("jdbc.url");
+            String username = rb.getString("jdbc.username");
+            String password = rb.getString("jdbc.password");
 
             return DriverManager.getConnection(url, username, password);
-        }catch(IOException | ClassNotFoundException | SQLException e){
+        }catch(ClassNotFoundException | SQLException e){
             System.out.println(e.getMessage() + " - getConnection()");
         }
         return null;
@@ -47,7 +51,7 @@ public class DBCleanup {
      *
      * Closes the ResultSet that is given as parameter.
      *
-     * @param rs
+     * @param rs        the ResultSet that is to be closed.
      */
     public static void closeResultSet(ResultSet rs){
         try{
@@ -64,7 +68,7 @@ public class DBCleanup {
      *
      * Closes the PreparedStatement that is given as parameter.
      *
-     * @param st
+     * @param st        the PreparedStatement that is to be closed.
      */
     public static void closeStatement(PreparedStatement st){
         try {
@@ -81,7 +85,7 @@ public class DBCleanup {
      *
      * Closes the connection that is given as parameter.
      *
-     * @param con
+     * @param con       the connection that is to be closed.
      */
     public static void closeConnection(Connection con){
         try{
@@ -98,7 +102,7 @@ public class DBCleanup {
      *
      * If AutoCommit is turned off, this method turns it back on.
      *
-     * @param con
+     * @param con       the connection where the AutoCommit is set to false.
      */
     public static void setAutoCommit(Connection con){
         try{

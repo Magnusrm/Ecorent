@@ -1,7 +1,9 @@
-package model;
+package model.tests;
 import control.Bike;
 import control.Repair;
 import control.Type;
+import model.DBCleanup;
+import model.RepairModel;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
@@ -10,6 +12,13 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * This is a test class for the class RepairModel
+ */
 public class RepairModelTest {
 
     Connection connection;

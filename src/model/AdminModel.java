@@ -5,16 +5,21 @@ import control.Admin;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * The class that handles saving, deleting and editing new administrators to the database.
+ */
 public class AdminModel {
 
     /**
-     * @Author Team 007
-     *
      * Checks if an admin is in the database by searching by email.
-     * Returns true/false.
      *
-     * @param  email
-     * @return boolean
+     * @param  email    the email that we want to know if exists.
+     * @return true     if that email is already in the database.
+     * @return false    if that email isn't in the database.
      */
     public boolean adminExists(String email){
         Connection connection = null;
@@ -46,13 +51,12 @@ public class AdminModel {
 
 
     /**
-     *@Author Team 007
-     *
      * Returns an admin Object from the database.
-     * Returns null if the method fails.
      *
-     * @param email
-     * @return Object
+     *
+     * @param email         the email that is searched for in the database.
+     * @return Object       an admin object with that emails corresponding data.
+     * @return null         if the method fails.
      */
     public Admin getAdmin(String email){
         Connection connection = null;
@@ -108,15 +112,14 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
+
      * Adds a new admin to the database.
-     * Returns true/false.
      *
-     * @param email
-     * @param hash
-     * @param priviliged
-     * @return boolean
+     * @param email         the email of the new user.
+     * @param hash          the value of the hashed password.
+     * @param priviliged    if the administrator has priviliged rights.
+     * @return true         if the method is successful.
+     * @return false        if the method fails.
      */
     public boolean addAdmin(String email, String hash, boolean priviliged){
         Connection connection = null;
@@ -155,13 +158,11 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Deletes an admin from the database.
-     * Returns true/false.
      *
-     * @param email
-     * @return boolean
+     * @param email         the email of the administrator that is to be deleted from the database.
+     * @return true         if the method is successful.
+     * @return false        if the method fails.
      */
     public boolean deleteAdmin(String email){
         Connection connection = null;
@@ -195,13 +196,11 @@ public class AdminModel {
 
 
     /**
-     *@Author Team 007
-     *
      * Returns the hashed (with salt) value that belongs to a given email.
-     * Returns null if the method fails.
      *
-     * @param email
-     * @return String
+     * @param email         the email address that the hash value belongs to.
+     * @return hash         the hashed password.
+     * @return null         if the method fails.
      */
     public String getHash(String email){
         Connection connection = null;
@@ -233,13 +232,11 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Checks if an admin has the rights to make new admins.
-     * Returns true/false.
      *
-     * @param email
-     * @return boolean
+     * @param email         the email of the admin that is to be checked.
+     * @return true         if the admin has priviliged rights.
+     * @return false        if the admin doesn't have priviliged rights.
      */
     public boolean isPriviliged(String email){
         Connection connection = null;
@@ -276,12 +273,11 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
+
      * Returns an ArrayList of all the admins in the database.
-     * Returns null if the method fails.
      *
-     * @return ArrayList
+     * @return allAdmins        an ArrayList of admin-objects.
+     * @return null             if the method fails.
      */
     public ArrayList<Admin> getAllAdmins(){
         Connection connection = null;
