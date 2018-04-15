@@ -15,7 +15,7 @@ public class BikeModelTest {
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     BikeModel instance;
-    private final int BIKEID = 66;
+    private final int BIKEID = 67;
 
     @Override
     public boolean equals(Object o){

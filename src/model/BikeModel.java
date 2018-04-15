@@ -26,7 +26,7 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String existsQuery = "SELECT bike_id FROM bike WHERE bike_id = ?";
+        String existsQuery = "SELECT bike_id FROM bike WHERE bike_id = ? AND active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -68,11 +68,11 @@ public class BikeModel {
         PreparedStatement getPwr = null;
         //PreparedStatement getDockID = null;
 
-        String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
-        String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
-        String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
-        String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
+        String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ? AND active = 1";
+        String priceQuery = "SELECT price FROM bike WHERE bike_id = ? AND active = 1";
+        String makeQuery = "SELECT make FROM bike WHERE bike_id = ? AND active = 1";
+        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ? AND active = 1)";
+        String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ? AND active = 1";
         //String dockIDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
@@ -253,7 +253,7 @@ public class BikeModel {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String deleteUpdate = "DELETE FROM bike WHERE bike.bike_id = ?";
+        String deleteUpdate = "UPDATE bike SET active = 0 WHERE bike_id = ?";
         try{
             connection = DBCleanup.getConnection();
 
@@ -295,8 +295,8 @@ public class BikeModel {
 
         int typeID = TypeModel.typeExists(type);
 
-        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing) VALUES " +
-                "(DEFAULT, ?, ?, ?, ?, ?, ?);";
+        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing, active) VALUES " +
+                "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
         String maxBikeID = "SELECT MAX(bike_id) from bike";
 
         byte rep = 1;
@@ -381,8 +381,8 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ?";
-        String repairUpdate = "UPDATE bike SET repairing = ? WHERE bike_id = ?";
+        String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ? AND active = 1";
+        String repairUpdate = "UPDATE bike SET repairing = ? WHERE bike_id = ? AND active = 1";
 
         try{
             connection = DBCleanup.getConnection();
