@@ -12,6 +12,7 @@ public class Bike {
     private double powerUsage;
     private boolean repairing;
     private boolean active = true; //whether or not the bike is still in use
+    private int battery;
 
     public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
@@ -25,6 +26,7 @@ public class Bike {
         this.type = type;
         this.powerUsage = powerUsage;
         repairing = false;
+        battery = 100;
     }
 
     public int getBikeId() {
@@ -96,8 +98,9 @@ public class Bike {
     }
 
     public int updateBatteryPercent(int percent) {
-        return 0;
-    }
+        battery -= percent;
+        return battery;
+    }//end method
 
     public String toString() {
         String r = "";
