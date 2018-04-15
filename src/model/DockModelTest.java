@@ -15,7 +15,7 @@ public class DockModelTest {
     ResultSet resultSet;
     DockModel instance;
 
-    int DOCKID = 10;
+    int DOCKID = 11;
 
 
 
@@ -74,7 +74,7 @@ public class DockModelTest {
         System.out.println("Testing the method editDock()");
 
         int dockID = DOCKID;
-        String dockName = "testdock2";
+        String dockName = "testdock22";
         double xCord = 2.0;
         double yCord = 2.0;
 
@@ -95,15 +95,15 @@ public class DockModelTest {
         assertFalse(instance.dockCoordinatesAvailable(xCord, yCord));
     }
 
-   
+
     @Test
     public void testDeleteDock(){
         System.out.println("Testing the method deleteDock()");
 
-        String dockName = "testdock2";
+        String dockName = "testdock22";
 
         instance.deleteDock(dockName);
 
-        assertFalse(instance.dockNameAvailable(dockName));
+        assertTrue(instance.dockNameAvailable(dockName));
     }
 }
