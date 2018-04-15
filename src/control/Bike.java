@@ -71,7 +71,7 @@ public class Bike {
         this.bikeId = bikeId;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         this.price = price;
     }
@@ -94,13 +94,25 @@ public class Bike {
         this.repairing = repairing;
     }
 
-    public void deactivate(boolean active){this.active = active;}
+    /**
+     * Method to deactivate bike (means it is deleted,
+     * still has stats). If param is true then it will deactivate.
+     * @param deactivate
+     */
+    public void deactivate(boolean deactivate){active = !deactivate;}
 
     public void setDockId(int dockId) {
         if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}
         this.dockId = dockId;
     }
 
+
+    /**
+     * Method to update the battery percent.
+     * Subtracts the battery with the argument.
+     * @param percent
+     * @return int
+     */
     public int updateBatteryPercent(int percent) {
         battery -= percent;
         return battery;
