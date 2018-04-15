@@ -1,6 +1,6 @@
 /**
 * Factory.java
-* @Team007
+* @author Ilia Rad Saadat
 *
 * This class is an aggregate of Dock.java,Bike.java and Admin.java
 * It both updates and retrieves data from the model classes connected to the database
@@ -24,7 +24,7 @@ public class Factory {
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
-    private String isLoggedIn;
+
 
     public Factory(){
         adminModel = new AdminModel();
@@ -39,14 +39,12 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
-    public String getIsLoggedIn(){return isLoggedIn;}
 
-    //Method to get bikes, docks and admins from
-    //model classes connected to database.
-    //This is used every time the user starts the application
 
     /**
-     * test
+     * Method to get bikes, docks and admins from
+     * model classes connected to database.
+     * This is used every time the user starts the application
      * */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();
@@ -110,6 +108,25 @@ public class Factory {
         d.setDockID(dockModel.addDock(name,x,y));
         if(d.getDockID() != -1)return true;
         else return false;
+    }//end method
+
+    /**
+     * Method to add a repair.
+     * Takes object in as argument and retrieves
+     * the information model class needs.
+     */
+    public boolean addRepair(Repair r){
+        if(r == null) throw new IllegalArgumentException("The repair object is not created");
+        int bikeID = r.getBikeId();
+        String beforeDescreption = r.getBeforeDesc();
+        String dateSent = r.getDateSent().toString();
+        r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescreption));
+        if(r.getRepair_id() != -1){
+            for(Bike b: bikes){
+                if(b.getBikeId() == bikeID)b.setRepairing(true);
+            }//end loop
+            return true;
+        } else return false;
     }//end method
 
     //Method to delete bikes
@@ -215,17 +232,6 @@ public class Factory {
         }//end loop
         if(TypeModel.typeExists(type.getName()) == -1)throw new IllegalArgumentException("The type does not exist");
         return false;
-    }
-
-    //Method to get an user's password
-    public String password(String email){
-        for(Admin a:admins){
-            if(a.getEmail().equals(email)){
-                isLoggedIn = email;
-                return a.getPassword();
-            }//end if
-        }//end loop
-        return null;
     }//end method
 
     //Method to delete all bikes without a type
@@ -246,7 +252,11 @@ public class Factory {
         return dockedBikes;
     }//end method
 
-    //Method to get power usage to a given dock
+    /**
+     * Method to get power usage from a given dock.
+     * It uses the dockedBikes(dockName) method to find all bikes docked at the given dock name.
+     * It then adds their power usage together and returns the value.
+     */
     public double powerUsage(String dockName){
         int[] docked = dockedBikes(dockName);
         double pwr = 0;

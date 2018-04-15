@@ -150,6 +150,7 @@ public class RepairModel {
 
             repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
             repair.setRepairId(repairID);
+            repair.setBikeId(bikeID);
             return repair;
 
         }catch (SQLException e){
