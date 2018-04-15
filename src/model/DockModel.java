@@ -2,6 +2,7 @@ package model;
 
 import control.Dock;
 
+import javax.print.DocFlavor;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -77,6 +78,28 @@ public class DockModel {
         return null;
     }
 
+    public boolean dockCoordinatesAvailable(double xCord, double yCord){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String cordsQuery = "SELECT x_cord, y_cord FROM dock WHERE x_cord = ? AND y_cord = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(cordsQuery);
+            preparedStatement.setDouble(1, xCord);
+            preparedStatement.setDouble(2, yCord);
+            resultSet = preparedStatement.executeQuery();
+            return !resultSet.next();
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - dockCoordinatesExists");
+        }
+        return false;
+    }
+
     /**
      * @Author Team 007
      *
@@ -86,7 +109,7 @@ public class DockModel {
      * @param name
      * @return boolean
      */
-    public boolean dockNameExists(String name){
+    public boolean dockNameAvailable(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -98,7 +121,7 @@ public class DockModel {
             preparedStatement = connection.prepareStatement(nameQuery);
             preparedStatement.setString(1, name.toLowerCase());
             resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+            return !resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - dockNameExists()");
         }finally {
@@ -118,7 +141,7 @@ public class DockModel {
      * @param dockID
      * @return boolean
      */
-    private boolean dockIDExists(int dockID){
+    private boolean dockIDAvailable(int dockID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -131,7 +154,7 @@ public class DockModel {
             preparedStatement = connection.prepareStatement(IDQuery);
             preparedStatement.setInt(1, dockID);
             resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+            return !resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - dockIDExists()");
         }finally {
@@ -166,7 +189,7 @@ public class DockModel {
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
 
-            if(!dockNameExists(name)) {
+            if(dockNameAvailable(name) && dockCoordinatesAvailable(xCord, yCord)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, xCord);
@@ -209,7 +232,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockIDExists(dockID)) {
+            if(!dockIDAvailable(dockID)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, xCord);
@@ -279,7 +302,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameExists(name)) {
+            if(dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(deleteQuery);
                 preparedStatement.setString(1, name);
                 return preparedStatement.executeUpdate() != 0;
@@ -315,7 +338,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameExists(name)) {
+            if(dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
                 preparedStatement.setString(1, name);
                 resultSet = preparedStatement.executeQuery();

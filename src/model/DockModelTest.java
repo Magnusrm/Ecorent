@@ -15,19 +15,8 @@ public class DockModelTest {
     ResultSet resultSet;
     DockModel instance;
 
+    int DOCKID = 10;
 
-    @Override
-    public boolean equals(Object o){
-        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Dock)) {
-            return false;
-        }
-
-        Dock b = (Dock) o;
-
-        return (((Dock) o).getName().equals(b.getDockID()) && ((Dock) o).getxCoordinates() == (b.getxCoordinates()) &&
-                ((Dock) o).getyCoordinates() == b.getyCoordinates());
-    }
 
 
     @BeforeEach
@@ -57,12 +46,12 @@ public class DockModelTest {
     }
 
     @Test
-    public void testDockNameExists(){
+    public void testDockNameAvailable(){
         System.out.println("Testing the method dockNameExists()");
 
-        String dockName = "testdock";
+        String dockName = "TESTDOCK";
 
-        assertTrue(instance.dockNameExists(dockName));
+        assertFalse(instance.dockNameAvailable(dockName));
     }
 
     //The expected result has to match the auto-incremented dock_id in the database
@@ -74,7 +63,7 @@ public class DockModelTest {
         double xCord = 2.1;
         double yCord = 2.2;
 
-        int expResult = 8;
+        int expResult = DOCKID;
         int result = instance.addDock(dockName, xCord, yCord);
         assertEquals(expResult, result);
     }
@@ -84,18 +73,29 @@ public class DockModelTest {
     public void testEditDock(){
         System.out.println("Testing the method editDock()");
 
-        int dockID = 8;
+        int dockID = DOCKID;
         String dockName = "testdock2";
         double xCord = 2.0;
         double yCord = 2.0;
 
-        instance.editDock(dockID, dockName, xCord, yCord);
-
-        Dock expResult = new Dock(dockName, xCord, yCord);
-        Dock result = instance.getDock(dockName);
-        assertEquals(expResult, result);
+        if(instance.editDock(dockID, dockName, xCord, yCord)) {
+            Dock expResult = new Dock(dockName, xCord, yCord);
+            Dock result = instance.getDock(dockName);
+            assertEquals(expResult, result);
+        }
     }
 
+    @Test
+    public void testDockCoordinatesAvailable(){
+        System.out.println("Testing the method dockCoordinatesAvailable()");
+
+        double xCord = 2.0;
+        double yCord = 2.0;
+
+        assertFalse(instance.dockCoordinatesAvailable(xCord, yCord));
+    }
+
+   
     @Test
     public void testDeleteDock(){
         System.out.println("Testing the method deleteDock()");
@@ -104,6 +104,6 @@ public class DockModelTest {
 
         instance.deleteDock(dockName);
 
-        assertFalse(instance.dockNameExists(dockName));
+        assertFalse(instance.dockNameAvailable(dockName));
     }
 }

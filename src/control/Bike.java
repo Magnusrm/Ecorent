@@ -110,21 +110,17 @@ public class Bike {
                 + "\n Make: " + make + "\n Type: " + type.getName() + "\n Repairing: " + r;
     }
 
+    @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Bike)) {
-            return false;
-        }
+        if (!(o instanceof Bike)) { throw new IllegalArgumentException("The object you are comparing must be an instance of Bike"); }
 
         Bike b = (Bike) o;
 
-        return (this.bikeId == b.getBikeId());
-        /*
-        if (this.bikeId == b.getBikeId()) {
-            return true;
-        }
-        return false;
-        */
+        return (((Bike) o).getBikeId() == b.getBikeId() && ((Bike) o).getMake().equals(b.getMake()) &&
+                ((Bike) o).getPrice() == b.getPrice() && ((Bike) o).getPowerUsage() == b.getPowerUsage() &&
+                ((Bike) o).getBuyDate().equals(b.getBuyDate()) && ((Bike) o).isRepairing() == b.isRepairing());
+
     }
 
 }
