@@ -15,6 +15,21 @@ public class Repair {
     private double price;
     private int bike_id;
 
+    @Override
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Repair)) {
+            return false;
+        }
+
+        Repair r = (Repair) o;
+
+        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
+                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
+                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
+
+    }
+
     public Repair(String dateSent, String beforeDesc, int bikeId){
         this.repair_id = -1; //use the database to set repairId
 

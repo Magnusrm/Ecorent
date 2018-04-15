@@ -30,14 +30,13 @@ public class TypeModelTest {
     }
 
 
-
     @Test
     public void testTypeExists(){
         System.out.println("Testing the method typeExists()");
 
-        String name = "racer";
+        String name = "test";
 
-        int expResult = 1;
+        int expResult = 1; //Make sure that this is the same as the ID in the DB
         int result = instance.typeExists(name);
         assertEquals(expResult, result);
     }
@@ -57,9 +56,20 @@ public class TypeModelTest {
     public void testAddType(){
         System.out.println("Testing the method addType()");
 
-        String name = "racer";
+        String name = "racer"; //Make sure this type already exists in the database
 
         int expResult = -1;
+        int result = instance.addType(name);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testAddType2(){
+        System.out.println("Testing the method AddType2");
+
+        String name = "TestType"; //Make sure this type already exists in the database
+
+        int expResult = 63; //This need to be changed to the expected ID of the repair
         int result = instance.addType(name);
         assertEquals(expResult, result);
     }
@@ -79,10 +89,10 @@ public class TypeModelTest {
     }
 
     @Test
-    public void testDeleteType(){
-        System.out.println("Testing the method deleteType()");
+    public void testDeleteType1(){
+        System.out.println("Testing the method deleteType2()");
 
-        String name = "hiTest";
+        String name = "TestType";
 
         instance.deleteType(name);
 
