@@ -15,6 +15,9 @@ public class Repair {
     private double price;
     private int bike_id;
 
+    /**
+     * Constructor for repair sent
+     */
     public Repair(String dateSent, String beforeDesc, int bikeId){
         this.repair_id = -1; //use the database to set repairId
 
@@ -25,6 +28,21 @@ public class Repair {
         this.price = 0;
         this.bike_id = bikeId;
     }
+
+    /**
+     * Constructor for repair returned
+     */
+    public Repair(String dateReceived, String afterDesc, double price, int bikeId){
+        this.repair_id = -1; //use the database to set repairId
+        this.date_received = toDate(dateReceived);
+        this.after_desc = afterDesc;
+        this.price = price;
+        this.bike_id = bikeId;
+    }
+
+    /**
+     * Constructor for model classes
+     */
     public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
         this.repair_id = -1; //use the database to set repairId
 
@@ -35,6 +53,7 @@ public class Repair {
         this.price = price;
         this.bike_id = bikeId;
     }
+
 
     public int getRepair_id(){
         return repair_id;

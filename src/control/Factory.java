@@ -122,6 +122,7 @@ public class Factory {
         String beforeDescreption = r.getBeforeDesc();
         String dateSent = r.getDateSent().toString();
         r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescreption));
+        bikeModel.changeRepair(bikeID);
         if(r.getRepair_id() != -1){
             for(Bike b: bikes){
                 if(b.getBikeId() == bikeID)b.setRepairing(true);
