@@ -28,7 +28,7 @@ public class BikeInfoController {
 
     @FXML
     private Label batteryLbl;
-    
+
     @FXML
     private Button showInfoBtn;
 

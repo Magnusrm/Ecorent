@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import model.TypeModel;
 import loginAdm.CurrentAdmin;
 
 public class BikeTypeController implements Initializable{
@@ -84,15 +85,13 @@ public class BikeTypeController implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeListView.setItems(types);
-            //System.out.println(factory.getTypes().get(0).getName());
         }catch (Exception e){e.printStackTrace();}
     }
-
 
     @FXML
     void deleteType(ActionEvent event) throws Exception {
 
-        //System.out.println(typeListView);
+        System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
         alert.setHeaderText(null);
@@ -182,11 +181,10 @@ public class BikeTypeController implements Initializable{
                updateList();
            } catch(Exception e){
 
-           }
+            }
+        });
 
-       });
-    }//end method
-
+    }
 
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
@@ -200,10 +198,12 @@ public class BikeTypeController implements Initializable{
             alert1.setHeaderText(null);
             alert1.setContentText(type.getName() + " has been saved!");
         }//end if
+        type = null;
     }
 
     @FXML
     void updateList(){
+
         ObservableList<String> types = FXCollections.observableArrayList();
         String[] visualized = new String[factory.getTypes().size()];
         for (int i = 0; i < visualized.length; i++) {
@@ -244,7 +244,7 @@ public class BikeTypeController implements Initializable{
     }
 
     @FXML
-    void changeToStatsScene(ActionEvent event)throws Exception{
+    void changeToStatsScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/stats/StatsView.fxml");
     }
@@ -261,11 +261,11 @@ public class BikeTypeController implements Initializable{
         cs.setScene(event, "/main/MainView.fxml");
     }
 
-
     @FXML
     void logOut(ActionEvent event) throws Exception {
         CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
+
     }
 }
