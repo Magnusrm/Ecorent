@@ -64,7 +64,10 @@ public class BikeRepairController {
     private TextField dateSentField;
 
     @FXML
-    private TextField bikeIdField;
+    private TextField bikeIdReturnedField;
+
+    @FXML
+    private TextField bikeIdSentField;
 
 
     @FXML
@@ -84,12 +87,12 @@ public class BikeRepairController {
 
     @FXML
     void registerRepairSentConfirm(){
-
+        System.out.println(bikeIdSentField.getText());
     }
 
     @FXML
     void registerRepairReturnedConfirm(){
-
+        System.out.println(bikeIdReturnedField.getText());
     }
 
 
