@@ -128,6 +128,36 @@ public class BikeStatsModel {
         return -1;
     }
 
+    public double getDistance(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        BikeModel bikeModel = new BikeModel();
+
+        String distanceQuery = "SELECT distance FROM bike_stats WHERE time >= (now() - INTERVAL 1 MINUTE) AND bike_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            if(bikeModel.bikeExists(bikeID)){
+                preparedStatement = connection.prepareStatement(distanceQuery);
+                preparedStatement.setInt(1, bikeID);
+                resultSet = preparedStatement.executeQuery();
+                resultSet.next();
+                return resultSet.getDouble("distance");
+            }else{
+                return -1;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getDistance");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
+    }
+
     /**
      * @Author Team 007
      *
