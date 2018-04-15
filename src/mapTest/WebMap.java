@@ -11,15 +11,43 @@ import javafx.stage.Stage;
 
 import netscape.javascript.JSObject;
 
+import java.util.Arrays;
+
+import static java.lang.Thread.sleep;
+
 
 public class WebMap extends Application {
-    public double[][] bikePos = {
-            {0, 63.435000, 10.397185},
-            {1, 63.430000, 10.397185},
-            {2, 63.423000, 10.397185},
-            {3, 63.429000, 10.334485},
-            {4, 63.427000, 10.339385},
-            {5, 63.427000, 10.300085}
+
+    public double[][] dockPos = {
+            {0, 63.426505, 10.393597},
+            {1, 63.427859, 10.387157},
+            {2, 63.430663, 10.392245},
+            {3, 63.433388, 10.400313}
+    };
+
+    public double[][] path01 = {
+            {63.426505, 10.393597},
+            {63.427859, 10.387157}
+    };
+
+    public double[][] path02 = {
+            {63.426505, 10.393597},
+            {63.430663, 10.392245}
+    };
+
+    public double[][] path03 = {
+            {63.426505, 10.393597},
+            {63.433388, 10.400313}
+    };
+
+    public double[][] path12 = {
+            {63.427859, 10.387157},
+            {63.430663, 10.392245}
+    };
+
+    public double[][] path23 = {
+            {63.430663, 10.392245},
+            {63.433388, 10.400313}
     };
 
     @Override public void start(Stage mapStage) {
@@ -55,7 +83,7 @@ public class WebMap extends Application {
             }
         }
 
-        webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) ->
+       /* webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) ->
         {
             JSObject window = (JSObject) webEngine.executeScript("window");
             JavaBridge bridge = new JavaBridge();
@@ -65,21 +93,31 @@ public class WebMap extends Application {
                     "    java.log(message);\n" +
                     "};");
         });
-
+*/
         // int position = (int)(webEngine.executeScript("document.updateMarker(63.426929, 10.397185));   // oppdatere posisjon på kart med data fra java.
         // System.out.println(position);
 
 
         testButton.setOnAction(e -> {
-            System.out.println(arrayToString(bikePos));
-            webEngine.executeScript("var items = " + arrayToString(bikePos) + ";" +
-                                    "document.addMarkers(items);");
-
+            System.out.println(arrayToString(dockPos));
+            webEngine.executeScript("var items = " + arrayToString(dockPos) + ";" +
+                                    "document.updateMarkers(items);");
+            /*webEngine.executeScript("var paths = [" + arrayToString(path01) + ", " +arrayToString(path02) +
+                                    ", " + arrayToString(path03) + ", " + arrayToString(path12) + ", " + arrayToString(path23) +
+                                    "];" +
+                                    "for (var i = 0; i < paths.length; i++) {document.runSnapToRoad(paths[i]); }");*/
         });
 
 
         System.out.println("ok");
         mapStage.show();
+        try {
+            sleep(2000);
+        } catch(InterruptedException e){
+            System.out.println("sleep interrupted");
+        }
+
+
     }
 
     static { // use system proxy settings when standalone application
@@ -87,7 +125,7 @@ public class WebMap extends Application {
     }
     public String arrayToString(double[][] data){
         String res = "[[";
-        for (int i = 0; i < bikePos.length; i++){
+        for (int i = 0; i < data.length; i++){
             for (int j = 0; j < data[i].length; j++){
                 res += data[i][j] + ", ";
             }
@@ -99,11 +137,10 @@ public class WebMap extends Application {
         return res;
     }
 
+
+
     public static void main(String[] args){
         Application.launch(args);
+
     }
 }
-
-
-
-
