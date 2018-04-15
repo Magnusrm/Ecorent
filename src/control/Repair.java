@@ -15,20 +15,6 @@ public class Repair {
     private double price;
     private int bike_id;
 
-    @Override
-    public boolean equals(Object o){
-        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Repair)) {
-            return false;
-        }
-
-        Repair r = (Repair) o;
-
-        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
-                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
-                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
-
-    }
 
     /**
      * Constructor for repair sent
@@ -132,6 +118,33 @@ public class Repair {
         return toDate;
     }
 
+    /**
+     * Override of the standard equals()-method to compare the information about two Repair-objects.
+     * @param o
+     * @return
+     * @author Team 007
+     */
+    @Override
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Repair)) {
+            return false;
+        }
+
+        Repair r = (Repair) o;
+
+        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
+                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
+                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
+
+    }
+
+    /**
+     * Override of the standard toString()-method to make it list out the information about a repair
+     * @return
+     * @author Team 007
+     */
+    @Override
     public String toString(){
         return "control.Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id

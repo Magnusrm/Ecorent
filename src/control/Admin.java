@@ -1,9 +1,15 @@
 package control;
 
+/**
+ * Class for Admin objects
+ *
+ * @author Team 007
+ */
 public class Admin {
     private String email;
     private String password;
     private boolean mainAdmin;
+
 
     public Admin(String email, String password, boolean mainAdmin) {
         if (email == null) { throw new IllegalArgumentException("Email cannot be null."); }
@@ -25,6 +31,11 @@ public class Admin {
         return mainAdmin;
     }
 
+    /**
+     * Method which sets the password using the Password class and its hashing algorithm
+     *
+     * @author Team 007
+     */
     public void setPassword(String password) {
         if (password == null) { throw new IllegalArgumentException("Password cannot be null."); }
         String hashed = Password.hashPassword(password);
@@ -41,6 +52,13 @@ public class Admin {
         return "User: " + email + "\n Main admin: " + a;
     }
 
+    /**
+     * Makes the equals method of this class to only check the email parameter of the object, overrides the standard equals method.
+     * @param o
+     * @return
+     * @author Team 007
+     */
+    @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null."); }
         if (!(o instanceof Admin)) {

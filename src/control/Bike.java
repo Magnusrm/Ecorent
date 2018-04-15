@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 /**
  * Class for Bike objects
+ *
  * @author Team 007
  */
 public class Bike {
