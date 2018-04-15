@@ -2,6 +2,10 @@ package control;
 
 import java.time.LocalDate;
 
+/**
+ * Class for Bike objects
+ * @author Team 007
+ */
 public class Bike {
     private int bikeId = -1; // this will be updated after the bike is added to the database.
     private final LocalDate buyDate;
