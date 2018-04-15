@@ -222,7 +222,7 @@ public class Factory {
         if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
             if(docks.get(i).getName().equals(dockName)){
-                d.setName(dockName);
+
                 int dockId = dockModel.getDock(dockName).getDockID();
                 docks.set(i,d);
                 String name = d.getName();
