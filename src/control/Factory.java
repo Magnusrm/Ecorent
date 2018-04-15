@@ -58,6 +58,9 @@ public class Factory {
         for(Integer i:repairModel.getRepairIDs()){
            repairsNotReturned.add(repairModel.getRepair(i));
         }//end loop
+        for(int i = 0; i<repairsNotReturned.size();i++){
+           if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
+        }
        admins = adminModel.getAllAdmins();
     }//end method
 
@@ -153,6 +156,7 @@ public class Factory {
             String date = r.getDateReceived().toString();
             String desc = r.getAfterDesc();
             double price = r.getPrice();
+            bikeModel.changeRepair(r.getBikeId());
             return (repairModel.returnRepair(repairId, date, desc, price));
         }else return false;
     }//end method
@@ -222,7 +226,6 @@ public class Factory {
         if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
             if(docks.get(i).getName().equals(dockName)){
-
                 int dockId = dockModel.getDock(dockName).getDockID();
                 docks.set(i,d);
                 String name = d.getName();
@@ -273,11 +276,16 @@ public class Factory {
     //Method to get all bikes docked at a given dock
     public int[] dockedBikes(String dockName){
         ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
-        int[] dockedBikes = new int[docked.size()];
-        for(int i = 0; i<dockedBikes.length;i++){
-            dockedBikes[i] = docked.get(i);
-        }//end loop
-        return dockedBikes;
+        if(docked.size() != 0) {
+            int[] dockedBikes = new int[docked.size()];
+            for (int i = 0; i < dockedBikes.length; i++) {
+                dockedBikes[i] = docked.get(i);
+            }//end loop
+            return dockedBikes;
+        }else{
+            int[] noBikes = new int[0];
+            return noBikes;
+        }
     }//end method
 
     /**

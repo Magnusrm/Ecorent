@@ -1,6 +1,7 @@
 package bike.bikeRepair;
 
 import changescene.ChangeScene;
+import changescene.CloseWindow;
 import changescene.PopupScene;
 import control.Repair;
 import javafx.event.ActionEvent;
@@ -88,7 +89,7 @@ public class BikeRepairController {
 
     @FXML
     void registerRepairSentConfirm(){
-        /*factory.updateSystem();
+        factory.updateSystem();
         System.out.println(bikeIdSentField.getText());
         int bikeId = Integer.parseInt(bikeIdSentField.getText());
         BikeModel b = new BikeModel();
@@ -119,11 +120,11 @@ public class BikeRepairController {
                         "out the form in the correct format");
                 alert.showAndWait();
             }//end condition
-        }//end condition*/
+        }//end condition
     }//end method
 
     @FXML
-    void registerRepairReturnedConfirm(){
+    void registerRepairReturnedConfirm(ActionEvent event){
         factory.updateSystem();
         boolean execute = false;
         int bikeID = Integer.parseInt(bikeIdReturnedField.getText());
@@ -145,8 +146,8 @@ public class BikeRepairController {
                         dateReturnedField.getText().substring(4,6) + "-" +
                         dateReturnedField.getText().substring(6);
                 double price = Double.parseDouble(priceReturnedField.getText());
-                String descreption = descReturnedTextArea.getText();
-                Repair repairReturned = new Repair(date,descreption,price,bikeID);
+                String description = descReturnedTextArea.getText();
+                Repair repairReturned = new Repair(date,description,price,bikeID);
                 if(factory.repairReturned(repairReturned)){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Repair confirmed");
@@ -169,6 +170,7 @@ public class BikeRepairController {
                 alert.showAndWait();
             }//end condition
         }//end condition
+        CloseWindow cw = new CloseWindow(event);
     }//end method
 
 
