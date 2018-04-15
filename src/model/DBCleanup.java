@@ -24,7 +24,7 @@ public class DBCleanup {
 
         ResourceBundle rb = ResourceBundle.getBundle("resources.DBProp");
 
-            try{
+        try{
 
             String driver = rb.getString("jdbc.driver");
             if (driver != null) {

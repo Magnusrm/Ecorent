@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,16 +14,14 @@
          <children>
             <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
                <children>
-                  <Button fx:id="bikeRepairReturnedBtn" layoutX="234.0" layoutY="206.0" mnemonicParsing="false" onAction="#changeToRepairReturnedView" prefHeight="80.0" prefWidth="134.0" text="Returned" textAlignment="CENTER" />
-                  <Button fx:id="bikeRepairSentBtn" layoutX="66.0" layoutY="206.0" mnemonicParsing="false" onAction="#changeToRepairSentView" prefHeight="80.0" prefWidth="134.0" stylesheets="@../../resources/darkTheme.css" text="Sent" textAlignment="CENTER" />
-                  <TextField fx:id="bikeIdField" alignment="TOP_CENTER" layoutX="134.0" layoutY="155.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+                  <Button fx:id="bikeRepairReturnedBtn" layoutX="235.0" layoutY="181.0" mnemonicParsing="false" onAction="#changeToRepairReturnedView" prefHeight="80.0" prefWidth="134.0" text="Returned" textAlignment="CENTER" />
+                  <Button fx:id="bikeRepairSentBtn" layoutX="67.0" layoutY="181.0" mnemonicParsing="false" onAction="#changeToRepairSentView" prefHeight="80.0" prefWidth="134.0" stylesheets="@../../resources/darkTheme.css" text="Sent" textAlignment="CENTER" />
                   <Label layoutX="114.0" layoutY="33.0" text="Register Repairs" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="Times New Roman" size="31.0" />
                      </font>
                   </Label>
                   <Line endX="80.0" layoutX="277.0" layoutY="68.0" startX="-200.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
-                  <Line endX="100.0" layoutX="202.0" layoutY="181.0" startX="-70.0" stroke="WHITE" styleClass="line" />
                </children>
             </AnchorPane>
             <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />

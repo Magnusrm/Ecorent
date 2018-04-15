@@ -11,6 +11,7 @@ public class Bike {
     private Type type;
     private double powerUsage;
     private boolean repairing;
+    private boolean active = true; //whether or not the bike is still in use
 
     public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
@@ -58,6 +59,8 @@ public class Bike {
         return repairing;
     }
 
+    public boolean isActive(){return active;}
+
     public void setBikeId(int bikeId) {
         this.bikeId = bikeId;
     }
@@ -84,6 +87,8 @@ public class Bike {
     public void setRepairing(boolean repairing) {
         this.repairing = repairing;
     }
+
+    public void deactivate(boolean active){this.active = active;}
 
     public void setDockId(int dockId) {
         if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}

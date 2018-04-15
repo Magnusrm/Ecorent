@@ -3,17 +3,11 @@ package dock.dockNew;
 import changescene.ChangeScene;
 import control.Dock;
 import control.Factory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class DockNewController{
     private Factory factory = new Factory();

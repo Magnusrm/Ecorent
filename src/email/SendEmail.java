@@ -55,7 +55,7 @@ public class SendEmail {
                 System.out.println(e.getMessage() + " - sendFromGmail()");
             }
         }  catch (MessagingException e) {
-        System.out.println(e.getMessage() + " - sendFromGmail()");
+            System.out.println(e.getMessage() + " - sendFromGmail()");
         }
         return null;
     }
