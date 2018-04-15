@@ -17,14 +17,16 @@ public class RepairModelTest {
     ResultSet resultSet;
     RepairModel instance;
 
-    private int max = 2; //Change this before running tests.
-    private int bikeId = 56; //ID of the test bike
-    //Information about the repair that is tested
-    private String dateSent = "2018-04-10";
-    private String beforeDescription = "Broken wheel";
-    private String dateReceived = "2018-04-11";
-    private String afterDescription = "Fixed wheel";
+    private int max = 13; //Change this to (the highest repair ID in the DB + 1)
+    private int bikeId = 69; //ID of the test bike
+    //Information about the test repair
+    private String dateSent = "2018-04-15";
+    private String beforeDescription = "Broken handle";
+    private String dateReceived = "2018-04-15";
+    private String afterDescription = "Fixed handle";
     double price = 2000;
+
+
 
     @BeforeEach
     public void before() {

@@ -11,6 +11,7 @@ public class Bike {
     private Type type;
     private double powerUsage;
     private boolean repairing;
+    private boolean active = true; //whether or not the bike is still in use
 
     public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
@@ -58,6 +59,8 @@ public class Bike {
         return repairing;
     }
 
+    public boolean isActive(){return active;}
+
     public void setBikeId(int bikeId) {
         this.bikeId = bikeId;
     }
@@ -85,6 +88,8 @@ public class Bike {
         this.repairing = repairing;
     }
 
+    public void deactivate(boolean active){this.active = active;}
+
     public void setDockId(int dockId) {
         if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}
         this.dockId = dockId;
@@ -105,21 +110,17 @@ public class Bike {
                 + "\n Make: " + make + "\n Type: " + type.getName() + "\n Repairing: " + r;
     }
 
+    @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Bike)) {
-            return false;
-        }
+        if (!(o instanceof Bike)) { throw new IllegalArgumentException("The object you are comparing must be an instance of Bike"); }
 
         Bike b = (Bike) o;
 
-        return (this.bikeId == b.getBikeId());
-        /*
-        if (this.bikeId == b.getBikeId()) {
-            return true;
-        }
-        return false;
-        */
+        return (((Bike) o).getBikeId() == b.getBikeId() && ((Bike) o).getMake().equals(b.getMake()) &&
+                ((Bike) o).getPrice() == b.getPrice() && ((Bike) o).getPowerUsage() == b.getPowerUsage() &&
+                ((Bike) o).getBuyDate().equals(b.getBuyDate()) && ((Bike) o).isRepairing() == b.isRepairing());
+
     }
 
 }

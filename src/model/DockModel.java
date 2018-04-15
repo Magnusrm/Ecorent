@@ -2,12 +2,20 @@ package model;
 
 import control.Dock;
 
+import javax.print.DocFlavor;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DockModel {
 
-    //Returns a given dock from the database
+    /**
+     * @Author Team 007
+     *
+     * Returns a dock object from the database.
+     *
+     * @param name
+     * @return Object
+     */
     public Dock getDock(String name){
         Connection connection = null;
 
@@ -50,7 +58,7 @@ public class DockModel {
             rsYCord.next();
             yCord = rsYCord.getDouble("y_cord");
 
-            dock = new Dock(name, /*pwrUsg,*/ xCord, yCord);
+            dock = new Dock(name, xCord, yCord);
             dock.setDockID(dockID);
             return dock;
 
@@ -70,7 +78,38 @@ public class DockModel {
         return null;
     }
 
-    public boolean dockNameExists(String name){
+    public boolean dockCoordinatesAvailable(double xCord, double yCord){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String cordsQuery = "SELECT x_cord, y_cord FROM dock WHERE x_cord = ? AND y_cord = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(cordsQuery);
+            preparedStatement.setDouble(1, xCord);
+            preparedStatement.setDouble(2, yCord);
+            resultSet = preparedStatement.executeQuery();
+            return !resultSet.next();
+
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - dockCoordinatesExists");
+        }
+        return false;
+    }
+
+    /**
+     * @Author Team 007
+     *
+     * Checks by name if a dock exists in the database.
+     * Returns true/false.
+     *
+     * @param name
+     * @return boolean
+     */
+    public boolean dockNameAvailable(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -82,7 +121,7 @@ public class DockModel {
             preparedStatement = connection.prepareStatement(nameQuery);
             preparedStatement.setString(1, name.toLowerCase());
             resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+            return !resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - dockNameExists()");
         }finally {
@@ -93,7 +132,16 @@ public class DockModel {
         return false;
     }
 
-    private boolean dockIDExists(int dockID){
+    /**
+     * @Author Team 007
+     *
+     * Private method to check by dockID if a dock exists.
+     * Returns true/false.
+     *
+     * @param dockID
+     * @return boolean
+     */
+    private boolean dockIDAvailable(int dockID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -106,7 +154,7 @@ public class DockModel {
             preparedStatement = connection.prepareStatement(IDQuery);
             preparedStatement.setInt(1, dockID);
             resultSet = preparedStatement.executeQuery();
-            return resultSet.next();
+            return !resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - dockIDExists()");
         }finally {
@@ -117,6 +165,18 @@ public class DockModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Adds a new dock to the database.
+     * Returns the dockID that is set in the database.
+     * Returns -1 if the dock already is in the database, or if the method failed.
+     *
+     * @param name
+     * @param xCord
+     * @param yCord
+     * @return int
+     */
     public int addDock(String name, double xCord, double yCord){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -129,7 +189,7 @@ public class DockModel {
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
 
-            if(!dockNameExists(name)) {
+            if(dockNameAvailable(name) && dockCoordinatesAvailable(xCord, yCord)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, xCord);
@@ -152,6 +212,18 @@ public class DockModel {
         return -1;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Edits a dock that already is saved to the database.
+     * Returns true/false.
+     *
+     * @param dockID
+     * @param name
+     * @param xCord
+     * @param yCord
+     * @return boolean
+     */
     public boolean editDock(int dockID, String name, double xCord, double yCord){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -160,7 +232,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockIDExists(dockID)) {
+            if(!dockIDAvailable(dockID)) {
                 preparedStatement = connection.prepareStatement(dockInsert);
                 preparedStatement.setString(1, name);
                 preparedStatement.setDouble(2, xCord);
@@ -178,6 +250,15 @@ public class DockModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns the dockID of the dock that a bike is docked at.
+     * Returns -1 if the bike is not docked.
+     *
+     * @param bikeID
+     * @return int
+     */
     public int getDockID(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -203,6 +284,15 @@ public class DockModel {
         return -1;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Deletes a dock from the database.
+     * Returns true/false.
+     *
+     * @param name
+     * @return boolean
+     */
     public boolean deleteDock(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -212,7 +302,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameExists(name)) {
+            if(dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(deleteQuery);
                 preparedStatement.setString(1, name);
                 return preparedStatement.executeUpdate() != 0;
@@ -226,7 +316,16 @@ public class DockModel {
         return false;
     }
 
-    //Returns an ArrayList of bikeID's that are docked at a certain docking station.
+
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of all bikes' bikeID's that is docked at a given dock.
+     * Returns null if method fails.
+     *
+     * @param name
+     * @return ArrayList
+     */
     public ArrayList<Integer> bikesAtDock(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -239,7 +338,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameExists(name)) {
+            if(dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
                 preparedStatement.setString(1, name);
                 resultSet = preparedStatement.executeQuery();
@@ -258,6 +357,14 @@ public class DockModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of all dock Objects that are in the database.
+     * Returns null if method fails.
+     *
+     * @return ArrayList
+     */
     public ArrayList<Dock> getAllDocks(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;

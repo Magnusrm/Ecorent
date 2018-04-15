@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public class AdminModel {
 
     /**
-     * @Author Sander Nicolausson
+     * @Author Team 007
+     *
      * Checks if an admin is in the database by searching by email.
      * Returns true/false.
+     *
      * @param  email
      * @return boolean
      */
@@ -44,11 +46,13 @@ public class AdminModel {
 
 
     /**
-     *@Author Sander Nicolausson
-     * Returns an admin object from the database
+     *@Author Team 007
+     *
+     * Returns an admin Object from the database.
+     * Returns null if the method fails.
      *
      * @param email
-     * @return
+     * @return Object
      */
     public Admin getAdmin(String email){
         Connection connection = null;
@@ -103,6 +107,17 @@ public class AdminModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Adds a new admin to the database.
+     * Returns true/false.
+     *
+     * @param email
+     * @param hash
+     * @param priviliged
+     * @return boolean
+     */
     public boolean addAdmin(String email, String hash, boolean priviliged){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -139,6 +154,15 @@ public class AdminModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Deletes an admin from the database.
+     * Returns true/false.
+     *
+     * @param email
+     * @return boolean
+     */
     public boolean deleteAdmin(String email){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -170,7 +194,15 @@ public class AdminModel {
     }
 
 
-    //Returns the hash value of a given email
+    /**
+     *@Author Team 007
+     *
+     * Returns the hashed (with salt) value that belongs to a given email.
+     * Returns null if the method fails.
+     *
+     * @param email
+     * @return String
+     */
     public String getHash(String email){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -200,6 +232,15 @@ public class AdminModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Checks if an admin has the rights to make new admins.
+     * Returns true/false.
+     *
+     * @param email
+     * @return boolean
+     */
     public boolean isPriviliged(String email){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -234,6 +275,14 @@ public class AdminModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of all the admins in the database.
+     * Returns null if the method fails.
+     *
+     * @return ArrayList
+     */
     public ArrayList<Admin> getAllAdmins(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;

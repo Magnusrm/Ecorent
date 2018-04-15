@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BikeModelTest {
 
@@ -15,7 +16,7 @@ public class BikeModelTest {
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     BikeModel instance;
-    private final int BIKEID = 62;
+    private final int BIKEID = 68;
 
     @Override
     public boolean equals(Object o){
@@ -27,7 +28,8 @@ public class BikeModelTest {
         Bike b = (Bike) o;
 
         return (((Bike) o).getBikeId() == b.getBikeId() && ((Bike) o).getMake().equals(b.getMake()) &&
-                ((Bike) o).getPrice() == b.getPrice());
+                ((Bike) o).getPrice() == b.getPrice() && ((Bike) o).getPowerUsage() == b.getPowerUsage() &&
+                ((Bike) o).getBuyDate().equals(b.getBuyDate()) && ((Bike) o).isRepairing() == b.isRepairing());
 
     }
 
@@ -72,7 +74,8 @@ public class BikeModelTest {
         Type type = new Type("Racer");
         double pwrUsg = 0.36;
 
-        Bike expResult = new Bike(regDate, price, make, type, pwrUsg) ;
+        Bike expResult = new Bike(regDate, price, make, type, pwrUsg);
+        expResult.setBikeId(BIKEID);
         Bike result = instance.getBike(BIKEID);
         assertEquals(expResult, result);
     }
@@ -89,12 +92,23 @@ public class BikeModelTest {
         double pwrUsg = 0.36;
         int dockID = 1;
 
-        instance.editBike(62, date, price, make, dockID, pwrUsg, typeName);
+        instance.editBike(BIKEID, date, price, make, dockID, pwrUsg, typeName);
 
         Bike expResult = new Bike(regDate, price, make, type, pwrUsg);
+        expResult.setBikeId(BIKEID);
         Bike result = instance.getBike(BIKEID);
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testChangeRepair(){
+        System.out.println("Testing the method changeRepair()");
+
+        instance.changeRepair(BIKEID);
+
+        assertTrue(instance.isRepairing(BIKEID));
+    }
+
 
     @Test
     public void testDeleteBike(){

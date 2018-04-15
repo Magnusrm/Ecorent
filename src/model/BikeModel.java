@@ -11,12 +11,21 @@ import java.util.ArrayList;
 public class BikeModel {
 
 
+    /**
+     * @Author Team 007
+     *
+     * Checks if a given bike is in the database.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @return boolean
+     */
     public boolean bikeExists(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String existsQuery = "SELECT bike_id FROM bike WHERE bike_id = ?";
+        String existsQuery = "SELECT bike_id FROM bike WHERE bike_id = ? AND active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -24,11 +33,7 @@ public class BikeModel {
             preparedStatement = connection.prepareStatement(existsQuery);
             preparedStatement.setInt(1, bikeID);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                return true;
-            }else{
-                return false;
-            }
+            return resultSet.next();
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - bikeExists()");
         }finally {
@@ -39,7 +44,15 @@ public class BikeModel {
         return false;
     }
 
-    //Method that retrieves a bike from the database as an object
+    /**
+     * @Author Team 007
+     *
+     * Return a bike Object from the database.
+     * Returns null if the method fails.
+     *
+     * @param bikeID
+     * @return Object
+     */
     public Bike getBike(int bikeID)  {
 
         Connection connection = null;
@@ -54,11 +67,11 @@ public class BikeModel {
         PreparedStatement getPwr = null;
         //PreparedStatement getDockID = null;
 
-        String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ?";
-        String priceQuery = "SELECT price FROM bike WHERE bike_id = ?";
-        String makeQuery = "SELECT make FROM bike WHERE bike_id = ?";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ?)";
-        String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ?";
+        String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ? AND active = 1";
+        String priceQuery = "SELECT price FROM bike WHERE bike_id = ? AND active = 1";
+        String makeQuery = "SELECT make FROM bike WHERE bike_id = ? AND active = 1";
+        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ? AND active = 1)";
+        String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ? AND active = 1";
         //String dockIDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
 
         ResultSet rsDate = null;
@@ -120,6 +133,7 @@ public class BikeModel {
                 type = new Type(typeName);
                 bike = new Bike(localDate, price, make, type,pwrUsg);
                 bike.setBikeId(bikeID);
+                bike.setRepairing(isRepairing(bikeID));
                 //bike.setDockId(dockID);
                 return bike;
             }
@@ -143,7 +157,21 @@ public class BikeModel {
         return null;
     }
 
-    //Updates the values of a given bike
+    /**
+     * @Author Team 007
+     *
+     * Changes the values of a bike in the database.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @param regDate
+     * @param price
+     * @param make
+     * @param dockID
+     * @param pwrUsg
+     * @param typeName
+     * @return boolean
+     */
     public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
 
@@ -151,7 +179,7 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
-                "WHERE bike_id = ?";
+                "WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
@@ -187,11 +215,18 @@ public class BikeModel {
         return false;
     }
 
+    /**
+     *
+     * "Deletes" bikes that does not have a type.
+     * Returns true/false.
+     *
+     * @return boolean
+     */
     public boolean deleteBikesWhereTypeIsNULL(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String deleteUpdate = "DELETE FROM bike WHERE type_id IS NULL";
+        String deleteUpdate = "UPDATE bike SET active = 0 WHERE type_id IS NULL";
 
         try{
             connection = DBCleanup.getConnection();
@@ -208,11 +243,20 @@ public class BikeModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * "Deletes" a bike from the database by setting the active-bit to 0.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @return boolean
+     */
     public boolean deleteBike(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String deleteUpdate = "DELETE FROM bike WHERE bike.bike_id = ?";
+        String deleteUpdate = "UPDATE bike SET active = 0 WHERE bike_id = ?";
         try{
             connection = DBCleanup.getConnection();
 
@@ -231,7 +275,22 @@ public class BikeModel {
         return false;
     }
 
-    //Adds a new bike to the database
+
+    /**
+     * @Author Team 007
+     *
+     * Adds a new bike to the database.
+     * Returns the bikeID.
+     * Returns -1 if the method fails.
+     *
+     * @param date
+     * @param price
+     * @param make
+     * @param type
+     * @param pwrUsg
+     * @param repair
+     * @return int
+     */
     public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -239,9 +298,9 @@ public class BikeModel {
 
         int typeID = TypeModel.typeExists(type);
 
-        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing) VALUES " +
-                "(DEFAULT, ?, ?, ?, ?, ?, ?);";
-        String maxBikeID = "SELECT MAX(bike_id) from bike";
+        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing, active) VALUES " +
+                "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
+        String maxBikeID = "SELECT MAX(bike_id) FROM bike WHERE active = 1";
 
         byte rep = 1;
         byte notRep = 0;
@@ -284,6 +343,14 @@ public class BikeModel {
         return -1;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of all bikes that is in the database.
+     * Returns null if method fails.
+     *
+     * @return ArrayList
+     */
     public ArrayList<Bike> getAllBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -291,7 +358,7 @@ public class BikeModel {
 
         ArrayList<Bike> allBikes = new ArrayList<Bike>();
 
-        String bikesQuery = "SELECT bike_id FROM bike";
+        String bikesQuery = "SELECT bike_id FROM bike WHERE active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -311,9 +378,92 @@ public class BikeModel {
         }
         return null;
     }
+
+    /**
+     * @Author Team 007
+     *
+     * Checks if a given bike is repairing.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @return boolean
+     */
+    public boolean isRepairing(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ? AND active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(repairQuery);
+            preparedStatement.setInt(1, bikeID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getByte("repairing") != 0;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getRepair()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
+    /**
+     * @Author Team 007
+     *
+     * Checks what value the repair-bit is and changes it.
+     * Returns true/false.
+     *
+     * @param bikeID
+     * @return boolean
+     */
+    public boolean changeRepair(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ? AND active = 1";
+        String repairUpdate = "UPDATE bike SET repairing = ? WHERE bike_id = ? AND active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(repairQuery);
+            preparedStatement.setInt(1, bikeID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            byte rep = resultSet.getByte("repairing");
+
+            if(rep == 0){
+                byte changeRep = 1;
+                preparedStatement = connection.prepareStatement(repairUpdate);
+                preparedStatement.setByte(1, changeRep);
+                preparedStatement.setInt(2, bikeID);
+                return preparedStatement.executeUpdate() != 0;
+            }else{
+                byte changeRep = 0;
+                preparedStatement = connection.prepareStatement(repairUpdate);
+                preparedStatement.setByte(1, changeRep);
+                preparedStatement.setInt(2, bikeID);
+                return preparedStatement.executeUpdate() != 0;
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - changeRepair");
+        }finally{
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
     public static void main(String[] args){
         BikeModel bikeModel = new BikeModel();
-
-        bikeModel.editBike(56, "2018-04-10", 3000,"DBS",1 , 3200, "Landevei");
+        if(bikeModel.isRepairing(68)){
+            System.out.println("Hei");
+        }
     }
 }
