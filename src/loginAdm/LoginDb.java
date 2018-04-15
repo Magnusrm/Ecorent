@@ -20,7 +20,6 @@ public class LoginDb {
      * @param loginBean
      * @return boolean
      */
-
     public static boolean authenticateUser(LoginBean loginBean) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
