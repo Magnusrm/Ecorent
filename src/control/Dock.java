@@ -45,7 +45,7 @@ public class Dock {
         dockID = id;
     }//end method
 
-    //Equals method.
+    //Equals-method.
     //Created to avoid indifference between lower and upper case characters
     @Override
     public boolean equals(Object o){
