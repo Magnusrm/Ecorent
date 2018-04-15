@@ -9,6 +9,15 @@ import java.util.Properties;
 
 public class DBCleanup {
 
+
+    /**
+     * @Author Team 007
+     *
+     * Uses the property-file to establish connection to the database.
+     * Returns the Connection.
+     *
+     * @return Connection
+     */
     public static Connection getConnection(){
         File file = new File("C:/Users/Ilia/Documents/Systemutvikling 1 (innføringsemne 2.0)/PROSJEKT ELSYKKEL/src/DBProp");
 
@@ -33,6 +42,13 @@ public class DBCleanup {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Closes the ResultSet that is given as parameter.
+     *
+     * @param rs
+     */
     public static void closeResultSet(ResultSet rs){
         try{
             if(rs != null){
@@ -43,6 +59,13 @@ public class DBCleanup {
         }
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Closes the PreparedStatement that is given as parameter.
+     *
+     * @param st
+     */
     public static void closeStatement(PreparedStatement st){
         try {
             if (st != null) {
@@ -53,6 +76,13 @@ public class DBCleanup {
         }
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Closes the connection that is given as parameter.
+     *
+     * @param con
+     */
     public static void closeConnection(Connection con){
         try{
             if(con != null){
@@ -63,7 +93,13 @@ public class DBCleanup {
         }
     }
 
-
+    /**
+     * @Author Team 007
+     *
+     * If AutoCommit is turned off, this method turns it back on.
+     *
+     * @param con
+     */
     public static void setAutoCommit(Connection con){
         try{
             if(con != null && !con.getAutoCommit()){

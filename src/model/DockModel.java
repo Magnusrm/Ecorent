@@ -7,7 +7,14 @@ import java.util.ArrayList;
 
 public class DockModel {
 
-    //Returns a given dock from the database
+    /**
+     * @Author Team 007
+     *
+     * Returns a dock object from the database.
+     *
+     * @param name
+     * @return Object
+     */
     public Dock getDock(String name){
         Connection connection = null;
 
@@ -50,7 +57,7 @@ public class DockModel {
             rsYCord.next();
             yCord = rsYCord.getDouble("y_cord");
 
-            dock = new Dock(name, /*pwrUsg,*/ xCord, yCord);
+            dock = new Dock(name, xCord, yCord);
             dock.setDockID(dockID);
             return dock;
 
@@ -70,6 +77,15 @@ public class DockModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Checks by name if a dock exists in the database.
+     * Returns true/false.
+     *
+     * @param name
+     * @return boolean
+     */
     public boolean dockNameExists(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -93,6 +109,15 @@ public class DockModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Private method to check by dockID if a dock exists.
+     * Returns true/false.
+     *
+     * @param dockID
+     * @return boolean
+     */
     private boolean dockIDExists(int dockID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -117,6 +142,18 @@ public class DockModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Adds a new dock to the database.
+     * Returns the dockID that is set in the database.
+     * Returns -1 if the dock already is in the database, or if the method failed.
+     *
+     * @param name
+     * @param xCord
+     * @param yCord
+     * @return int
+     */
     public int addDock(String name, double xCord, double yCord){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -152,6 +189,18 @@ public class DockModel {
         return -1;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Edits a dock that already is saved to the database.
+     * Returns true/false.
+     *
+     * @param dockID
+     * @param name
+     * @param xCord
+     * @param yCord
+     * @return boolean
+     */
     public boolean editDock(int dockID, String name, double xCord, double yCord){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -178,6 +227,15 @@ public class DockModel {
         return false;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns the dockID of the dock that a bike is docked at.
+     * Returns -1 if the bike is not docked.
+     *
+     * @param bikeID
+     * @return int
+     */
     public int getDockID(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -203,6 +261,15 @@ public class DockModel {
         return -1;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Deletes a dock from the database.
+     * Returns true/false.
+     *
+     * @param name
+     * @return boolean
+     */
     public boolean deleteDock(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -226,7 +293,16 @@ public class DockModel {
         return false;
     }
 
-    //Returns an ArrayList of bikeID's that are docked at a certain docking station.
+
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of all bikes' bikeID's that is docked at a given dock.
+     * Returns null if method fails.
+     *
+     * @param name
+     * @return ArrayList
+     */
     public ArrayList<Integer> bikesAtDock(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -258,6 +334,14 @@ public class DockModel {
         return null;
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Returns an ArrayList of all dock Objects that are in the database.
+     * Returns null if method fails.
+     *
+     * @return ArrayList
+     */
     public ArrayList<Dock> getAllDocks(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
