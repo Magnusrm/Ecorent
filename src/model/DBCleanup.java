@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
+import java.util.ResourceBundle;
+
 
 public class DBCleanup {
 
@@ -19,24 +21,22 @@ public class DBCleanup {
      * @return Connection
      */
     public static Connection getConnection(){
-        File file = new File("C:/Users/Ilia/Documents/Systemutvikling 1 (innføringsemne 2.0)/PROSJEKT ELSYKKEL/src/DBProp");
 
-        try(FileInputStream fileInputStream = new FileInputStream(file)) {
+        ResourceBundle rb = ResourceBundle.getBundle("resources.DBProp");
 
-            Properties properties = new Properties();
-            properties.load(fileInputStream);
+        try{
 
-            String driver = properties.getProperty("jdbc.driver");
+            String driver = rb.getString("jdbc.driver");
             if (driver != null) {
                 Class.forName(driver);
             }
 
-            String url = properties.getProperty("jdbc.url");
-            String username = properties.getProperty("jdbc.username");
-            String password = properties.getProperty("jdbc.password");
+            String url = rb.getString("jdbc.url");
+            String username = rb.getString("jdbc.username");
+            String password = rb.getString("jdbc.password");
 
             return DriverManager.getConnection(url, username, password);
-        }catch(IOException | ClassNotFoundException | SQLException e){
+        }catch(ClassNotFoundException | SQLException e){
             System.out.println(e.getMessage() + " - getConnection()");
         }
         return null;
