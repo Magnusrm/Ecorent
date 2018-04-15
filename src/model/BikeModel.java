@@ -215,6 +215,41 @@ public class BikeModel {
         return false;
     }
 
+    public boolean editBikeDock(int bikeID, int dockID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
+        try{
+            connection = DBCleanup.getConnection();
+            connection.setAutoCommit(false);
+
+
+            if(bikeExists(bikeID)) {
+                preparedStatement = connection.prepareStatement(bikeInsert);
+                preparedStatement.setInt(1, dockID);
+                preparedStatement.setInt(2, bikeID);
+
+
+                if (preparedStatement.executeUpdate() != 0) {
+                    connection.commit();
+                    return true;
+                } else {
+                    connection.rollback();
+                    return false;
+                }
+            }
+        }catch(SQLException e) {
+            System.out.println(e.getMessage() + " - editBikeDock");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.setAutoCommit(connection);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
     /**
      *
      * "Deletes" bikes that does not have a type.
