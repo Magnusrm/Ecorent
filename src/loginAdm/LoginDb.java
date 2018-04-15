@@ -1,8 +1,3 @@
-/**
- * Class which is used to authenticate an user trying to login.
- *
- * @author Team 007
- */
 
 package loginAdm;
 
@@ -12,7 +7,11 @@ import java.sql.*;
 
 
 import static control.Password.*;
-
+/**
+ * Class which is used to authenticate an user trying to login.
+ *
+ * @author Team 007
+ */
 public class LoginDb {
 
     /**

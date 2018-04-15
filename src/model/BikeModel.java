@@ -222,7 +222,6 @@ public class BikeModel {
      * @param dockID
      * @return
      */
-
     public boolean editBikeDock(int bikeID, int dockID) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

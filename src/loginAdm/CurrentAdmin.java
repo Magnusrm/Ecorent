@@ -1,14 +1,13 @@
+
+package loginAdm;
+
+import control.Admin;
 /**
  * This class uses the Singleton pattern to store the user logged in to the system
  * An instance of this class stores an Admin-object
  *
  * @author Team 007
  */
-
-package loginAdm;
-
-import control.Admin;
-
 public class CurrentAdmin {
     private Admin admin;
     private static CurrentAdmin currentAdmin;

@@ -1,11 +1,10 @@
+
+package loginAdm;
 /**
  * This class is only to store the login fields as an object which can be used further on.
  *
  * @author Team 007
  */
-
-package loginAdm;
-
 public class LoginBean {
     private String email;
     private String password;
