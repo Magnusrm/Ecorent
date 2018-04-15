@@ -57,9 +57,6 @@ public class BikeInfoController {
     private Button homeBtn;
 
 
-
-
-
     @FXML
     void showInfo(){
         factory.updateSystem();
