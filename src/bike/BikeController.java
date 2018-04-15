@@ -87,6 +87,14 @@ public class BikeController {
         cs.setScene(event, "/bike/bikeInfo/BikeInfoView.fxml");
     }
 
+
+    /**
+     * @Author Team 007
+     *
+     * Deleted the bike based on the clients input in the TextField.
+     *
+     * @param event
+     */
     @FXML
     void deleteBike(ActionEvent event) {
         factory.updateSystem();
@@ -119,24 +127,8 @@ public class BikeController {
         }//end condition
     }//end method
 
-    @FXML
-    void deleteAllBikesWithoutType(ActionEvent event){
-        factory.updateSystem();
-        if(factory.deleteAllBikes()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("All bikes with type null deleted");
-            alert.setHeaderText(null);
-            alert.setContentText("Operation successful! All bikes have a type");
-            alert.showAndWait();
-        }//end if
-        else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("OOPS");
-            alert.setHeaderText(null);
-            alert.setContentText("Something went wrong! Please check your internet access");
-            alert.showAndWait();
-        }//end else
-    }
+
+
 
 
 

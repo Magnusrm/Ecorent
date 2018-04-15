@@ -88,7 +88,14 @@ public class BikeTypeController implements Initializable{
         }catch (Exception e){e.printStackTrace();}
     }
 
-
+    /**
+     * @Author Team 007
+     *
+     * Gives the client an option to either accept or decline the deletion of the selected type.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void deleteType(ActionEvent event) throws Exception {
 
@@ -131,6 +138,13 @@ public class BikeTypeController implements Initializable{
     }//end method
 
 
+    /**
+     * @Author Team 007
+     *
+     * Gives the client a textfield and created a new type based on the input.
+     *
+     * @param event
+     */
     @FXML
     void newType(ActionEvent event) {
 
@@ -152,6 +166,16 @@ public class BikeTypeController implements Initializable{
         });
     }
 
+
+    /**
+     * @Author Team 007
+     *
+     * Gives the client an option to enter a new type name.
+     * Confirming will change the type based on the clients input.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void editTypeName(ActionEvent event) throws Exception{
        TextInputDialog dialog = new TextInputDialog("");
@@ -188,6 +212,15 @@ public class BikeTypeController implements Initializable{
     }//end method
 
 
+    /**
+     * @Author Team 007
+     *
+     * Saves changes.
+     * This method gets called each time
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -202,6 +235,14 @@ public class BikeTypeController implements Initializable{
         }//end if
     }
 
+
+    /**
+     * @Author Team 007
+     *
+     * Updates the listview of types.
+     * This gets called after clients changes name.
+     *
+     */
     @FXML
     void updateList(){
         ObservableList<String> types = FXCollections.observableArrayList();
@@ -217,9 +258,30 @@ public class BikeTypeController implements Initializable{
         typeListView.setItems(types);
     }
 
-
-
-
+    /**
+     *
+     *
+     *
+     * @param event
+     */
+    @FXML
+    void deleteAllBikesWithoutType(ActionEvent event){
+        factory.updateSystem();
+        if(factory.deleteAllBikes()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("All bikes with type null deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("Operation successful! All bikes have a type");
+            alert.showAndWait();
+        }//end if
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("OOPS");
+            alert.setHeaderText(null);
+            alert.setContentText("Something went wrong! There might not be any bikes without a type.");
+            alert.showAndWait();
+        }//end else
+    }
 
 
 

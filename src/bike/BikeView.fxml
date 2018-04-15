@@ -19,7 +19,6 @@
             <Button fx:id="editBikeTypesBtn" layoutX="75.0" layoutY="239.0" mnemonicParsing="false" onAction="#changeToBikeTypeView" prefHeight="35.0" prefWidth="134.0" stylesheets="@../resources/darkTheme.css" text="Edit Bike Types" textAlignment="CENTER" />
             <TextField fx:id="bikeIdField" layoutX="224.0" layoutY="85.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
             <Line endX="80.0" layoutX="279.0" layoutY="112.0" startX="-55.0" stroke="WHITE" />
-            <Button fx:id="deleteAllBikesWithoutTypeBtn" layoutX="40.0" layoutY="357.0" mnemonicParsing="false" onAction="#deleteAllBikesWithoutType" prefHeight="35.0" prefWidth="355.0" style="-fx-background-color: gray;" text="Midlertidig knapp - slett alle sykler med type lik null" textAlignment="CENTER" textFill="WHITE" />
          </children></AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">

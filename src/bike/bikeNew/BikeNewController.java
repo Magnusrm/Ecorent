@@ -78,6 +78,13 @@ public class BikeNewController implements Initializable{
     }//end constructor
 
 
+    /**
+     * @Author Team 007
+     *
+     * Creates a new bike based on the information given in the TextFields.
+     *
+     * @param event
+     */
 
     @FXML
     void createNewBike(ActionEvent event) {
