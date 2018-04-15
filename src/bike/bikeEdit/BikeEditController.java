@@ -90,6 +90,13 @@ public class BikeEditController implements Initializable{
     }//end method
 
 
+    /**
+     * @Author Team 007
+     *
+     * Fills the TextFields with the information about the bike that is already stored in the database.
+     *
+     * @param event
+     */
     @FXML
     void fillInfo(ActionEvent event) {
         int bikeID = Integer.parseInt(bikeIdField.getText());
@@ -109,6 +116,14 @@ public class BikeEditController implements Initializable{
         }//end if
     }//end method
 
+
+    /**
+     * @Author Team 007
+     *
+     * Confirms the changed made to the bike.
+     *
+     * @param event
+     */
     @FXML
     void saveChanges(ActionEvent event){
         int bikeID = Integer.parseInt(bikeIdField.getText());
@@ -132,6 +147,7 @@ public class BikeEditController implements Initializable{
             alert.showAndWait();
         }//end else
     }//end method
+
 
 
 

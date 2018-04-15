@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,59 +14,60 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <Button fx:id="showInfoBtn" layoutX="249.0" layoutY="211.0" mnemonicParsing="false" onAction="#showInfo" prefHeight="27.0" prefWidth="136.0" text="Show info" textAlignment="CENTER" />
-            <TextField fx:id="bikeIdField" layoutX="250.0" layoutY="169.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
-            <Line endX="80.0" layoutX="305.0" layoutY="196.0" startX="-55.0" stroke="WHITE" />
-            <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="263.0" text="Battery:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Button fx:id="showInfoBtn" layoutX="243.0" layoutY="41.0" mnemonicParsing="false" onAction="#showInfo" prefHeight="27.0" prefWidth="136.0" text="Show info" textAlignment="CENTER" />
+            <TextField fx:id="bikeIdField" layoutX="34.0" layoutY="40.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
+            <Line endX="80.0" layoutX="89.0" layoutY="67.0" startX="-55.0" stroke="WHITE" />
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="263.0" text="Battery:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="228.0" prefHeight="21.0" prefWidth="61.0" text="Date:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="228.0" prefHeight="21.0" prefWidth="61.0" text="Date:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="123.0" prefHeight="21.0" prefWidth="61.0" text="Price:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="123.0" prefHeight="21.0" prefWidth="61.0" text="Price:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="193.0" prefHeight="21.0" prefWidth="61.0" text="Make:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="193.0" prefHeight="21.0" prefWidth="61.0" text="Make:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="158.0" prefHeight="21.0" prefWidth="61.0" text="Type:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="158.0" prefHeight="21.0" prefWidth="61.0" text="Type:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="priceLbl" layoutX="107.0" layoutY="123.0" prefHeight="21.0" prefWidth="134.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="priceLbl" layoutX="84.0" layoutY="123.0" prefHeight="21.0" prefWidth="134.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="typeLbl" layoutX="107.0" layoutY="158.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="typeLbl" layoutX="84.0" layoutY="158.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="makeLbl" layoutX="107.0" layoutY="193.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="makeLbl" layoutX="84.0" layoutY="193.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="dateLbl" layoutX="107.0" layoutY="228.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="dateLbl" layoutX="84.0" layoutY="228.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl" layoutX="107.0" layoutY="263.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="batteryLbl" layoutX="84.0" layoutY="263.0" prefHeight="21.0" prefWidth="127.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
+            <ListView fx:id="repairIdListView" layoutX="211.0" layoutY="93.0" prefHeight="280.0" prefWidth="200.0" />
          </children>
       </AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
