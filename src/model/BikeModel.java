@@ -215,6 +215,14 @@ public class BikeModel {
         return false;
     }
 
+    /**
+     * @author Team 007
+     * Edits the dock of a bike
+     * @param bikeID
+     * @param dockID
+     * @return
+     */
+
     public boolean editBikeDock(int bikeID, int dockID) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
