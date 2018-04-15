@@ -101,7 +101,7 @@ public class WebMap extends Application {
         testButton.setOnAction(e -> {
             System.out.println(arrayToString(dockPos));
             webEngine.executeScript("var items = " + arrayToString(dockPos) + ";" +
-                                    "document.updateMarkers(items);");
+                                    "document.setMarkers(items);");
             /*webEngine.executeScript("var paths = [" + arrayToString(path01) + ", " +arrayToString(path02) +
                                     ", " + arrayToString(path03) + ", " + arrayToString(path12) + ", " + arrayToString(path23) +
                                     "];" +
