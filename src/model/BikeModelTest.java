@@ -84,7 +84,7 @@ public class BikeModelTest {
         LocalDate regDate = LocalDate.parse(date);
         double price = 1001;
         String make = "DBS";
-        String typeName = "Racer";
+        String typeName = "Landevei";
         Type type = new Type(typeName);
         double pwrUsg = 0.36;
         int dockID = 1;

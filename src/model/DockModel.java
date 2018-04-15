@@ -178,6 +178,31 @@ public class DockModel {
         return false;
     }
 
+    public int getDockID(int bikeID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String IDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(IDQuery);
+            preparedStatement.setInt(1, bikeID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("dock_id");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getDockID()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
+    }
+
     public boolean deleteDock(String name){
         Connection connection = null;
         PreparedStatement preparedStatement = null;

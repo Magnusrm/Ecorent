@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import model.DockModel;
 
 import java.net.URL;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class DockController implements Initializable {
     private Factory factory = new Factory();
 
     @FXML
-    private ComboBox<String> dockIdComboBox;
+    private ComboBox<String> dockNameComboBox;
 
     @FXML
     private Button editDockBtn;
@@ -73,7 +74,7 @@ public class DockController implements Initializable {
                 visualized[i] = factory.getDocks().get(i).getName();
             }//end loop
             docks.addAll(visualized);
-            dockIdComboBox.setItems(docks);
+            dockNameComboBox.setItems(docks);
         }catch (Exception e){e.printStackTrace();}
     }//end constructor
 
@@ -97,7 +98,7 @@ public class DockController implements Initializable {
     }
 
     @FXML
-    void deleteDock(ActionEvent event){
+    void deleteDock(ActionEvent event) throws Exception{
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete dock");
@@ -106,10 +107,10 @@ public class DockController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            //... IF OK
-
-        } else {
-            // ... IF CANCEL
+            DockModel dm = new DockModel();
+            dm.deleteDock(dockNameComboBox.getValue());
+            ChangeScene cs = new ChangeScene();
+            cs.setScene(event, "/dock/DockView.fxml");
         }
     }
 
