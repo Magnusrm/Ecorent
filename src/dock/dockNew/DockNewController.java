@@ -1,7 +1,6 @@
 package dock.dockNew;
 
 import changescene.ChangeScene;
-import com.sun.istack.internal.Interned;
 import control.Dock;
 import control.Factory;
 import javafx.collections.FXCollections;
