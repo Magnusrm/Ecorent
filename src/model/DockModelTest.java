@@ -1,4 +1,5 @@
 package model;
+import control.Bike;
 import control.Dock;
 import org.junit.jupiter.api.*;
 
@@ -14,34 +15,31 @@ public class DockModelTest {
     ResultSet resultSet;
     DockModel instance;
 
-    @BeforeAll
-    public void before() {
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no:3306/sandern?user=sandern&password=TUyEYWPb&useSSL=false&autoReconnect=true");
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + " - before() in DockModelTest");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage() + " - before() in DockModelTest");
+
+    @Override
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Dock)) {
+            return false;
         }
+
+        Dock b = (Dock) o;
+
+        return (((Dock) o).getName().equals(b.getDockID()) && ((Dock) o).getxCoordinates() == (b.getxCoordinates()) &&
+                ((Dock) o).getyCoordinates() == b.getyCoordinates());
     }
 
-    @AfterAll
-    public void after() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     @BeforeEach
-    public void setUp() {
+    public void before() {
         instance = new DockModel();
+        connection = DBCleanup.getConnection();
     }
 
+
     @AfterEach
-    public void tearDown() {
+    public void after() {
+        DBCleanup.closeConnection(connection);
         instance = null;
     }
 
@@ -50,8 +48,8 @@ public class DockModelTest {
         System.out.println("Testing the method getDock()");
 
         String name = "testdock";
-        double xCord = 20.1;
-        double yCord = 20.1;
+        double xCord = 63.426405;
+        double yCord = 10.393597;
 
         Dock expResult = new Dock(name, xCord, yCord);
         Dock result = instance.getDock(name);
@@ -67,6 +65,7 @@ public class DockModelTest {
         assertTrue(instance.dockNameExists(dockName));
     }
 
+    //The expected result has to match the auto-incremented dock_id in the database
     @Test
     public void testAddDock(){
         System.out.println("Testing the method addDock()");
@@ -75,16 +74,17 @@ public class DockModelTest {
         double xCord = 2.1;
         double yCord = 2.2;
 
-        int expResult = 2;
+        int expResult = 8;
         int result = instance.addDock(dockName, xCord, yCord);
         assertEquals(expResult, result);
     }
 
+    //The dockID has to match the auto-incremented dock_id in the database
     @Test
     public void testEditDock(){
         System.out.println("Testing the method editDock()");
 
-        int dockID = 2;
+        int dockID = 8;
         String dockName = "testdock2";
         double xCord = 2.0;
         double yCord = 2.0;

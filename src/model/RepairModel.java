@@ -6,7 +6,18 @@ import java.sql.*;
 
 public class RepairModel {
 
-    //Adds the first part of the repair to the database
+    /**
+     * @Author Team 007
+     *
+     * Sends the first part of the repair to the database.
+     * Returns the repairID that is set in the database.
+     * Returns -1 if method fails.
+     *
+     * @param bikeID
+     * @param dateSent
+     * @param bDescription
+     * @return int
+     */
     public int sendRepair(int bikeID, String dateSent, String bDescription){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -45,7 +56,19 @@ public class RepairModel {
         return -1;
     }
 
-    //Adds the rest of the repair to the database
+
+    /**
+     * @Author Team 007
+     *
+     * Adds the second part of the repair to the database.
+     * Returns true/false.
+     *
+     * @param repairID
+     * @param dateReceived
+     * @param aDescription
+     * @param price
+     * @return boolean
+     */
     public boolean returnRepair(int repairID, String dateReceived, String aDescription, double price)
     {
         Connection connection = null;
@@ -75,7 +98,14 @@ public class RepairModel {
         return false;
     }
 
-    //Retrieves a repair object from the database
+    /**
+     * @Author Team 007
+     *
+     * Returns a repair Object from the database.
+     *
+     * @param repairID
+     * @return Object
+     */
     public Repair getRepair(int repairID){
         Connection connection = null;
 
