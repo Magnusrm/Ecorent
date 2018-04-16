@@ -3,8 +3,14 @@ package bike.bikeInfo;
 import changescene.ChangeScene;
 import control.Bike;
 import control.Factory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -68,6 +74,9 @@ public class BikeInfoController implements Initializable {
     private WebEngine engine;
 
     @FXML
+    private ListView<String> repairIdListView;
+
+    @FXML
     private WebView root;
 
     @Override
@@ -78,14 +87,43 @@ public class BikeInfoController implements Initializable {
         engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
 
+        try {
+
+            repairIdListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println("nice, du valgte: " + newValue + " bror");
+                }
+            });
+
+        }catch (Exception e){e.printStackTrace();}
+
     }
     public void getBikePosition() {
 
     }
 
+    /**
+     * @Author Team 007
+     *
+     * Displays the info about the bike described in the bikeIdField.
+     * This method also fills the ListView with the repairs the bike have had in the past.
+     *
+     */
     @FXML
     void showInfo(){
         factory.updateSystem();
+
+
+       /*
+
+
+       HER MÅ MAN LEGGE TIL REPAIRS TIL LISTVIEW,VENTER PÅ MODEL SKAL LAGE GET ALL REPAIRS
+
+
+        */
+
+
         for(Bike b:factory.getBikes()){System.out.println(b);}
         Bike bike = null;
         int bikeID = Integer.parseInt(bikeIdField.getText());
@@ -119,6 +157,12 @@ public class BikeInfoController implements Initializable {
         }
 
     }//end method
+
+
+
+
+
+
 
     // main buttons below
 
