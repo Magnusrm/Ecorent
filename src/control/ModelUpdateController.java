@@ -1,6 +1,10 @@
 package control;
 
+import model.BikeStatsModel;
+
 public class ModelUpdateController {
+
+    private BikeStatsModel bms = new BikeStatsModel();
 
 
     public ModelUpdateController() {

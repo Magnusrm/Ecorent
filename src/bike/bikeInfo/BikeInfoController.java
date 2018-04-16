@@ -11,13 +11,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import loginAdm.CurrentAdmin;
+import model.BikeStatsModel;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BikeInfoController implements Initializable {
     private Factory factory = new Factory();
+    private BikeStatsModel bsm= new BikeStatsModel();
 
     @FXML
     private Label priceLbl;
@@ -61,15 +71,22 @@ public class BikeInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
+    private WebView root;
+
+    private WebEngine engine;
+
     @FXML
     private ListView<String> repairIdListView;
 
-
     @Override
-    public void initialize(URL url, ResourceBundle rb){
-        try {
-            factory.updateSystem();
+    public void initialize(URL location, ResourceBundle resources) {
+        factory.updateSystem();
 
+        engine = root.getEngine();
+        engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
+        engine.setJavaScriptEnabled(true);
+
+        try {
 
             repairIdListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
@@ -79,8 +96,11 @@ public class BikeInfoController implements Initializable {
             });
 
         }catch (Exception e){e.printStackTrace();}
-    }
 
+    }
+    public void getBikePosition() {
+
+    }
 
     /**
      * @Author Team 007
@@ -128,7 +148,19 @@ public class BikeInfoController implements Initializable {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }
+        ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
+        for (double[] p : recentPositions){
+            if (p[0] == bikeID){
+                engine.executeScript("document.createMarkerEgen(" + p[0] + ", " + p[1] + ", " + p[2] + ");");
+            }
+        }
+
     }//end method
+
+
+
+
+
 
 
     // main buttons below

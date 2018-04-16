@@ -87,8 +87,6 @@ public class DockNewController{
 
 
 
-
-
     // main buttons below
 
     @FXML
