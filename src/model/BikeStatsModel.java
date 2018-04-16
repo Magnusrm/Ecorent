@@ -55,6 +55,44 @@ public class BikeStatsModel {
         return null;
     }
 
+
+    public ArrayList<double[]> getMostRecentCoordinates() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<double[]> recentCords = new ArrayList<>();
+
+        String recentQuery = "SELECT bs.bike_id, bs.x_cord, bs.y_cord FROM bike_stats bs JOIN " +
+                "(SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
+                "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike " +
+                "ON bs.bike_id = bike.bike_id WHERE active = 1;";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement= connection.prepareStatement(recentQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                double[] row = new double[3];
+                row[0] = (double) resultSet.getInt("bs.bike_id");
+                row[1] = resultSet.getDouble("bs.x_cord");
+                row[2] = resultSet.getDouble("bs.y_cord");
+                recentCords.add(row);
+            }
+
+            return recentCords;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getMostRecentCoordinates()");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
+
     /**
      * Returns the trip number of a given bike.
      *
@@ -213,5 +251,16 @@ public class BikeStatsModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
+    }
+
+    public static void main(String[] args){
+        BikeStatsModel bsm = new BikeStatsModel();
+
+        ArrayList<double[]> cords = bsm.getMostRecentCoordinates();
+
+        for(int i = 0; i < cords.size(); i++){
+            double [] row = cords.get(i);
+            System.out.println(row[0] + " " + row[1] + " " + row[2]);
+        }
     }
 }

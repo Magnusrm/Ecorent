@@ -88,12 +88,13 @@ public class Factory {
      */
     public boolean addBike(Bike b){
         if(b == null ) return false;
+        b.setDockId(docks.get(0).getDockID());
         bikes.add(b);
        String date = b.getBuyDate().toString();
        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
-       int dockID = b.getDockId();
+        int dockID = b.getDockId();
        double pwrUsage = b.getPowerUsage();
        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
        return true;

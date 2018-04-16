@@ -64,26 +64,11 @@ public class BikeModel {
         Type type;
         Bike bike;
 
-        PreparedStatement getDate = null;
-        PreparedStatement getPrice = null;
-        PreparedStatement getMake = null;
-        PreparedStatement getType = null;
-        PreparedStatement getPwr = null;
-        //PreparedStatement getDockID = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        String dateQuery = "SELECT reg_date FROM bike WHERE bike_id = ? AND active = 1";
-        String priceQuery = "SELECT price FROM bike WHERE bike_id = ? AND active = 1";
-        String makeQuery = "SELECT make FROM bike WHERE bike_id = ? AND active = 1";
-        String typeQuery = "SELECT name FROM type WHERE type_id IN(SELECT type_id FROM bike WHERE bike_id = ? AND active = 1)";
-        String pwrQuery = "SELECT pwr_usg FROM bike WHERE bike_id = ? AND active = 1";
-        //String dockIDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
 
-        ResultSet rsDate = null;
-        ResultSet rsPrice = null;
-        ResultSet rsMake = null;
-        ResultSet rsType = null;
-        ResultSet rsPwr = null;
-        //ResultSet rsDockID = null;
+        String bikeQuery = "SELECT reg_date, price, make, pwr_usg, name FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
 
         String regDate;
         LocalDate localDate;
@@ -91,71 +76,33 @@ public class BikeModel {
         String make;
         String typeName;
         double pwrUsg;
-        //int dockID;
 
         try {
             connection = DBCleanup.getConnection();
 
             if(bikeExists(bikeID)) {
-                getDate = connection.prepareStatement(dateQuery);
-                getDate.setInt(1, bikeID);
-                rsDate = getDate.executeQuery();
-                rsDate.next();
-                regDate = rsDate.getString("reg_date");
-                localDate = LocalDate.parse(regDate);
-
-                getPrice = connection.prepareStatement(priceQuery);
-                getPrice.setInt(1, bikeID);
-                rsPrice = getPrice.executeQuery();
-                rsPrice.next();
-                price = rsPrice.getDouble("price");
-
-                getMake = connection.prepareStatement(makeQuery);
-                getMake.setInt(1, bikeID);
-                rsMake = getMake.executeQuery();
-                rsMake.next();
-                make = rsMake.getString("make");
-
-                getType = connection.prepareStatement(typeQuery);
-                getType.setInt(1, bikeID);
-                rsType = getType.executeQuery();
-                rsType.next();
-                typeName = rsType.getString("name");
-
-                getPwr = connection.prepareStatement(pwrQuery);
-                getPwr.setInt(1, bikeID);
-                rsPwr = getPwr.executeQuery();
-                rsPwr.next();
-                pwrUsg = rsPwr.getDouble("pwr_usg");
-
-                /*getDockID = connection.prepareStatement(dockIDQuery);
-                getDockID.setInt(1, bikeID);
-                rsDockID = getDockID.executeQuery();
-                rsDockID.next();
-                dockID = rsDockID.getInt("dock_id");*/
-
-                type = new Type(typeName);
-                bike = new Bike(localDate, price, make, type,pwrUsg);
-                bike.setBikeId(bikeID);
-                bike.setRepairing(isRepairing(bikeID));
-                //bike.setDockId(dockID);
-                return bike;
+                preparedStatement = connection.prepareStatement(bikeQuery);
+                preparedStatement.setInt(1, bikeID);
+                resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()){
+                    regDate = resultSet.getString("reg_date");
+                    price = resultSet.getDouble("price");
+                    make = resultSet.getString("make");
+                    typeName = resultSet.getString("name");
+                    pwrUsg = resultSet.getDouble("pwr_usg");
+                    localDate = LocalDate.parse(regDate);
+                    type = new Type(typeName);
+                    bike = new Bike(localDate, price, make, type,pwrUsg);
+                    bike.setBikeId(bikeID);
+                    bike.setRepairing(isRepairing(bikeID));
+                    return bike;
+                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage() + " - getBike()");
         }finally{
-            DBCleanup.closeStatement(getDate);
-            DBCleanup.closeStatement(getPrice);
-            DBCleanup.closeStatement(getMake);
-            DBCleanup.closeStatement(getType);
-            DBCleanup.closeStatement(getPwr);
-
-            DBCleanup.closeResultSet(rsDate);
-            DBCleanup.closeResultSet(rsPrice);
-            DBCleanup.closeResultSet(rsMake);
-            DBCleanup.closeResultSet(rsType);
-            DBCleanup.closeResultSet(rsPwr);
-
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
         return null;
@@ -368,6 +315,36 @@ public class BikeModel {
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
+    public ArrayList<Integer> getActiveBikes(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<Integer> activeBikes = new ArrayList<>();
+
+        String allBikesQuery = "SELECT DISTINCT bike.bike_id, bike_stats.bike_id, active\n" +
+                "FROM bike\n" +
+                "    LEFT JOIN bike_stats ON bike_stats.bike_id = bike.bike_id\n" +
+                "WHERE (active = 1) AND (bike_stats.bike_id IS NOT NULL)";
+
+        try{
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(allBikesQuery);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                activeBikes.add(resultSet.getInt("bike_id"));
+            }
+            return activeBikes;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getActiveBikes()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
         }
         return null;

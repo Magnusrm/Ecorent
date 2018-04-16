@@ -105,4 +105,14 @@ public class BikeTest {
         boolean result = instance.equals(b);
         assertEquals(true,result);
     }//end method
+
+    @Test
+    void testSetDockId(){
+        System.out.println("Testing setDockID-method");
+        Bike b = new Bike(date, price, make, type, pwr);
+        b.setDockId(1);
+        int expResult = 1;
+        int result = b.getDockId();
+        assertEquals(expResult, result);
+    }
 }//end class
