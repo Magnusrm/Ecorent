@@ -320,6 +320,36 @@ public class BikeModel {
         return null;
     }
 
+    public ArrayList<Integer> getActiveBikes(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<Integer> activeBikes = new ArrayList<>();
+
+        String allBikesQuery = "SELECT DISTINCT bike.bike_id, bike_stats.bike_id, active\n" +
+                "FROM bike\n" +
+                "    LEFT JOIN bike_stats ON bike_stats.bike_id = bike.bike_id\n" +
+                "WHERE (active = 1) AND (bike_stats.bike_id IS NOT NULL)";
+
+        try{
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(allBikesQuery);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                activeBikes.add(resultSet.getInt("bike_id"));
+            }
+            return activeBikes;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getActiveBikes()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
     /**
      * Checks if a given bike is repairing.
      *
