@@ -64,6 +64,10 @@ public class Factory {
     /**
      * Private method to fill out the repair arrays from
      * database.
+     * A duplicate bug seem to occur in repairsNotReturned at times.
+     * The reason is at this time (16.04.2018) unknown,
+     * but the duplicates get removed with the second for-loop.
+     * The method can be updated in the future.
      */
     private void fillRepair(){
         repairsCompleted = repairModel.getRepairsReturned();
@@ -71,7 +75,14 @@ public class Factory {
         for(int i:repairModel.getRepairIDs()){
             repairsNotReturned.add(repairModel.getRepair(i));
         }//end loop
-        
+        for(int i = 0;i<repairsNotReturned.size();i++){
+            for(int j = i+1; j<repairsNotReturned.size();j++){
+                if(repairsNotReturned.get(i).getRepair_id() == repairsNotReturned.get(j).getRepair_id()){
+                    repairsNotReturned.remove(j);
+                }
+            }
+        }
+
         for(int i = 0; i<repairsNotReturned.size();i++){ //Registering that bikes are repairing
             if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
         }//end loop
@@ -151,6 +162,7 @@ public class Factory {
         String dateSent = r.getDateSent().toString();
         r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescription));
         bikeModel.changeRepair(bikeID);
+        repairsNotReturned.add(r);
         if(r.getRepair_id() != -1){
             for(Bike b: bikes){
                 if(b.getBikeId() == bikeID)b.setRepairing(true);
@@ -176,6 +188,8 @@ public class Factory {
             String desc = r.getAfterDesc();
             double price = r.getPrice();
             bikeModel.changeRepair(r.getBikeId());
+            for(RepairSent r1:repairsNotReturned){if(r1.getRepair_id()==repairId)repairsNotReturned.remove(r1);}
+            repairsCompleted.add(r);
             return (repairModel.returnRepair(repairId, date, desc, price));
         }else return false;
     }//end method

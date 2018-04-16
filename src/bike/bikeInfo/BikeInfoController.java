@@ -18,9 +18,12 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import loginAdm.CurrentAdmin;
 import model.BikeStatsModel;
+import model.RepairModel;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class BikeInfoController implements Initializable {
@@ -90,7 +93,18 @@ public class BikeInfoController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                     System.out.println("nice, du valgte: " + newValue + " bror");
-                }
+                    int repairID = Integer.parseInt(newValue);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information about repair " + repairID);
+                    alert.setHeaderText(Alert.AlertType.INFORMATION.name());
+                    ArrayList<Repair> repairs = new ArrayList<>();
+                    repairs.addAll(factory.getRepairsNotReturned());
+                    repairs.addAll(factory.getRepairsCompleted());
+                    String s = "";
+                    for(Repair r:repairs)if(repairID == r.getRepair_id())s+=r.toString();
+                    alert.setContentText(s);
+                    alert.showAndWait();
+                }//end method
             });
 
         }catch (Exception e){e.printStackTrace();}
@@ -114,6 +128,8 @@ public class BikeInfoController implements Initializable {
         //Creating a object-view list
         ObservableList<String> repairIds = FXCollections.observableArrayList();
         ArrayList<String> visualized = new ArrayList<>();
+        ArrayList<String> visualized1 = new ArrayList<>();
+        ArrayList<String> complete = new ArrayList<>();
 
         //Adding the repair ids registered on the bike
         for(int i = 0; i<factory.getRepairsNotReturned().size();i++){
@@ -126,12 +142,26 @@ public class BikeInfoController implements Initializable {
             String s = null;
             if(factory.getRepairsCompleted().get(i).getBikeId() == bikeID)s = "" +
                     factory.getRepairsCompleted().get(i).getRepair_id();
-            if(s!=null)visualized.add(s);
+            if(s!=null)visualized1.add(s);
         }//end loop
 
+        //Removing duplicate version
+        for(int i = 0; i<factory.getRepairsNotReturned().size();i++){
+            for(RepairReturned r:factory.getRepairsCompleted()){
+                if(factory.getRepairsNotReturned().get(i).getRepair_id() == r.getRepair_id()){
+                    factory.getRepairsNotReturned().remove(i);
+                }//end condition
+            }//end loop
+        }//end loop
+
+        complete.addAll(visualized);
+        complete.addAll(visualized1);
         //Adding them in list view
-        repairIds.addAll(visualized);
+        repairIds.addAll(complete);
         repairIdListView.setItems(repairIds);
+
+        RepairModel repairModel = new RepairModel();
+        for(RepairSent i : factory.getRepairsNotReturned())System.out.println(i);
 
         Bike bike = null;
         for(int i = 0; i<factory.getBikes().size();i++){
@@ -148,14 +178,14 @@ public class BikeInfoController implements Initializable {
             makeLbl.setText(make);
             dateLbl.setText(date);
             batteryLbl.setText(battery);
-        }//end if
+        }//end condition
         if(bike == null){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Something went wrong!");
             alert.setHeaderText(null);
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
-        }
+        }//end condition
         ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
         for (double[] p : recentPositions){
             if (p[0] == bikeID){

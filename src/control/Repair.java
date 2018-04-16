@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-abstract class Repair {
+public class Repair {
     private int repair_id;
     private LocalDate date_sent;
     private String before_desc;
@@ -145,7 +145,7 @@ abstract class Repair {
      */
     @Override
     public String toString(){
-        return "control.Repair ID: " + repair_id
+        return "Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id
                 + "\nDate sent: " + date_sent
                 + "\nDescription before: " + before_desc
