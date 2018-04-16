@@ -27,7 +27,7 @@ public class Simulation implements Runnable{
 
     static void sim(int bikeID){
         BikeStatsModel bts = new BikeStatsModel();
-        double xBefore = 53.43388;
+        double xBefore = 63.43388;
         double xAfter;
         double yBefore = 10.400313;
         double yAfter;
@@ -52,7 +52,7 @@ public class Simulation implements Runnable{
 
 
             try{
-                sleep(3000);
+                sleep(1000);
             } catch(Exception e){
                 System.out.println("Error: " + e);
             }

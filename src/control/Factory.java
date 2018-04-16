@@ -59,6 +59,7 @@ public class Factory {
            repairsNotReturned.add(repairModel.getRepair(i));
         }//end loop
         for(int i = 0; i<repairsNotReturned.size();i++){
+           System.out.println(repairsNotReturned.size());
            if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
         }
        admins = adminModel.getAllAdmins();
