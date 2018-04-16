@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import javafx.scene.web.WebView;
 
 public class DockInfoController implements Initializable {
 
@@ -52,6 +53,9 @@ public class DockInfoController implements Initializable {
 
     @FXML
     private Button homeBtn;
+
+    @FXML
+    private WebView root;
 
 
     //Notice the bikes and docks are converted to String array.
