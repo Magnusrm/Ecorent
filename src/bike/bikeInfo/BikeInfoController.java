@@ -99,6 +99,7 @@ public class BikeInfoController implements Initializable {
         }catch (Exception e){e.printStackTrace();}
 
     }
+
     public void getBikePosition() {
 
     }
