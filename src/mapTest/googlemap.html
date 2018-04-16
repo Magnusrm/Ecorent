@@ -36,15 +36,10 @@
                 map : document.map
             });
 
-
-
-
-
             document.geocoder = new google.maps.Geocoder();
             document.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
             directionsDisplay.setMap(document.map);
 
-            var bounds = new google.maps.LatLngBounds();
 
             document.zoomIn = function zoomIn() {
                 var zoomLevel = document.map.getZoom();
@@ -56,7 +51,6 @@
                 if (zoomLevel > 0) document.map.setZoom(zoomLevel - 1);
             }
 
-            console.log("ok");
             var markers = [];
             var snappedCoordinates = [];
             var snappedWaypoints = [];
@@ -92,62 +86,6 @@
                 destinations.push(latlngMarker);
             }
 
-            document.drawSnappedPolyline = function drawSnappedPolyline() {
-                var snappedPolyline = new google.maps.Polyline({
-                    path: snappedWaypoints.join('|'),
-                    icons: [{
-                        icon: lineSymbol,
-                        offset: '100%'
-                    }],
-                    map: document.map,
-                    strokeColor: 'black',
-                    strokeWeight: 3
-                });
-
-                snappedPolyline.setMap(document.map);
-                polylines.push(snappedPolyline);
-                document.animateCircle(snappedPolyline);
-            }
-
-            document.runSnapToRoad = function runSnapToRoad(path){
-
-                var pathValues = [];
-                for (var i = 0; i < path.length; i++){
-                    pathValues.push(path[i].toUrlValue());
-
-                    $.get('https://roads.googleapis.com/v1/snapToRoads', {
-                        interpolate: true,
-                        key: apiKey,
-                        path: pathValues.join('|')
-                    }, function(data) {
-                        document.processSnapToRoadResponse(data);
-
-                        document.drawSnappedPolyline();
-                        //getAndDrawSpeedLimits();
-                    });
-                }
-            }
-
-            document.processSnapToRoadResponse = function processSnapToRoadResponse(data) {
-                snappedCoordinates = [];
-                placeIdArray = [];
-                for (var i = 0; i < data.snappedPoints.length; i++) {
-                    var latlng = new google.maps.LatLng(
-                        data.snappedPoints[i].location.latitude,
-                        data.snappedPoints[i].location.longitude);
-                    snappedCoordinates.push(latlng);
-                    placeIdArray.push(data.snappedPoints[i].placeId);
-                }
-            }
-
-
-
-            document.map.addListener("click", function(event){
-                document.createMarker(event.latLng);
-                  console.log(event.latLng); });
-
-
-
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
                     markers[i].setMap(map);
@@ -170,20 +108,6 @@
                 for (var j = 0; j < posData.length; j++){
                     document.createMarkerEgen(posData[j][0], posData[j][1], posData[j][2]);
                 }
-                var en = [destinations[0], destinations[1]];
-                var to = [destinations[0], destinations[2]];
-                var tre = [destinations[2], destinations[3]];
-                var fire = [destinations[1], destinations[2]];
-                var fem = [destinations[3], destinations[0]];
-
-                document.drawPolyline(en);
-                document.drawPolyline(to);
-                document.drawPolyline(tre);
-                document.drawPolyline(fire);
-                document.drawPolyline(fem);
-
-                //document.drawPolyline();
-
 
             }
 
@@ -225,23 +149,6 @@
                 p.setMap(document.map);
                 //document.animateCircle(p);
             }
-
-            document.animateCircle = function animateCircle(line) {
-                var count = 0;
-                window.setInterval(function() {
-                    count = (count + 1) % 200;
-
-                    var icons = line.get('icons');
-                    icons[0].offset = (count / 2) + '%';
-                    line.set('icons', icons);
-                }, 1000);
-            }
-
-            document.tilJava = function tilJava(){
-                console.log("hei fra javascript");
-            }
-
-
         }// initialize end
 
     </script>
