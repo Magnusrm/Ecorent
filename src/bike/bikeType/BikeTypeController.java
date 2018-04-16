@@ -1,6 +1,8 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,6 +87,8 @@ public class BikeTypeController implements Initializable{
             types.addAll(visualized);
             typeListView.setItems(types);
             //System.out.println(factory.getTypes().get(0).getName());
+
+
         }catch (Exception e){e.printStackTrace();}
     }
 

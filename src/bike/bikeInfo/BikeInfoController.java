@@ -3,14 +3,20 @@ package bike.bikeInfo;
 import changescene.ChangeScene;
 import control.Bike;
 import control.Factory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import loginAdm.CurrentAdmin;
 
-public class BikeInfoController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class BikeInfoController implements Initializable {
     private Factory factory = new Factory();
 
     @FXML
@@ -57,6 +63,23 @@ public class BikeInfoController {
 
     @FXML
     private ListView<String> repairIdListView;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        try {
+            factory.updateSystem();
+
+
+            repairIdListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println("nice, du valgte: " + newValue + " bror");
+                }
+            });
+
+        }catch (Exception e){e.printStackTrace();}
+    }
 
 
     /**
