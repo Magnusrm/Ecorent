@@ -5,14 +5,23 @@ import control.Bike;
 import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import loginAdm.CurrentAdmin;
+import model.BikeStatsModel;
 
-public class BikeInfoController {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class BikeInfoController implements Initializable {
     private Factory factory = new Factory();
+    private BikeStatsModel bsm= new BikeStatsModel();
 
     @FXML
     private Label priceLbl;
@@ -56,9 +65,26 @@ public class BikeInfoController {
     @FXML
     private Button homeBtn;
 
+    private WebView root;
 
+    private WebEngine engine;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        factory.updateSystem();
 
+        engine = root.getEngine();
+        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.setJavaScriptEnabled(true);
+
+        engine.getLoadWorker().stateProperty().addListener(e -> {
+
+        });
+
+    }
+    public void getBikePosition() {
+
+    }
 
     @FXML
     void showInfo(){
@@ -88,8 +114,14 @@ public class BikeInfoController {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }
-    }//end method
+        ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
+        for (double[] p : recentPositions){
+            if (p[0] == bikeID){
+                engine.executeScript("document.createMarkerEgen(" + p[0] + ", " + p[1] + ", " + p[2] + ");");
+            }
+        }
 
+    }//end method
 
     // main buttons below
 

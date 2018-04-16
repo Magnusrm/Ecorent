@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class DockInfoController implements Initializable {
 
@@ -52,6 +54,10 @@ public class DockInfoController implements Initializable {
 
     @FXML
     private Button homeBtn;
+
+    private WebView root;
+
+    private WebEngine engine;
 
 
     //Notice the bikes and docks are converted to String array.
@@ -94,10 +100,6 @@ public class DockInfoController implements Initializable {
         powerDrawLbl.setText("" + factory.powerUsage(dockNameComboBox.getValue()));
 
     }
-
-
-
-
 
 
     // main buttons below

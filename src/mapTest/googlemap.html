@@ -15,7 +15,6 @@
     <script type ="text/javascript" src="scripts/v3_epoly.js">
     </script>
 
-
     <script type="text/javascript">
         function initialize() {
             var apiKey = "AIzaSyA44sw3tgul3F1t5xT2PeXkSm0GhQmUa6M";
@@ -51,6 +50,8 @@
                 }
             });
 
+
+
             document.geocoder = new google.maps.Geocoder();
             document.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
             directionsDisplay.setMap(document.map);
@@ -68,7 +69,7 @@
                 if (zoomLevel > 0) document.map.setZoom(zoomLevel - 1);
             }
 
-
+            console.log("ok");
             var markers = [];
             var snappedCoordinates = [];
             var snappedWaypoints = [];
@@ -153,11 +154,11 @@
             }
 
 
-            /*
-            document.map.addListener("click", function(event){
-                  createMarker(event.latLng) });
 
-            */
+            document.map.addListener("click", function(event){
+                  console.log("ok"); });
+
+
 
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
@@ -239,6 +240,9 @@
                 }, 1000);
             }
 
+            document.tilJava = function tilJava(){
+                console.log("hei fra javascript");
+            }
 
         }// initialize end
 

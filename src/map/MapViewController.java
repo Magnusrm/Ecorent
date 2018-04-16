@@ -5,19 +5,25 @@ import control.Bike;
 import control.Dock;
 import control.Factory;
 import control.Type;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import model.BikeModel;
 import model.BikeStatsModel;
+import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
@@ -27,6 +33,12 @@ public class MapViewController implements Initializable{
     private BikeStatsModel bsm= new BikeStatsModel();
     private ArrayList<Dock> allDocks;
     private ArrayList<Bike> allBikes;
+
+    private ExecutorService executor = Executors.newFixedThreadPool(1);
+
+    private int i = 0;
+
+    private Runnable worker = new WorkerThread("" + i);
 
     @FXML
     private Button showBikeBtn;
@@ -39,18 +51,87 @@ public class MapViewController implements Initializable{
 
     private WebEngine engine;
 
+    class RunnableDemo implements Runnable {
+        private Thread t;
+        private String threadName;
+        private double bikeX;
+        private double bikeY;
+        private double xDifference;
+        private double yDifference;
+        private int bikeID;
+        private double distance;
+        private int tripNr = 0;
+        private double distanceChange;
+        private int charge_lvl;
+
+        public RunnableDemo(String threadName, double bikeX, double bikeY, double xDifference, double yDifference,
+                            int bikeId, double distance, int tripNr, double distanceChange, int charge_lvl) {
+            this.threadName = threadName;
+            this.bikeX = bikeX;
+            this.bikeY = bikeY;
+            this.xDifference = xDifference;
+            this.yDifference = yDifference;
+            this.distance = distance;
+            this.tripNr = tripNr;
+            this.distanceChange = distanceChange;
+            this.charge_lvl = charge_lvl;
+        }
+
+        RunnableDemo(String name, double bikeX, double bikeY, double xDifference, double yDifference) {
+            threadName = name;
+            this.bikeX = bikeX;
+            this.bikeY = bikeY;
+            this.xDifference = xDifference;
+            this.yDifference = yDifference;
+
+            System.out.println("Creating " +  threadName );
+        }
+
+        public void run (){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+
+                    System.out.println("Running " + threadName);
+                    if (tripNr == 0) {
+                        engine.executeScript("document.updateBikeMarker(" + bikeX + ", " + bikeY + ", " + xDifference + ", " + yDifference + ");");
+                    } else{
+                        updateBikeToDatabase(bikeID, charge_lvl, bikeX, bikeY, distance,
+                                            tripNr, distanceChange, xDifference, yDifference);
+                    }
+                    System.out.println("Thread " + threadName + " exiting.");
+                }
+            });
+        }
+
+        public void start() {
+            System.out.println("Starting " +  threadName );
+            if (t == null) {
+                t = new Thread (this, threadName);
+                t.start();
+            }
+        }
+    }
+
+    class JavaBridge {
+
+        public String log(String pos) {
+            System.out.println("okokokok");
+            return pos;
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         myFactory.updateSystem();
 
         engine = root.getEngine();
-        root.getEngine().load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
-
 
         engine.getLoadWorker().stateProperty().addListener(e -> {
             showDocks();
+            showBike();
         });
 
     }
@@ -113,14 +194,12 @@ public class MapViewController implements Initializable{
         Bike b = new Bike(LocalDate.now(), 0, "", new Type(""), 0);
         double[] bikePos = {allDocks.get(0).getxCoordinates(), allDocks.get(0).getyCoordinates()};
         int tripNr = bsm.getTripNr(bikeId) + 1;
-        int charg_lvl;
+        int charg_lvl = 100;
         double distance = 0;
-        //distance = bsm.getDistance(bikeId);
-        if (tripNr == 0){
-            charg_lvl = 100;
-        } else {
-            tripNr = bsm.getTripNr(bikeId) + 1;
+
+        if (tripNr > 1){
             charg_lvl = bsm.getChargLvl(bikeId);
+            distance = bsm.getDistance(bikeId);
         }
 
         for (Bike aBike : allBikes) {
@@ -139,15 +218,54 @@ public class MapViewController implements Initializable{
         if (Math.sqrt(xDifference*xDifference) < 0.0000002 || Math.sqrt(yDifference*yDifference) < 0.0000002){
             return;
         }
-        distance = distance(bikePos[0], bikePos[1], d.getxCoordinates(), d.getyCoordinates()) / 10;
-        engine.executeScript("document.updateBikeMarker(" + bikePos[0] + ", " + bikePos[1] + ", " + xDifference + ", " + yDifference +");");
+        double distanceChange = distance(bikePos[0], bikePos[1], d.getxCoordinates(), d.getyCoordinates()) / 10;
+/*
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+                engine.executeScript("document.updateBikeMarker(" + bikePos[0] + ", " + bikePos[1] + ", " + xDifference + ", " + yDifference + ");");
+                return null;
+            }
+        };
+        new Thread(task).start();
+        */
+/*
+        new Thread(new Runnable() {
+            @Override public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("kjøre script");
+                        engine.executeScript("document.updateBikeMarker(" + bikePos[0] + ", " + bikePos[1] + ", " + xDifference + ", " + yDifference + ");");
+                        System.out.println("script kjørt");
+                    }
+                });
+            }
+            }).start();
+            */
+        /*
+        RunnableDemo animer = new RunnableDemo("Thread1", bikePos[0], bikePos[1], xDifference, yDifference);
+        animer.start();*/
+        engine.executeScript("document.updateBikeMarker(" + bikePos[0] + ", " + bikePos[1] + ", " + xDifference + ", " + yDifference + ");");
+        RunnableDemo data = new RunnableDemo("Thread2", bikePos[0], bikePos[1], xDifference, yDifference,
+                                                bikeId, distance, tripNr, distanceChange, charg_lvl);
+        data.start();
+
+    }
+
+
+
+    public void updateBikeToDatabase(int bikeId, int charg_lvl, double posX, double posY, double distance,
+                                     int tripNr, double distanceChange, double xDifference, double yDifference) {
+        double x = posX;
+        double y = posY;
+        int battery = charg_lvl;
+        double travelDistance = distance;
         for (int i = 0; i < 10; i++){
-            bikePos[0] += xDifference / 10;
-            bikePos[1] += yDifference / 10;
-
-            charg_lvl --;
-            bsm.updateStats(LocalDate.now().toString(), bikeId, charg_lvl, bikePos[0], bikePos[1], distance, tripNr);
-
+            x += xDifference / 10;
+            y += yDifference / 10;
+            distance += distanceChange;
+            battery --;
+           // bsm.updateStats(LocalDate.now().toString(), bikeId, battery, x, y, travelDistance, tripNr);
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
@@ -155,31 +273,35 @@ public class MapViewController implements Initializable{
             }
             System.out.println("\n" + "interval: " + i + "\n");
         }
-       // engine.executeScript("document.removeBikeMarker();");
-
     }
 
 
     @FXML
-    void showBike(ActionEvent event) {
+    void showBike() {
         Random random = new Random();
         allDocks = myFactory.getDocks();
         allBikes = myFactory.getBikes();
 
         int bikeId = Integer.parseInt(bikeIdField.getText());
+        Bike b = allBikes.get(0);
+        for (Bike aBike : allBikes){
+            if (aBike.getBikeId() == bikeId){
+                b = aBike;
+            }
+        }
         Dock d = allDocks.get(0);
         int i = 1;
         while(i == 1){
             int randomDock = random.nextInt(allDocks.size());
 
-            if (allBikes.get(bikeId).getDockId() != randomDock){
+            if (b.getDockId() != randomDock){
                 i = 0;
                 d = allDocks.get(randomDock);
             }
         }
-        moveBikeToDock(bikeId, d);
-        // BikeModel bm = new BikeModel();
-        // bm.
+        moveBikeToDock(54, d);
+        BikeModel bm = new BikeModel();
+        bm.editBikeDock(54, d.getDockID());
     }
     // main buttons below
 
