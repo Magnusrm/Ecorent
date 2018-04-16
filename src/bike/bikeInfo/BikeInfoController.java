@@ -74,12 +74,8 @@ public class BikeInfoController implements Initializable {
         factory.updateSystem();
 
         engine = root.getEngine();
-        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
-
-        engine.getLoadWorker().stateProperty().addListener(e -> {
-
-        });
 
     }
     public void getBikePosition() {

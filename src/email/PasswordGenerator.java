@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/*
- *Credits to StackOverflow user George Siggouroglou
+/**
+ * @author StackOverflow user George Siggouroglou
+ *
+ * @version 1.0
+ *
+ * The class that generates a random password.
  */
 public final class PasswordGenerator {
 
@@ -144,11 +148,5 @@ public final class PasswordGenerator {
             password.append(charCategory.charAt(position));
         }
         return new String(password);
-    }
-
-    public static void main(String[] args){
-        PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true).useLower(false).useUpper(true).build();
-        String password = passwordGenerator.generate(10);
-        System.out.println(password);
     }
 }

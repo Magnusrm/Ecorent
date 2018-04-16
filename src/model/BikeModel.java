@@ -8,17 +8,22 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * The class that handles saving, deleting and editing new bikes to the database.
+ */
 public class BikeModel {
 
 
     /**
-     * @Author Team 007
-     *
      * Checks if a given bike is in the database.
-     * Returns true/false.
      *
-     * @param bikeID
-     * @return boolean
+     * @param bikeID        the bike_id that is to be searched for
+     * @return true         if the bike exists.
+     * @return false        if the bike doesn't exist.
      */
     public boolean bikeExists(int bikeID){
         Connection connection = null;
@@ -45,13 +50,12 @@ public class BikeModel {
     }
 
     /**
-     * @Author Team 007
-     *
+
      * Return a bike Object from the database.
-     * Returns null if the method fails.
      *
-     * @param bikeID
-     * @return Object
+     * @param bikeID        the bike_id that is to be searched for in the database.
+     * @return bike         the bike object with the data corresponding to the bike_id.
+     * @return null         if the method fails.
      */
     public Bike getBike(int bikeID)  {
 
@@ -158,19 +162,17 @@ public class BikeModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Changes the values of a bike in the database.
-     * Returns true/false.
      *
-     * @param bikeID
-     * @param regDate
-     * @param price
-     * @param make
-     * @param dockID
-     * @param pwrUsg
-     * @param typeName
-     * @return boolean
+     * @param bikeID        the bike_id of the bike that is going to be edited.
+     * @param regDate       the edited reg_date.
+     * @param price         the edited price.
+     * @param make          the edited make.
+     * @param dockID        the edited dock_id.
+     * @param pwrUsg        the edited price.
+     * @param typeName      the edited type.name. This uses the method typeExists to return the correct type_id.
+     * @return true         if the edited changes has been saved.
+     * @return false        if the changes hasn't been saved.
      */
     public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
@@ -215,47 +217,11 @@ public class BikeModel {
         return false;
     }
 
-    public boolean editBikeDock(int bikeID, int dockID) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
-        try{
-            connection = DBCleanup.getConnection();
-            connection.setAutoCommit(false);
-
-
-            if(bikeExists(bikeID)) {
-                preparedStatement = connection.prepareStatement(bikeInsert);
-                preparedStatement.setInt(1, dockID);
-                preparedStatement.setInt(2, bikeID);
-
-
-                if (preparedStatement.executeUpdate() != 0) {
-                    connection.commit();
-                    return true;
-                } else {
-                    connection.rollback();
-                    return false;
-                }
-            }
-        }catch(SQLException e) {
-            System.out.println(e.getMessage() + " - editBikeDock");
-        }finally {
-            DBCleanup.closeResultSet(resultSet);
-            DBCleanup.closeStatement(preparedStatement);
-            DBCleanup.setAutoCommit(connection);
-            DBCleanup.closeConnection(connection);
-        }
-        return false;
-    }
-
     /**
-     *
      * "Deletes" bikes that does not have a type.
-     * Returns true/false.
      *
-     * @return boolean
+     * @return true         if the bikes has been deleted.
+     * @return false        if the method fails.
      */
     public boolean deleteBikesWhereTypeIsNULL(){
         Connection connection = null;
@@ -279,13 +245,11 @@ public class BikeModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * "Deletes" a bike from the database by setting the active-bit to 0.
-     * Returns true/false.
      *
-     * @param bikeID
-     * @return boolean
+     * @param bikeID        the bike_id of the bike that is to be "deleted".
+     * @return true         if the bike has been "deleted".
+     * @return false        if the method fails.
      */
     public boolean deleteBike(int bikeID){
         Connection connection = null;
@@ -312,26 +276,23 @@ public class BikeModel {
 
 
     /**
-     * @Author Team 007
-     *
      * Adds a new bike to the database.
-     * Returns the bikeID.
-     * Returns -1 if the method fails.
      *
-     * @param date
-     * @param price
-     * @param make
-     * @param type
-     * @param pwrUsg
-     * @param repair
-     * @return int
+     * @param date          the date of witch the bike is registered.
+     * @param price         the price of the bike.
+     * @param make          the make of the type.
+     * @param typeName      the type.name of the type of the bike. This uses the method typeExists to return the correct type_id.
+     * @param pwrUsg        the pwr_usage of the bike.
+     * @param repair        if the bike is sent to repair or not.
+     * @return bikeID       the bike_id that is set by auto increment in the database.
+     * @return -1           if the method fails.
      */
-    public int addBike(String date, double price, String make, String type, double pwrUsg, boolean repair){
+    public int addBike(String date, double price, String make, String typeName, double pwrUsg, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        int typeID = TypeModel.typeExists(type);
+        int typeID = TypeModel.typeExists(typeName);
 
         String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing, active) VALUES " +
                 "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
@@ -379,12 +340,10 @@ public class BikeModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Returns an ArrayList of all bikes that is in the database.
-     * Returns null if method fails.
      *
-     * @return ArrayList
+     * @return allBikes         an ArrayList of bike objects of all the bikes that are saved in the database.
+     * @return null             if the method fails.
      */
     public ArrayList<Bike> getAllBikes(){
         Connection connection = null;
@@ -415,13 +374,11 @@ public class BikeModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Checks if a given bike is repairing.
-     * Returns true/false.
      *
-     * @param bikeID
-     * @return boolean
+     * @param bikeID        the bike_id of the bike that is to be checked.
+     * @return true         if the bike is sent to repair.
+     * @return false        if the bike isn't sent to repair.
      */
     public boolean isRepairing(int bikeID){
         Connection connection = null;
@@ -449,13 +406,11 @@ public class BikeModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Checks what value the repair-bit is and changes it.
-     * Returns true/false.
      *
-     * @param bikeID
-     * @return boolean
+     * @param bikeID        the bike_id of the bike that is sent to repair.
+     * @return true         if the method is successful.
+     * @retrun false        if the method fails.
      */
     public boolean changeRepair(int bikeID){
         Connection connection = null;
@@ -494,11 +449,5 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
-    }
-    public static void main(String[] args){
-        BikeModel bikeModel = new BikeModel();
-        if(bikeModel.isRepairing(68)){
-            System.out.println("Hei");
-        }
     }
 }

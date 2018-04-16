@@ -7,14 +7,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * The class that handles saving and retrieving statistics about a bike.
+ */
 public class BikeStatsModel {
 
     /**
-     * @Author Team 007
-     *
      * Returns an ArrayList of the most recent latitudes and longitudes + corresponding bikeID's.
      *
-     * @return ArrayList
+     * @return coordinates      an ArrayList of double[] with the most recent latitudes and longitudes + their corresponding bike_id's.
      */
     public ArrayList<double[]> getRecentCoordinates(){
         Connection connection = null;
@@ -51,12 +56,11 @@ public class BikeStatsModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Returns the trip number of a given bike.
      *
-     * @param bikeID
-     * @return int
+     * @param bikeID        the bike_id of the bike that is to be searched for in the database.
+     * @return tripNr       the number of trips that bike has taken.
+     * @return -1           if the method fails.
      */
     public int getTripNr(int bikeID){
         Connection connection = null;
@@ -93,12 +97,11 @@ public class BikeStatsModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Returns the most recent battery percentage of a given bike.
      *
-     * @param bikeID
-     * @return int
+     * @param bikeID        the bike_id of the bike that is to be searched for.
+     * @return chargLvl     the current charg_lvl of that bike.
+     * @return -1           if the method fails.
      */
     public int getChargLvl(int bikeID){
         Connection connection = null;
@@ -162,19 +165,17 @@ public class BikeStatsModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Since all stats are to be saved to the database, this adds new and updated stats to the database.
-     * Returns true/false.
      *
-     * @param time
-     * @param bikeID
-     * @param chargLvl
-     * @param xCord
-     * @param yCord
-     * @param distance
-     * @param tripNr
-     * @return boolean
+     * @param time          when the stats are updated.
+     * @param bikeID        which bike the stats are referring to.
+     * @param chargLvl      the current charg_lvl of the bike.
+     * @param xCord         the current x_cord of the bike.
+     * @param yCord         the current y_cord of the bike.
+     * @param distance      the total distance the bike has travelled.
+     * @param tripNr        how many trips the bike has taken.
+     * @return true         if the update is successful.
+     * @return false        if the update failed.
      */
     public boolean updateStats(String time, int bikeID, int chargLvl, double xCord, double yCord, double distance, int tripNr){
         Connection connection = null;

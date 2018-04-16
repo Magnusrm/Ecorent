@@ -78,51 +78,14 @@ public class AdminController {
         ps.setScene(event, "/admin/AdminChangePasswordView.fxml");
     }
 
-
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-    }
-
+    /**
+     * @Author Team 007
+     *
+     * Confirms the creation of a new admin.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void createNewAdminConfirm(ActionEvent event) throws Exception{
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
@@ -144,6 +107,15 @@ public class AdminController {
         }//end else
     }//end method
 
+
+    /**
+     * @Author
+     *
+     * Confirms the deletion of the admin.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     void deleteAdminConfirm(ActionEvent event) throws Exception{
         String email = deleteAdminEmailField.getText();
@@ -173,6 +145,15 @@ public class AdminController {
 
     }//end
 
+    /**
+     * @Author Team 007
+     *
+     * Confirms the change of password.
+     * The password will change if the old password is correct,
+     * as well as if the new password meets the requirements.
+     *
+     * @param event
+     */
     @FXML
     void changePasswordConfirm(ActionEvent event) {
         boolean continiue = true;//Makes it easier to choose which error message to display
@@ -226,5 +207,57 @@ public class AdminController {
         }//end else
 
         CloseWindow cw = new CloseWindow(event);
+    }
+
+
+
+
+
+
+
+
+    // main buttons
+
+    @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/BikeView.fxml");
+    }
+
+    @FXML
+    void changeToDockScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/DockView.fxml");
+    }
+
+    @FXML
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
+    }
+
+    @FXML
+    void changeToStatsScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/StatsView.fxml");
+    }
+
+    @FXML
+    void changeToAdminScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/admin/AdminView.fxml");
+    }
+
+    @FXML
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/MainView.fxml");
+    }
+
+    @FXML
+    void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/login/LoginView.fxml");
     }
 }

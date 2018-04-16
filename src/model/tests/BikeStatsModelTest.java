@@ -1,5 +1,7 @@
-package model;
+package model.tests;
 
+import model.BikeStatsModel;
+import model.DBCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,13 @@ import java.sql.ResultSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * This is a test class for the class BikeStatsModel
+ */
 public class BikeStatsModelTest {
     Connection connection;
     PreparedStatement preparedStatement;

@@ -131,7 +131,6 @@ public class MapViewController implements Initializable{
 
         engine.getLoadWorker().stateProperty().addListener(e -> {
             showDocks();
-            showBike();
         });
 
     }
@@ -277,7 +276,7 @@ public class MapViewController implements Initializable{
 
 
     @FXML
-    void showBike() {
+    void showBike(ActionEvent event) {
         Random random = new Random();
         allDocks = myFactory.getDocks();
         allBikes = myFactory.getBikes();
@@ -299,9 +298,9 @@ public class MapViewController implements Initializable{
                 d = allDocks.get(randomDock);
             }
         }
-        moveBikeToDock(54, d);
+        moveBikeToDock(bikeId, d);
         BikeModel bm = new BikeModel();
-        bm.editBikeDock(54, d.getDockID());
+        //bm.editBikeDock(, d.getDockID());
     }
     // main buttons below
 
