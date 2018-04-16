@@ -20,6 +20,7 @@ public class BikeStatsModel {
      * Returns an ArrayList of the most recent latitudes and longitudes + corresponding bikeID's.
      *
      * @return coordinates      an ArrayList of double[] with the most recent latitudes and longitudes + their corresponding bike_id's.
+     * @return null             if the method fails.
      */
     public ArrayList<double[]> getRecentCoordinates(){
         Connection connection = null;

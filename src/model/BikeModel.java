@@ -109,6 +109,14 @@ public class BikeModel {
     }
 
 
+    /**
+     * Sets the dockID for a bike in the database.
+     *
+     * @param bikeID            the bike_id of the bike that is to be altered.
+     * @param dockID            the dock_id that the bike is stationed at.
+     * @return true             if the method is successful.
+     * @return false            if the method fails.
+     */
     public boolean setDockID(int bikeID, int dockID) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -348,6 +356,12 @@ public class BikeModel {
         return null;
     }
 
+    /**
+     * Returns all the active bikes in the system.
+     *
+     * @return activeBikes      an ArrayList of the bike_id's of all the active bikes in the system.
+     * @return null             if the method fails.
+     */
     public ArrayList<Integer> getActiveBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
