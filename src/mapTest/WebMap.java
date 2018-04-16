@@ -49,7 +49,6 @@ public class WebMap extends Application {
             {63.430663, 10.392245},
             {63.433388, 10.400313}
     };
-
     public class JavaBridge {
 
         public String log(String pos) {
@@ -57,6 +56,7 @@ public class WebMap extends Application {
             return pos;
         }
     }
+
 
     @Override public void start(Stage mapStage) {
         // create web engine and view

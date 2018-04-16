@@ -3,18 +3,29 @@ package dock.dockNew;
 import changescene.ChangeScene;
 import control.Dock;
 import control.Factory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import mapTest.WebMap;
+import netscape.javascript.JSObject;
 
-public class DockNewController{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DockNewController implements Initializable{
     private Factory factory = new Factory();
 
     @FXML
     private WebView root;
+
+    private WebEngine engine;
 
     @FXML
     private TextField dockNameField;
@@ -48,6 +59,44 @@ public class DockNewController{
 
     @FXML
     private Button homeBtn;
+
+    public class JavaBridge {
+
+        public String log(String pos) {
+            System.out.println(pos);
+            String[] data = pos.split(", ");
+            String xValue = data[0].substring(1);
+            String yValue = data[1].substring(0, data[1].length() - 1);
+            xCoordField.setText(xValue);
+            yCoordField.setText(yValue);
+            return pos;
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        try {
+            factory.updateSystem();
+
+            engine = root.getEngine();
+            engine.load(this.getClass().getResource("newdockmap.html").toExternalForm());
+            engine.setJavaScriptEnabled(true);
+
+
+            engine.getLoadWorker().stateProperty().addListener(e ->
+            {
+                JSObject window = (JSObject) engine.executeScript("window");
+                JavaBridge bridge = new JavaBridge();
+
+                window.setMember("java", bridge);
+                engine.executeScript("console.log = function(message)\n" +
+                        "{\n" +
+                        "    java.log(message);\n" +
+                        "};");
+            });
+
+        }catch (Exception e){e.printStackTrace();}
+    }
 
     @FXML
     void createNewDockConfirm(ActionEvent event){ // created a new dock
