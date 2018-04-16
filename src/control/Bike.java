@@ -12,6 +12,7 @@ public class Bike {
     private double powerUsage;
     private boolean repairing;
     private boolean active = true; //whether or not the bike is still in use
+    private int battery;
 
     public Bike(LocalDate buyDate, double price, String make, Type type, double powerUsage) {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
@@ -25,6 +26,7 @@ public class Bike {
         this.type = type;
         this.powerUsage = powerUsage;
         repairing = false;
+        battery = 100;
     }
 
     public int getBikeId() {
@@ -65,7 +67,7 @@ public class Bike {
         this.bikeId = bikeId;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         this.price = price;
     }
@@ -88,16 +90,29 @@ public class Bike {
         this.repairing = repairing;
     }
 
-    public void deactivate(boolean active){this.active = active;}
+    /**
+     * Method to deactivate bike (means it is deleted,
+     * still has stats). If param is true then it will deactivate.
+     * @param deactivate
+     */
+    public void deactivate(boolean deactivate){active = !deactivate;}
 
     public void setDockId(int dockId) {
         if (dockId < 0) {throw new IllegalArgumentException("This dock ID is not used in the system.");}
         this.dockId = dockId;
     }
 
+
+    /**
+     * Method to update the battery percent.
+     * Subtracts the battery with the argument.
+     * @param percent
+     * @return int
+     */
     public int updateBatteryPercent(int percent) {
-        return 0;
-    }
+        battery -= percent;
+        return battery;
+    }//end method
 
     public String toString() {
         String r = "";

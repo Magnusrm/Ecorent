@@ -176,10 +176,16 @@ public class BikeRepairController {
 
 
 
+
+
+
+
+    // main buttons below
+
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
-      cs.setScene(event, "/bike/BikeView.fxml");
+        cs.setScene(event, "/bike/BikeView.fxml");
     }
 
     @FXML
@@ -189,7 +195,7 @@ public class BikeRepairController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) throws Exception{
+    void changeToMapScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/map/MapView.fxml");
     }

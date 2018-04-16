@@ -1,6 +1,6 @@
 /**
 * Factory.java
-* @author Team 007
+* @author Team007
 *
 * This class is an aggregate of Dock.java,Bike.java and Admin.java
 * It both updates and retrieves data from the model classes connected to the database
@@ -79,7 +79,13 @@ public class Factory {
     }//end method
 
 
-    //Method to add bikes to database
+    /**
+     * Method to add a bike.
+     *
+     *
+     * @param b is an Bike object
+     * @return boolean
+     */
     public boolean addBike(Bike b){
         if(b == null ) return false;
         bikes.add(b);
@@ -275,17 +281,22 @@ public class Factory {
 
     //Method to get all bikes docked at a given dock
     public int[] dockedBikes(String dockName){
-        ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
-        if(docked.size() != 0) {
-            int[] dockedBikes = new int[docked.size()];
-            for (int i = 0; i < dockedBikes.length; i++) {
-                dockedBikes[i] = docked.get(i);
-            }//end loop
-            return dockedBikes;
-        }else{
+        if(dockModel.bikesAtDock(dockName) != null) {
+            ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
+            if (docked.size() != 0) {
+                int[] dockedBikes = new int[docked.size()];
+                for (int i = 0; i < dockedBikes.length; i++) {
+                    dockedBikes[i] = docked.get(i);
+                }//end loop
+                return dockedBikes;
+            } else {
+                int[] noBikes = new int[0];
+                return noBikes;
+            }//end condition
+        }else {
             int[] noBikes = new int[0];
             return noBikes;
-        }
+        }//end condition
     }//end method
 
     /**
