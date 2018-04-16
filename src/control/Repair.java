@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-public class Repair {
+abstract class Repair {
     private int repair_id;
     private LocalDate date_sent;
     private String before_desc;
@@ -16,9 +16,9 @@ public class Repair {
     private int bike_id;
 
     /**
-     * Constructor for repair sent
+     * Constructor for repair sent in view classes and RepairSent.java
      */
-    public Repair(String dateSent, String beforeDesc, int bikeId){
+    protected Repair(String dateSent, String beforeDesc, int bikeId){
             this.repair_id = -1; //use the database to set repairId
 
             this.date_sent = toDate(dateSent);
@@ -30,9 +30,9 @@ public class Repair {
     }//end constructor
 
     /**
-     * Constructor for repair returned
+     * Constructor for repairs returned in view
      */
-    public Repair(String dateReceived, String afterDesc, double price, int bikeId){
+    protected Repair(String dateReceived, String afterDesc, double price, int bikeId){
             this.repair_id = -1; //use the database to set repairId
             this.date_received = toDate(dateReceived);
             this.after_desc = afterDesc;
@@ -41,9 +41,9 @@ public class Repair {
     }//end constructor
 
     /**
-     * Constructor for model classes, view classes and testing
+     * Constructor for model classes, view classes and RepairReturned.java
      */
-    public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
+    protected Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
             this.repair_id = -1; //use the database to set repairId
             this.date_sent = toDate(dateSent);
             this.before_desc = beforeDesc;
@@ -142,7 +142,6 @@ public class Repair {
     /**
      * Override of the standard toString()-method to make it list out the information about a repair
      * @return
-     * @author Team 007
      */
     @Override
     public String toString(){

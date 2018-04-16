@@ -20,13 +20,13 @@ public class Factory {
     private ArrayList<Bike> bikes = new ArrayList<>();
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<Type> types = new ArrayList<>();
-    private ArrayList<Repair> repairsNotReturned = new ArrayList<>();
+    private ArrayList<RepairSent> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
-    private ArrayList<Repair> allRepairs = new ArrayList<>();
+    private ArrayList<RepairReturned> repairsCompleted = new ArrayList<>();
 
 
     public Factory(){
@@ -42,16 +42,14 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
-    public ArrayList<Repair> getRepairsNotReturned(){return repairsNotReturned;}
-    public ArrayList<Repair> getAllRepairs(){return allRepairs;}
+    public ArrayList<RepairSent> getRepairsNotReturned(){return repairsNotReturned;}
+    public ArrayList<RepairReturned> getRepairsCompleted(){return repairsCompleted;}
 
     /**
      * Method to get bikes, docks, types, repairs and admins from
      * model classes connected to database.
      * This is used every time the user starts the application
-     * @param
-     * @return void
-     * */
+     */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();
        docks = dockModel.getAllDocks();
@@ -59,20 +57,32 @@ public class Factory {
            Type type = new Type(name);
            types.add(type);
        }//end loop
-        allRepairs.addAll(repairModel.getRepairsReturned());
-        for(Integer i:repairModel.getRepairIDs()){
+        fillRepair();
+       admins = adminModel.getAllAdmins();
+    }//end method
+
+    /**
+     * Private method to fill out the repair arrays from
+     * database.
+     */
+    private void fillRepair(){
+        repairsCompleted = repairModel.getRepairsReturned();
+
+        for(int i:repairModel.getRepairIDs()){
             repairsNotReturned.add(repairModel.getRepair(i));
         }//end loop
-        for(int i = 0; i<repairsNotReturned.size();i++){
-           if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
+        
+        for(int i = 0; i<repairsNotReturned.size();i++){ //Registering that bikes are repairing
+            if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
         }//end loop
-       admins = adminModel.getAllAdmins();
     }//end method
 
     /**
      * Method to add admin. If mainAdmin is true
      * the admin will have access to add and delete
-     * ther admins
+     * admins
+     * @param a is an Admin object
+     * @return true if added in database
      */
     public boolean addAdmin(Admin a){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
@@ -86,9 +96,7 @@ public class Factory {
 
     /**
      * Method to add a bike.
-     *
-     *
-     * @param b is an Bike object
+     * @param b is a Bike object
      * @return boolean
      */
     public boolean addBike(Bike b){
@@ -136,7 +144,7 @@ public class Factory {
      * Takes object in as argument and retrieves
      * the information model class needs.
      */
-    public boolean repairSent(Repair r){
+    public boolean repairSent(RepairSent r){
         if(r == null) throw new IllegalArgumentException("The repair object is not created");
         int bikeID = r.getBikeId();
         String beforeDescription = r.getBeforeDesc();
@@ -157,7 +165,7 @@ public class Factory {
      * retrieves what model classes need.
      * @return boolean.
      */
-    public boolean repairReturned(Repair r){
+    public boolean repairReturned(RepairReturned r){
         if(r == null)throw new IllegalArgumentException("Repair object is not created!");
         int repairId = 0;
         for(Repair r1: repairsNotReturned){

@@ -1,8 +1,7 @@
 package bike.bikeInfo;
 
 import changescene.ChangeScene;
-import control.Bike;
-import control.Factory;
+import control.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -104,8 +102,6 @@ public class BikeInfoController implements Initializable {
     }
 
     /**
-     * @Author Team 007
-     *
      * Displays the info about the bike described in the bikeIdField.
      * This method also fills the ListView with the repairs the bike have had in the past.
      *
@@ -113,20 +109,31 @@ public class BikeInfoController implements Initializable {
     @FXML
     void showInfo(){
         factory.updateSystem();
-
-
-       /*
-
-
-       HER MÅ MAN LEGGE TIL REPAIRS TIL LISTVIEW,VENTER PÅ MODEL SKAL LAGE GET ALL REPAIRS
-
-
-        */
-
-
-        for(Bike b:factory.getBikes()){System.out.println(b);}
-        Bike bike = null;
         int bikeID = Integer.parseInt(bikeIdField.getText());
+
+        //Creating a object-view list
+        ObservableList<String> repairIds = FXCollections.observableArrayList();
+        ArrayList<String> visualized = new ArrayList<>();
+
+        //Adding the repair ids registered on the bike
+        for(int i = 0; i<factory.getRepairsNotReturned().size();i++){
+            String s = null;
+            if(factory.getRepairsNotReturned().get(i).getBikeId() == bikeID) s = "" +
+                    factory.getRepairsNotReturned().get(i).getRepair_id();
+            if(s!= null)visualized.add(s);
+        }//end loop
+        for(int i = 0;i<factory.getRepairsCompleted().size();i++){
+            String s = null;
+            if(factory.getRepairsCompleted().get(i).getBikeId() == bikeID)s = "" +
+                    factory.getRepairsCompleted().get(i).getRepair_id();
+            if(s!=null)visualized.add(s);
+        }//end loop
+
+        //Adding them in list view
+        repairIds.addAll(visualized);
+        repairIdListView.setItems(repairIds);
+
+        Bike bike = null;
         for(int i = 0; i<factory.getBikes().size();i++){
             if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
         }//end loop

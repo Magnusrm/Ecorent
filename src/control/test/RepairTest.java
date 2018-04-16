@@ -1,6 +1,6 @@
 package control.test;
 
-import control.Repair;
+import control.*;
 import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Simple Junit test for Repair.java
  */
 public class RepairTest {
-    private Repair instance;
+    private RepairReturned instance;
     private int repair_id;
     private String date_sent;
     private String before_desc;
@@ -30,7 +30,7 @@ public class RepairTest {
         after_desc = "Test end";
         price = 4000;
         bike_id = 56;
-        instance = new Repair(date_sent,before_desc,date_received,after_desc,price,bike_id);
+        instance = new RepairReturned(date_sent,before_desc,date_received,after_desc,price,bike_id);
     }//end method
 
     @AfterEach
@@ -120,7 +120,7 @@ public class RepairTest {
 
     @Test
     void testEquals(){
-        Repair r = new Repair(date_sent,before_desc,date_received,after_desc,price,bike_id);
+        RepairReturned r = new RepairReturned(date_sent,before_desc,date_received,after_desc,price,bike_id);
         boolean result = instance.equals(r);
         assertEquals(true,result);
     }//end method

@@ -11,7 +11,8 @@ public class FactoryTest {
     private Admin a;
     private Bike b;
     private Dock d;
-    private Repair r;
+    private RepairSent r;
+    private RepairReturned rr;
     private Type t;
 
     @BeforeEach
@@ -22,7 +23,7 @@ public class FactoryTest {
         b = new Bike(LocalDate.now(), 3000, "DBS", t, 0.36);
         b.setBikeId(666);
         d = new Dock("Test", 3.3,6.6);
-        r = new Repair("2018-04-16", "Test", 666);
+        r = new RepairSent("2018-04-16", "Test", 666);
     }//end method
 
     @AfterEach
