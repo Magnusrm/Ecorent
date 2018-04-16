@@ -159,32 +159,7 @@ public class MapViewController implements Initializable{
                 "document.setMarkers(items);");
     }
 
-    /**
-     * @param lat1 x coordinate 1
-     * @param lon1 y coordinate 1
-     * @param lat2 x coordinate 2
-     * @param lon2 y coordinate 2
-     * @return distance between position 1 and 2 in meters.
-     */
-    private static double distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 111.189577 * 1000;
 
-        return dist;
-    }
-
-    /*::	This function converts decimal degrees to radians						 :*/
-    private static double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    /*::	This function converts radians to decimal degrees						 :*/
-    private static double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
-    }
 
     public void moveBikeToDock(int bikeId, Dock d){
         allBikes = myFactory.getBikes();
@@ -217,7 +192,7 @@ public class MapViewController implements Initializable{
         if (Math.sqrt(xDifference*xDifference) < 0.0000002 || Math.sqrt(yDifference*yDifference) < 0.0000002){
             return;
         }
-        double distanceChange = distance(bikePos[0], bikePos[1], d.getxCoordinates(), d.getyCoordinates()) / 10;
+        // double distanceChange = distance(bikePos[0], bikePos[1], d.getxCoordinates(), d.getyCoordinates()) / 10;
 /*
         Task task = new Task<Void>() {
             @Override public Void call() {
@@ -244,10 +219,6 @@ public class MapViewController implements Initializable{
         /*
         RunnableDemo animer = new RunnableDemo("Thread1", bikePos[0], bikePos[1], xDifference, yDifference);
         animer.start();*/
-        engine.executeScript("document.updateBikeMarker(" + bikePos[0] + ", " + bikePos[1] + ", " + xDifference + ", " + yDifference + ");");
-        RunnableDemo data = new RunnableDemo("Thread2", bikePos[0], bikePos[1], xDifference, yDifference,
-                                                bikeId, distance, tripNr, distanceChange, charg_lvl);
-        data.start();
 
     }
 
