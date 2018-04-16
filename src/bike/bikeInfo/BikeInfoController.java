@@ -81,13 +81,13 @@ public class BikeInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        factory.updateSystem();
-
-        engine = root.getEngine();
-        engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
-        engine.setJavaScriptEnabled(true);
 
         try {
+            factory.updateSystem();
+
+            engine = root.getEngine();
+            engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
+            engine.setJavaScriptEnabled(true);
 
             repairIdListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
