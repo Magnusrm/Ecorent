@@ -161,6 +161,34 @@ public class BikeModel {
         return null;
     }
 
+
+    public boolean setDockID(int bikeID, int dockID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
+        try{
+            connection = DBCleanup.getConnection();
+
+
+            if(bikeExists(bikeID)) {
+                preparedStatement = connection.prepareStatement(bikeInsert);
+                preparedStatement.setInt(1, dockID);
+                preparedStatement.setInt(2, bikeID);
+
+                return preparedStatement.executeUpdate() != 0;
+
+            }
+        }catch(SQLException e) {
+            System.out.println(e.getMessage() + " - setDockID");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
     /**
      * Changes the values of a bike in the database.
      *
