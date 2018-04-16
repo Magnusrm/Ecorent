@@ -65,9 +65,10 @@ public class BikeInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
-    private WebView root;
-
     private WebEngine engine;
+
+    @FXML
+    private WebView root;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

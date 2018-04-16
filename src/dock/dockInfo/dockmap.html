@@ -41,11 +41,6 @@
             }
 
             var markers = [];
-            var lineSymbol = {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                strokeColor: '#393'
-            };
 
 
             document.createMarkerEgen = function createMarkerEgen(id, latitude, longitude) {
@@ -54,7 +49,6 @@
                 var latlngMarker = new google.maps.LatLng(latitude, longitude);
                 document.marker = new google.maps.Marker({
                     position: latlngMarker,
-                    icon : lineSymbol,
                     map: document.map,
                     draggable: false,
                     title: id,
@@ -66,7 +60,7 @@
 
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(document.map);
+                    markers[i].setMap(map);
                 }
             }
             document.setMarkers = function setMarkers(posData){
