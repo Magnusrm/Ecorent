@@ -5,19 +5,23 @@ import control.Repair;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * The class that handles saving and retrieving repairs to the database.
+ */
 public class RepairModel {
 
     /**
-     * @Author Team 007
-     *
      * Sends the first part of the repair to the database.
-     * Returns the repairID that is set in the database.
-     * Returns -1 if method fails.
      *
-     * @param bikeID
-     * @param dateSent
-     * @param bDescription
-     * @return int
+     * @param bikeID            bike_id of the bike that the repair should be registered on.
+     * @param dateSent          the date that the bike is sent to repair.
+     * @param bDescription      the description of what to be done to the bike.
+     * @return repairID         the repair_id of the repair that is registered.
+     * @return -1               if the method fails.
      */
     public int sendRepair(int bikeID, String dateSent, String bDescription){
         Connection connection = null;
@@ -59,16 +63,14 @@ public class RepairModel {
 
 
     /**
-     * @Author Team 007
-     *
      * Adds the second part of the repair to the database.
-     * Returns true/false.
      *
-     * @param repairID
-     * @param dateReceived
-     * @param aDescription
-     * @param price
-     * @return boolean
+     * @param repairID          what repair_id the second part belongs to.
+     * @param dateReceived      when the bike is returned from repair.
+     * @param aDescription      the description of what is done.
+     * @param price             the cost of the repair.
+     * @return true             if the second part of the repair is successfully saved.
+     * @return false            if the method fails.
      */
     public boolean returnRepair(int repairID, String dateReceived, String aDescription, double price)
     {
@@ -99,6 +101,12 @@ public class RepairModel {
         return false;
     }
 
+    /**
+     * Returns an arraylist of all repairID's that is sent but not returned.
+     *
+     * @return repIDs           an ArrayList of all repairs that is sent but not returned.
+     * @return null             if the method fails.
+     */
     public ArrayList<Integer> getRepairIDs(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -129,12 +137,72 @@ public class RepairModel {
     }
 
     /**
-     * @Author Team 007
+     * Returns an ArrayList of all repair objects that are both sent and returned.
      *
+     * @return repairs          an ArrayList of repair objects.
+     * @return null             if method fails.
+     */
+    public ArrayList<Repair> getRepairsReturned(){
+        Connection connection = null;
+
+        PreparedStatement preparedStatement = null;
+
+
+        ResultSet resultSet = null;
+
+
+        String dateSent;
+        String beforeDesc;
+        String dateReceived;
+        String afterDesc;
+        double price;
+        int bikeID;
+        int repairID;
+
+        Repair repair;
+        ArrayList<Repair> repairs = new ArrayList<>();
+
+        String repQuery = "SELECT repair_id, date_sent, before_desc, date_recieved, after_desc, price, bike_id FROM repair WHERE date_recieved IS NOT NULL";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(repQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                repairID = resultSet.getInt("repair_id");
+                dateSent = resultSet.getString("date_sent");
+                beforeDesc = resultSet.getString("before_desc");
+                dateReceived = resultSet.getString("date_recieved");
+                afterDesc = resultSet.getString("after_desc");
+                price = resultSet.getDouble("price");
+                bikeID = resultSet.getInt("bike_id");
+
+                repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
+                repair.setRepairId(repairID);
+                repairs.add(repair);
+            }
+            return repairs;
+        }catch (SQLException e){
+            System.out.println(e.getMessage() + " - getRepair()");
+        }finally{
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
+
+
+
+
+    /**
      * Returns a repair Object from the database.
      *
-     * @param repairID
-     * @return Object
+     * @param repairID          the repair_id of the repair that is to be returned.
+     * @return repair           a repair object.
+     * @return null             if the method fails.
      */
     public Repair getRepair(int repairID){
         Connection connection = null;
@@ -235,4 +303,3 @@ public class RepairModel {
         return null;
     }
 }
-
