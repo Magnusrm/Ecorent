@@ -338,7 +338,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameAvailable(name)) {
+            if(!dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
                 preparedStatement.setString(1, name);
                 resultSet = preparedStatement.executeQuery();
