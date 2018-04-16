@@ -121,7 +121,8 @@ public class Repair {
     /**
      * Override of the standard equals()-method to compare the information about two Repair-objects.
      * @param o
-     * @return
+     * @return true     if the parameters compared are equal
+     * @return false    if the parameters compared are not equal
      * @author Team 007
      */
     @Override

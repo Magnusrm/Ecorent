@@ -61,8 +61,8 @@ public class Admin {
     /**
      * Makes the equals method of this class to only check the email parameter of the object, overrides the standard equals method.
      * @param o
-     * @return true if they are defined equal in the method
-     * @return false if they not defined equal in the method
+     * @return true     if the parameters compared are equal
+     * @return false    if the parameters compared are not equal
      * @author Team 007
      */
     @Override

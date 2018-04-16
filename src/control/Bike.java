@@ -138,8 +138,8 @@ public class Bike {
     /**
      * Override of the equals()-method to compare objects of the class
      * @param o
-     * @return true     if the parts compared are equal
-     * @return false    if the parts compared are not equal
+     * @return true     if the parameters compared are equal
+     * @return false    if the parameters compared are not equal
      */
     @Override
     public boolean equals(Object o){
