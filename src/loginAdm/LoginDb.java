@@ -18,9 +18,9 @@ public class LoginDb {
      * Checks if the login credentials are identical to the ones stored in the database. Checks if an users email and password correspond.
      *
      * @param loginBean
-     * @return boolean
+     * @return true     if the user credentials are correct
+     * @return false    if the user credentials are incorrect
      */
-
     public static boolean authenticateUser(LoginBean loginBean) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
