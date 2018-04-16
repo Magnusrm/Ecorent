@@ -52,7 +52,8 @@ public class Dock {
     /**
      * Override of the standard equals()-method to compare objects of the class. Checks if name and position are the same.
      * @param o
-     * @return boolean
+     * @return true     if the parameters compared are equal
+     * @return false    if the parameters compared are not equal
      * @author Team 007
      */
     @Override
