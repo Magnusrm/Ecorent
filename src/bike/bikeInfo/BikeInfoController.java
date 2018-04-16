@@ -115,7 +115,6 @@ public class BikeInfoController implements Initializable {
     void showInfo(){
         factory.updateSystem();
 
-
        /*
 
 
