@@ -1,6 +1,8 @@
-package model;
+package model.tests;
 import control.Bike;
 import control.Dock;
+import model.DBCleanup;
+import model.DockModel;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
@@ -8,6 +10,13 @@ import java.sql.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * This is a test class for the class DockModel
+ */
 public class DockModelTest {
 
     Connection connection;

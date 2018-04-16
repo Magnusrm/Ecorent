@@ -5,19 +5,24 @@ import control.Repair;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * The class that takes care of saving repairs to the database.
+ */
 public class RepairModel {
 
     /**
-     * @Author Team 007
      *
      * Sends the first part of the repair to the database.
-     * Returns the repairID that is set in the database.
-     * Returns -1 if method fails.
      *
-     * @param bikeID
-     * @param dateSent
-     * @param bDescription
-     * @return int
+     * @param bikeID            the bike id the repair is to be registered on.
+     * @param dateSent          the date the repair is sent.
+     * @param bDescription      the description of the flaw.
+     * @return repairID         the repair id of the repair.
+     * @return -1               if the method fails.
      */
     public int sendRepair(int bikeID, String dateSent, String bDescription){
         Connection connection = null;
@@ -59,16 +64,14 @@ public class RepairModel {
 
 
     /**
-     * @Author Team 007
-     *
      * Adds the second part of the repair to the database.
-     * Returns true/false.
      *
-     * @param repairID
-     * @param dateReceived
-     * @param aDescription
-     * @param price
-     * @return boolean
+     * @param repairID          what repair_id that the repair belongs to.
+     * @param dateReceived      the date of witch the bike is returned.
+     * @param aDescription      the description of what is done.
+     * @param price             the price of the repair.
+     * @return true             if the second part of the repair is successfully added to the database.
+     * @return false            if the method fails.
      */
     public boolean returnRepair(int repairID, String dateReceived, String aDescription, double price)
     {
@@ -79,17 +82,14 @@ public class RepairModel {
         try{
             connection = DBCleanup.getConnection();
 
-            preparedStatement = connection.prepareStatement(returnInsert);
-            preparedStatement.setString(1, dateReceived);
-            preparedStatement.setString(2, aDescription);
-            preparedStatement.setDouble(3, price);
-            preparedStatement.setInt(4, repairID);
-            if(preparedStatement.executeUpdate() != 0){
-                return true;
-            }else{
-                return false;
+            if(repairExists(repairID)) {
+                preparedStatement = connection.prepareStatement(returnInsert);
+                preparedStatement.setString(1, dateReceived);
+                preparedStatement.setString(2, aDescription);
+                preparedStatement.setDouble(3, price);
+                preparedStatement.setInt(4, repairID);
+                return preparedStatement.executeUpdate() != 0;
             }
-
         }catch(SQLException e) {
             System.out.println(e.getMessage() + " - returnRepair()");
         }finally{
@@ -99,6 +99,12 @@ public class RepairModel {
         return false;
     }
 
+    /**
+     * Returns an ArrayList of all repair_id's of all bikes that are send but not returned in the database.
+     *
+     * @return repIDs       an ArrayList of all repair_id's of all the bikes that are sent but not returned.
+     * @return null         if there are none, or the method fails.
+     */
     public ArrayList<Integer> getRepairIDs(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -129,12 +135,12 @@ public class RepairModel {
     }
 
     /**
-     * @Author Team 007
-     *
+
      * Returns a repair Object from the database.
      *
-     * @param repairID
-     * @return Object
+     * @param repairID      the repair_id of the repair that is to be returned.
+     * @return repair       a repair object with values that matches the one in the database.
+     * @return null         if the method fails.
      */
     public Repair getRepair(int repairID){
         Connection connection = null;
@@ -172,46 +178,48 @@ public class RepairModel {
         try{
             connection = DBCleanup.getConnection();
 
-            getDateSent = connection.prepareStatement(dateSentQuery);
-            getDateSent.setInt(1, repairID);
-            rsDateSent = getDateSent.executeQuery();
-            rsDateSent.next();
-            dateSent = rsDateSent.getString("date_sent");
+            if(repairExists(repairID)) {
+                getDateSent = connection.prepareStatement(dateSentQuery);
+                getDateSent.setInt(1, repairID);
+                rsDateSent = getDateSent.executeQuery();
+                rsDateSent.next();
+                dateSent = rsDateSent.getString("date_sent");
 
-            getBeforeDesc = connection.prepareStatement(beforeDescQuery);
-            getBeforeDesc.setInt(1, repairID);
-            rsBeforeDesc = getBeforeDesc.executeQuery();
-            rsBeforeDesc.next();
-            beforeDesc = rsBeforeDesc.getString("before_desc");
+                getBeforeDesc = connection.prepareStatement(beforeDescQuery);
+                getBeforeDesc.setInt(1, repairID);
+                rsBeforeDesc = getBeforeDesc.executeQuery();
+                rsBeforeDesc.next();
+                beforeDesc = rsBeforeDesc.getString("before_desc");
 
-            getDateReceived = connection.prepareStatement(dateReceivedQuery);
-            getDateReceived.setInt(1, repairID);
-            rsDateReceived = getDateReceived.executeQuery();
-            rsDateReceived.next();
-            dateReceived = rsDateReceived.getString("date_recieved");
+                getDateReceived = connection.prepareStatement(dateReceivedQuery);
+                getDateReceived.setInt(1, repairID);
+                rsDateReceived = getDateReceived.executeQuery();
+                rsDateReceived.next();
+                dateReceived = rsDateReceived.getString("date_recieved");
 
-            getAfterDesc = connection.prepareStatement(afterDescQuery);
-            getAfterDesc.setInt(1, repairID);
-            rsAfterDesc = getAfterDesc.executeQuery();
-            rsAfterDesc.next();
-            afterDesc = rsAfterDesc.getString("after_desc");
+                getAfterDesc = connection.prepareStatement(afterDescQuery);
+                getAfterDesc.setInt(1, repairID);
+                rsAfterDesc = getAfterDesc.executeQuery();
+                rsAfterDesc.next();
+                afterDesc = rsAfterDesc.getString("after_desc");
 
-            getPrice = connection.prepareStatement(priceQuery);
-            getPrice.setInt(1, repairID);
-            rsPrice = getPrice.executeQuery();
-            rsPrice.next();
-            price = rsPrice.getDouble("price");
+                getPrice = connection.prepareStatement(priceQuery);
+                getPrice.setInt(1, repairID);
+                rsPrice = getPrice.executeQuery();
+                rsPrice.next();
+                price = rsPrice.getDouble("price");
 
-            getBikeID = connection.prepareStatement(bikeIDQuery);
-            getBikeID.setInt(1, repairID);
-            rsBikeID = getBikeID.executeQuery();
-            rsBikeID.next();
-            bikeID = rsBikeID.getInt("bike_id");
+                getBikeID = connection.prepareStatement(bikeIDQuery);
+                getBikeID.setInt(1, repairID);
+                rsBikeID = getBikeID.executeQuery();
+                rsBikeID.next();
+                bikeID = rsBikeID.getInt("bike_id");
 
-            repair = new Repair(dateSent, beforeDesc, price, bikeID);
-            repair.setRepairId(repairID);
-            repair.setBikeId(bikeID);
-            return repair;
+                repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
+                repair.setRepairId(repairID);
+                repair.setBikeId(bikeID);
+                return repair;
+            }
 
         }catch (SQLException e){
             System.out.println(e.getMessage() + " - getRepair()");
@@ -233,6 +241,38 @@ public class RepairModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
+    }
+
+    /**
+     * Private method that is used to check if a repair exists.
+     *
+     * @param repID     the repair_id that is searched for in the database.
+     * @return true     if the repair exists.
+     * @return false    if the repair doesn't exist.
+     */
+    private boolean repairExists(int repID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String repExistsQuery = "SELECT repair_id FROM repair WHERE repair_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(repExistsQuery);
+            preparedStatement.setInt(1, repID);
+            resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+
+        }catch (SQLException e){
+            System.out.println(e.getMessage() + " - repairExists");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
     }
 }
 
