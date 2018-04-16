@@ -44,9 +44,11 @@ public class Factory {
     public ArrayList<Repair> getRepairsNotReturned(){return repairsNotReturned;}
 
     /**
-     * Method to get bikes, docks and admins from
+     * Method to get bikes, docks, types, repairs and admins from
      * model classes connected to database.
      * This is used every time the user starts the application
+     * @param
+     * @return void
      * */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();

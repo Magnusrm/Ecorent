@@ -15,25 +15,16 @@ public class Repair {
     private double price;
     private int bike_id;
 
-    @Override
-    public boolean equals(Object o){
-        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Repair)) {
-            return false;
-        }
-
-        Repair r = (Repair) o;
-
-        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
-                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
-                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
-
-    }
-
     /**
      * Constructor for repair sent
      */
     public Repair(String dateSent, String beforeDesc, int bikeId){
+        Factory factory = new Factory();
+        factory.updateSystem();
+        boolean execute = false;
+        for(Bike b: factory.getBikes()){
+            //if(bikeId )
+        }//end loop
         this.repair_id = -1; //use the database to set repairId
 
         this.date_sent = toDate(dateSent);
@@ -56,7 +47,7 @@ public class Repair {
     }
 
     /**
-     * Constructor for model classes
+     * Constructor for model classes, view classes and testing
      */
     public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
         this.repair_id = -1; //use the database to set repairId
@@ -130,6 +121,21 @@ public class Repair {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate toDate = LocalDate.parse(date, formatter);
         return toDate;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Repair)) {
+            return false;
+        }
+
+        Repair r = (Repair) o;
+
+        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
+                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
+                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
+
     }
 
     public String toString(){
