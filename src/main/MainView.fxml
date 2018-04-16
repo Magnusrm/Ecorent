@@ -5,10 +5,30 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
    <children>
-      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0" />
+      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
+         <children>
+            <Text fill="WHITE" layoutX="37.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Ecorent's management system">
+               <font>
+                  <Font name="Times New Roman" size="21.0" />
+               </font>
+            </Text>
+            <Line endX="380.0" layoutX="28.0" layoutY="50.0" stroke="WHITE" />
+            <Text fill="WHITE" layoutX="86.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="For any questions or inquires, contact us at:">
+               <font>
+                  <Font name="Times New Roman" size="15.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="112.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teamdoubleoseven007@gmail.com">
+               <font>
+                  <Font name="Times New Roman" size="15.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
             <ImageView fitHeight="117.0" fitWidth="88.0" layoutX="45.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
