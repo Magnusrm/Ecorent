@@ -94,7 +94,7 @@ public class Factory {
        double price = b.getPrice();
        String make = b.getMake();
        String type = b.getType().getName();
-       int dockID = b.getDockId();
+        int dockID = b.getDockId();
        double pwrUsage = b.getPowerUsage();
        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
        return true;
