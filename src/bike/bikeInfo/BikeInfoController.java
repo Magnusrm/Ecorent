@@ -71,19 +71,20 @@ public class BikeInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
-    @FXML
-    private WebView root;
-
     private WebEngine engine;
 
     @FXML
     private ListView<String> repairIdListView;
 
+    @FXML
+    private WebView root;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
 
+        try {
             factory.updateSystem();
+
             engine = root.getEngine();
             engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
@@ -113,7 +114,6 @@ public class BikeInfoController implements Initializable {
     @FXML
     void showInfo(){
         factory.updateSystem();
-
 
        /*
 

@@ -73,6 +73,7 @@ public class DockInfoController implements Initializable {
             engine = root.getEngine();
             engine.load(this.getClass().getResource("dockmap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
+
             // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
             String[] visualized2 = new String[factory.getDocks().size()];

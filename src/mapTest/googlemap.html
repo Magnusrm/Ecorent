@@ -15,6 +15,7 @@
     <script type ="text/javascript" src="scripts/v3_epoly.js">
     </script>
 
+
     <script type="text/javascript">
         function initialize() {
             var apiKey = "AIzaSyA44sw3tgul3F1t5xT2PeXkSm0GhQmUa6M";
@@ -35,27 +36,13 @@
                 map : document.map
             });
 
-            var drawingManager = new google.maps.drawing.DrawingManager({
-                drawingMode: google.maps.drawing.OverlayType.POLYLINE,
-                drawingControl: true,
-                drawingControlOptions: {
-                    position: google.maps.ControlPosition.TOP_CENTER,
-                    drawingModes: [
-                        google.maps.drawing.OverlayType.POLYLINE
-                    ]
-                },
-                polylineOptions: {
-                    strokeColor: '#696969',
-                    strokeWeight: 2
-                }
-            });
+
 
 
 
             document.geocoder = new google.maps.Geocoder();
             document.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
             directionsDisplay.setMap(document.map);
-            drawingManager.setMap(document.map);
 
             var bounds = new google.maps.LatLngBounds();
 
@@ -156,15 +143,25 @@
 
 
             document.map.addListener("click", function(event){
-                  console.log("ok"); });
+                document.createMarker(event.latLng);
+                  console.log(event.latLng); });
 
 
 
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(document.map);
+                    markers[i].setMap(map);
                 }
-
+            }
+            
+            document.createMarker = function (location) {
+                document.marker = new google.maps.Marker({
+                    position: location,
+                    map: document.map,
+                    draggable: false,
+                    visible: true
+                });
+                markers.push(document.marker);
             }
             document.setMarkers = function setMarkers(posData){
                 document.setMapOnAll(null);
@@ -243,6 +240,7 @@
             document.tilJava = function tilJava(){
                 console.log("hei fra javascript");
             }
+
 
         }// initialize end
 

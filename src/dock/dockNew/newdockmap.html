@@ -15,9 +15,11 @@
     <script type ="text/javascript" src="scripts/v3_epoly.js">
     </script>
 
+
     <script type="text/javascript">
         function initialize() {
             var apiKey = "AIzaSyA44sw3tgul3F1t5xT2PeXkSm0GhQmUa6M";
+            var directionsKey = "AIzaSyAQSLNDYInDRGGXsEDAOl_8sQ2JWQGcw6w";
             var latlng = new google.maps.LatLng(63.429276, 10.392517);
             var myOptions = {
                 zoom: 14,
@@ -28,7 +30,16 @@
                 streetViewControl: false,
                 backgroundColor: "#666970"
             };
+
+            var directionsService = new google.maps.DirectionsService();
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                map : document.map
+            });
+
+            document.geocoder = new google.maps.Geocoder();
             document.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+            directionsDisplay.setMap(document.map);
+
 
             document.zoomIn = function zoomIn() {
                 var zoomLevel = document.map.getZoom();
@@ -42,35 +53,28 @@
 
             var markers = [];
 
+            document.map.addListener("click", function(event){
+                document.createMarker(event.latLng);
+                console.log(event.latLng); });
 
-            document.createMarkerEgen = function createMarkerEgen(id, latitude, longitude) {
-                document.setMapOnAll(null);
-                markers = [];
-                var latlngMarker = new google.maps.LatLng(latitude, longitude);
-                document.marker = new google.maps.Marker({
-                    position: latlngMarker,
-                    map: document.map,
-                    draggable: false,
-                    title: id,
-                    visible: true
-                });
-                markers.push(document.marker);
-                document.setMapOnAll(document.map);
-            }
 
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
                     markers[i].setMap(map);
                 }
             }
-            document.setMarkers = function setMarkers(posData){
+
+            document.createMarker = function (location) {
                 document.setMapOnAll(null);
                 markers = [];
-
-                for (var j = 0; j < posData.length; j++){
-                    document.createMarkerEgen(posData[j][0], posData[j][1], posData[j][2]);
-                }
-
+                document.marker = new google.maps.Marker({
+                    position: location,
+                    map: document.map,
+                    draggable: false,
+                    visible: true
+                });
+                markers.push(document.marker);
+                document.setMapOnAll(document.map);
             }
 
 
