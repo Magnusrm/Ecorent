@@ -24,6 +24,23 @@ public class FactoryTest {
         r = new Repair("2018-04-16", "Test", 666);
     }//end method
 
+    @AfterEach
+    void after(){
+        instance = null;
+        a = null;
+        b = null;
+        t = null;
+        d = null;
+        r = null;
+    }//end method
+
+    @Test
+    void testUpdateSystem(){
+        System.out.println("Testing method to update system from database");
+        instance.updateSystem();
+
+    }//end method
+
 
 
 }//end class

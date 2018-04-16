@@ -19,13 +19,6 @@ public class Repair {
      * Constructor for repair sent
      */
     public Repair(String dateSent, String beforeDesc, int bikeId){
-        Factory factory = new Factory();
-        factory.updateSystem();
-        boolean execute = false;
-        for(Bike b: factory.getBikes()){
-            if(bikeId == b.getBikeId())execute = true;
-        }//end loop
-        if(execute) {
             this.repair_id = -1; //use the database to set repairId
 
             this.date_sent = toDate(dateSent);
@@ -34,43 +27,23 @@ public class Repair {
             this.after_desc = null;
             this.price = 0;
             this.bike_id = bikeId;
-        }else{
-            throw new IllegalArgumentException("Bike ID does not exist!");
-        }//end condition
     }//end constructor
 
     /**
      * Constructor for repair returned
      */
     public Repair(String dateReceived, String afterDesc, double price, int bikeId){
-        Factory factory = new Factory();
-        factory.updateSystem();
-        boolean execute = false;
-        for(Bike b: factory.getBikes()){
-            if(bikeId == b.getBikeId())execute = true;
-        }//end loop
-        if(execute) {
             this.repair_id = -1; //use the database to set repairId
             this.date_received = toDate(dateReceived);
             this.after_desc = afterDesc;
             this.price = price;
             this.bike_id = bikeId;
-        }else{
-            throw new IllegalArgumentException("Bike ID does not exist!");
-        }//end condition
     }//end constructor
 
     /**
      * Constructor for model classes, view classes and testing
      */
     public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
-        Factory factory = new Factory();
-        factory.updateSystem();
-        boolean execute = false;
-        for(Bike b: factory.getBikes()){
-            if(bikeId == b.getBikeId())execute = true;
-        }//end loop
-        if(execute) {
             this.repair_id = -1; //use the database to set repairId
             this.date_sent = toDate(dateSent);
             this.before_desc = beforeDesc;
@@ -78,9 +51,6 @@ public class Repair {
             this.after_desc = afterDesc;
             this.price = price;
             this.bike_id = bikeId;
-        }else{
-            throw new IllegalArgumentException("Bike ID does not exist!");
-        }//end condition
     }//end constructor
 
 
