@@ -23,42 +23,65 @@ public class Repair {
         factory.updateSystem();
         boolean execute = false;
         for(Bike b: factory.getBikes()){
-            //if(bikeId )
+            if(bikeId == b.getBikeId())execute = true;
         }//end loop
-        this.repair_id = -1; //use the database to set repairId
+        if(execute) {
+            this.repair_id = -1; //use the database to set repairId
 
-        this.date_sent = toDate(dateSent);
-        this.before_desc = beforeDesc;
-        this.date_received = null;
-        this.after_desc = null;
-        this.price = 0;
-        this.bike_id = bikeId;
-    }
+            this.date_sent = toDate(dateSent);
+            this.before_desc = beforeDesc;
+            this.date_received = null;
+            this.after_desc = null;
+            this.price = 0;
+            this.bike_id = bikeId;
+        }else{
+            throw new IllegalArgumentException("Bike ID does not exist!");
+        }//end condition
+    }//end constructor
 
     /**
      * Constructor for repair returned
      */
     public Repair(String dateReceived, String afterDesc, double price, int bikeId){
-        this.repair_id = -1; //use the database to set repairId
-        this.date_received = toDate(dateReceived);
-        this.after_desc = afterDesc;
-        this.price = price;
-        this.bike_id = bikeId;
-    }
+        Factory factory = new Factory();
+        factory.updateSystem();
+        boolean execute = false;
+        for(Bike b: factory.getBikes()){
+            if(bikeId == b.getBikeId())execute = true;
+        }//end loop
+        if(execute) {
+            this.repair_id = -1; //use the database to set repairId
+            this.date_received = toDate(dateReceived);
+            this.after_desc = afterDesc;
+            this.price = price;
+            this.bike_id = bikeId;
+        }else{
+            throw new IllegalArgumentException("Bike ID does not exist!");
+        }//end condition
+    }//end constructor
 
     /**
      * Constructor for model classes, view classes and testing
      */
     public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
-        this.repair_id = -1; //use the database to set repairId
-
-        this.date_sent = toDate(dateSent);
-        this.before_desc = beforeDesc;
-        this.date_received = toDate(dateReceived);
-        this.after_desc = afterDesc;
-        this.price = price;
-        this.bike_id = bikeId;
-    }
+        Factory factory = new Factory();
+        factory.updateSystem();
+        boolean execute = false;
+        for(Bike b: factory.getBikes()){
+            if(bikeId == b.getBikeId())execute = true;
+        }//end loop
+        if(execute) {
+            this.repair_id = -1; //use the database to set repairId
+            this.date_sent = toDate(dateSent);
+            this.before_desc = beforeDesc;
+            this.date_received = toDate(dateReceived);
+            this.after_desc = afterDesc;
+            this.price = price;
+            this.bike_id = bikeId;
+        }else{
+            throw new IllegalArgumentException("Bike ID does not exist!");
+        }//end condition
+    }//end constructor
 
 
     public int getRepair_id(){
@@ -123,6 +146,15 @@ public class Repair {
         return toDate;
     }
 
+
+
+    /**
+     * Override of the standard equals()-method to compare the information about two Repair-objects.
+     * @param o
+     * @return boolean
+     * @author Team 007
+     */
+
     @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
@@ -137,7 +169,12 @@ public class Repair {
                 && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
 
     }
-
+    /**
+     * Override of the standard toString()-method to make it list out the information about a repair
+     * @return
+     * @author Team 007
+     */
+    @Override
     public String toString(){
         return "control.Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id
