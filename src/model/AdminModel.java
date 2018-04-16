@@ -61,16 +61,11 @@ public class AdminModel {
     public Admin getAdmin(String email){
         Connection connection = null;
 
-        PreparedStatement getHash = null;
-        PreparedStatement getPriviliged = null;
+        PreparedStatement preparedStatement = null;
 
-        ResultSet rsHash = null;
-        ResultSet rsPriviliged = null;
+        ResultSet resultSet = null;
 
-        String hashQuery = "SELECT hash FROM admin WHERE email = ?";
-        String priviligedQuery = "SELECT priviliged FROM admin WHERE email = ?";
-
-        Admin admin;
+        String adminQuery = "SELECT hash, priviliged FROM admin WHERE email = ?";
 
         String hash;
         boolean isPriviliged;
@@ -79,22 +74,14 @@ public class AdminModel {
             connection = DBCleanup.getConnection();
 
             if(adminExists(email)) {
-                getHash = connection.prepareStatement(hashQuery);
-                getHash.setString(1, email);
-                rsHash = getHash.executeQuery();
-                rsHash.next();
-                hash = rsHash.getString("hash");
-
-                getPriviliged = connection.prepareStatement(priviligedQuery);
-                getPriviliged.setString(1, email);
-                rsPriviliged = getPriviliged.executeQuery();
-                rsPriviliged.next();
-                if(rsPriviliged.getByte("priviliged") == 1){
-                    isPriviliged = true;
-                }else{
-                    isPriviliged = false;
+                preparedStatement = connection.prepareStatement(adminQuery);
+                preparedStatement.setString(1, email);
+                resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()) {
+                    hash = resultSet.getString("hash");
+                    isPriviliged = resultSet.getByte("priviliged") == 1;
+                    return new Admin(email, hash, isPriviliged);
                 }
-                return new Admin(email, hash, isPriviliged);
             }else{
                 System.out.println("Given email does not exist");
                 return null;
@@ -102,10 +89,8 @@ public class AdminModel {
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getAdmin()");
         }finally{
-            DBCleanup.closeStatement(getHash);
-            DBCleanup.closeStatement(getPriviliged);
-            DBCleanup.closeResultSet(rsHash);
-            DBCleanup.closeResultSet(rsPriviliged);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
         return null;
