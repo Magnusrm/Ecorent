@@ -91,7 +91,7 @@ public class BikeInfoController {
             String type = "" + bike.getType().getName();
             String make = "" + bike.getMake();
             String date = "" + bike.getBuyDate().toString();
-            String battery = "" + bike.getPowerUsage();
+            String battery = "" + bike.getBattery() + "%";
             priceLbl.setText(price);
             typeLbl.setText(type);
             makeLbl.setText(make);

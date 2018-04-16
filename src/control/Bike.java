@@ -41,6 +41,7 @@ public class Bike {
     public LocalDate getBuyDate() {
         return buyDate;
     }
+    public int getBattery(){return battery;}
 
     public double getPrice() {
         return price;

@@ -153,31 +153,5 @@ public class Repair {
                 + "\nDate received: " + date_received
                 + "\nDescrifton after: " + after_desc
                 + "\nPrice: " + price;
-    }
-
-    //Test
-    public static void main(String[] args) throws ParseException {
-        String now = "2018-03-12";
-        Repair test = new Repair(now, "Problems with front wheel", 1);
-        Repair test2 = new Repair("2018-02-22", "Punctured tire", "2018-02-27", "Change tube and rutine check", 30.4, 1);
-        System.out.println("\nOutprint of bike before testing\n");
-        System.out.println(test2);
-        System.out.println("\nTests");
-        if(test2.getPrice() == 30.4){
-            System.out.println("Test 1 successful");
-        }
-        test2.setPrice(45);
-        if(test2.getPrice() == 45){
-            System.out.println("Test 2 successful");
-        }
-        test2.setRepairId(3);
-        test2.setAfterDesc("setTEST");
-        test2.setBeforeDesc("setTEST");
-        test2.setDateSent("2000-01-01");
-        test2.setDateReceived("2001-01-01");
-        test2.setBikeId(5);
-
-        System.out.println("\nOutprint of repair after testing\n");
-        System.out.println(test2);
-    }
-}
+    }//end method
+}//end class

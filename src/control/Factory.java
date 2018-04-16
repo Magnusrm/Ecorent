@@ -16,16 +16,17 @@ import java.util.*;
 import model.*;
 
 public class Factory {
-    private ArrayList<Dock> docks = new ArrayList<Dock>();
-    private ArrayList<Bike> bikes = new ArrayList<Bike>();
-    private ArrayList<Admin> admins = new ArrayList<Admin>();
-    private ArrayList<Type> types = new ArrayList<Type>();
+    private ArrayList<Dock> docks = new ArrayList<>();
+    private ArrayList<Bike> bikes = new ArrayList<>();
+    private ArrayList<Admin> admins = new ArrayList<>();
+    private ArrayList<Type> types = new ArrayList<>();
     private ArrayList<Repair> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
+    private ArrayList<Repair> allRepairs = new ArrayList<>();
 
 
     public Factory(){
@@ -42,6 +43,7 @@ public class Factory {
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
     public ArrayList<Repair> getRepairsNotReturned(){return repairsNotReturned;}
+    public ArrayList<Repair> getAllRepairs(){return allRepairs;}
 
     /**
      * Method to get bikes, docks, types, repairs and admins from
@@ -57,12 +59,13 @@ public class Factory {
            Type type = new Type(name);
            types.add(type);
        }//end loop
+        allRepairs.addAll(repairModel.getRepairsReturned());
         for(Integer i:repairModel.getRepairIDs()){
-           repairsNotReturned.add(repairModel.getRepair(i));
+            repairsNotReturned.add(repairModel.getRepair(i));
         }//end loop
         for(int i = 0; i<repairsNotReturned.size();i++){
            if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
-        }
+        }//end loop
        admins = adminModel.getAllAdmins();
     }//end method
 

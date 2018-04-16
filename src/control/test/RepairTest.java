@@ -1,5 +1,6 @@
-package control;
+package control.test;
 
+import control.Repair;
 import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;

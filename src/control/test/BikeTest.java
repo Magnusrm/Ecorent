@@ -1,4 +1,6 @@
-package control;
+package control.test;
+import control.Bike;
+import control.Type;
 import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
