@@ -24,62 +24,38 @@ public class DockModel {
      */
     public Dock getDock(String name){
         Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        Dock dock = null;
-
-        PreparedStatement getDockID = null;
-        PreparedStatement getXCord = null;
-        PreparedStatement getYCord = null;
-
-        ResultSet rsDockID = null;
-        ResultSet rsXCord = null;
-        ResultSet rsYCord = null;
+        Dock dock;
 
         int dockID;
         double xCord;
         double yCord;
 
-        String dockIDQuery = "SELECT dock_id FROM dock WHERE name = ?";
-        String xCordQuery = "SELECT x_cord FROM dock WHERE name = ?";
-        String yCordQuery = "SELECT y_cord FROM dock WHERE name = ?";
+        String dockIDQuery = "SELECT dock_id, x_cord, y_cord FROM dock WHERE name = ?";
 
         try{
             connection = DBCleanup.getConnection();
 
             if(!dockNameAvailable(name)) {
-                getDockID = connection.prepareStatement(dockIDQuery);
-                getDockID.setString(1, name);
-                rsDockID = getDockID.executeQuery();
-                rsDockID.next();
-                dockID = rsDockID.getInt("dock_id");
-
-                getXCord = connection.prepareStatement(xCordQuery);
-                getXCord.setString(1, name);
-                rsXCord = getXCord.executeQuery();
-                rsXCord.next();
-                xCord = rsXCord.getDouble("x_cord");
-
-                getYCord = connection.prepareCall(yCordQuery);
-                getYCord.setString(1, name);
-                rsYCord = getYCord.executeQuery();
-                rsYCord.next();
-                yCord = rsYCord.getDouble("y_cord");
-
-                dock = new Dock(name, xCord, yCord);
-                dock.setDockID(dockID);
-                return dock;
+                preparedStatement = connection.prepareStatement(dockIDQuery);
+                preparedStatement.setString(1, name);
+                resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()){
+                    dockID = resultSet.getInt("dock_id");
+                    xCord = resultSet.getDouble("x_cord");
+                    yCord = resultSet.getDouble("y_cord");
+                    dock = new Dock(name, xCord, yCord);
+                    dock.setDockID(dockID);
+                    return dock;
+                }
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getDock()");
         }finally {
-            DBCleanup.closeResultSet(rsDockID);
-            DBCleanup.closeResultSet(rsXCord);
-            DBCleanup.closeResultSet(rsYCord);
-
-            DBCleanup.closeStatement(getDockID);
-            DBCleanup.closeStatement(getXCord);
-            DBCleanup.closeStatement(getYCord);
-
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
         }
         return null;
@@ -338,7 +314,7 @@ public class DockModel {
         try{
             connection = DBCleanup.getConnection();
 
-            if(dockNameAvailable(name)) {
+            if(!dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
                 preparedStatement.setString(1, name);
                 resultSet = preparedStatement.executeQuery();
