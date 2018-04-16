@@ -309,7 +309,7 @@ public class DockModel {
 
         ArrayList<Integer> bikes = new ArrayList<Integer>();
 
-        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?)";
+        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?) AND bike.active = 1";
 
         try{
             connection = DBCleanup.getConnection();
