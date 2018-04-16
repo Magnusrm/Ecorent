@@ -3,12 +3,11 @@ package bike.bikeInfo;
 import changescene.ChangeScene;
 import control.Bike;
 import control.Factory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import loginAdm.CurrentAdmin;
 
 public class BikeInfoController {
@@ -28,7 +27,7 @@ public class BikeInfoController {
 
     @FXML
     private Label batteryLbl;
-
+    
     @FXML
     private Button showInfoBtn;
 
@@ -56,10 +55,31 @@ public class BikeInfoController {
     @FXML
     private Button homeBtn;
 
+    @FXML
+    private ListView<String> repairIdListView;
 
+
+    /**
+     * @Author Team 007
+     *
+     * Displays the info about the bike described in the bikeIdField.
+     * This method also fills the ListView with the repairs the bike have had in the past.
+     *
+     */
     @FXML
     void showInfo(){
         factory.updateSystem();
+
+
+       /*
+
+
+       HER MÅ MAN LEGGE TIL REPAIRS TIL LISTVIEW,VENTER PÅ MODEL SKAL LAGE GET ALL REPAIRS
+
+
+        */
+
+
         for(Bike b:factory.getBikes()){System.out.println(b);}
         Bike bike = null;
         int bikeID = Integer.parseInt(bikeIdField.getText());

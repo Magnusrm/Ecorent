@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * Simple Junit test for Bike.java
  */
+
 public class BikeTest {
     private Bike instance;
     private LocalDate date;

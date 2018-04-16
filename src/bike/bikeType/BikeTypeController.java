@@ -259,9 +259,8 @@ public class BikeTypeController implements Initializable{
     }
 
     /**
-     * @Author Team007
      *
-     * Deletes all bikes without a type.
+     *
      *
      * @param event
      */
