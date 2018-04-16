@@ -25,6 +25,13 @@ public class Type {
 
     //Equals method.
     //Created to avoid indifference between lower and upper case characters
+
+    /**
+     * Override of the standard equals()-method to indifference upper and lower case letters when comparing Type-objects.
+     * @param b
+     * @return
+     * @author Team 007
+     */
     @Override
     public boolean equals(Object b) {
         if (b == null) throw new IllegalArgumentException("Error at Type.java, object not created");
@@ -34,6 +41,10 @@ public class Type {
         else return false;
     }//end method
 
+    /**
+     * Override of the standard toString()-method to make it only return the name of the type.
+     * @return
+     */
     @Override
     public String toString() {
         return name;
