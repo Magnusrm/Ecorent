@@ -188,13 +188,18 @@ public class Factory {
             String desc = r.getAfterDesc();
             double price = r.getPrice();
             bikeModel.changeRepair(r.getBikeId());
-            for(RepairSent r1:repairsNotReturned){if(r1.getRepair_id()==repairId)repairsNotReturned.remove(r1);}
             repairsCompleted.add(r);
+            //for(RepairSent r1:repairsNotReturned){if(r1.getRepair_id()==repairId)repairsNotReturned.remove(r1);}
             return (repairModel.returnRepair(repairId, date, desc, price));
         }else return false;
     }//end method
 
-    //Method to delete bikes
+    /**
+     * Method to delete bikes.
+     * Searches for the bike using the bikeID
+     * @param bikeId is an int identifying the bike.
+     * @return boolean true if the operation is successful.
+     */
     public boolean delBike(int bikeId){
         if(bikeId == 0 || bikeId<0)throw new IllegalArgumentException("No bike ID is zero or negative");
         for(int i = 0; i<bikes.size();i++){
@@ -206,7 +211,12 @@ public class Factory {
         return false;
     }//end method
 
-    //Method to delete docks
+    /**
+     * Method to delete docks
+     * Uses the ID to find and delete the bike.
+     * @param dockId is an int identifying the dock
+     * @return boolean true if the operation is successful.
+     */
     public boolean delDock(int dockId){
         if(dockId == 0 || dockId <0)throw new IllegalArgumentException("No dock ID is zero or negative");
         for(int i = 0;i<docks.size();i++){
@@ -219,6 +229,14 @@ public class Factory {
         return false;
     }//end method
 
+    /**
+     * Method to delete admin.
+     * Uses the email to find and delete admin
+     * This operation is only possible to perform
+     * as a main admin.
+     * @param email is a String that identifies an Admin
+     * @return boolean true if the operation is successful.
+     */
     public boolean deleteAdmin(String email) {
         for (Admin anAdmin : admins) {
             if (email.equals(anAdmin.getEmail())) {
@@ -232,7 +250,16 @@ public class Factory {
 
     //Method to change
 
-    //Method to edit bikes
+    /**
+     * Method to edit bikes.
+     * Uses the bikeId to find the given bike.
+     * Then it replaces the bike object with the
+     * one coming in as argument.
+     * @param bikeId is an int that identifies a bike
+     * @param newBike is a new bike object that replaces
+     *                the given bike.
+     * @return boolean true if the operation is successful.
+     */
     public boolean editBike(int bikeId, Bike newBike){
         if(bikeId == 0 || bikeId<0) throw new IllegalArgumentException("No bike ID is zero or negative");
         if(newBike == null) throw new IllegalArgumentException("Error at Factory.java,editBike, argument is null");
@@ -240,6 +267,7 @@ public class Factory {
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
                int dockID = dockModel.getDockID(bikeId);
+               if(dockID == -1)dockID = 1; //The main dock
                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
