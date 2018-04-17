@@ -108,6 +108,42 @@ public class BikeModel {
         return null;
     }
 
+
+    /**
+     * Sets the dockID for a bike in the database.
+     *
+     * @param bikeID            the bike_id of the bike that is to be altered.
+     * @param dockID            the dock_id that the bike is stationed at.
+     * @return true             if the method is successful.
+     * @return false            if the method fails.
+     */
+    public boolean setDockID(int bikeID, int dockID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
+        try{
+            connection = DBCleanup.getConnection();
+
+
+            if(bikeExists(bikeID)) {
+                preparedStatement = connection.prepareStatement(bikeInsert);
+                preparedStatement.setInt(1, dockID);
+                preparedStatement.setInt(2, bikeID);
+
+                return preparedStatement.executeUpdate() != 0;
+
+            }
+        }catch(SQLException e) {
+            System.out.println(e.getMessage() + " - setDockID");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return false;
+    }
+
     /**
      * Changes the values of a bike in the database.
      *
@@ -320,6 +356,12 @@ public class BikeModel {
         return null;
     }
 
+    /**
+     * Returns all the active bikes in the system.
+     *
+     * @return activeBikes      an ArrayList of the bike_id's of all the active bikes in the system.
+     * @return null             if the method fails.
+     */
     public ArrayList<Integer> getActiveBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;

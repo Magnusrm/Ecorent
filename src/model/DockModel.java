@@ -33,7 +33,7 @@ public class DockModel {
         double xCord;
         double yCord;
 
-        String dockIDQuery = "SELECT dock_id, x_cord, y_cord FROM dock WHERE name = ?";
+        String dockIDQuery = "SELECT dock_id, x_cord, y_cord FROM dock WHERE name = ? AND active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -123,13 +123,13 @@ public class DockModel {
 
     /**
 
-     * Private method to check if a dock_id is available or taken.
+     * Method to check if a dock_id is available or taken.
      *
      * @param dockID        the dock_id that is to be checked.
      * @return true         if the dock_id is available.
      * @return false        if the dock_id isn't available.
      */
-    private boolean dockIDAvailable(int dockID){
+    public boolean dockIDAvailable(int dockID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -167,7 +167,7 @@ public class DockModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String dockInsert = "INSERT INTO dock(dock_id, name, x_cord, y_cord) VALUES(DEFAULT, ?, ?, ?)";
+        String dockInsert = "INSERT INTO dock(dock_id, name, x_cord, y_cord, active) VALUES(DEFAULT, ?, ?, ?, 1)";
         String maxQuery = "SELECT MAX(dock_id) FROM dock";
 
         try{
@@ -211,7 +211,7 @@ public class DockModel {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String dockInsert = "UPDATE dock SET name = ?, x_cord = ?, y_cord = ? WHERE dock_id = ?";
+        String dockInsert = "UPDATE dock SET name = ?, x_cord = ?, y_cord = ? WHERE dock_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
 
@@ -244,7 +244,7 @@ public class DockModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        String IDQuery = "SELECT dock_id FROM bike WHERE bike_id = ?";
+        String IDQuery = "SELECT dock_id FROM bike WHERE bike_id = ? and active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -275,7 +275,7 @@ public class DockModel {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
-        String deleteQuery = "DELETE FROM dock WHERE name = ?";
+        String deleteQuery = "UPDATE dock SET active = 0 WHERE name = ?";
 
         try{
             connection = DBCleanup.getConnection();
@@ -309,7 +309,7 @@ public class DockModel {
 
         ArrayList<Integer> bikes = new ArrayList<Integer>();
 
-        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?)";
+        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?) AND bike.active = 1";
 
         try{
             connection = DBCleanup.getConnection();
@@ -346,7 +346,7 @@ public class DockModel {
 
         ArrayList<Dock> allDocks = new ArrayList<Dock>();
 
-        String docksQuery = "SELECT name FROM dock";
+        String docksQuery = "SELECT name FROM dock WHERE active = 1";
 
         try{
             connection = DBCleanup.getConnection();
