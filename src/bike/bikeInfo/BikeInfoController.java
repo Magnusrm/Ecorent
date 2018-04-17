@@ -149,7 +149,7 @@ public class BikeInfoController implements Initializable {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }
-        ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
+        ArrayList<double[]> recentPositions = bsm.getMostRecentCoordinates();
         for (double[] p : recentPositions){
             if (p[0] == bikeID){
                 engine.executeScript("document.createMarkerEgen(" + p[0] + ", " + p[1] + ", " + p[2] + ");");
