@@ -2,12 +2,22 @@ package stats;
 
 import changescene.ChangeScene;
 import changescene.PopupScene;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class StatsController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class StatsController implements Initializable {
 
     @FXML
     private Button homeBtn;
@@ -33,9 +43,28 @@ public class StatsController {
     @FXML
     private BarChart<?, ?> barChart;
 
+    @FXML
+    private TableView budget;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        TableColumn type = new TableColumn("Type");
+        TableColumn amount = new TableColumn("Amount");
+        budget.getColumns().addAll(type, amount);
 
 
+        ObservableList<String> typer = FXCollections.observableArrayList(
+                    new String("Sykkelkjøp"),
+                    new String("Reprasjoner")
 
+                );
+
+
+        type.setCellValueFactory(new PropertyValueFactory<>("bra sykkel"));
+
+        budget.setItems(typer);
+
+    }
 
     @FXML
     void changeToBarChartScene(ActionEvent event) throws Exception{

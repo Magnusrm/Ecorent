@@ -10,6 +10,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import model.DockModel;
 import model.DockStatsModel;
 
 import java.net.URL;
@@ -29,6 +30,7 @@ public class StatsPieChartController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         DockStatsModel dsm = new DockStatsModel();
+        DockModel dm = new DockModel();
         ArrayList<int[]> checkouts = dsm.getMaxCheckouts();
 
 
@@ -39,7 +41,7 @@ public class StatsPieChartController implements Initializable {
         );
 
         for(int[] i : checkouts){
-           pieChartData.add(new PieChart.Data("Dock: " + i[0], i[1]));
+           pieChartData.add(new PieChart.Data(dm.getDockName(i[0]), i[1]));
 
         }
 
