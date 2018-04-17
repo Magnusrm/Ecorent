@@ -20,6 +20,7 @@ public class BikeStatsModel {
      * Returns an ArrayList of the most recent latitudes and longitudes + corresponding bikeID's.
      *
      * @return coordinates      an ArrayList of double[] with the most recent latitudes and longitudes + their corresponding bike_id's.
+     * @return null             if the method fails.
      */
     public ArrayList<double[]> getRecentCoordinates(){
         Connection connection = null;
@@ -54,6 +55,50 @@ public class BikeStatsModel {
         }
         return null;
     }
+
+
+    /**
+     * Retrieves the most recent coordinates of all bikes.
+     *
+     * @return recentCords          an ArrayList of double[] with the most recent x- and y-coordinate + the corresponding bikeID.
+     * @return null                 if the method fails.
+     */
+    public ArrayList<double[]> getMostRecentCoordinates() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        ArrayList<double[]> recentCords = new ArrayList<>();
+
+        String recentQuery = "SELECT bs.bike_id, bs.x_cord, bs.y_cord FROM bike_stats bs JOIN " +
+                "(SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
+                "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike " +
+                "ON bs.bike_id = bike.bike_id WHERE active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement= connection.prepareStatement(recentQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                double[] row = new double[3];
+                row[0] = (double) resultSet.getInt("bs.bike_id");
+                row[1] = resultSet.getDouble("bs.x_cord");
+                row[2] = resultSet.getDouble("bs.y_cord");
+                recentCords.add(row);
+            }
+
+            return recentCords;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getMostRecentCoordinates()");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
 
     /**
      * Returns the trip number of a given bike.
@@ -109,7 +154,10 @@ public class BikeStatsModel {
         ResultSet resultSet = null;
         BikeModel bikeModel = new BikeModel();
 
-        String chargLvlQuery = "SELECT charg_lvl FROM bike_stats WHERE time >= (now() - INTERVAL 1 MINUTE) AND bike_id = ?";
+        String chargLvlQuery = "SELECT bs.bike_id, bs.charg_lvl FROM bike_stats bs " +
+                "JOIN (SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
+                "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike ON bs.bike_id = bike.bike_id " +
+                "WHERE active = 1 AND bike.bike_id = ?";
 
         try{
             connection = DBCleanup.getConnection();
@@ -134,13 +182,23 @@ public class BikeStatsModel {
 
     }
 
+    /**
+     * Shows the total distance travelled by a given bike
+     *
+     * @param bikeID        the bike_id of the bike that is to be searched for
+     * @return distance     the total distance travelled
+     * @return -1           if the method fails
+     */
     public double getDistance(int bikeID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         BikeModel bikeModel = new BikeModel();
 
-        String distanceQuery = "SELECT distance FROM bike_stats WHERE time >= (now() - INTERVAL 1 MINUTE) AND bike_id = ?";
+        String distanceQuery = "SELECT bs.bike_id, bs.distance FROM bike_stats bs " +
+                "JOIN (SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
+                "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike " +
+                "ON bs.bike_id = bike.bike_id WHERE active = 1 AND bike.bike_id = ?";
 
         try{
             connection = DBCleanup.getConnection();
