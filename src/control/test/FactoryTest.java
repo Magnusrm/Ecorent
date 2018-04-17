@@ -124,4 +124,26 @@ public class FactoryTest {
         assertEquals(true,result);
     }//end method
 
+    @Test
+    void testEditDock()throws Exception{
+        System.out.println("Testing method to edit docks");
+        Dock d = new Dock("JunitEdited",this.d.getxCoordinates(),this.d.getyCoordinates());
+        boolean result = instance.editDocks("Junit",d);
+    }//end method
+
+    @Test
+    void testEditTypes(){
+        System.out.println("Testing method to edit types");
+        Type t = new Type("Junit");
+        boolean result = instance.editType(this.t,t);
+        assertEquals(true,result);
+    }//end method
+
+    @Test
+    void testDeleteTypes(){
+        System.out.println("Testing method to delete types");
+        boolean result = instance.deleteType(new Type("Junit"));
+        assertEquals(true,result);
+    }//end method
+
 }//end class

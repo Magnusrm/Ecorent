@@ -76,12 +76,12 @@ public class DockStatsModel {
         return -1;
     }
 
-    public boolean updateDockStats(int dockID){
+    /*public boolean updateDockStats(int dockID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         String powerInsert = "INSERT INTO dock_stats(time, dock_id, total_pwr_usg, checkouts) VALUES " +
                 "(?, ?"
-    }
+    }*/
 }
