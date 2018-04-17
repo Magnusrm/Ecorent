@@ -30,8 +30,6 @@ public class StatsAreaChartController implements Initializable {
         }
 
 
-
-
         areaChart.getData().addAll(set1);
     }
 

@@ -21,17 +21,13 @@ public class StatsBarChartController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        headerLbl.setText("header");
+        headerLbl.setText("");
         barChart.setLegendVisible(false);
         XYChart.Series set1 = new XYChart.Series<>();
 
-        set1.getData().add(new XYChart.Data("settInnDatoHer1", 50));
-        set1.getData().add(new XYChart.Data("settInnDatoHer2", 40));
-        set1.getData().add(new XYChart.Data("settInnDatoHer3", 60));
-        set1.getData().add(new XYChart.Data("settInnDatoHer4", 20));
-        set1.getData().add(new XYChart.Data("settInnDatoHer5", 10));
-        set1.getData().add(new XYChart.Data("settInnDatoHer6", 5));
-        set1.getData().add(new XYChart.Data("settInnDatoHer7", 30));
+        for(int i = 0; i<7; i++){
+            set1.getData().add(new XYChart.Data("Dag " + i, 5 + i*i));
+        }
 
         barChart.getData().addAll(set1);
     }

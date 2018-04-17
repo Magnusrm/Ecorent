@@ -27,15 +27,15 @@ public class StatsPieChartController implements Initializable {
         headerLbl.setText("header");
         pieChart.setLegendVisible(false);
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-
-            new PieChart.Data("settInnDockName", 50),
-            new PieChart.Data("settInnDockName", 40),
-            new PieChart.Data("settInnDockName", 60),
-            new PieChart.Data("settInnDockName", 20),
-            new PieChart.Data("settInnDockName", 10),
-            new PieChart.Data("settInnDockName", 50),
-            new PieChart.Data("settInnDockName", 30)
+                new PieChart.Data("dockname" + 5, 5 + 5*10),
+                new PieChart.Data("dockname" + 1, 5 + 1*10),
+                new PieChart.Data("dockname" + 2, 5 + 2*10),
+                new PieChart.Data("dockname" + 3, 5 + 3*10)
         );
+/*
+        for(int i = 0; i<7; i++){
+            new*/
+
 
         pieChart.setData(pieChartData);
 
