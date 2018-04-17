@@ -424,6 +424,32 @@ public class BikeModel {
         return false;
     }
 
+    public double getPriceOfAllBikes(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String priceQuery = "SELECT price FROM bike";
+
+        try {
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(priceQuery);
+            resultSet = preparedStatement.executeQuery();
+            double sum = 0;
+            while (resultSet.next()) {
+                sum += resultSet.getDouble("price");
+            }
+            return sum;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getPriceOfAllBikes");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
+    }
+
     /**
      * Checks what value the repair-bit is and changes it.
      *
