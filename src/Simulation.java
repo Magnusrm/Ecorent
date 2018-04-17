@@ -1,14 +1,22 @@
+import control.Dock;
+import control.Factory;
 import model.BikeStatsModel;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
 public class Simulation implements Runnable{
     private int id;
     private Thread t;
+
+    private static Factory factory = new Factory();
+    private static ArrayList<Dock> docks;
+    private static Random random = new Random();
 
     public Simulation(int id){
        this.id = id;
@@ -26,29 +34,41 @@ public class Simulation implements Runnable{
     }
 
     static void sim(int bikeID){
+        int steps = 10;
         BikeStatsModel bts = new BikeStatsModel();
-        double xBefore = 53.43388;
-        double xAfter;
-        double yBefore = 10.400313;
-        double yAfter;
         double distance = bts.getDistance(bikeID);
+        int trip = bts.getTripNr(bikeID) + 1;
+        int batteryLevel = bts.getChargLvl(bikeID);
+        ArrayList<double[]> lastPositions = bts.getMostRecentCoordinates();
+        double xPos = 0;
+        double yPos = 0;
+        for (double[] d : lastPositions){
+            if (d[0] == bikeID){
+                xPos = d[1];
+                yPos = d[2];
+            }
+        }
+        Dock randomD = randomDock();
+        double xDestination = randomD.getxCoordinates();
+        double yDestination = randomD.getyCoordinates();
 
-        double i = 0;
+        double xDifference = xDestination - xPos;
+        double yDifference = yDestination - yPos;
+
         LocalDateTime ldt;
-        while(true){
+        double distanceChange = distance(xPos, yPos, xDestination, yDestination);
+        for (int i = 0; i < steps; i++){
 
             ldt = LocalDateTime.now();
             String time = ("" + ldt + "").replaceAll("T"," ");
             time = time.substring(0, time.length() - 4);
 
-            i -= 0.000021;
-            xAfter = xBefore - i;
-            yAfter = yBefore;
+            xPos += xDifference / steps;
+            yPos += yDifference / steps;
 
-            bts.updateStats(time, bikeID, 100, xAfter, yAfter, distance + distance(xBefore, yBefore, xAfter, yAfter), 1);
+            distance += distanceChange / steps;
 
-            xBefore = xAfter;
-            yBefore = yAfter;
+            bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
 
 
             try{
@@ -58,6 +78,13 @@ public class Simulation implements Runnable{
             }
 
         }
+    }
+
+    public static Dock randomDock(){
+        factory.updateSystem();
+        docks = factory.getDocks();
+        int randomIndex = random.nextInt(docks.size());
+        return docks.get(randomIndex);
     }
 
     /**
