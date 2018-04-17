@@ -127,18 +127,26 @@ public class AdminController {
             alert.showAndWait();
             CloseWindow cw = new CloseWindow(event);
         }//end if
-        if(model.deleteAdmin(email)){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Delete success");
-            alert.setHeaderText(null);
-            alert.setContentText("Admin with email " + email + " is deleted");
-            alert.showAndWait();
-        }//end if
-        else{
+        if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
+            if (model.deleteAdmin(email)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Delete success");
+                alert.setHeaderText(Alert.AlertType.INFORMATION.name());
+                alert.setContentText("Admin with email " + email + " is deleted");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Failed");
+                alert.setHeaderText(Alert.AlertType.WARNING.name());
+                alert.setContentText("Something went wrong!");
+                alert.showAndWait();
+            }//end condition
+        }else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Failed");
-            alert.setHeaderText(null);
-            alert.setContentText("Something went wrong!");
+            alert.setHeaderText(Alert.AlertType.WARNING.name());
+            alert.setContentText("You do not have the privileges required to delete other admins." +
+                    " Contact your supervisor to require more privileges");
             alert.showAndWait();
         }
         CloseWindow cw = new CloseWindow(event);

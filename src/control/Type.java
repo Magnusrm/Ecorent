@@ -1,6 +1,6 @@
-/*
+/**
  * Type.java
- * @Team007
+ * @author Team007
  *
  * Class to define different bike types.
  * The type name can be changed

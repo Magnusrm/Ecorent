@@ -1,8 +1,7 @@
 package bike.bikeInfo;
 
 import changescene.ChangeScene;
-import control.Bike;
-import control.Factory;
+import control.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -71,20 +69,19 @@ public class BikeInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
+    @FXML
+    private WebView root;
+
     private WebEngine engine;
 
     @FXML
     private ListView<String> repairIdListView;
 
-    @FXML
-    private WebView root;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
-            factory.updateSystem();
 
+            factory.updateSystem();
             engine = root.getEngine();
             engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
@@ -114,14 +111,29 @@ public class BikeInfoController implements Initializable {
     @FXML
     void showInfo(){
         factory.updateSystem();
+        int bikeID = Integer.parseInt(bikeIdField.getText());
 
-       /*
+        //Creating a object-view list
+        ObservableList<String> repairIds = FXCollections.observableArrayList();
+        ArrayList<String> visualized = new ArrayList<>();
 
+        //Adding the repair ids registered on the bike
+        for(int i = 0; i<factory.getRepairsNotReturned().size();i++){
+            String s = null;
+            if(factory.getRepairsNotReturned().get(i).getBikeId() == bikeID) s = "" +
+                    factory.getRepairsNotReturned().get(i).getRepair_id();
+            if(s!= null)visualized.add(s);
+        }//end loop
+        for(int i = 0;i<factory.getRepairsCompleted().size();i++){
+            String s = null;
+            if(factory.getRepairsCompleted().get(i).getBikeId() == bikeID)s = "" +
+                    factory.getRepairsCompleted().get(i).getRepair_id();
+            if(s!=null)visualized.add(s);
+        }//end loop
 
-       HER MÅ MAN LEGGE TIL REPAIRS TIL LISTVIEW,VENTER PÅ MODEL SKAL LAGE GET ALL REPAIRS
-
-
-        */
+        //Adding them in list view
+        repairIds.addAll(visualized);
+        repairIdListView.setItems(repairIds);
 
 
         for(Bike b:factory.getBikes()){System.out.println(b);}
@@ -135,7 +147,7 @@ public class BikeInfoController implements Initializable {
             String type = "" + bike.getType().getName();
             String make = "" + bike.getMake();
             String date = "" + bike.getBuyDate().toString();
-            String battery = "" + bike.getPowerUsage();
+            String battery = "" + bike.getBattery() + "%";
             priceLbl.setText(price);
             typeLbl.setText(type);
             makeLbl.setText(make);

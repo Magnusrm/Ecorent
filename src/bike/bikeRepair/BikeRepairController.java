@@ -3,7 +3,7 @@ package bike.bikeRepair;
 import changescene.ChangeScene;
 import changescene.CloseWindow;
 import changescene.PopupScene;
-import control.Repair;
+import control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -105,7 +105,7 @@ public class BikeRepairController {
                     dateSentField.getText().substring(6);
             System.out.println(date);
             String description = descSentTextArea.getText();
-            Repair repairSent = new Repair(date, description, bikeId);
+            RepairSent repairSent = new RepairSent(date, description, bikeId);
             if (factory.repairSent(repairSent)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Repair confirmed");
@@ -147,7 +147,7 @@ public class BikeRepairController {
                         dateReturnedField.getText().substring(6);
                 double price = Double.parseDouble(priceReturnedField.getText());
                 String description = descReturnedTextArea.getText();
-                Repair repairReturned = new Repair(date,description,price,bikeID);
+                RepairReturned repairReturned = new RepairReturned(date,description,price,bikeID);
                 if(factory.repairReturned(repairReturned)){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Repair confirmed");
