@@ -1,12 +1,14 @@
 package stats;
 
 import changescene.ChangeScene;
+import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 
 public class StatsController {
-// tester commit etter reformatering
+
     @FXML
     private Button homeBtn;
 
@@ -28,6 +30,39 @@ public class StatsController {
     @FXML
     private Button adminBtn;
 
+    @FXML
+    private BarChart<?, ?> barChart;
+
+
+
+
+
+    @FXML
+    void changeToBarChartScene(ActionEvent event) throws Exception{
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/stats/statsBarChart/StatsBarChartView.fxml");
+    }
+
+    @FXML
+    void changeToPieChartScene(ActionEvent event) throws Exception{
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/stats/statsPieChart/StatsPieChartView.fxml");
+    }
+
+    @FXML
+    void changeToAreaChartScene(ActionEvent event) throws Exception{
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/stats/statsAreaChart/StatsAreaChartView.fxml");
+    }
+
+
+
+
+
+
+
+
+// main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -42,9 +77,9 @@ public class StatsController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
@@ -65,10 +100,11 @@ public class StatsController {
         cs.setScene(event, "/main/MainView.fxml");
     }
 
-
     @FXML
     void logOut(ActionEvent event) throws Exception {
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
+
     }
 }

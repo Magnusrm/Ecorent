@@ -8,7 +8,12 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stats.StatsController">
    <children>
-      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0" />
+      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
+         <children>
+            <Button layoutX="45.0" layoutY="134.0" mnemonicParsing="false" onAction="#changeToBarChartScene" text="Power usage" />
+            <Button layoutX="160.0" layoutY="134.0" mnemonicParsing="false" onAction="#changeToPieChartScene" text="Pie Chart" />
+            <Button layoutX="266.0" layoutY="134.0" mnemonicParsing="false" onAction="#changeToAreaChartScene" text="Area Chart" />
+         </children></AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>

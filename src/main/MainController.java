@@ -43,6 +43,16 @@ public class MainController implements Initializable{
 
     }//end method
 
+
+
+
+
+
+
+
+
+    // main buttons below
+
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -56,7 +66,7 @@ public class MainController implements Initializable{
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) throws Exception{
+    void changeToMapScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/map/MapView.fxml");
     }
@@ -74,17 +84,17 @@ public class MainController implements Initializable{
     }
 
     @FXML
-    void changeToHomeScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/MainView.fxml");
     }
-
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
+
     }
 
 }

@@ -138,7 +138,7 @@ public class BikeInfoController implements Initializable {
 
         for(Bike b:factory.getBikes()){System.out.println(b);}
         Bike bike = null;
-        int bikeID = Integer.parseInt(bikeIdField.getText());
+        bikeID = Integer.parseInt(bikeIdField.getText());
         for(int i = 0; i<factory.getBikes().size();i++){
             if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
         }//end loop

@@ -1,9 +1,12 @@
-package stats;
+package stats.statsBarChart;
 
+import changescene.CloseWindow;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,8 +16,12 @@ public class StatsBarChartController implements Initializable {
     @FXML
     private BarChart<?, ?> barChart;
 
+    @FXML
+    private Label headerLbl;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        headerLbl.setText("header");
         barChart.setLegendVisible(false);
         XYChart.Series set1 = new XYChart.Series<>();
 
@@ -30,7 +37,7 @@ public class StatsBarChartController implements Initializable {
     }
 
     @FXML
-    void closeBarChart(){
-
+    void closeBarChart(ActionEvent event){
+        CloseWindow cs = new CloseWindow(event);
     }
 }
