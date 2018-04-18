@@ -83,6 +83,9 @@ public class Simulation implements Runnable{
                 xPos += xDifference / steps;
                 yPos += yDifference / steps;
                 batteryLevel -= 5;
+                if (batteryLevel < 0){
+                    batteryLevel = 0;
+                }
                 distance += distanceChange / steps;
 
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
@@ -101,7 +104,7 @@ public class Simulation implements Runnable{
                 String time = ("" + ldt + "").replaceAll("T", " ");
                 time = time.substring(0, time.length() - 4);
                 batteryLevel += 10;
-                bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip - 1);
+                bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
                 try {
                     sleep(1000);
                 } catch(InterruptedException e){
@@ -153,6 +156,7 @@ class RunSimulation{
         Factory factory = new Factory();
         factory.updateSystem();
         ArrayList<Bike> bikes = factory.getBikes();
+        System.out.println(bikes.size());
         Simulation[] simulations = new Simulation[bikes.size()];
         for (int i = 0; i < bikes.size(); i++){
             simulations[i] = new Simulation(bikes.get(i).getBikeId());
