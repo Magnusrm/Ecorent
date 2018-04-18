@@ -34,6 +34,7 @@ public class MapViewController implements Initializable{
     private ArrayList<Dock> allDocks;
 
 
+
     @FXML
     private Button showBikeBtn;
 
@@ -60,13 +61,6 @@ public class MapViewController implements Initializable{
 
     }
 
-    public double[][] dockPos = {
-            {0, 63.426505, 10.393597},
-            {1, 63.427859, 10.387157},
-            {2, 63.430663, 10.392245},
-            {3, 63.433388, 10.400313}
-    };
-
     private double[][] dockToArray(){
         double[][] res = new double[allDocks.size()][3];
         for (int i = 0; i < res.length; i++) {
@@ -77,26 +71,29 @@ public class MapViewController implements Initializable{
         return res;
     }
 
+
     public void showDocks() {
         allDocks = myFactory.getDocks();
         String dockData = arrayToString(dockToArray());
         engine.executeScript("var items = " + dockData + ";" +
-                "document.setMarkers(items);");
+                "document.setDockMarkers(items);");
     }
-
-
-    public void moveBikeToDock(int bikeId, Dock d){
-
-    }
-
-
 
 
     @FXML
     void showBike(ActionEvent event) {
-        Random random = new Random();
 
-        int bikeId = Integer.parseInt(bikeIdField.getText());
+        double bikeXPos = 0;
+        double bikeYPos = 0;
+        engine.executeScript("document.removeBikeMarkers();");
+
+        ArrayList<double[]> coordinates = bsm.getMostRecentCoordinates();
+        for (double[] d : coordinates) {
+            bikeXPos = d[1];
+            bikeYPos = d[2];
+            engine.executeScript("document.createBikeMarker(" + bikeXPos + ", " + bikeYPos + ");");
+        }
+        engine.executeScript("document.setMapOnAllBikes(document.map);");
 
     }
     // main buttons below
