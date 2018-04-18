@@ -8,6 +8,7 @@ import control.Type;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.zip.CheckedOutputStream;
 
 /**
  * @author Team 007
@@ -122,18 +123,24 @@ public class BikeModel {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+
         String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
+        String bikeInsert2 = "UPDATE bike SET dock_id = NULL WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
 
 
             if(bikeExists(bikeID)) {
-                preparedStatement = connection.prepareStatement(bikeInsert);
-                preparedStatement.setInt(1, dockID);
-                preparedStatement.setInt(2, bikeID);
-
-                return preparedStatement.executeUpdate() != 0;
-
+                if(dockID <= 0){
+                    preparedStatement = connection.prepareStatement(bikeInsert2);
+                    preparedStatement.setInt(1, bikeID);
+                    return preparedStatement.executeUpdate() != 0;
+                }else {
+                    preparedStatement = connection.prepareStatement(bikeInsert);
+                    preparedStatement.setInt(1, dockID);
+                    preparedStatement.setInt(2, bikeID);
+                    return preparedStatement.executeUpdate() != 0;
+                }
             }
         }catch(SQLException e) {
             System.out.println(e.getMessage() + " - setDockID");
@@ -367,7 +374,7 @@ public class BikeModel {
      * @return activeBikes      an ArrayList of the bike_id's of all the active bikes in the system.
      * @return null             if the method fails.
      */
-    public ArrayList<Integer> getActiveBikes(){
+/*    public ArrayList<Integer> getActiveBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -395,7 +402,7 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
-    }
+    }*/
 
     /**
      * Checks if a given bike is repairing.
@@ -434,13 +441,14 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
+        double sum = 0;
+
         String priceQuery = "SELECT price FROM bike";
 
         try {
             connection = DBCleanup.getConnection();
             preparedStatement = connection.prepareStatement(priceQuery);
             resultSet = preparedStatement.executeQuery();
-            double sum = 0;
             while (resultSet.next()) {
                 sum += resultSet.getDouble("price");
             }
@@ -452,7 +460,7 @@ public class BikeModel {
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-        return -1;
+        return sum;
     }
 
     /**
@@ -499,5 +507,34 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
+    }
+
+    /**
+     * Counts how many bikes that are not currently docked.
+     * @return count        nr of bikes.
+     * @return -1           if the method fails
+     */
+    public int bikesNotDocked(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String notDockedQuery = "SELECT COUNT(*) FROM bike WHERE dock_id IS NULL AND active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(notDockedQuery);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("COUNT(*)");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - bikesNotDocked()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
     }
 }
