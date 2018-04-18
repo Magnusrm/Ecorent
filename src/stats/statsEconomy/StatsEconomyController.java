@@ -2,6 +2,7 @@ package stats.statsEconomy;
 
 import changescene.ChangeScene;
 import control.Budget;
+import control.Factory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +17,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class StatsEconomyController implements Initializable {
+
+    private Factory factory = new Factory();
 
     @FXML
     private TableView<Budget> incomeTableView;
@@ -35,10 +38,9 @@ public class StatsEconomyController implements Initializable {
     @FXML
     private TableColumn<Budget, String> expensesAmount;
 
-    private double income = 0;
-
     @FXML
     private Label netIncomeLbl;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -52,7 +54,7 @@ public class StatsEconomyController implements Initializable {
         // load dummy data
        incomeTableView.setItems(getIncome());
        expensesTableView.setItems(getExpenses());
-       netIncomeLbl.setText("" + income);
+       netIncomeLbl.setText("" + factory.getNetIncome());
 
 
     }
@@ -64,11 +66,8 @@ public class StatsEconomyController implements Initializable {
     public ObservableList<Budget> getIncome(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
 
-        budget.add(new Budget("Leieinnteker", 45000));
-        System.out.println("før inome:" +income);
+        budget.add(new Budget("Rent", factory.getRentIncome()));
 
-        income += budget.get(0).getAmount();
-        System.out.println("etter income " + income);
         return budget;
     }
 
@@ -79,14 +78,9 @@ public class StatsEconomyController implements Initializable {
     public ObservableList<Budget> getExpenses(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
 
-        budget.add(new Budget("Sykkelkjøp", 25000));
-        budget.add(new Budget("Strøm", 15000));
-        System.out.println("før expenses " + income);
-
-        income -= budget.get(0).getAmount();
-        income -= budget.get(1).getAmount();
-        System.out.println("etter expenses " + income);
-
+        budget.add(new Budget("Bike Purchase" , factory.getBikePurchaseExpenses()));
+        budget.add(new Budget("Power", factory.getPowerExpenses()));
+        budget.add(new Budget("Repairs", factory.getRepairExpenses()));
         return budget;
     }
 

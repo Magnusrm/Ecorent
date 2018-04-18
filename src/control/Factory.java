@@ -413,4 +413,87 @@ public class Factory {
         return pwr;
     }//end method
 
+    /**
+     *
+     * Returns a double describing the expenses of all repairs combined.
+     *
+     * @return
+     */
+    public double getRepairExpenses(){
+        double sum = 0;
+        for(RepairReturned r : repairsCompleted){
+            sum += r.getPrice();
+            System.out.println("Repairs returned price: " + r.getPrice());
+        }
+        return sum;
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of all bike purchases.
+     *
+     * @return
+     */
+    public double getBikePurchaseExpenses(){
+        double sum = 0;
+
+        for(Bike b : bikes){
+          sum += b.getPrice();
+        }
+
+        return sum;
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of the total power usage;
+     *
+     * @return
+     */
+    public double getPowerExpenses(){
+        double price = 2;
+        double sum = 0;
+
+        // set sum euql to dockModel.getTotalpowerusage
+
+        sum *= price;
+        return sum;
+    }
+
+
+    /**
+     *
+     * Returns a double describing the income of bike rentals
+     *
+     * @return
+     */
+    public double getRentIncome(){
+        double sum = 0;
+        double price = 100; // sets price to rent each bke
+
+        // set sum equal to total amount of trips
+
+        sum *= price;
+        return sum;
+    }
+
+
+    /**
+     *
+     * Returns a double describing the net income.
+     *
+     * @return
+     */
+    public double getNetIncome(){
+        double sum = 0;
+
+        sum += getRentIncome();
+        sum -= getPowerExpenses();
+        sum -= getRepairExpenses();
+        sum -= getBikePurchaseExpenses();
+
+        return sum;
+    }
+
+
 }//end class
