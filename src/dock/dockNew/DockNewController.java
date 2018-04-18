@@ -134,6 +134,7 @@ public class DockNewController implements Initializable{
             System.out.println("Error createNewDockConfirm: " + e);
         }
     }
+    
 
 
 

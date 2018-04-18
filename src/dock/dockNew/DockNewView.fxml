@@ -20,6 +20,8 @@
             <Line endX="80.0" layoutX="126.0" layoutY="232.0" startX="-100.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
             <Button fx:id="createNewDockBtn" layoutX="55.0" layoutY="253.0" mnemonicParsing="false" onAction="#createNewDockConfirm" text="Create new dock" />
             <WebView fx:id="root" layoutX="230.0" layoutY="47.0" prefHeight="295.0" prefWidth="181.0" />
+            <Button fx:id="zoomInBtn" layoutX="288.0" layoutY="350.0" mnemonicParsing="false" onAction="#zoomIn" prefHeight="27.0" prefWidth="33.0" text="+" />
+            <Button fx:id="zoomOutBtn" layoutX="324.0" layoutY="350.0" mnemonicParsing="false" onAction="#zoomOut" prefHeight="27.0" prefWidth="33.0" text="-" />
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
