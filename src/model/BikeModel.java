@@ -2,7 +2,6 @@ package model;
 
 import control.Bike;
 import control.Dock;
-import control.Factory;
 import control.Type;
 
 import java.sql.*;
@@ -307,11 +306,7 @@ public class BikeModel {
                 resultSet = preparedStatement.executeQuery();
                 connection.commit();
                 resultSet.next();
-                int bikeID = resultSet.getInt("MAX(bike_id)");
-                Factory factory = new Factory();
-                int dockId = factory.getMAINDOCK();
-                setDockID(bikeID,dockId);
-                return bikeID;
+                return resultSet.getInt("MAX(bike_id)");
             }else{
                 connection.rollback();
                 return -1;
@@ -367,7 +362,7 @@ public class BikeModel {
      * @return activeBikes      an ArrayList of the bike_id's of all the active bikes in the system.
      * @return null             if the method fails.
      */
-    public ArrayList<Integer> getActiveBikes(){
+/*    public ArrayList<Integer> getActiveBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -395,7 +390,7 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
-    }
+    }*/
 
     /**
      * Checks if a given bike is repairing.

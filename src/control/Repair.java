@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-abstract class Repair {
+public class Repair {
     private int repair_id;
     private LocalDate date_sent;
     private String before_desc;
