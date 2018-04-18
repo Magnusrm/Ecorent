@@ -399,18 +399,13 @@ public class Factory {
         }//end condition
     }//end method
 
+
     /**
-     * Method to get power usage from a given dock.
-     * It uses the dockedBikes(dockName) method to find all bikes docked at the given dock name.
-     * It then adds their power usage together and returns the value.
+     *
+     * @param dockName
+     * @return
      */
     public double powerUsage(String dockName){
-        int[] docked = dockedBikes(dockName);
-        double pwr = 0;
-        for(int i = 0; i<docked.length;i++){
-            if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
-        }//end loop
-        return pwr;
-    }//end method
-
+        return dockModel.getPowerAtDock(dockName);
+    }
 }//end class

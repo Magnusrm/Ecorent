@@ -309,14 +309,14 @@ public class DockModel {
 
         ArrayList<Integer> bikes = new ArrayList<Integer>();
 
-        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?) AND bike.active = 1";
+        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE LOWER(dock.name = ?) AND bike.active = 1";
 
         try{
             connection = DBCleanup.getConnection();
 
             if(!dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
-                preparedStatement.setString(1, name);
+                preparedStatement.setString(1, name.toLowerCase());
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     bikes.add(resultSet.getInt("bike_id"));
@@ -390,5 +390,31 @@ public class DockModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
+    }
+
+    public double getPowerAtDock(String dockName){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String powerQuery = "SELECT SUM(power) from dock LEFT JOIN bike ON(bike.dock_id = dock.dock_id) " +
+                "WHERE dock.name = ? AND bike.active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(powerQuery);
+            preparedStatement.setString(1, dockName);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble("SUM(power)");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " getPowerAtDock()");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
     }
 }
