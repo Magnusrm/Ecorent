@@ -70,14 +70,14 @@ public class BikeModel {
         ResultSet resultSet = null;
 
 
-        String bikeQuery = "SELECT reg_date, price, make, pwr_usg, name FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
+        String bikeQuery = "SELECT reg_date, price, make, power, name FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
 
         String regDate;
         LocalDate localDate;
         double price;
         String make;
         String typeName;
-        double pwrUsg;
+        double power;
 
         try {
             connection = DBCleanup.getConnection();
@@ -91,10 +91,10 @@ public class BikeModel {
                     price = resultSet.getDouble("price");
                     make = resultSet.getString("make");
                     typeName = resultSet.getString("name");
-                    pwrUsg = resultSet.getDouble("pwr_usg");
+                    power = resultSet.getDouble("power");
                     localDate = LocalDate.parse(regDate);
                     type = new Type(typeName);
-                    bike = new Bike(localDate, price, make, type,pwrUsg);
+                    bike = new Bike(localDate, price, make, type, power);
                     bike.setBikeId(bikeID);
                     bike.setRepairing(isRepairing(bikeID));
                     return bike;
@@ -160,18 +160,18 @@ public class BikeModel {
      * @param price         the edited price.
      * @param make          the edited make.
      * @param dockID        the edited dock_id.
-     * @param pwrUsg        the edited price.
+     * @param power        the edited price.
      * @param typeName      the edited type.name. This uses the method typeExists to return the correct type_id.
      * @return true         if the edited changes has been saved.
      * @return false        if the changes hasn't been saved.
      */
-    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
+    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double power, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
+        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, power = ?, type_id = ? " +
                 "WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
@@ -184,7 +184,7 @@ public class BikeModel {
                 preparedStatement.setDouble(2, price);
                 preparedStatement.setString(3, make);
                 preparedStatement.setInt(4, dockID);
-                preparedStatement.setDouble(5, pwrUsg);
+                preparedStatement.setDouble(5, power);
                 preparedStatement.setInt(6, typeID);
                 preparedStatement.setInt(7, bikeID);
 
@@ -273,19 +273,19 @@ public class BikeModel {
      * @param price         the price of the bike.
      * @param make          the make of the type.
      * @param typeName      the type.name of the type of the bike. This uses the method typeExists to return the correct type_id.
-     * @param pwrUsg        the pwr_usage of the bike.
+     * @param power        the power of the bike.
      * @param repair        if the bike is sent to repair or not.
      * @return bikeID       the bike_id that is set by auto increment in the database.
      * @return -1           if the method fails.
      */
-    public int addBike(String date, double price, String make, String typeName, double pwrUsg, boolean repair){
+    public int addBike(String date, double price, String make, String typeName, double power, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         int typeID = TypeModel.typeExists(typeName);
 
-        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing, active) VALUES " +
+        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, power, repairing, active) VALUES " +
                 "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
         String maxBikeID = "SELECT MAX(bike_id) FROM bike WHERE active = 1";
 
@@ -301,7 +301,7 @@ public class BikeModel {
             preparedStatement.setDouble(2, price);
             preparedStatement.setString(3, make);
             preparedStatement.setInt(4, typeID);
-            preparedStatement.setDouble(5, pwrUsg);
+            preparedStatement.setDouble(5, power);
             //preparedStatement.setInt(6, dockID);
             if(repair){
                 preparedStatement.setByte(6, rep);
