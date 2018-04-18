@@ -14,21 +14,41 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <Label layoutX="169.0" layoutY="32.0" styleClass="text" text="ECONOMY">
+            <Label layoutX="159.0" layoutY="21.0" styleClass="text" text="ECONOMY">
                <font>
-                  <Font name="Times New Roman" size="19.0" />
+                  <Font name="Times New Roman" size="23.0" />
                </font>
             </Label>
-            <TableView fx:id="budget" layoutX="22.0" layoutY="104.0" prefHeight="279.0" prefWidth="158.0">
+            <TableView fx:id="incomeTableView" layoutX="22.0" layoutY="81.0" prefHeight="206.0" prefWidth="192.0">
                <columns>
-                  <TableColumn fx:id="type" prefWidth="97.0" text="Type" />
-                  <TableColumn fx:id="amount" prefWidth="109.0" text="Amount" />
+                  <TableColumn fx:id="incomeType" prefWidth="97.0" text="Type" />
+                  <TableColumn fx:id="incomeAmount" prefWidth="109.0" text="Amount" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Label alignment="CENTER" layoutX="42.0" layoutY="87.0" prefHeight="17.0" prefWidth="127.0" styleClass="text" text="Income &amp; expenses" />
+            <Label alignment="CENTER" layoutX="55.0" layoutY="64.0" prefHeight="17.0" prefWidth="127.0" styleClass="text" text="Income" />
+            <TableView fx:id="expensesTableView" layoutX="222.0" layoutY="81.0" prefHeight="206.0" prefWidth="192.0">
+               <columns>
+                  <TableColumn fx:id="expensesType" prefWidth="97.0" text="Type" />
+                  <TableColumn fx:id="expensesAmount" prefWidth="109.0" text="Amount" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Label alignment="CENTER" layoutX="255.0" layoutY="64.0" prefHeight="17.0" prefWidth="127.0" styleClass="text" text="Expenses" />
+            <Label alignment="CENTER" layoutX="160.0" layoutY="327.0" prefHeight="23.0" prefWidth="116.0" styleClass="text" text="Net income:">
+               <font>
+                  <Font name="Times New Roman" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="netIncomeLbl" alignment="CENTER" layoutX="177.0" layoutY="350.0" prefHeight="17.0" prefWidth="80.0" styleClass="text" text="-">
+               <font>
+                  <Font name="Times New Roman" size="19.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
