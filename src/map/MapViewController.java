@@ -1,25 +1,38 @@
 package map;
 
 import changescene.ChangeScene;
+import control.Bike;
 import control.Dock;
 import control.Factory;
+import control.Type;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import model.BikeModel;
+import model.BikeStatsModel;
+import netscape.javascript.JSObject;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
 public class MapViewController implements Initializable{
 
     private Factory myFactory = new Factory();
+    private BikeStatsModel bsm= new BikeStatsModel();
     private ArrayList<Dock> allDocks;
+
 
     @FXML
     private Button showBikeBtn;
@@ -38,9 +51,8 @@ public class MapViewController implements Initializable{
         myFactory.updateSystem();
 
         engine = root.getEngine();
-        root.getEngine().load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
-
 
         engine.getLoadWorker().stateProperty().addListener(e -> {
             showDocks();
@@ -69,11 +81,22 @@ public class MapViewController implements Initializable{
         allDocks = myFactory.getDocks();
         String dockData = arrayToString(dockToArray());
         engine.executeScript("var items = " + dockData + ";" +
-                "document.updateMarkers(items);");
+                "document.setMarkers(items);");
     }
+
+
+    public void moveBikeToDock(int bikeId, Dock d){
+
+    }
+
+
+
 
     @FXML
     void showBike(ActionEvent event) {
+        Random random = new Random();
+
+        int bikeId = Integer.parseInt(bikeIdField.getText());
 
     }
     // main buttons below
@@ -122,8 +145,6 @@ public class MapViewController implements Initializable{
 
     }
 
-
-
     public String arrayToString(double[][] data){
         String res = "[[";
         for (int i = 0; i < data.length; i++){
@@ -138,9 +159,7 @@ public class MapViewController implements Initializable{
         return res;
     }
 
-    public static void main(String args[]){
-        MapViewController myMapViewController = new MapViewController();
-        myMapViewController.showDocks();
-    }
+
+
 
 }

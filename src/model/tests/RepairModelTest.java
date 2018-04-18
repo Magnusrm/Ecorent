@@ -1,6 +1,6 @@
 package model.tests;
 import control.Bike;
-import control.Repair;
+import control.*;
 import control.Type;
 import model.DBCleanup;
 import model.RepairModel;
@@ -89,9 +89,9 @@ public class RepairModelTest {
         int bikeID = bikeId;
 
 
-        Repair expResult = new Repair(dateS, descriptionBefore, dateR, descriptionAfter, pr, bikeID);
+        RepairSent expResult = new RepairSent(dateS,descriptionBefore,bikeID);
         expResult.setRepairId(repairID);
-        Repair result = instance.getRepair(repairID);
+        RepairSent result = instance.getRepair(repairID);
         assertEquals(expResult, result);
     }
 }

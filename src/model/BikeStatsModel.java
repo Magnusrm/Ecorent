@@ -125,18 +125,20 @@ public class BikeStatsModel {
                 resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 tripNr = resultSet.getInt("MAX(trip_number)");
+                System.out.print("trip number: " + tripNr);
                 return tripNr;
             }else{
                 return -1;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getTripNr()");
+            return -1;
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-        return -1;
+
     }
 
     /**
@@ -171,12 +173,13 @@ public class BikeStatsModel {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getChargLvl()");
+            return -1;
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-        return -1;
+
     }
 
     /**

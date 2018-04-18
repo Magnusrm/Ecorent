@@ -49,6 +49,14 @@ public class WebMap extends Application {
             {63.430663, 10.392245},
             {63.433388, 10.400313}
     };
+    public class JavaBridge {
+
+        public String log(String pos) {
+            System.out.println(pos);
+            return pos;
+        }
+    }
+
 
     @Override public void start(Stage mapStage) {
         // create web engine and view
@@ -61,9 +69,6 @@ public class WebMap extends Application {
 
         // get bike and dock positions
 
-
-
-
         // create root
         BorderPane root = new BorderPane();
         root.setCenter(webView);
@@ -75,25 +80,21 @@ public class WebMap extends Application {
         webEngine.load(WebMap.class.getResource("googlemap.html").toExternalForm());
         webEngine.setJavaScriptEnabled(true);
 
-        class JavaBridge {
 
-            public String log(String pos) {
-                System.out.println("okokokok");
-                return pos;
-            }
-        }
 
-       /* webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) ->
+        webEngine.getLoadWorker().stateProperty().addListener(e ->
         {
             JSObject window = (JSObject) webEngine.executeScript("window");
             JavaBridge bridge = new JavaBridge();
+
             window.setMember("java", bridge);
             webEngine.executeScript("console.log = function(message)\n" +
                     "{\n" +
                     "    java.log(message);\n" +
-                    "};");
+                    "};\n" +
+                    "document.tilJava()");
         });
-*/
+
         // int position = (int)(webEngine.executeScript("document.updateMarker(63.426929, 10.397185));   // oppdatere posisjon på kart med data fra java.
         // System.out.println(position);
 
@@ -101,15 +102,19 @@ public class WebMap extends Application {
         testButton.setOnAction(e -> {
             System.out.println(arrayToString(dockPos));
             webEngine.executeScript("var items = " + arrayToString(dockPos) + ";" +
-                                    "document.updateMarkers(items);");
-            /*webEngine.executeScript("var paths = [" + arrayToString(path01) + ", " +arrayToString(path02) +
-                                    ", " + arrayToString(path03) + ", " + arrayToString(path12) + ", " + arrayToString(path23) +
-                                    "];" +
-                                    "for (var i = 0; i < paths.length; i++) {document.runSnapToRoad(paths[i]); }");*/
+                                    "document.setMarkers(items);");
+
+            JSObject window = (JSObject) webEngine.executeScript("window");
+            JavaBridge bridge = new JavaBridge();
+
+            window.setMember("java", bridge);
+            webEngine.executeScript("console.log = function(message)\n" +
+                    "{\n" +
+                    "    java.log(message);\n" +
+                    "};\n" +
+                    "document.tilJava()");
         });
 
-
-        System.out.println("ok");
         mapStage.show();
         try {
             sleep(2000);

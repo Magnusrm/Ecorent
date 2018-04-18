@@ -1,17 +1,31 @@
 package bike.bikeInfo;
 
 import changescene.ChangeScene;
-import control.Bike;
-import control.Factory;
+import control.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import loginAdm.CurrentAdmin;
+import model.BikeStatsModel;
 
-public class BikeInfoController {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class BikeInfoController implements Initializable {
     private Factory factory = new Factory();
+    private BikeStatsModel bsm= new BikeStatsModel();
 
     @FXML
     private Label priceLbl;
@@ -56,8 +70,36 @@ public class BikeInfoController {
     private Button homeBtn;
 
     @FXML
+    private WebView root;
+
+    private WebEngine engine;
+
+    @FXML
     private ListView<String> repairIdListView;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+
+            factory.updateSystem();
+            engine = root.getEngine();
+            engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
+            engine.setJavaScriptEnabled(true);
+
+            repairIdListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println("nice, du valgte: " + newValue + " bror");
+                }
+            });
+
+        }catch (Exception e){e.printStackTrace();}
+
+    }
+
+    public void getBikePosition() {
+
+    }
 
     /**
      * @Author Team 007
@@ -69,20 +111,34 @@ public class BikeInfoController {
     @FXML
     void showInfo(){
         factory.updateSystem();
+        int bikeID = Integer.parseInt(bikeIdField.getText());
 
+        //Creating a object-view list
+        ObservableList<String> repairIds = FXCollections.observableArrayList();
+        ArrayList<String> visualized = new ArrayList<>();
 
-       /*
+        //Adding the repair ids registered on the bike
+        for(int i = 0; i<factory.getRepairsNotReturned().size();i++){
+            String s = null;
+            if(factory.getRepairsNotReturned().get(i).getBikeId() == bikeID) s = "" +
+                    factory.getRepairsNotReturned().get(i).getRepair_id();
+            if(s!= null)visualized.add(s);
+        }//end loop
+        for(int i = 0;i<factory.getRepairsCompleted().size();i++){
+            String s = null;
+            if(factory.getRepairsCompleted().get(i).getBikeId() == bikeID)s = "" +
+                    factory.getRepairsCompleted().get(i).getRepair_id();
+            if(s!=null)visualized.add(s);
+        }//end loop
 
-
-       HER MÅ MAN LEGGE TIL REPAIRS TIL LISTVIEW,VENTER PÅ MODEL SKAL LAGE GET ALL REPAIRS
-
-
-        */
+        //Adding them in list view
+        repairIds.addAll(visualized);
+        repairIdListView.setItems(repairIds);
 
 
         for(Bike b:factory.getBikes()){System.out.println(b);}
         Bike bike = null;
-        int bikeID = Integer.parseInt(bikeIdField.getText());
+        bikeID = Integer.parseInt(bikeIdField.getText());
         for(int i = 0; i<factory.getBikes().size();i++){
             if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
         }//end loop
@@ -91,7 +147,7 @@ public class BikeInfoController {
             String type = "" + bike.getType().getName();
             String make = "" + bike.getMake();
             String date = "" + bike.getBuyDate().toString();
-            String battery = "" + bike.getPowerUsage();
+            String battery = "" + bike.getBattery() + "%";
             priceLbl.setText(price);
             typeLbl.setText(type);
             makeLbl.setText(make);
@@ -105,7 +161,19 @@ public class BikeInfoController {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }
+        ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
+        for (double[] p : recentPositions){
+            if (p[0] == bikeID){
+                engine.executeScript("document.createMarkerEgen(" + p[0] + ", " + p[1] + ", " + p[2] + ");");
+            }
+        }
+
     }//end method
+
+
+
+
+
 
 
     // main buttons below

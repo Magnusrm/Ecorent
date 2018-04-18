@@ -34,6 +34,7 @@ public class Admin {
     /**
      * Method which sets the password using the Password class and its hashing algorithm
      *
+     *@param password is the String input the user sets in the program
      * @author Team 007
      */
     public void setPassword(String password) {
@@ -42,6 +43,11 @@ public class Admin {
         this.password = hashed;
     }
 
+    /**
+     * Override of the toString()-method to display the admin user
+     * @return The admins email and whether or not they are a main admin
+     */
+    @Override
     public String toString() {
         String a;
         if (mainAdmin) {
@@ -55,7 +61,8 @@ public class Admin {
     /**
      * Makes the equals method of this class to only check the email parameter of the object, overrides the standard equals method.
      * @param o
-     * @return
+     * @return true     if the parameters compared are equal
+     * @return false    if the parameters compared are not equal
      * @author Team 007
      */
     @Override

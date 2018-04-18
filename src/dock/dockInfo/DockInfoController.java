@@ -9,9 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 public class DockInfoController implements Initializable {
@@ -54,6 +57,8 @@ public class DockInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
+    private WebEngine engine;
+
     @FXML
     private WebView root;
 
@@ -64,6 +69,10 @@ public class DockInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         try {
             factory.updateSystem();
+
+            engine = root.getEngine();
+            engine.load(this.getClass().getResource("dockmap.html").toExternalForm());
+            engine.setJavaScriptEnabled(true);
 
             // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
@@ -96,12 +105,15 @@ public class DockInfoController implements Initializable {
 
         // add powerDraw to powerDrawLbl
         powerDrawLbl.setText("" + factory.powerUsage(dockNameComboBox.getValue()));
+        // show marker on map
+        ArrayList<Dock> docks = factory.getDocks();
+        for (Dock d : docks){
+            if (d.getName().equals(dockNameComboBox.getValue()) ){
+                engine.executeScript("document.createMarkerEgen(" + d.getDockID() + ", " + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
+            }
+        }
 
     }
-
-
-
-
 
 
     // main buttons below

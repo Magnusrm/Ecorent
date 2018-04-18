@@ -36,25 +36,13 @@
                 map : document.map
             });
 
-            var drawingManager = new google.maps.drawing.DrawingManager({
-                drawingMode: google.maps.drawing.OverlayType.POLYLINE,
-                drawingControl: true,
-                drawingControlOptions: {
-                    position: google.maps.ControlPosition.TOP_CENTER,
-                    drawingModes: [
-                        google.maps.drawing.OverlayType.POLYLINE
-                    ]
-                },
-                polylineOptions: {
-                    strokeColor: '#696969',
-                    strokeWeight: 2
-                }
-            });
+
+
+
 
             document.geocoder = new google.maps.Geocoder();
             document.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
             directionsDisplay.setMap(document.map);
-            drawingManager.setMap(document.map);
 
             var bounds = new google.maps.LatLngBounds();
 
@@ -68,7 +56,7 @@
                 if (zoomLevel > 0) document.map.setZoom(zoomLevel - 1);
             }
 
-
+            console.log("ok");
             var markers = [];
             var snappedCoordinates = [];
             var snappedWaypoints = [];
@@ -80,9 +68,15 @@
                 scale: 8,
                 strokeColor: '#393'
             };
-
-            document.calcRoute = function calcRoute() {
-            }
+            var bikeMarker = new google.maps.Marker({
+                position: latlng,
+                map : document.map,
+                icon : lineSymbol,
+                draggable : false,
+                title : "",
+                visible :false
+            })
+            bikeMarker.setMap(document.map);
 
 
             document.createMarkerEgen = function createMarkerEgen(id, latitude, longitude) {
@@ -147,22 +141,31 @@
             }
 
 
-            /*
-            document.map.addListener("click", function(event){
-                  createMarker(event.latLng) });
 
-            */
+            document.map.addListener("click", function(event){
+                document.createMarker(event.latLng);
+                  console.log(event.latLng); });
+
+
 
             document.setMapOnAll = function setMapOnAll(map) {
                 for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(document.map);
+                    markers[i].setMap(map);
                 }
-
             }
-            document.updateMarkers = function updateMarkers(posData){
+            
+            document.createMarker = function (location) {
+                document.marker = new google.maps.Marker({
+                    position: location,
+                    map: document.map,
+                    draggable: false,
+                    visible: true
+                });
+                markers.push(document.marker);
+            }
+            document.setMarkers = function setMarkers(posData){
                 document.setMapOnAll(null);
                 markers = [];
-
 
                 for (var j = 0; j < posData.length; j++){
                     document.createMarkerEgen(posData[j][0], posData[j][1], posData[j][2]);
@@ -183,6 +186,31 @@
 
 
             }
+
+            document.updateBikeMarker = function updateMarker(xPos, yPos, xDifference, yDifference){
+                var x = xPos;
+                var y = yPos;
+                var pos = new google.maps.LatLng(x, y);
+                var count = 0;
+                bikeMarker.visible = true;
+                var interval = window.setInterval(function(){
+
+                    x += xDifference / 10;
+                    y += yDifference / 10;
+                    pos = new google.maps.LatLng(x, y);
+                    bikeMarker.setPosition(pos);
+                    count ++;
+                    if (count >= 10) {
+                        clearInterval(interval);
+                    }
+                }, 1000);
+
+            }
+
+            document.removeBikeMarker = function removeBikeMarker(){
+                bikeMarker.visible = false;
+            }
+
             document.drawPolyline = function drawPolyline(joda){
                 var p = new google.maps.Polyline({
                     path: joda,
@@ -207,6 +235,10 @@
                     icons[0].offset = (count / 2) + '%';
                     line.set('icons', icons);
                 }, 1000);
+            }
+
+            document.tilJava = function tilJava(){
+                console.log("hei fra javascript");
             }
 
 

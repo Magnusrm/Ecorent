@@ -1,47 +1,57 @@
-package main;
+package stats.statsEconomy;
 
+import changescene.ChangeScene;
+import control.Budget;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import changescene.ChangeScene;
-import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-public class MainController implements Initializable{
-
-    @FXML
-    private Button homeBtn;
+public class StatsEconomyController implements Initializable {
 
     @FXML
-    private Button bikesBtn;
+    private TableView<Budget> budget;
 
     @FXML
-    private Button docksBtn;
+    private TableColumn<Budget, String> type;
 
     @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private TextField current;
+    private TableColumn<Budget, String> amount;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL location, ResourceBundle resources) {
 
-    }//end method
+        // set up the columns in the table
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+        // load dummy data
+        budget.setItems(getBudget());
+
+    }
+
+    /**
+     * Returnerer en ObservableList med Strings
+     * @return
+     */
+    public ObservableList<Budget> getBudget(){
+        ObservableList<Budget> budget = FXCollections.observableArrayList();
+
+        budget.add(new Budget("Sykkelkjøp", -25000));
+        budget.add(new Budget("Strøm", -15000));
+        budget.add(new Budget("Leieinnteker", 45000));
+        budget.add(new Budget("Sum", 5000));
+
+
+        return budget;
+    }
 
 
 
@@ -51,7 +61,9 @@ public class MainController implements Initializable{
 
 
 
-    // main buttons below
+
+
+// main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -96,5 +108,4 @@ public class MainController implements Initializable{
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }
