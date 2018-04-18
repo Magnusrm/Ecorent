@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Team 007
@@ -50,6 +49,39 @@ public class DockStatsModel {
         }
         return -1;
     }
+
+
+    public double getTotalPowerUsageOfSystem(){
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        double sum = 0;
+
+        String query = "SELECT dock_id, MAX(total_pwr_usg) FROM dock_stats GROUP BY dock_id";
+
+        try {
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                sum += resultSet.getDouble("MAX(total_pwr_usg)");
+            }
+            return sum;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getTotalPowerUsageOfSystem");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return sum;
+    }
+
+
+
+
 
     /**
      * Returns the total number of checkouts at a given dock
