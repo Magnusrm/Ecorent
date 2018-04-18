@@ -1,11 +1,11 @@
 /**
-* Factory.java
-* @author Team007
-*
-* This class is an aggregate of Dock.java,Bike.java and Admin.java
-* It both updates and retrieves data from the model classes connected to the database
-* concerned the creation and edit of these objects.
-* The class will provide the view-control classes with data, which is why we add data from the
+ * Factory.java
+ * @author Team007
+ *
+ * This class is an aggregate of Dock.java,Bike.java and Admin.java
+ * It both updates and retrieves data from the model classes connected to the database
+ * concerned the creation and edit of these objects.
+ * The class will provide the view-control classes with data, which is why we add data from the
  * database into private arrays.
  */
 
@@ -51,14 +51,14 @@ public class Factory {
      * This is used every time the user starts the application
      */
     public void updateSystem(){
-       bikes = bikeModel.getAllBikes();
-       docks = dockModel.getAllDocks();
-       for(String name:typeModel.getTypes()){
-           Type type = new Type(name);
-           types.add(type);
-       }//end loop
+        bikes = bikeModel.getAllBikes();
+        docks = dockModel.getAllDocks();
+        for(String name:typeModel.getTypes()){
+            Type type = new Type(name);
+            types.add(type);
+        }//end loop
         fillRepair();
-       admins = adminModel.getAllAdmins();
+        admins = adminModel.getAllAdmins();
     }//end method
 
     /**
@@ -105,14 +105,14 @@ public class Factory {
         if(b == null ) return false;
         b.setDockId(docks.get(0).getDockID());
         bikes.add(b);
-       String date = b.getBuyDate().toString();
-       double price = b.getPrice();
-       String make = b.getMake();
-       String type = b.getType().getName();
+        String date = b.getBuyDate().toString();
+        double price = b.getPrice();
+        String make = b.getMake();
+        String type = b.getType().getName();
         int dockID = b.getDockId();
-       double pwrUsage = b.getPowerUsage();
-       b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
-       return true;
+        double pwrUsage = b.getPowerUsage();
+        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
+        return true;
     }//end method
 
     //Method to add types
@@ -228,8 +228,8 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = dockModel.getDockID(bikeId);
-               newBike.setDockId(dockID);
+                int dockID = dockModel.getDockID(bikeId);
+                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
