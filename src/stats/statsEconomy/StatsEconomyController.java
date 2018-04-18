@@ -2,11 +2,13 @@ package stats.statsEconomy;
 
 import changescene.ChangeScene;
 import control.Budget;
+import control.Factory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,43 +18,72 @@ import java.util.ResourceBundle;
 
 public class StatsEconomyController implements Initializable {
 
-    @FXML
-    private TableView<Budget> budget;
+    private Factory factory = new Factory();
 
     @FXML
-    private TableColumn<Budget, String> type;
+    private TableView<Budget> incomeTableView;
 
     @FXML
-    private TableColumn<Budget, String> amount;
+    private TableView<Budget> expensesTableView;
+
+    @FXML
+    private TableColumn<Budget, String> incomeType;
+
+    @FXML
+    private TableColumn<Budget, String> incomeAmount;
+
+    @FXML
+    private TableColumn<Budget, String> expensesType;
+
+    @FXML
+    private TableColumn<Budget, String> expensesAmount;
+
+    @FXML
+    private Label netIncomeLbl;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         // set up the columns in the table
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        incomeType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        incomeAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        expensesType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        expensesAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
         // load dummy data
-        budget.setItems(getBudget());
+       incomeTableView.setItems(getIncome());
+       expensesTableView.setItems(getExpenses());
+       netIncomeLbl.setText("" + factory.getNetIncome());
+
 
     }
 
     /**
-     * Returnerer en ObservableList med Strings
+     * Returnerer en ObservableList med income som String
      * @return
      */
-    public ObservableList<Budget> getBudget(){
+    public ObservableList<Budget> getIncome(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
 
-        budget.add(new Budget("Sykkelkjøp", -25000));
-        budget.add(new Budget("Strøm", -15000));
-        budget.add(new Budget("Leieinnteker", 45000));
-        budget.add(new Budget("Sum", 5000));
-
+        budget.add(new Budget("Rent", factory.getRentIncome()));
 
         return budget;
     }
 
+    /**
+     * Returnerer en ObservableList med expenses som String
+     * @return
+     */
+    public ObservableList<Budget> getExpenses(){
+        ObservableList<Budget> budget = FXCollections.observableArrayList();
+
+        budget.add(new Budget("Bike Purchase" , factory.getBikePurchaseExpenses()));
+        budget.add(new Budget("Power", factory.getPowerExpenses()));
+        budget.add(new Budget("Repairs", factory.getRepairExpenses()));
+
+        return budget;
+    }
 
 
 
