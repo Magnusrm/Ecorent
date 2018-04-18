@@ -1,5 +1,6 @@
 import control.Dock;
 import control.Factory;
+import model.BikeModel;
 import model.BikeStatsModel;
 
 import java.time.*;
@@ -17,6 +18,7 @@ public class Simulation implements Runnable{
     private static Factory factory = new Factory();
     private static ArrayList<Dock> docks;
     private static Random random = new Random();
+    private static BikeModel bm = new BikeModel();
 
     public Simulation(int id){
        this.id = id;
@@ -36,47 +38,74 @@ public class Simulation implements Runnable{
     static void sim(int bikeID){
         int steps = 10;
         BikeStatsModel bts = new BikeStatsModel();
-        double distance = bts.getDistance(bikeID);
-        int trip = bts.getTripNr(bikeID) + 1;
-        int batteryLevel = bts.getChargLvl(bikeID);
-        ArrayList<double[]> lastPositions = bts.getMostRecentCoordinates();
-        double xPos = 0;
-        double yPos = 0;
-        for (double[] d : lastPositions){
-            if (d[0] == bikeID){
-                xPos = d[1];
-                yPos = d[2];
+        while (true) {
+            double distance = bts.getDistance(bikeID);
+            int trip = bts.getTripNr(bikeID) + 1;
+            int batteryLevel = bts.getChargLvl(bikeID);
+            ArrayList<double[]> lastPositions = bts.getMostRecentCoordinates();
+            double xPos = 0;
+            double yPos = 0;
+            for (double[] d : lastPositions) {
+                if (d[0] == bikeID) {
+                    xPos = d[1];
+                    yPos = d[2];
+                }
             }
-        }
-        Dock randomD = randomDock();
-        double xDestination = randomD.getxCoordinates();
-        double yDestination = randomD.getyCoordinates();
-
-        double xDifference = xDestination - xPos;
-        double yDifference = yDestination - yPos;
-
-        LocalDateTime ldt;
-        double distanceChange = distance(xPos, yPos, xDestination, yDestination);
-        for (int i = 0; i < steps; i++){
-
-            ldt = LocalDateTime.now();
-            String time = ("" + ldt + "").replaceAll("T"," ");
-            time = time.substring(0, time.length() - 4);
-
-            xPos += xDifference / steps;
-            yPos += yDifference / steps;
-
-            distance += distanceChange / steps;
-
-            bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
-
-
-            try{
-                sleep(3000);
-            } catch(Exception e){
-                System.out.println("Error: " + e);
+            int check = 0;
+            double xDestination = 0;
+            double yDestination = 0;
+            double distanceChange = 0;
+            Dock randomD = null;
+            while(check == 0) {
+                randomD = randomDock();
+                xDestination = randomD.getxCoordinates();
+                yDestination = randomD.getyCoordinates();
+                distanceChange = distance(xPos, yPos, xDestination, yDestination);
+                if (distanceChange > 10){
+                    check = 1;
+                }
             }
 
+            double xDifference = xDestination - xPos;
+            double yDifference = yDestination - yPos;
+
+            LocalDateTime ldt;
+
+            bm.setDockID(-1, bikeID);
+            for (int i = 0; i < steps; i++) {
+
+                ldt = LocalDateTime.now();
+                String time = ("" + ldt + "").replaceAll("T", " ");
+                time = time.substring(0, time.length() - 4);
+
+                xPos += xDifference / steps;
+                yPos += yDifference / steps;
+                batteryLevel -= 5;
+                distance += distanceChange / steps;
+
+                bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
+
+
+                try {
+                    sleep(3000);
+                } catch (Exception e) {
+                    System.out.println("Error: " + e);
+                }
+            }
+            bm.setDockID(bikeID, randomD.getDockID());
+
+            for (int j = 0; j < 5; j++){
+                ldt = LocalDateTime.now();
+                String time = ("" + ldt + "").replaceAll("T", " ");
+                time = time.substring(0, time.length() - 4);
+                batteryLevel += 10;
+                bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip - 1);
+                try {
+                    sleep(1000);
+                } catch(InterruptedException e){
+                    System.out.println("charging sleep interrupted.");
+                }
+            }
         }
     }
 

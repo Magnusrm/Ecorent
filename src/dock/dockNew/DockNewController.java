@@ -101,6 +101,7 @@ public class DockNewController implements Initializable{
     @FXML
     void createNewDockConfirm(ActionEvent event){ // created a new dock
         try{
+            System.out.println(xCoordField.getText() + "   " + yCoordField.getText());
             Dock dock = new Dock(dockNameField.getText(), Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));
 
             if(factory.addDock(dock)) {

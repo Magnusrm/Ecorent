@@ -120,15 +120,15 @@ public class Factory {
         if(b == null ) return false;
         b.setDockId(docks.get(0).getDockID());
         bikes.add(b);
-       String date = b.getBuyDate().toString();
-       double price = b.getPrice();
-       String make = b.getMake();
-       String type = b.getType().getName();
+        String date = b.getBuyDate().toString();
+        double price = b.getPrice();
+        String make = b.getMake();
+        String type = b.getType().getName();
         int dockID = b.getDockId();
-       double pwrUsage = b.getPowerUsage();
-       b.setDockId(MAINDOCK);
-       b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
-       return true;
+        double pwrUsage = b.getPowerUsage();
+        b.setDockId(MAINDOCK);
+        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
+        return true;
     }//end method
 
     /**
@@ -159,9 +159,6 @@ public class Factory {
      */
     public boolean addDock(Dock d){
         if(d == null)throw new IllegalArgumentException("Error at Factory.java, addDock, argument is null");
-        for(Dock dock : docks){
-            if(d.equals(dock))return false;
-        }//end loop
         docks.add(d);
         String name = d.getName();
         double x = d.getxCoordinates();

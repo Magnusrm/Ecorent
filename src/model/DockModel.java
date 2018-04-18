@@ -197,6 +197,7 @@ public class DockModel {
         return -1;
     }
 
+
     /**
      * Edits a dock that already is saved to the database.
      *
