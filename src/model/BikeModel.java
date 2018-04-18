@@ -367,7 +367,7 @@ public class BikeModel {
      * @return activeBikes      an ArrayList of the bike_id's of all the active bikes in the system.
      * @return null             if the method fails.
      */
-    public ArrayList<Integer> getActiveBikes(){
+/*    public ArrayList<Integer> getActiveBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -395,7 +395,7 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
-    }
+    }*/
 
     /**
      * Checks if a given bike is repairing.
@@ -434,13 +434,14 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
+        double sum = 0;
+
         String priceQuery = "SELECT price FROM bike";
 
         try {
             connection = DBCleanup.getConnection();
             preparedStatement = connection.prepareStatement(priceQuery);
             resultSet = preparedStatement.executeQuery();
-            double sum = 0;
             while (resultSet.next()) {
                 sum += resultSet.getDouble("price");
             }
@@ -452,7 +453,7 @@ public class BikeModel {
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-        return -1;
+        return sum;
     }
 
     /**

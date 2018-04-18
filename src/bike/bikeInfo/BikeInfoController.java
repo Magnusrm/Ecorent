@@ -72,19 +72,20 @@ public class BikeInfoController implements Initializable {
     @FXML
     private Button homeBtn;
 
-    @FXML
-    private WebView root;
-
     private WebEngine engine;
 
     @FXML
     private ListView<String> repairIdListView;
 
+    @FXML
+    private WebView root;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
 
+        try {
             factory.updateSystem();
+
             engine = root.getEngine();
             engine.load(this.getClass().getResource("bikemap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
@@ -164,6 +165,7 @@ public class BikeInfoController implements Initializable {
         for(RepairSent i : factory.getRepairsNotReturned())System.out.println(i);
 
         Bike bike = null;
+        bikeID = Integer.parseInt(bikeIdField.getText());
         for(int i = 0; i<factory.getBikes().size();i++){
             if(factory.getBikes().get(i).getBikeId() == bikeID)bike = factory.getBikes().get(i);
         }//end loop
