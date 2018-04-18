@@ -1,23 +1,26 @@
-/*
-* Password.java
-* @Team007
-*
-* This class is created to control password protection.
-* The class will take a client chosen text, add a random salt and hash, then store the
-* hash and salt in the database. The authentication will take the text and add the salt
-* from the account information. The login will be successful if the input that is hashed
-* equates the stored hash password in their account.
- */
+
 package control;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base64;
+
+/**
+ * Password.java
+ * @author Team007
+ *
+ * This class is created to control password protection.
+ * The class will take a client chosen text, add a random salt and hash, then store the
+ * hash and salt in the database. The authentication will take the text and add the salt
+ * from the account information. The login will be successful if the input that is hashed
+ * equates the stored hash password in their account.
+ * This code is created with insperation from stackoverflow.com user @Martin Konicek
+ */
 public class Password {
     private static final int iterations = 20*1000; //More iterations = More expensive computing the hash(For us and attackers)
     private static final int saltLen = 32; //The salt will be 32 random bytes
-    private static final int desiredKeyLen = 64;
+    private static final int desiredKeyLen = 64; //Completed hash bytes. Set down to match resources
 
     public Password(){}//Default constructor
 

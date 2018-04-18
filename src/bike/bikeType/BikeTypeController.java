@@ -1,8 +1,6 @@
 package bike.bikeType;
 
 import changescene.ChangeScene;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -271,7 +269,7 @@ public class BikeTypeController implements Initializable{
     @FXML
     void deleteAllBikesWithoutType(ActionEvent event){
         factory.updateSystem();
-        if(factory.deleteAllBikes()){
+        if(factory.deleteAllBikesWithNoType()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("All bikes with type null deleted");
             alert.setHeaderText(null);

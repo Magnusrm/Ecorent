@@ -146,4 +146,11 @@ public class FactoryTest {
         assertEquals(true,result);
     }//end method
 
+    @Test
+    void testDockedBikes(){
+        System.out.println("Testing method to get all bikes docked at one station");
+        int expResult = 56;
+        int result = instance.dockedBikes("testdock")[0];
+        assertEquals(expResult,result);
+    }//end method
 }//end class
