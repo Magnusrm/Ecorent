@@ -90,7 +90,6 @@ public class Simulation implements Runnable{
 
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
 
-
                 try {
                     sleep(3000);
                 } catch (Exception e) {
