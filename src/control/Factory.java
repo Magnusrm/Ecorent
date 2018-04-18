@@ -23,6 +23,7 @@ public class Factory {
     private ArrayList<RepairSent> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
+    private BikeStatsModel bikeStatsModel;
     private DockModel dockModel;
     private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
@@ -34,6 +35,7 @@ public class Factory {
     public Factory(){
         adminModel = new AdminModel();
         bikeModel = new BikeModel();
+        bikeStatsModel = new BikeStatsModel();
         dockModel = new DockModel();
         repairModel = new RepairModel();
         typeModel = new TypeModel();
@@ -433,12 +435,7 @@ public class Factory {
      * @return
      */
     public double getRepairExpenses(){
-        double sum = 0;
-        for(RepairReturned r : repairsCompleted){
-            sum += r.getPrice();
-            System.out.println("Repairs returned price: " + r.getPrice());
-        }
-        return sum;
+        return repairModel.getPriceOfAllRepairs();
     }
 
     /**
@@ -459,12 +456,7 @@ public class Factory {
      */
     public double getPowerExpenses(){
         double price = 0.53;
-        double sum = 0;
-
-        sum += getTotalPowerUsageOfSystem();
-
-        sum *= price;
-        return sum;
+        return getTotalPowerUsageOfSystem() * price;
     }
 
 
@@ -475,13 +467,8 @@ public class Factory {
      * @return
      */
     public double getRentIncome(){
-        double sum = 0;
         double price = 100; // sets price to rent each bke
-
-        // set sum equal to total amount of trips
-
-        sum *= price;
-        return sum;
+        return bikeStatsModel.getTotalTrips() * price;
     }
 
 
@@ -502,5 +489,16 @@ public class Factory {
         return sum;
     }
 
+    public double getTotalDistance(){
+        return bikeStatsModel.getTotalDistance();
+    }
+
+    public int getTotalTrips(){
+        return bikeStatsModel.getTotalTrips();
+    };
+
+    public double getAvgKmPerTrip(){
+        return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
+    }
 
 }//end class
