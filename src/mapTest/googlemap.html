@@ -36,15 +36,10 @@
                 map : document.map
             });
 
-
-
-
-
             document.geocoder = new google.maps.Geocoder();
             document.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
             directionsDisplay.setMap(document.map);
 
-            var bounds = new google.maps.LatLngBounds();
 
             document.zoomIn = function zoomIn() {
                 var zoomLevel = document.map.getZoom();
@@ -56,30 +51,18 @@
                 if (zoomLevel > 0) document.map.setZoom(zoomLevel - 1);
             }
 
-            console.log("ok");
-            var markers = [];
-            var snappedCoordinates = [];
-            var snappedWaypoints = [];
-            var placeIdArray = [];
-            var polylines = [];
+            var dockMarkers = [];
+            var bikeMarkers = [];
             var destinations = [];
+            var markers = [];
             var lineSymbol = {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 8,
                 strokeColor: '#393'
             };
-            var bikeMarker = new google.maps.Marker({
-                position: latlng,
-                map : document.map,
-                icon : lineSymbol,
-                draggable : false,
-                title : "",
-                visible :false
-            })
-            bikeMarker.setMap(document.map);
 
 
-            document.createMarkerEgen = function createMarkerEgen(id, latitude, longitude) {
+            document.createDockMarker = function createDockMarker(id, latitude, longitude) {
                 var latlngMarker = new google.maps.LatLng(latitude, longitude);
                 document.marker = new google.maps.Marker({
                     position: latlngMarker,
@@ -88,73 +71,36 @@
                     title: id,
                     visible: true
                 });
-                markers.push(document.marker);
+                dockMarkers.push(document.marker);
                 destinations.push(latlngMarker);
             }
 
-            document.drawSnappedPolyline = function drawSnappedPolyline() {
-                var snappedPolyline = new google.maps.Polyline({
-                    path: snappedWaypoints.join('|'),
-                    icons: [{
-                        icon: lineSymbol,
-                        offset: '100%'
-                    }],
-                    map: document.map,
-                    strokeColor: 'black',
-                    strokeWeight: 3
+            document.setMapOnAllDocks = function setMapOnAllDocks(map) {
+                for (var i = 0; i < dockMarkers.length; i++) {
+                    dockMarkers[i].setMap(map);
+                }
+            }
+
+            document.setMapOnAllBikes = function setMapOnAllBikes(map) {
+                for (var i = 0; i < bikeMarkers.length; i++) {
+                    bikeMarkers[i].setMap(map);
+                }
+            }
+
+            document.createBikeMarker = function createBikeMarker(xPos, yPos){
+                var position = new google.maps.LatLng(xPos, yPos);
+                document.marker = new google.maps.Marker({
+                    position : position,
+                    icon : lineSymbol,
+                    map : document.map,
+                    draggable : false,
+                    visible : true
                 });
+                bikeMarkers.push(document.marker);
 
-                snappedPolyline.setMap(document.map);
-                polylines.push(snappedPolyline);
-                document.animateCircle(snappedPolyline);
-            }
-
-            document.runSnapToRoad = function runSnapToRoad(path){
-
-                var pathValues = [];
-                for (var i = 0; i < path.length; i++){
-                    pathValues.push(path[i].toUrlValue());
-
-                    $.get('https://roads.googleapis.com/v1/snapToRoads', {
-                        interpolate: true,
-                        key: apiKey,
-                        path: pathValues.join('|')
-                    }, function(data) {
-                        document.processSnapToRoadResponse(data);
-
-                        document.drawSnappedPolyline();
-                        //getAndDrawSpeedLimits();
-                    });
-                }
-            }
-
-            document.processSnapToRoadResponse = function processSnapToRoadResponse(data) {
-                snappedCoordinates = [];
-                placeIdArray = [];
-                for (var i = 0; i < data.snappedPoints.length; i++) {
-                    var latlng = new google.maps.LatLng(
-                        data.snappedPoints[i].location.latitude,
-                        data.snappedPoints[i].location.longitude);
-                    snappedCoordinates.push(latlng);
-                    placeIdArray.push(data.snappedPoints[i].placeId);
-                }
-            }
-
-
-
-            document.map.addListener("click", function(event){
-                document.createMarker(event.latLng);
-                  console.log(event.latLng); });
-
-
-
-            document.setMapOnAll = function setMapOnAll(map) {
-                for (var i = 0; i < markers.length; i++) {
-                    markers[i].setMap(map);
-                }
             }
             
-            document.createMarker = function (location) {
+            document.createMarker = function createMarker(location) {
                 document.marker = new google.maps.Marker({
                     position: location,
                     map: document.map,
@@ -163,82 +109,20 @@
                 });
                 markers.push(document.marker);
             }
-            document.setMarkers = function setMarkers(posData){
-                document.setMapOnAll(null);
+
+            document.removeBikeMarkers = function removeBikeMarkers(){
+                document.setMapOnAllBikes(null);
+                bikeMarkers = [];
+            }
+
+            document.setDockMarkers = function setDockMarkers(posData){
+                document.setMapOnAllDocks(null);
                 markers = [];
 
                 for (var j = 0; j < posData.length; j++){
-                    document.createMarkerEgen(posData[j][0], posData[j][1], posData[j][2]);
+                    document.createDockMarker(posData[j][0], posData[j][1], posData[j][2]);
                 }
-                var en = [destinations[0], destinations[1]];
-                var to = [destinations[0], destinations[2]];
-                var tre = [destinations[2], destinations[3]];
-                var fire = [destinations[1], destinations[2]];
-                var fem = [destinations[3], destinations[0]];
 
-                document.drawPolyline(en);
-                document.drawPolyline(to);
-                document.drawPolyline(tre);
-                document.drawPolyline(fire);
-                document.drawPolyline(fem);
-
-                //document.drawPolyline();
-
-
-            }
-
-            document.updateBikeMarker = function updateMarker(xPos, yPos, xDifference, yDifference){
-                var x = xPos;
-                var y = yPos;
-                var pos = new google.maps.LatLng(x, y);
-                var count = 0;
-                bikeMarker.visible = true;
-                var interval = window.setInterval(function(){
-
-                    x += xDifference / 10;
-                    y += yDifference / 10;
-                    pos = new google.maps.LatLng(x, y);
-                    bikeMarker.setPosition(pos);
-                    count ++;
-                    if (count >= 10) {
-                        clearInterval(interval);
-                    }
-                }, 1000);
-
-            }
-
-            document.removeBikeMarker = function removeBikeMarker(){
-                bikeMarker.visible = false;
-            }
-
-            document.drawPolyline = function drawPolyline(joda){
-                var p = new google.maps.Polyline({
-                    path: joda,
-                  /*  icons: [{
-                        icon: lineSymbol,
-                        offset: '100%'
-                    }],*/
-                    map: document.map,
-                    strokeColor: 'black',
-                    strokeWeight: 3
-                });
-                p.setMap(document.map);
-                //document.animateCircle(p);
-            }
-
-            document.animateCircle = function animateCircle(line) {
-                var count = 0;
-                window.setInterval(function() {
-                    count = (count + 1) % 200;
-
-                    var icons = line.get('icons');
-                    icons[0].offset = (count / 2) + '%';
-                    line.set('icons', icons);
-                }, 1000);
-            }
-
-            document.tilJava = function tilJava(){
-                console.log("hei fra javascript");
             }
 
 

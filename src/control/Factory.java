@@ -12,6 +12,7 @@
 package control;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 import model.*;
 
@@ -24,6 +25,7 @@ public class Factory {
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private BikeStatsModel bikeStatsModel;
+    private BikeStatsModel bsm;
     private DockModel dockModel;
     private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
@@ -122,16 +124,23 @@ public class Factory {
      */
     public boolean addBike(Bike b){
         if(b == null ) return false;
+        b.setDockId(docks.get(0).getDockID());
         bikes.add(b);
-       String date = b.getBuyDate().toString();
-       double price = b.getPrice();
-       String make = b.getMake();
-       String type = b.getType().getName();
-       int dockID = b.getDockId();
-       double pwrUsage = b.getPowerUsage();
-       b.setDockId(MAINDOCK);
-       b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
-       return true;
+        String date = b.getBuyDate().toString();
+        double price = b.getPrice();
+        String make = b.getMake();
+        String type = b.getType().getName();
+        int dockID = b.getDockId();
+        double pwrUsage = b.getPowerUsage();
+        b.setDockId(MAINDOCK);
+        int bikeID = bikeModel.addBike(date,price,make,type,pwrUsage,false);
+        b.setBikeId(bikeID);
+        bikeModel.setDockID(bikeID, MAINDOCK);
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        bsm.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
+        return true;
     }//end method
 
     /**
@@ -162,9 +171,6 @@ public class Factory {
      */
     public boolean addDock(Dock d){
         if(d == null)throw new IllegalArgumentException("Error at Factory.java, addDock, argument is null");
-        for(Dock dock : docks){
-            if(d.equals(dock))return false;
-        }//end loop
         docks.add(d);
         String name = d.getName();
         double x = d.getxCoordinates();
@@ -293,7 +299,7 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = 1; //The main dock
+               int dockID = dockModel.getDockID(bikeId);
                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
