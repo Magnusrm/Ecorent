@@ -81,9 +81,9 @@ public class StatsEconomyController implements Initializable {
         budget.add(new Budget("Bike Purchase" , factory.getBikePurchaseExpenses()));
         budget.add(new Budget("Power", factory.getPowerExpenses()));
         budget.add(new Budget("Repairs", factory.getRepairExpenses()));
+
         return budget;
     }
-
 
 
 

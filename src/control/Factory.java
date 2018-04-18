@@ -24,6 +24,7 @@ public class Factory {
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private DockModel dockModel;
+    private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
     private ArrayList<RepairReturned> repairsCompleted = new ArrayList<>();
@@ -36,6 +37,7 @@ public class Factory {
         dockModel = new DockModel();
         repairModel = new RepairModel();
         typeModel = new TypeModel();
+        dockStatsModel = new DockStatsModel();
     }//end constructor
 
     //Access methods
@@ -413,6 +415,17 @@ public class Factory {
         return pwr;
     }//end method
 
+
+    /**
+     *
+     * Returns the Total Power Usage Of System.
+     *
+     * @return
+     */
+    public double getTotalPowerUsageOfSystem(){
+        return dockStatsModel.getTotalPowerUsageOfSystem();
+    }
+
     /**
      *
      * Returns a double describing the expenses of all repairs combined.
@@ -435,13 +448,7 @@ public class Factory {
      * @return
      */
     public double getBikePurchaseExpenses(){
-        double sum = 0;
-
-        for(Bike b : bikes){
-          sum += b.getPrice();
-        }
-
-        return sum;
+        return bikeModel.getPriceOfAllBikes();
     }
 
     /**
@@ -451,10 +458,10 @@ public class Factory {
      * @return
      */
     public double getPowerExpenses(){
-        double price = 2;
+        double price = 0.53;
         double sum = 0;
 
-        // set sum euql to dockModel.getTotalpowerusage
+        sum += getTotalPowerUsageOfSystem();
 
         sum *= price;
         return sum;
