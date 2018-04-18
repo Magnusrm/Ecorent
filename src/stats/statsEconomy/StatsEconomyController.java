@@ -1,16 +1,12 @@
-package stats;
+package stats.statsEconomy;
 
 import changescene.ChangeScene;
-import changescene.PopupScene;
 import control.Budget;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,52 +14,45 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StatsController{
+public class StatsEconomyController implements Initializable {
 
     @FXML
-    private Button homeBtn;
+    private TableView<Budget> budget;
 
     @FXML
-    private Button bikesBtn;
+    private TableColumn<Budget, String> type;
 
     @FXML
-    private Button docksBtn;
+    private TableColumn<Budget, String> amount;
 
-    @FXML
-    private Button mapBtn;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-    @FXML
-    private Button statsBtn;
+        // set up the columns in the table
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-
-
-    @FXML
-    void changeToBarChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsBarChart/StatsBarChartView.fxml", "Power usage");
-    }
-
-    @FXML
-    void changeToPieChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsPieChart/StatsPieChartView.fxml", "Checkouts");
+        // load dummy data
+        budget.setItems(getBudget());
 
     }
 
-    @FXML
-    void changeToAreaChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsAreaChart/StatsAreaChartView.fxml", "Power usage");
+    /**
+     * Returnerer en ObservableList med Strings
+     * @return
+     */
+    public ObservableList<Budget> getBudget(){
+        ObservableList<Budget> budget = FXCollections.observableArrayList();
+
+        budget.add(new Budget("Sykkelkjøp", -25000));
+        budget.add(new Budget("Strøm", -15000));
+        budget.add(new Budget("Leieinnteker", 45000));
+        budget.add(new Budget("Sum", 5000));
+
+
+        return budget;
     }
 
-    @FXML
-    void changeToEconomyScene(ActionEvent event) throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsEconomy/StatsEconomyView.fxml");
-    }
 
 
 

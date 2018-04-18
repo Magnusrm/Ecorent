@@ -27,7 +27,7 @@ public class StatsAreaChartController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         DockStatsModel dsm = new DockStatsModel();
         days = dsm.getWeeklyMaxPowerUsage();
-        headerLbl.setText("header");
+        headerLbl.setText("Total Power Usage");
         areaChart.setLegendVisible(false);
         XYChart.Series set1 = new XYChart.Series<>();
 

@@ -33,8 +33,7 @@ public class StatsPieChartController implements Initializable {
         DockModel dm = new DockModel();
         ArrayList<int[]> checkouts = dsm.getMaxCheckouts();
 
-
-        headerLbl.setText("Daily Power Usage");
+        headerLbl.setText("Total Checkouts on Each Dock");
         pieChart.setLegendVisible(false);
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
 

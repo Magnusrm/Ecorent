@@ -25,6 +25,7 @@ public class StatsBarChartController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        headerLbl.setText("Power Usage Each Day");
         DockStatsModel dsm = new DockStatsModel();
         days = dsm.getDailyPowerUsage();
         LocalDate tomorrow = LocalDate.now().plusDays(1);

@@ -19,7 +19,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </AreaChart>
-      <Label fx:id="headerLbl" alignment="CENTER" layoutX="174.0" layoutY="22.0" prefHeight="17.0" prefWidth="201.0" text="Hva viser vi her?" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="headerLbl" alignment="CENTER" layoutX="29.0" layoutY="22.0" prefHeight="25.0" prefWidth="492.0" text="Hva viser vi her?" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Times New Roman" size="22.0" />
          </font>
