@@ -112,17 +112,15 @@ public class Repair {
 
     public LocalDate toDate(String date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate toDate = LocalDate.parse(date, formatter);
-        return toDate;
+        return LocalDate.parse(date, formatter);
     }
 
 
 
     /**
      * Override of the standard equals()-method to compare the information about two Repair-objects.
-     * @param o
+     * @param o Object.java object.
      * @return boolean
-     * @author Team 007
      */
 
     @Override
@@ -145,7 +143,7 @@ public class Repair {
      */
     @Override
     public String toString(){
-        return "control.Repair ID: " + repair_id
+        return "Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id
                 + "\nDate sent: " + date_sent
                 + "\nDescription before: " + before_desc
