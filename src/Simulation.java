@@ -1,3 +1,4 @@
+import control.Bike;
 import control.Dock;
 import control.Factory;
 import model.BikeModel;
@@ -19,6 +20,7 @@ public class Simulation implements Runnable{
     private static ArrayList<Dock> docks;
     private static Random random = new Random();
     private static BikeModel bm = new BikeModel();
+    private static BikeStatsModel bts = new BikeStatsModel();
 
     public Simulation(int id){
        this.id = id;
@@ -37,7 +39,7 @@ public class Simulation implements Runnable{
 
     static void sim(int bikeID){
         int steps = 10;
-        BikeStatsModel bts = new BikeStatsModel();
+
         while (true) {
             double distance = bts.getDistance(bikeID);
             int trip = bts.getTripNr(bikeID) + 1;
@@ -71,7 +73,7 @@ public class Simulation implements Runnable{
 
             LocalDateTime ldt;
 
-            bm.setDockID(-1, bikeID);
+            bm.setDockID(bikeID, -1);
             for (int i = 0; i < steps; i++) {
 
                 ldt = LocalDateTime.now();
@@ -148,10 +150,19 @@ public class Simulation implements Runnable{
 class RunSimulation{
 
     public static void main(String[] args){
-        Simulation s = new Simulation(54);
-        Simulation s2 = new Simulation(56);
-        s.start();
-        s2.start();
+        Factory factory = new Factory();
+        factory.updateSystem();
+        ArrayList<Bike> bikes = factory.getBikes();
+        Simulation[] simulations = new Simulation[bikes.size()];
+        for (int i = 0; i < bikes.size(); i++){
+            simulations[i] = new Simulation(bikes.get(i).getBikeId());
+            simulations[i].start();
+            try{
+                sleep(500);
+            } catch(InterruptedException e){
+                System.out.println("simulation main sleep interrupted.");
+            }
+        }
 
     }
 

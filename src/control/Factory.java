@@ -12,6 +12,7 @@
 package control;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 import model.*;
 
@@ -23,6 +24,7 @@ public class Factory {
     private ArrayList<RepairSent> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
+    private BikeStatsModel bsm;
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
@@ -127,7 +129,13 @@ public class Factory {
         int dockID = b.getDockId();
         double pwrUsage = b.getPowerUsage();
         b.setDockId(MAINDOCK);
-        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
+        int bikeID = bikeModel.addBike(date,price,make,type,pwrUsage,false);
+        b.setBikeId(bikeID);
+        bikeModel.setDockID(bikeID, MAINDOCK);
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        bsm.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
         return true;
     }//end method
 
