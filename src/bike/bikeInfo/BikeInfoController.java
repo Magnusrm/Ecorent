@@ -44,7 +44,7 @@ public class BikeInfoController implements Initializable {
 
     @FXML
     private Label batteryLbl;
-    
+
     @FXML
     private Button showInfoBtn;
 
