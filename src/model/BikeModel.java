@@ -429,13 +429,14 @@ public class BikeModel {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
+        double sum = 0;
+
         String priceQuery = "SELECT price FROM bike";
 
         try {
             connection = DBCleanup.getConnection();
             preparedStatement = connection.prepareStatement(priceQuery);
             resultSet = preparedStatement.executeQuery();
-            double sum = 0;
             while (resultSet.next()) {
                 sum += resultSet.getDouble("price");
             }
@@ -447,7 +448,7 @@ public class BikeModel {
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-        return -1;
+        return sum;
     }
 
     /**
