@@ -2,6 +2,7 @@ package model;
 
 import control.Bike;
 import control.Dock;
+import control.Factory;
 import control.Type;
 
 import java.sql.*;
@@ -306,7 +307,11 @@ public class BikeModel {
                 resultSet = preparedStatement.executeQuery();
                 connection.commit();
                 resultSet.next();
-                return resultSet.getInt("MAX(bike_id)");
+                int bikeID = resultSet.getInt("MAX(bike_id)");
+                Factory factory = new Factory();
+                int dockId = factory.getMAINDOCK();
+                setDockID(bikeID,dockId);
+                return bikeID;
             }else{
                 connection.rollback();
                 return -1;
