@@ -81,8 +81,6 @@ public class DockStatsModel {
 
 
 
-
-
     /**
      * Returns the total number of checkouts at a given dock
      * @param dockID            the dock_id of the dock that is to be checked.
