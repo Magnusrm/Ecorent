@@ -51,7 +51,11 @@ public class DockStatsModel {
         return -1;
     }
 
-
+    /**
+     * This method returns the total power usage of the system.
+     * @return sum  which is the added up total power usage of all docks.
+     * @return -1   if the method fails
+     */
     public double getTotalPowerUsageOfSystem(){
 
         Connection connection = null;
@@ -77,12 +81,8 @@ public class DockStatsModel {
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-        return sum;
+        return -1;
     }
-
-
-
-
 
     /**
      * Returns the total number of checkouts at a given dock
@@ -376,5 +376,9 @@ public class DockStatsModel {
         return null;
     }
 
-
+    public static void main(String[] args){
+        DockStatsModel bikemodel = new DockStatsModel();
+        double hei = bikemodel.getTotalPowerUsageOfSystem();
+        System.out.println(hei);
+    }
 }
