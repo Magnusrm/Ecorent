@@ -11,7 +11,7 @@ public class Bike {
     private int bikeId = -1; // this will be updated after the bike is added to the database.
     private final LocalDate buyDate;
     private double price;
-    private int dockId;
+    private int dockId = -1;
     private String make;
     private Type type;
     private double powerUsage;
@@ -41,6 +41,7 @@ public class Bike {
     public LocalDate getBuyDate() {
         return buyDate;
     }
+    public int getBattery(){return battery;}
 
     public double getPrice() {
         return price;
@@ -119,6 +120,11 @@ public class Bike {
         return battery;
     }//end method
 
+    /**
+     * Override of the toString()-method to display a bike's info
+     * @return The bike info listed out
+     */
+    @Override
     public String toString() {
         String r = "";
         if (repairing) {
@@ -130,6 +136,12 @@ public class Bike {
                 + "\n Make: " + make + "\n Type: " + type.getName() + "\n Repairing: " + r;
     }
 
+    /**
+     * Override of the equals()-method to compare objects of the class
+     * @param o
+     * @return true     if the parameters compared are equal
+     * @return false    if the parameters compared are not equal
+     */
     @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }

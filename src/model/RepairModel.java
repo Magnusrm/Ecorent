@@ -1,6 +1,8 @@
 package model;
 
-import control.Repair;
+import control.*;
+import control.RepairReturned;
+import control.RepairSent;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -142,7 +144,7 @@ public class RepairModel {
      * @return repairs          an ArrayList of repair objects.
      * @return null             if method fails.
      */
-    public ArrayList<Repair> getRepairsReturned(){
+    public ArrayList<RepairReturned> getRepairsReturned(){
         Connection connection = null;
 
         PreparedStatement preparedStatement = null;
@@ -159,8 +161,8 @@ public class RepairModel {
         int bikeID;
         int repairID;
 
-        Repair repair;
-        ArrayList<Repair> repairs = new ArrayList<>();
+        RepairReturned repair;
+        ArrayList<RepairReturned> repairs = new ArrayList<>();
 
         String repQuery = "SELECT repair_id, date_sent, before_desc, date_recieved, after_desc, price, bike_id FROM repair WHERE date_recieved IS NOT NULL";
 
@@ -178,7 +180,7 @@ public class RepairModel {
                 price = resultSet.getDouble("price");
                 bikeID = resultSet.getInt("bike_id");
 
-                repair = new Repair(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
+                repair = new RepairReturned(dateSent, beforeDesc, dateReceived, afterDesc, price, bikeID);
                 repair.setRepairId(repairID);
                 repairs.add(repair);
             }
@@ -202,7 +204,7 @@ public class RepairModel {
      * @return repair           a repair object.
      * @return null             if the method fails.
      */
-    public Repair getRepair(int repairID){
+    public RepairSent getRepair(int repairID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -212,7 +214,7 @@ public class RepairModel {
         double price;
         int bikeID;
 
-        Repair repair = null;
+        RepairSent repair = null;
 
         String repairQuery = "SELECT date_sent, before_desc, date_recieved, after_desc, price, bike_id FROM repair WHERE repair_id = ?";
 
@@ -228,7 +230,7 @@ public class RepairModel {
                 beforeDesc = resultSet.getString("before_desc");
                 price = resultSet.getDouble("price");
                 bikeID = resultSet.getInt("bike_id");
-                repair = new Repair(dateSent, beforeDesc, price, bikeID);
+                repair = new RepairSent(dateSent, beforeDesc,bikeID);
                 repair.setRepairId(repairID);
                 repair.setBikeId(bikeID);
             }

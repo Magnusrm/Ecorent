@@ -16,16 +16,18 @@ import java.util.*;
 import model.*;
 
 public class Factory {
-    private ArrayList<Dock> docks = new ArrayList<Dock>();
-    private ArrayList<Bike> bikes = new ArrayList<Bike>();
-    private ArrayList<Admin> admins = new ArrayList<Admin>();
-    private ArrayList<Type> types = new ArrayList<Type>();
-    private ArrayList<Repair> repairsNotReturned = new ArrayList<>();
+    private ArrayList<Dock> docks = new ArrayList<>();
+    private ArrayList<Bike> bikes = new ArrayList<>();
+    private ArrayList<Admin> admins = new ArrayList<>();
+    private ArrayList<Type> types = new ArrayList<>();
+    private ArrayList<RepairSent> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private DockModel dockModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
+    private ArrayList<RepairReturned> repairsCompleted = new ArrayList<>();
+    private int MAINDOCK = 0; //the default dock of the bikes.
 
 
     public Factory(){
@@ -41,33 +43,63 @@ public class Factory {
     public ArrayList<Bike> getBikes(){return bikes;}
     public ArrayList<Admin> getAdmins(){return admins;}
     public ArrayList<Type> getTypes(){return types;}
-    public ArrayList<Repair> getRepairsNotReturned(){return repairsNotReturned;}
+    public ArrayList<RepairSent> getRepairsNotReturned(){return repairsNotReturned;}
+    public ArrayList<RepairReturned> getRepairsCompleted(){return repairsCompleted;}
+    public int getMAINDOCK(){return MAINDOCK;}
 
     /**
-     * Method to get bikes, docks and admins from
+     * Method to get bikes, docks, types, repairs and admins from
      * model classes connected to database.
      * This is used every time the user starts the application
-     * */
+     */
     public void updateSystem(){
        bikes = bikeModel.getAllBikes();
        docks = dockModel.getAllDocks();
+       MAINDOCK = docks.get(0).getDockID();
+       for(Bike b:bikes)b.setDockId(MAINDOCK);
        for(String name:typeModel.getTypes()){
            Type type = new Type(name);
            types.add(type);
        }//end loop
-        for(Integer i:repairModel.getRepairIDs()){
-           repairsNotReturned.add(repairModel.getRepair(i));
-        }//end loop
-        for(int i = 0; i<repairsNotReturned.size();i++){
-           if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
-        }
+        fillRepair();
        admins = adminModel.getAllAdmins();
+    }//end method
+
+    /**
+     * Private method to fill out the repair arrays from
+     * database.
+     * A duplicate bug seem to occur in repairsNotReturned at times.
+     * The reason is at this time (16.04.2018) unknown,
+     * but the duplicates get removed with the second for-loop.
+     * The method can be updated in the future.
+     */
+    private void fillRepair(){
+        repairsCompleted = repairModel.getRepairsReturned();
+
+        for(int i:repairModel.getRepairIDs()){
+            repairsNotReturned.add(repairModel.getRepair(i));
+        }//end loop
+
+        //Removing duplicates
+        for(int i = 0;i<repairsNotReturned.size();i++){
+            for(int j = i+1; j<repairsNotReturned.size();j++){
+                if(repairsNotReturned.get(i).getRepair_id() == repairsNotReturned.get(j).getRepair_id()){
+                    repairsNotReturned.remove(j);
+                }//end condition
+            }//end loop
+        }//end loop
+
+        for(int i = 0; i<repairsNotReturned.size();i++){ //Registering that bikes are repairing
+            if(bikes.get(i).getBikeId() == repairsNotReturned.get(i).getBikeId())bikes.get(i).setRepairing(true);
+        }//end loop
     }//end method
 
     /**
      * Method to add admin. If mainAdmin is true
      * the admin will have access to add and delete
-     * ther admins
+     * admins
+     * @param a is an Admin object
+     * @return true if added in database
      */
     public boolean addAdmin(Admin a){
         if(a == null) throw new IllegalArgumentException("Error at Factory.java, addAdmin, argument is null");
@@ -81,9 +113,7 @@ public class Factory {
 
     /**
      * Method to add a bike.
-     *
-     *
-     * @param b is an Bike object
+     * @param b is a Bike object
      * @return boolean
      */
     public boolean addBike(Bike b){
@@ -96,11 +126,18 @@ public class Factory {
        String type = b.getType().getName();
         int dockID = b.getDockId();
        double pwrUsage = b.getPowerUsage();
+       b.setDockId(MAINDOCK);
        b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
        return true;
     }//end method
 
-    //Method to add types
+    /**
+     * Method to add types
+     * Takes a Type object and retrieves
+     * the information the database needs.
+     * @param t is an object of Type.java
+     * @return true if operation is successful.
+     */
     public boolean addType(Type t){
         if(t == null)return false;
         for(Type type:types){
@@ -112,7 +149,14 @@ public class Factory {
         else return false;
     }//end method
 
-    //Method to add docks
+    /**
+     * Method to add docks.
+     * Takes an object of Dock and
+     * retrieves the information the
+     * dock needs.
+     * @param d is an object of Dock.java
+     * @return boolean true if operation is successful
+     */
     public boolean addDock(Dock d){
         if(d == null)throw new IllegalArgumentException("Error at Factory.java, addDock, argument is null");
         for(Dock dock : docks){
@@ -131,14 +175,17 @@ public class Factory {
      * Method to add a repair.
      * Takes object in as argument and retrieves
      * the information model class needs.
+     * @param r is an object of RepairSent.java
+     * @return boolean true if operation is successful.
      */
-    public boolean repairSent(Repair r){
+    public boolean repairSent(RepairSent r){
         if(r == null) throw new IllegalArgumentException("The repair object is not created");
         int bikeID = r.getBikeId();
         String beforeDescription = r.getBeforeDesc();
         String dateSent = r.getDateSent().toString();
         r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescription));
         bikeModel.changeRepair(bikeID);
+        repairsNotReturned.add(r);
         if(r.getRepair_id() != -1){
             for(Bike b: bikes){
                 if(b.getBikeId() == bikeID)b.setRepairing(true);
@@ -151,9 +198,10 @@ public class Factory {
      * Method to receive a repair.
      * Takes object in as argument and
      * retrieves what model classes need.
-     * @return boolean.
+     * @param r is an object of RepairReturned.java
+     * @return boolean true if operation is successful.
      */
-    public boolean repairReturned(Repair r){
+    public boolean repairReturned(RepairReturned r){
         if(r == null)throw new IllegalArgumentException("Repair object is not created!");
         int repairId = 0;
         for(Repair r1: repairsNotReturned){
@@ -164,11 +212,18 @@ public class Factory {
             String desc = r.getAfterDesc();
             double price = r.getPrice();
             bikeModel.changeRepair(r.getBikeId());
+            repairsCompleted.add(r);
+            //for(RepairSent r1:repairsNotReturned){if(r1.getRepair_id()==repairId)repairsNotReturned.remove(r1);}
             return (repairModel.returnRepair(repairId, date, desc, price));
         }else return false;
     }//end method
 
-    //Method to delete bikes
+    /**
+     * Method to delete bikes.
+     * Searches for the bike using the bikeID
+     * @param bikeId is an int identifying the bike.
+     * @return boolean true if the operation is successful.
+     */
     public boolean delBike(int bikeId){
         if(bikeId == 0 || bikeId<0)throw new IllegalArgumentException("No bike ID is zero or negative");
         for(int i = 0; i<bikes.size();i++){
@@ -180,7 +235,12 @@ public class Factory {
         return false;
     }//end method
 
-    //Method to delete docks
+    /**
+     * Method to delete docks
+     * Uses the ID to find and delete the bike.
+     * @param dockId is an int identifying the dock
+     * @return boolean true if the operation is successful.
+     */
     public boolean delDock(int dockId){
         if(dockId == 0 || dockId <0)throw new IllegalArgumentException("No dock ID is zero or negative");
         for(int i = 0;i<docks.size();i++){
@@ -193,6 +253,14 @@ public class Factory {
         return false;
     }//end method
 
+    /**
+     * Method to delete admin.
+     * Uses the email to find and delete admin
+     * This operation is only possible to perform
+     * as a main admin.
+     * @param email is a String that identifies an Admin
+     * @return boolean true if the operation is successful.
+     */
     public boolean deleteAdmin(String email) {
         for (Admin anAdmin : admins) {
             if (email.equals(anAdmin.getEmail())) {
@@ -206,14 +274,23 @@ public class Factory {
 
     //Method to change
 
-    //Method to edit bikes
+    /**
+     * Method to edit bikes.
+     * Uses the bikeId to find the given bike.
+     * Then it replaces the bike object with the
+     * one coming in as argument.
+     * @param bikeId is an int that identifies a bike
+     * @param newBike is a new bike object that replaces
+     *                the given bike.
+     * @return boolean true if the operation is successful.
+     */
     public boolean editBike(int bikeId, Bike newBike){
         if(bikeId == 0 || bikeId<0) throw new IllegalArgumentException("No bike ID is zero or negative");
         if(newBike == null) throw new IllegalArgumentException("Error at Factory.java,editBike, argument is null");
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = dockModel.getDockID(bikeId);
+               int dockID = 1; //The main dock
                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
@@ -228,7 +305,16 @@ public class Factory {
         return false;
     }//end method
 
-    //Method to edit docks
+    /**
+     * Method to edit docks.
+     * Takes the dock name and finds the given dock.
+     * Then it replaces it with the given Dock object.
+     * @param dockName is an object of String.java
+     * @param d is an object of Dock.java
+     * @return boolean true if operation is successful.
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public boolean editDocks(String dockName, Dock d)throws SQLException,ClassNotFoundException{
         if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
         for(int i = 0; i<docks.size();i++){
@@ -245,7 +331,14 @@ public class Factory {
         return false;
     }//end method
 
-    //Method to edit types
+    /**
+     * Method to edit types.
+     * Takes in an original Type object and finds the given type.
+     * Then it replaces the type with the new Type object.
+     * @param typeOriginal is an object of Type.java
+     * @param typeEdit is an object of Type.java
+     * @return boolean true if operation is successful.
+     */
     public boolean editType(Type typeOriginal, Type typeEdit) {
         if(typeEdit == null||typeEdit.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
@@ -259,7 +352,14 @@ public class Factory {
         return false;
     }//end method
 
-    //Method to delete types
+    /**
+     * Method to delete types.
+     * Takes a Type object.
+     * If the type doesn't exist it will throw exceptions.
+     * If the type exists it will remove it.
+     * @param type is an object of Type.java
+     * @return boolean true if operation is successful.
+     */
     public boolean deleteType(Type type) {
         if(type == null||type.getName().length() == 0)throw new IllegalArgumentException("No input");
         for (int i = 0; i < types.size(); i++) {
