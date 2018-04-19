@@ -112,10 +112,6 @@ public class BikeInfoController implements Initializable {
 
     }
 
-    public void getBikePosition() {
-
-    }
-
     /**
      * Displays the info about the bike described in the bikeIdField.
      * This method also fills the ListView with the repairs the bike have had in the past.
@@ -187,7 +183,7 @@ public class BikeInfoController implements Initializable {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }//end condition
-        ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
+        ArrayList<double[]> recentPositions = bsm.getMostRecentCoordinates();
         for (double[] p : recentPositions){
             if (p[0] == bikeID){
                 engine.executeScript("document.createMarkerEgen(" + p[0] + ", " + p[1] + ", " + p[2] + ");");

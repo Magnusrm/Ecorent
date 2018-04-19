@@ -59,14 +59,25 @@ public class Simulation implements Runnable{
             double xDestination = 0;
             double yDestination = 0;
             double distanceChange = 0;
-/*
-            for (Dock d : docks){
-                if (d.getDockID())
+
+            factory.updateSystem();
+            ArrayList<Bike> bikes = factory.getBikes();
+            Bike bike = null;
+            for (Bike b : bikes){
+                if (b.getBikeId() == bikeID){
+                    bike = b;
+                }
             }
-*/
-          //  int checkouts = dsm.getCheckouts(.getDockID()) + 1;
+            Dock dock = null;
+            for (Dock d : docks){
+                if (d.getDockID() == bike.getDockId()){
+                    dock = d;
+                }
+            }
+
+            int checkouts = dsm.getCheckouts(dock.getDockID()) + 1;
             String time = getNow();
-           // dsm.updateDockStats(randomD.getDockID(), time, factory.powerUsage(randomD.getName())*0.016666667, checkouts);
+            dsm.updateDockStats(dock.getDockID(), time, factory.powerUsage(dock.getName())*0.016666667, checkouts);
 
             Dock randomD = null;
             while(check == 0) {
@@ -78,7 +89,6 @@ public class Simulation implements Runnable{
                     check = 1;
                 }
             }
-
 
             double xDifference = xDestination - xPos;
             double yDifference = yDestination - yPos;
@@ -105,10 +115,7 @@ public class Simulation implements Runnable{
                 }
             }
 
-
             bm.setDockID(bikeID, randomD.getDockID());
-
-
 
             for (int j = 0; j < 5; j++){
                 time = getNow();
