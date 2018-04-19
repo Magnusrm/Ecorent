@@ -93,7 +93,6 @@ public class BikeInfoController implements Initializable {
             repairIdListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    System.out.println("nice, du valgte: " + newValue + " bror");
                     int repairID = Integer.parseInt(newValue);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information about repair " + repairID);
@@ -112,9 +111,6 @@ public class BikeInfoController implements Initializable {
 
     }
 
-    public void getBikePosition() {
-
-    }
 
     /**
      * Displays the info about the bike described in the bikeIdField.
@@ -195,6 +191,7 @@ public class BikeInfoController implements Initializable {
         }
 
     }//end method
+
 
 
 
