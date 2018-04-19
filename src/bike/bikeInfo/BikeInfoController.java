@@ -175,6 +175,7 @@ public class BikeInfoController implements Initializable {
             makeLbl.setText(make);
             dateLbl.setText(date);
             batteryLbl.setText(battery);
+
         }//end condition
         if(bike == null){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
