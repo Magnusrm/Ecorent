@@ -3,6 +3,7 @@ import control.Dock;
 import control.Factory;
 import model.BikeModel;
 import model.BikeStatsModel;
+import model.DockStatsModel;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ public class Simulation implements Runnable{
     private static Random random = new Random();
     private static BikeModel bm = new BikeModel();
     private static BikeStatsModel bts = new BikeStatsModel();
+    private static DockStatsModel dsm = new DockStatsModel();
 
     public Simulation(int id){
        this.id = id;
@@ -57,6 +59,15 @@ public class Simulation implements Runnable{
             double xDestination = 0;
             double yDestination = 0;
             double distanceChange = 0;
+/*
+            for (Dock d : docks){
+                if (d.getDockID())
+            }
+*/
+          //  int checkouts = dsm.getCheckouts(.getDockID()) + 1;
+            String time = getNow();
+           // dsm.updateDockStats(randomD.getDockID(), time, factory.powerUsage(randomD.getName())*0.016666667, checkouts);
+
             Dock randomD = null;
             while(check == 0) {
                 randomD = randomDock();
@@ -68,17 +79,14 @@ public class Simulation implements Runnable{
                 }
             }
 
+
             double xDifference = xDestination - xPos;
             double yDifference = yDestination - yPos;
-
-            LocalDateTime ldt;
 
             bm.setDockID(bikeID, -1);
             for (int i = 0; i < steps; i++) {
 
-                ldt = LocalDateTime.now();
-                String time = ("" + ldt + "").replaceAll("T", " ");
-                time = time.substring(0, time.length() - 4);
+                time = getNow();
 
                 xPos += xDifference / steps;
                 yPos += yDifference / steps;
@@ -90,19 +98,20 @@ public class Simulation implements Runnable{
 
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
 
-
                 try {
                     sleep(3000);
                 } catch (Exception e) {
                     System.out.println("Error: " + e);
                 }
             }
+
+
             bm.setDockID(bikeID, randomD.getDockID());
 
+
+
             for (int j = 0; j < 5; j++){
-                ldt = LocalDateTime.now();
-                String time = ("" + ldt + "").replaceAll("T", " ");
-                time = time.substring(0, time.length() - 4);
+                time = getNow();
                 batteryLevel += 10;
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
                 try {
@@ -119,6 +128,15 @@ public class Simulation implements Runnable{
         docks = factory.getDocks();
         int randomIndex = random.nextInt(docks.size());
         return docks.get(randomIndex);
+    }
+
+    public static String getNow() {
+        String time;
+        LocalDateTime ldt;
+        ldt = LocalDateTime.now();
+        time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        return time;
     }
 
     /**
