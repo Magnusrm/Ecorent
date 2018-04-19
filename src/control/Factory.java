@@ -25,7 +25,6 @@ public class Factory {
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private BikeStatsModel bikeStatsModel;
-    private BikeStatsModel bsm;
     private DockModel dockModel;
     private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
@@ -139,7 +138,7 @@ public class Factory {
         LocalDateTime ldt = LocalDateTime.now();
         String time = ("" + ldt + "").replaceAll("T", " ");
         time = time.substring(0, time.length() - 4);
-        bsm.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
+        bikeStatsModel.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
         return true;
     }//end method
 
