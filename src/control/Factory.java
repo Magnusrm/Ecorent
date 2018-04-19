@@ -523,4 +523,37 @@ public class Factory {
         return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
     }
 
+    /**
+     * Method to find the number of bikes using each type.
+     * It is used in bike stats to show one types popularity.
+     * @return an two dimensional array of String.java
+     */
+    public String[][] getTypePopularity(){
+        String[][] numberOfTypes = new String[types.size()][2];
+        for(int i = 0; i<types.size();i++){
+            numberOfTypes[i][0] = types.get(i).getName();
+        }//end loop
+        for(int i = 0; i<types.size();i++){
+            int size = 0;
+            for(int j = 0; j<bikes.size();j++){
+                if(numberOfTypes[i][0].equals(bikes.get(j).getType().getName())){
+                    size++;
+                    numberOfTypes[i][1] = "" + size;
+                }//end loop
+                if(numberOfTypes[i][1] == null)numberOfTypes[i][1] = "" + 0; //If there are no bikes with that type
+            }//end loop
+        }//end loop
+        return numberOfTypes;
+    }//end method
+
+    public static void main(String[] args){
+        Factory f = new Factory();
+        f.updateSystem();
+        for(int i = 0; i<f.getTypes().size();i++){
+            for(int j = 0; j<2; j++){
+                System.out.println(f.getTypePopularity()[i][j]);
+            }
+        }
+    }
+
 }//end class
