@@ -23,13 +23,20 @@
                   <Font name="Times New Roman" size="15.0" />
                </font>
             </Text>
-            <Label alignment="CENTER" layoutX="95.0" layoutY="203.0" prefHeight="17.0" prefWidth="244.0" styleClass="text" text="Admin currently signed in:" textFill="WHITE" />
-            <Label fx:id="adminEmailLbl" alignment="CENTER" layoutX="61.0" layoutY="220.0" prefHeight="17.0" prefWidth="311.0" styleClass="text" text="email" />
+            <Label fx:id="adminEmailLbl" alignment="CENTER" layoutX="62.0" layoutY="215.0" prefHeight="17.0" prefWidth="311.0" styleClass="text" text="email">
+               <font>
+                  <Font name="Times New Roman" size="20.0" />
+               </font></Label>
             <ImageView fitHeight="126.0" fitWidth="417.0" layoutX="20.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/welcome.png" />
                </image>
             </ImageView>
+            <Label fx:id="adminRightsLbl" alignment="CENTER" layoutX="62.0" layoutY="238.0" prefHeight="17.0" prefWidth="311.0" styleClass="text" text="rights">
+               <font>
+                  <Font name="Times New Roman" size="17.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>

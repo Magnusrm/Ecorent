@@ -427,17 +427,42 @@ public class Factory {
      * It uses the dockedBikes(dockName) method to find all bikes docked at the given dock name.
      * It then adds their power usage together and returns the value.
      * @param dockName is an object of String.java
-     * @return double, the power usage of the dock.
+     * @return the power usage of the dock.
      */
     public double powerUsage(String dockName){
         return dockModel.getPowerAtDock(dockName);
     }//end method
 
     /**
+     * Returns a double[] containing the daily power usage of each dock.
+     * @return daily power usage of each dock.
+     */
+    public double[] getDailyPowerUsage(){
+        return dockStatsModel.getDailyPowerUsage();
+    }
+
+    /**
+     * Returns an ArrayList of int[] containing maxCheckouts for each dock.
+     * @return  Max checkouts for each dock.
+     */
+    public ArrayList<int[]> getMaxCheckouts(){
+        return dockStatsModel.getMaxCheckouts();
+    }
+
+    /**
+     * Returns the dock name for a given dockID.
+     * @param dockID
+     * @return dock name for a given dockID.
+     */
+    public String getDockName(int dockID){
+        return dockModel.getDockName(dockID);
+    }
+
+    /**
      *
      * Returns the Total Power Usage Of System.
      *
-     * @return
+     * @return Total Power Usage Of System.
      */
     public double getTotalPowerUsageOfSystem(){
         return dockStatsModel.getTotalPowerUsageOfSystem();
@@ -447,7 +472,7 @@ public class Factory {
      *
      * Returns a double describing the expenses of all repairs combined.
      *
-     * @return
+     * @return expenses of all repairs combined.
      */
     public double getRepairExpenses(){
         return repairModel.getPriceOfAllRepairs();
@@ -457,7 +482,7 @@ public class Factory {
      *
      * Returns a double describing the expenses of all bike purchases.
      *
-     * @return
+     * @return expenses of all bike purchases.
      */
     public double getBikePurchaseExpenses(){
         return bikeModel.getPriceOfAllBikes();
@@ -467,7 +492,7 @@ public class Factory {
      *
      * Returns a double describing the expenses of the total power usage;
      *
-     * @return
+     * @return describing the expenses of the total power usage;
      */
     public double getPowerExpenses(){
         double price = 0.53;
@@ -478,7 +503,7 @@ public class Factory {
      *
      * Returns a double describing the income of bike rentals
      *
-     * @return
+     * @return income of bike rentals
      */
     public double getRentIncome(){
         double price = 100; // sets price to rent each bke
@@ -489,7 +514,7 @@ public class Factory {
      *
      * Returns a double describing the net income.
      *
-     * @return
+     * @return net income.
      */
     public double getNetIncome(){
         double sum = 0;
@@ -501,16 +526,27 @@ public class Factory {
 
         return sum;
     }
-// kommentar
 
+    /**
+     * Returns the total distance of all bikes
+     * @return total distance of all bikes
+     */
     public double getTotalDistance(){
         return bikeStatsModel.getTotalDistance();
     }
 
+    /**
+     * Returns the total amount of trips for all bikes
+     * @return total amount of trips for all bikes
+     */
     public int getTotalTrips(){
         return bikeStatsModel.getTotalTrips();
     };
 
+    /**
+     * Returns the average kilometers per trip for all bikes.
+     * @return average kilometers per trip for all bikes.
+     */
     public double getAvgKmPerTrip(){
         return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
     }

@@ -42,9 +42,18 @@ public class MainController implements Initializable{
     @FXML
     private Label adminEmailLbl;
 
+    @FXML
+    private Label adminRightsLbl;
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
-    adminEmailLbl.setText(CurrentAdmin.getInstance().getAdmin().getEmail());
+    adminEmailLbl.setText("Welcome, " + CurrentAdmin.getInstance().getAdmin().getEmail() + "!");
+    if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()){
+        adminRightsLbl.setText("You have main admin priviliges");
+    } else {
+        adminRightsLbl.setText("Your priviliges might be restricted");
+    }
+
 
 
     }//end method

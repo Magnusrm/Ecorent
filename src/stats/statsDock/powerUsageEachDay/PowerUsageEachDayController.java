@@ -1,6 +1,7 @@
 package stats.statsDock.powerUsageEachDay;
 
 import changescene.CloseWindow;
+import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,8 @@ import java.util.ResourceBundle;
 
 public class PowerUsageEachDayController implements Initializable {
 
+    Factory factory = new Factory();
+
     @FXML
     private BarChart<?, ?> barChart;
 
@@ -26,8 +29,8 @@ public class PowerUsageEachDayController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         headerLbl.setText("Power Usage Each Day");
-        DockStatsModel dsm = new DockStatsModel();
-        days = dsm.getDailyPowerUsage();
+
+        days = factory.getDailyPowerUsage();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         barChart.setLegendVisible(false);
         XYChart.Series set1 = new XYChart.Series<>();

@@ -1,6 +1,7 @@
 package stats.statsDock.totalCheckouts;
 
 import changescene.CloseWindow;
+import control.Factory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,8 @@ import java.util.ResourceBundle;
 
 public class TotalCheckoutsController implements Initializable {
 
+    Factory factory = new Factory();
+
     @FXML
     private PieChart pieChart;
 
@@ -27,9 +30,7 @@ public class TotalCheckoutsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        DockStatsModel dsm = new DockStatsModel();
-        DockModel dm = new DockModel();
-        ArrayList<int[]> checkouts = dsm.getMaxCheckouts();
+        ArrayList<int[]> checkouts = factory.getMaxCheckouts();
 
         headerLbl.setText("Total Checkouts on Each Dock");
         pieChart.setLegendVisible(false);
@@ -38,7 +39,7 @@ public class TotalCheckoutsController implements Initializable {
         );
 
         for (int[] i : checkouts) {
-            pieChartData.add(new PieChart.Data(dm.getDockName(i[0]), i[1]));
+            pieChartData.add(new PieChart.Data(factory.getDockName(i[0]), i[1]));
 
         }
 
