@@ -1,4 +1,4 @@
-package stats.statsPieChart;
+package stats.statsDock.totalCheckouts;
 
 import changescene.CloseWindow;
 import javafx.collections.FXCollections;
@@ -6,9 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import model.DockModel;
 import model.DockStatsModel;
@@ -17,7 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class StatsPieChartController implements Initializable {
+public class TotalCheckoutsController implements Initializable {
 
     @FXML
     private PieChart pieChart;
@@ -39,8 +37,8 @@ public class StatsPieChartController implements Initializable {
 
         );
 
-        for(int[] i : checkouts){
-           pieChartData.add(new PieChart.Data(dm.getDockName(i[0]), i[1]));
+        for (int[] i : checkouts) {
+            pieChartData.add(new PieChart.Data(dm.getDockName(i[0]), i[1]));
 
         }
 
@@ -56,7 +54,7 @@ public class StatsPieChartController implements Initializable {
     }
 
     @FXML
-    void closeBarChart(ActionEvent event){
+    void closeBarChart(ActionEvent event) {
         CloseWindow cs = new CloseWindow(event);
     }
 }

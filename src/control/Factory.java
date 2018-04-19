@@ -1,11 +1,11 @@
 /**
- * Factory.java
- * @author Team007
- *
- * This class is an aggregate of Dock.java,Bike.java and Admin.java
- * It both updates and retrieves data from the model classes connected to the database
- * concerned the creation and edit of these objects.
- * The class will provide the view-control classes with data, which is why we add data from the
+* Factory.java
+* @author Team007
+*
+* This class is an aggregate of Dock.java,Bike.java and Admin.java
+* It both updates and retrieves data from the model classes connected to the database
+* concerned the creation and edit of these objects.
+* The class will provide the view-control classes with data, which is why we add data from the
  * database into private arrays.
  */
 
@@ -58,16 +58,16 @@ public class Factory {
      * This is used every time the user starts the application
      */
     public void updateSystem(){
-        bikes = bikeModel.getAllBikes();
-        docks = dockModel.getAllDocks();
-        MAINDOCK = docks.get(0).getDockID();
-        for(Bike b:bikes)b.setDockId(MAINDOCK);
-        for(String name:typeModel.getTypes()){
-            Type type = new Type(name);
-            types.add(type);
-        }//end loop
+       bikes = bikeModel.getAllBikes();
+       docks = dockModel.getAllDocks();
+       MAINDOCK = docks.get(0).getDockID();
+       for(Bike b:bikes)b.setDockId(MAINDOCK);
+       for(String name:typeModel.getTypes()){
+           Type type = new Type(name);
+           types.add(type);
+       }//end loop
         fillRepair();
-        admins = adminModel.getAllAdmins();
+       admins = adminModel.getAllAdmins();
     }//end method
 
     /**
@@ -175,10 +175,6 @@ public class Factory {
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
         d.setDockID(dockModel.addDock(name,x,y));
-        LocalDateTime ldt = LocalDateTime.now();
-        String time = ("" + ldt + "").replaceAll("T", " ");
-        time = time.substring(0, time.length() - 4);
-        dockStatsModel.updateDockStats(d.getDockID(), time, 1,0 );
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
@@ -343,7 +339,6 @@ public class Factory {
         return false;
     }//end method
 
-
     /**
      * Method to edit types.
      * Takes in an original Type object and finds the given type.
@@ -378,22 +373,36 @@ public class Factory {
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(type)){
                 types.remove(i);
-                return typeModel.deleteType(type.getName());
+                boolean result = deleteAllBikesWithNoType(); //Bikes with no types cannot exist
+                boolean result1 =  typeModel.deleteType(type.getName());
+                return result&&result1;
             }//end if
         }//end loop
         if(TypeModel.typeExists(type.getName()) == -1)throw new IllegalArgumentException("The type does not exist");
         return false;
     }//end method
 
-    //Method to delete all bikes without a type
-    public boolean deleteAllBikes(){
+    /**
+     * Method to delete all bikes with no type.
+     * A bike without a type cannot exist, so
+     * the system will use this method to delete
+     * all bikes with no types.
+     * @return
+     */
+    public boolean deleteAllBikesWithNoType(){
         for(int i = 0; i<bikes.size();i++){
             if(bikes.get(i).getType() == null)bikes.remove(i);
         }
         return bikeModel.deleteBikesWhereTypeIsNULL();
     }//end
 
-    //Method to get all bikes docked at a given dock
+    /**
+     * Method to get all bikes docked at a given dock.
+     * It will use the dock name to find the given dock
+     * and show all bikes located at the dock.
+     * @param dockName is an object of String.java
+     * @return an array of the bike IDs located at the dock.
+     */
     public int[] dockedBikes(String dockName){
         if(dockModel.bikesAtDock(dockName) != null) {
             ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
@@ -504,6 +513,39 @@ public class Factory {
 
     public double getAvgKmPerTrip(){
         return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
+    }
+
+    /**
+     * Method to find the number of bikes using each type.
+     * It is used in bike stats to show one types popularity.
+     * @return an two dimensional array of String.java
+     */
+    public String[][] getTypePopularity(){
+        String[][] numberOfTypes = new String[types.size()][2];
+        for(int i = 0; i<types.size();i++){
+            numberOfTypes[i][0] = types.get(i).getName();
+        }//end loop
+        for(int i = 0; i<types.size();i++){
+            int size = 0;
+            for(int j = 0; j<bikes.size();j++){
+                if(numberOfTypes[i][0].equals(bikes.get(j).getType().getName())){
+                    size++;
+                    numberOfTypes[i][1] = "" + size;
+                }//end loop
+                if(numberOfTypes[i][1] == null)numberOfTypes[i][1] = "" + 0; //If there are no bikes with that type
+            }//end loop
+        }//end loop
+        return numberOfTypes;
+    }//end method
+
+    public static void main(String[] args){
+        Factory f = new Factory();
+        f.updateSystem();
+        for(int i = 0; i<f.getTypes().size();i++){
+            for(int j = 0; j<2; j++){
+                System.out.println(f.getTypePopularity()[i][j]);
+            }
+        }
     }
 
 }//end class
