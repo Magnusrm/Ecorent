@@ -62,7 +62,6 @@ public class Factory {
         bikes = bikeModel.getAllBikes();
         docks = dockModel.getAllDocks();
         MAINDOCK = docks.get(0).getDockID();
-        for(Bike b:bikes)b.setDockId(MAINDOCK);
         for(String name:typeModel.getTypes()){
             Type type = new Type(name);
             types.add(type);
