@@ -31,6 +31,7 @@
                 backgroundColor: "#666970"
             };
 
+
             var directionsService = new google.maps.DirectionsService();
             var directionsDisplay = new google.maps.DirectionsRenderer({
                 map : document.map
@@ -51,56 +52,22 @@
                 if (zoomLevel > 0) document.map.setZoom(zoomLevel - 1);
             }
 
-            var dockMarkers = [];
-            var bikeMarkers = [];
-            var destinations = [];
             var markers = [];
-            var lineSymbol = {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                strokeColor: '#393'
-            };
+
+            document.map.addListener("click", function(event){
+                document.createMarker(event.latLng);
+                console.log(event.latLng); });
 
 
-            document.createDockMarker = function createDockMarker(id, latitude, longitude) {
-                var latlngMarker = new google.maps.LatLng(latitude, longitude);
-                document.marker = new google.maps.Marker({
-                    position: latlngMarker,
-                    map: document.map,
-                    draggable: false,
-                    title: id,
-                    visible: true
-                });
-                dockMarkers.push(document.marker);
-                destinations.push(latlngMarker);
-            }
-
-            document.setMapOnAllDocks = function setMapOnAllDocks(map) {
-                for (var i = 0; i < dockMarkers.length; i++) {
-                    dockMarkers[i].setMap(map);
+            document.setMapOnAll = function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(map);
                 }
             }
 
-            document.setMapOnAllBikes = function setMapOnAllBikes(map) {
-                for (var i = 0; i < bikeMarkers.length; i++) {
-                    bikeMarkers[i].setMap(map);
-                }
-            }
-
-            document.createBikeMarker = function createBikeMarker(xPos, yPos){
-                var position = new google.maps.LatLng(xPos, yPos);
-                document.marker = new google.maps.Marker({
-                    position : position,
-                    icon : lineSymbol,
-                    map : document.map,
-                    draggable : false,
-                    visible : true
-                });
-                bikeMarkers.push(document.marker);
-
-            }
-            
-            document.createMarker = function createMarker(location) {
+            document.createMarker = function (location) {
+                document.setMapOnAll(null);
+                markers = [];
                 document.marker = new google.maps.Marker({
                     position: location,
                     map: document.map,
@@ -108,21 +75,7 @@
                     visible: true
                 });
                 markers.push(document.marker);
-            }
-
-            document.removeBikeMarkers = function removeBikeMarkers(){
-                document.setMapOnAllBikes(null);
-                bikeMarkers = [];
-            }
-
-            document.setDockMarkers = function setDockMarkers(posData){
-                document.setMapOnAllDocks(null);
-                markers = [];
-
-                for (var j = 0; j < posData.length; j++){
-                    document.createDockMarker(posData[j][0], posData[j][1], posData[j][2]);
-                }
-
+                document.setMapOnAll(document.map);
             }
 
 

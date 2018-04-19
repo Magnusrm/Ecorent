@@ -12,6 +12,7 @@
 package control;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 import model.*;
 
@@ -23,7 +24,10 @@ public class Factory {
     private ArrayList<RepairSent> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
+    private BikeStatsModel bikeStatsModel;
+    private BikeStatsModel bsm;
     private DockModel dockModel;
+    private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
     private ArrayList<RepairReturned> repairsCompleted = new ArrayList<>();
@@ -33,9 +37,11 @@ public class Factory {
     public Factory(){
         adminModel = new AdminModel();
         bikeModel = new BikeModel();
+        bikeStatsModel = new BikeStatsModel();
         dockModel = new DockModel();
         repairModel = new RepairModel();
         typeModel = new TypeModel();
+        dockStatsModel = new DockStatsModel();
     }//end constructor
 
     //Access methods
@@ -118,16 +124,23 @@ public class Factory {
      */
     public boolean addBike(Bike b){
         if(b == null ) return false;
+        b.setDockId(docks.get(0).getDockID());
         bikes.add(b);
-       String date = b.getBuyDate().toString();
-       double price = b.getPrice();
-       String make = b.getMake();
-       String type = b.getType().getName();
-       int dockID = b.getDockId();
-       double pwrUsage = b.getPowerUsage();
-       b.setDockId(MAINDOCK);
-       b.setBikeId(bikeModel.addBike(date,price,make,type,pwrUsage,false));
-       return true;
+        String date = b.getBuyDate().toString();
+        double price = b.getPrice();
+        String make = b.getMake();
+        String type = b.getType().getName();
+        int dockID = b.getDockId();
+        double pwrUsage = b.getPowerUsage();
+        b.setDockId(MAINDOCK);
+        int bikeID = bikeModel.addBike(date,price,make,type,pwrUsage,false);
+        b.setBikeId(bikeID);
+        bikeModel.setDockID(bikeID, MAINDOCK);
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        bsm.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
+        return true;
     }//end method
 
     /**
@@ -158,9 +171,6 @@ public class Factory {
      */
     public boolean addDock(Dock d){
         if(d == null)throw new IllegalArgumentException("Error at Factory.java, addDock, argument is null");
-        for(Dock dock : docks){
-            if(d.equals(dock))return false;
-        }//end loop
         docks.add(d);
         String name = d.getName();
         double x = d.getxCoordinates();
@@ -289,7 +299,7 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = 1; //The main dock
+               int dockID = dockModel.getDockID(bikeId);
                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
@@ -428,5 +438,89 @@ public class Factory {
         }//end loop
         return pwr;
     }//end method
+
+
+    /**
+     *
+     * Returns the Total Power Usage Of System.
+     *
+     * @return
+     */
+    public double getTotalPowerUsageOfSystem(){
+        return dockStatsModel.getTotalPowerUsageOfSystem();
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of all repairs combined.
+     *
+     * @return
+     */
+    public double getRepairExpenses(){
+        return repairModel.getPriceOfAllRepairs();
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of all bike purchases.
+     *
+     * @return
+     */
+    public double getBikePurchaseExpenses(){
+        return bikeModel.getPriceOfAllBikes();
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of the total power usage;
+     *
+     * @return
+     */
+    public double getPowerExpenses(){
+        double price = 0.53;
+        return getTotalPowerUsageOfSystem() * price;
+    }
+
+
+    /**
+     *
+     * Returns a double describing the income of bike rentals
+     *
+     * @return
+     */
+    public double getRentIncome(){
+        double price = 100; // sets price to rent each bke
+        return bikeStatsModel.getTotalTrips() * price;
+    }
+
+
+    /**
+     *
+     * Returns a double describing the net income.
+     *
+     * @return
+     */
+    public double getNetIncome(){
+        double sum = 0;
+
+        sum += getRentIncome();
+        sum -= getPowerExpenses();
+        sum -= getRepairExpenses();
+        sum -= getBikePurchaseExpenses();
+
+        return sum;
+    }
+
+    public double getTotalDistance(){
+        return bikeStatsModel.getTotalDistance();
+    }
+
+    public int getTotalTrips(){
+        return bikeStatsModel.getTotalTrips();
+    };
+
+    public double getAvgKmPerTrip(){
+        return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
+    }
 
 }//end class

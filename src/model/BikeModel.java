@@ -8,6 +8,7 @@ import control.Type;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.zip.CheckedOutputStream;
 
 /**
  * @author Team 007
@@ -69,14 +70,14 @@ public class BikeModel {
         ResultSet resultSet = null;
 
 
-        String bikeQuery = "SELECT reg_date, price, make, pwr_usg, name FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
+        String bikeQuery = "SELECT reg_date, price, make, power, name FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
 
         String regDate;
         LocalDate localDate;
         double price;
         String make;
         String typeName;
-        double pwrUsg;
+        double power;
 
         try {
             connection = DBCleanup.getConnection();
@@ -90,10 +91,10 @@ public class BikeModel {
                     price = resultSet.getDouble("price");
                     make = resultSet.getString("make");
                     typeName = resultSet.getString("name");
-                    pwrUsg = resultSet.getDouble("pwr_usg");
+                    power = resultSet.getDouble("power");
                     localDate = LocalDate.parse(regDate);
                     type = new Type(typeName);
-                    bike = new Bike(localDate, price, make, type,pwrUsg);
+                    bike = new Bike(localDate, price, make, type, power);
                     bike.setBikeId(bikeID);
                     bike.setRepairing(isRepairing(bikeID));
                     return bike;
@@ -122,18 +123,24 @@ public class BikeModel {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+
         String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
+        String bikeInsert2 = "UPDATE bike SET dock_id = NULL WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
 
 
             if(bikeExists(bikeID)) {
-                preparedStatement = connection.prepareStatement(bikeInsert);
-                preparedStatement.setInt(1, dockID);
-                preparedStatement.setInt(2, bikeID);
-
-                return preparedStatement.executeUpdate() != 0;
-
+                if(dockID <= 0){
+                    preparedStatement = connection.prepareStatement(bikeInsert2);
+                    preparedStatement.setInt(1, bikeID);
+                    return preparedStatement.executeUpdate() != 0;
+                }else {
+                    preparedStatement = connection.prepareStatement(bikeInsert);
+                    preparedStatement.setInt(1, dockID);
+                    preparedStatement.setInt(2, bikeID);
+                    return preparedStatement.executeUpdate() != 0;
+                }
             }
         }catch(SQLException e) {
             System.out.println(e.getMessage() + " - setDockID");
@@ -153,18 +160,18 @@ public class BikeModel {
      * @param price         the edited price.
      * @param make          the edited make.
      * @param dockID        the edited dock_id.
-     * @param pwrUsg        the edited price.
+     * @param power        the edited price.
      * @param typeName      the edited type.name. This uses the method typeExists to return the correct type_id.
      * @return true         if the edited changes has been saved.
      * @return false        if the changes hasn't been saved.
      */
-    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double pwrUsg, String typeName) {
+    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double power, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, pwr_usg = ?, type_id = ? " +
+        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, power = ?, type_id = ? " +
                 "WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
@@ -177,7 +184,7 @@ public class BikeModel {
                 preparedStatement.setDouble(2, price);
                 preparedStatement.setString(3, make);
                 preparedStatement.setInt(4, dockID);
-                preparedStatement.setDouble(5, pwrUsg);
+                preparedStatement.setDouble(5, power);
                 preparedStatement.setInt(6, typeID);
                 preparedStatement.setInt(7, bikeID);
 
@@ -266,19 +273,19 @@ public class BikeModel {
      * @param price         the price of the bike.
      * @param make          the make of the type.
      * @param typeName      the type.name of the type of the bike. This uses the method typeExists to return the correct type_id.
-     * @param pwrUsg        the pwr_usage of the bike.
+     * @param power        the power of the bike.
      * @param repair        if the bike is sent to repair or not.
      * @return bikeID       the bike_id that is set by auto increment in the database.
      * @return -1           if the method fails.
      */
-    public int addBike(String date, double price, String make, String typeName, double pwrUsg, boolean repair){
+    public int addBike(String date, double price, String make, String typeName, double power, boolean repair){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
         int typeID = TypeModel.typeExists(typeName);
 
-        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, pwr_usg, repairing, active) VALUES " +
+        String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, power, repairing, active) VALUES " +
                 "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
         String maxBikeID = "SELECT MAX(bike_id) FROM bike WHERE active = 1";
 
@@ -294,7 +301,7 @@ public class BikeModel {
             preparedStatement.setDouble(2, price);
             preparedStatement.setString(3, make);
             preparedStatement.setInt(4, typeID);
-            preparedStatement.setDouble(5, pwrUsg);
+            preparedStatement.setDouble(5, power);
             //preparedStatement.setInt(6, dockID);
             if(repair){
                 preparedStatement.setByte(6, rep);
@@ -367,7 +374,7 @@ public class BikeModel {
      * @return activeBikes      an ArrayList of the bike_id's of all the active bikes in the system.
      * @return null             if the method fails.
      */
-    public ArrayList<Integer> getActiveBikes(){
+/*    public ArrayList<Integer> getActiveBikes(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -395,7 +402,7 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
-    }
+    }*/
 
     /**
      * Checks if a given bike is repairing.
@@ -427,6 +434,33 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
+    }
+
+    public double getPriceOfAllBikes(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        double sum = 0;
+
+        String priceQuery = "SELECT price FROM bike";
+
+        try {
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(priceQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                sum += resultSet.getDouble("price");
+            }
+            return sum;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getPriceOfAllBikes");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return sum;
     }
 
     /**
@@ -473,5 +507,34 @@ public class BikeModel {
             DBCleanup.closeConnection(connection);
         }
         return false;
+    }
+
+    /**
+     * Counts how many bikes that are not currently docked.
+     * @return count        nr of bikes.
+     * @return -1           if the method fails
+     */
+    public int bikesNotDocked(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String notDockedQuery = "SELECT COUNT(*) FROM bike WHERE dock_id IS NULL AND active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(notDockedQuery);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("COUNT(*)");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - bikesNotDocked()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
     }
 }

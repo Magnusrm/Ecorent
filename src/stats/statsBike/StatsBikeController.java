@@ -1,57 +1,53 @@
-package main;
+package stats.statsBike;
 
+import changescene.ChangeScene;
+import control.Budget;
+import control.Factory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import changescene.ChangeScene;
-import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+public class StatsBikeController implements Initializable {
 
-public class MainController implements Initializable{
-
-    @FXML
-    private Button homeBtn;
+    private Factory factory = new Factory();
 
     @FXML
-    private Button bikesBtn;
+    private Label totalDistanceLbl;
 
     @FXML
-    private Button docksBtn;
+    private Label avgKmPerTripLbl;
 
     @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private TextField current;
+    private Label totalTripsLbl;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL location, ResourceBundle resources) {
 
-    }//end method
+    totalDistanceLbl.setText("" + (Math.round(factory.getTotalDistance() * 100) / 100)/1000 + " km")  ;
+    avgKmPerTripLbl.setText("" + (Math.round(factory.getAvgKmPerTrip() * 100)  /100) /1000 + " km");
+    totalTripsLbl.setText("" + factory.getTotalTrips() + " trips");
 
-
-
-
-
-
+    }
 
 
 
-    // main buttons below
+
+
+
+
+
+
+
+// main buttons below
 
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
@@ -96,5 +92,4 @@ public class MainController implements Initializable{
         cs.setScene(event, "/login/LoginView.fxml");
 
     }
-
 }

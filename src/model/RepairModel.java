@@ -244,4 +244,32 @@ public class RepairModel {
         }
         return null;
     }
+
+    public double getPriceOfAllRepairs(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        double sum = 0;
+
+        String priceQuery = "SELECT price FROM repair";
+
+        try {
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(priceQuery);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                sum += resultSet.getDouble("price");
+            }
+            return sum;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getPriceOfAllRepairs");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return sum;
+    }
 }

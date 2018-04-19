@@ -1,12 +1,25 @@
 package stats;
 
 import changescene.ChangeScene;
+import changescene.PopupScene;
+import control.Budget;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class StatsController {
-// tester commit etter reformatering
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class StatsController{
+
     @FXML
     private Button homeBtn;
 
@@ -29,6 +42,45 @@ public class StatsController {
     private Button adminBtn;
 
 
+
+    @FXML
+    void changeToBarChartScene(ActionEvent event) throws Exception{
+        PopupScene ps = new PopupScene(event, "/stats/statsBarChart/StatsBarChartView.fxml", "Power usage");
+    }
+
+    @FXML
+    void changeToPieChartScene(ActionEvent event) throws Exception{
+        PopupScene ps = new PopupScene(event, "/stats/statsPieChart/StatsPieChartView.fxml", "Checkouts");
+
+    }
+
+    @FXML
+    void changeToAreaChartScene(ActionEvent event) throws Exception{
+        PopupScene ps = new PopupScene(event, "/stats/statsAreaChart/StatsAreaChartView.fxml", "Power usage");
+    }
+
+    @FXML
+    void changeToEconomyScene(ActionEvent event) throws Exception{
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/statsEconomy/StatsEconomyView.fxml");
+    }
+
+    @FXML
+    void changeToBikeStatsScene(ActionEvent event) throws Exception{
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/statsBike/StatsBikeView.fxml");
+    }
+
+
+
+
+
+
+
+
+
+// main buttons below
+
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -42,9 +94,9 @@ public class StatsController {
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
     }
 
     @FXML
@@ -65,10 +117,11 @@ public class StatsController {
         cs.setScene(event, "/main/MainView.fxml");
     }
 
-
     @FXML
     void logOut(ActionEvent event) throws Exception {
+
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
+
     }
 }

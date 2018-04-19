@@ -197,6 +197,7 @@ public class DockModel {
         return -1;
     }
 
+
     /**
      * Edits a dock that already is saved to the database.
      *
@@ -362,6 +363,31 @@ public class DockModel {
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
+    public String getDockName(int dockID){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String nameQuery = "SELECT name FROM dock WHERE dock_id = ?";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(nameQuery);
+            preparedStatement.setInt(1, dockID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getString("name");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getDockName()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeConnection(connection);
         }
         return null;

@@ -87,7 +87,6 @@ public class BikeStatsModel {
                 row[2] = resultSet.getDouble("bs.y_cord");
                 recentCords.add(row);
             }
-
             return recentCords;
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getMostRecentCoordinates()");
@@ -125,20 +124,51 @@ public class BikeStatsModel {
                 resultSet = preparedStatement.executeQuery();
                 resultSet.next();
                 tripNr = resultSet.getInt("MAX(trip_number)");
-                System.out.print("trip number: " + tripNr);
                 return tripNr;
             }else{
                 return -1;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getTripNr()");
-            return -1;
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
+        return -1;
+    }
 
+    /**
+     * Returns the total trips of all bikes in the system to be used in the economy part of the statistics.
+     * @return trips        the total number of trips.
+     * @return -1           if the method fails.
+     */
+    public int getTotalTrips(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int trips = 0;
+
+        String totalTripsQuery = "SELECT bike_id, MAX(trip_number) FROM bike_stats GROUP BY bike_id";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(totalTripsQuery);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                trips += resultSet.getInt("MAX(trip_number)");
+            }
+            return trips;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getTotalTrips()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
     }
 
     /**
@@ -173,13 +203,12 @@ public class BikeStatsModel {
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getChargLvl()");
-            return -1;
         }finally {
             DBCleanup.closeStatement(preparedStatement);
             DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
-
+        return -1;
     }
 
     /**
@@ -223,6 +252,39 @@ public class BikeStatsModel {
     }
 
     /**
+     * Returns the total distance travelled by all bikes.
+     * @return totalDistance        distance travelled.
+     * @return -1                   if method fails.
+     */
+    public double getTotalDistance(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        double totalDistance = 0;
+
+        String totalDistanceQuery = "SELECT bike_id, MAX(distance) FROM bike_stats GROUP BY bike_id";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(totalDistanceQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                totalDistance += resultSet.getDouble("MAX(distance)");
+            }
+            return totalDistance;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getTotalDistance()");
+        }finally {
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
+    }
+
+    /**
      * Since all stats are to be saved to the database, this adds new and updated stats to the database.
      *
      * @param time          when the stats are updated.
@@ -255,11 +317,7 @@ public class BikeStatsModel {
                 preparedStatement.setDouble(5, yCord);
                 preparedStatement.setDouble(6, distance);
                 preparedStatement.setInt(7, tripNr);
-                if(preparedStatement.executeUpdate() != 0){
-                    return true;
-                }else{
-                    return false;
-                }
+                return preparedStatement.executeUpdate() != 0;
             }else{
                 return false;
             }
