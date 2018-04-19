@@ -124,6 +124,36 @@ public class DockEditController implements Initializable {
     }
 
     @FXML
+    private void zoomIn(){
+        engine.executeScript("document.zoomIn();");
+
+
+        JSObject window = (JSObject) engine.executeScript("window");
+        JavaBridge bridge = new JavaBridge();
+
+        window.setMember("java", bridge);
+        engine.executeScript("console.log = function(message)\n" +
+                "{\n" +
+                "    java.log(message);\n" +
+                "};");
+    }
+
+    @FXML
+    private void zoomOut(){
+        engine.executeScript("document.zoomOut();");
+
+        JSObject window = (JSObject) engine.executeScript("window");
+        JavaBridge bridge = new JavaBridge();
+
+        window.setMember("java", bridge);
+        engine.executeScript("console.log = function(message)\n" +
+                "{\n" +
+                "    java.log(message);\n" +
+                "};");
+    }
+
+
+    @FXML
     void saveChanges(ActionEvent event) throws SQLException,ClassNotFoundException{
         String dockName = dockNameComboBox.getValue();
         Dock editDock = new Dock(dockNameField.getText(),Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));

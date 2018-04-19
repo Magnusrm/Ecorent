@@ -9,18 +9,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="400.0" prefWidth="607.0" style="-fx-background-color: -fx-mainMenu;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-mainMenu;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.LoginController">
    <children>
-      <Button fx:id="signInBtn" layoutX="260.0" layoutY="331.0" mnemonicParsing="false" onAction="#signIn" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: -fx-secondary;" text="Sign in" textFill="#363232" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="275.0" />
-      <TextField fx:id="usernameField" layoutX="219.0" layoutY="223.0" prefWidth="200.0" promptText="Username" style="-fx-background-color: -fx-mainMenu;" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="234.0" />
-      <ImageView fitHeight="208.0" fitWidth="518.0" layoutX="44.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="44.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="57.0">
+      <Button fx:id="signInBtn" layoutX="261.0" layoutY="310.0" mnemonicParsing="false" onAction="#signIn" prefHeight="27.0" prefWidth="85.0" style="-fx-background-color: -fx-secondary;" text="Sign in" textFill="#363232" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="261.0" AnchorPane.rightAnchor="274.0" />
+      <TextField fx:id="usernameField" layoutX="220.0" layoutY="202.0" prefWidth="200.0" promptText="Username" style="-fx-background-color: -fx-mainMenu;" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="233.0" />
+      <ImageView fitHeight="208.0" fitWidth="518.0" layoutX="45.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="36.0">
          <image>
             <Image url="@../resources/logo2.PNG" />
          </image>
       </ImageView>
-      <PasswordField fx:id="passwordField" layoutX="219.0" layoutY="273.0" prefWidth="200.0" promptText="Password" style="-fx-background-color: -fx-mainMenu;" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="234.0" />
-      <Label fx:id="incorrectLbl" alignment="CENTER" layoutX="140.0" layoutY="366.0" prefHeight="20.0" prefWidth="312.0" />
-      <Line endX="100.0" layoutX="288.0" layoutY="256.0" startX="-70.0" stroke="WHITE" />
-      <Line endX="100.0" layoutX="288.0" layoutY="300.0" startX="-70.0" stroke="WHITE" />
+      <PasswordField fx:id="passwordField" layoutX="220.0" layoutY="252.0" prefWidth="200.0" promptText="Password" style="-fx-background-color: -fx-mainMenu;" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="233.0" />
+      <Label fx:id="incorrectLbl" alignment="CENTER" layoutX="141.0" layoutY="353.0" prefHeight="20.0" prefWidth="312.0" />
+      <Line endX="100.0" layoutX="289.0" layoutY="235.0" startX="-70.0" stroke="WHITE" />
+      <Line endX="100.0" layoutX="289.0" layoutY="279.0" startX="-70.0" stroke="WHITE" />
    </children>
 </AnchorPane>

@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dock.DockController">
    <children>
-      <AnchorPane layoutX="184.0" layoutY="-3.0" prefHeight="406.0" prefWidth="435.0">
+      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
             <Button fx:id="editDockBtn" layoutX="60.0" layoutY="222.0" mnemonicParsing="false" onAction="#changeToDockEditView" prefHeight="35.0" prefWidth="134.0" text="Edit Dock" textAlignment="CENTER" />
             <Button fx:id="dockInfoBtn" layoutX="60.0" layoutY="168.0" mnemonicParsing="false" onAction="#changeToDockInfoView" prefHeight="35.0" prefWidth="134.0" text="Dock Info" textAlignment="CENTER" />
