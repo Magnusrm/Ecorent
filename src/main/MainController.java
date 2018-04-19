@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import changescene.ChangeScene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import loginAdm.CurrentAdmin;
+import sun.util.resources.ar.CurrencyNames_ar_TN;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,11 +40,15 @@ public class MainController implements Initializable{
     @FXML
     private TextField current;
 
+    @FXML
+    private Label adminEmailLbl;
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
+    adminEmailLbl.setText(CurrentAdmin.getInstance().getAdmin().getEmail());
+
 
     }//end method
-
 
 
 

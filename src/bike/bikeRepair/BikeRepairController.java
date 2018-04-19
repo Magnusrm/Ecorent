@@ -88,9 +88,8 @@ public class BikeRepairController {
     }
 
     @FXML
-    void registerRepairSentConfirm(){
+    void registerRepairSentConfirm(ActionEvent event){
         factory.updateSystem();
-        System.out.println(bikeIdSentField.getText());
         int bikeId = Integer.parseInt(bikeIdSentField.getText());
         BikeModel b = new BikeModel();
         if(!b.bikeExists(bikeId)){
@@ -121,6 +120,7 @@ public class BikeRepairController {
                 alert.showAndWait();
             }//end condition
         }//end condition
+        CloseWindow cw = new CloseWindow(event);
     }//end method
 
     @FXML

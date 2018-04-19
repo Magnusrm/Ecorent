@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,6 +29,10 @@ public class StatsBikeController implements Initializable {
 
     @FXML
     private Label totalTripsLbl;
+
+    @FXML
+    private BarChart<?, ?> barChart;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
