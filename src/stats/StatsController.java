@@ -2,21 +2,9 @@ package stats;
 
 import changescene.ChangeScene;
 import changescene.PopupScene;
-import control.Budget;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class StatsController{
 
@@ -45,18 +33,18 @@ public class StatsController{
 
     @FXML
     void changeToBarChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsBarChart/StatsBarChartView.fxml", "Power usage");
+        PopupScene ps = new PopupScene(event, "/stats/statsDock/powerUsageEachDay/PowerUsageEachDayView.fxml", "Power usage");
     }
 
     @FXML
     void changeToPieChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsPieChart/StatsPieChartView.fxml", "Checkouts");
+        PopupScene ps = new PopupScene(event, "/stats/statsDock/totalCheckouts/TotalCheckoutsView.fxml", "Checkouts");
 
     }
 
     @FXML
     void changeToAreaChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsAreaChart/StatsAreaChartView.fxml", "Power usage");
+        PopupScene ps = new PopupScene(event, "/stats/statsDock/totalPowerUsage/TotalPowerUsageView.fxml", "Power usage");
     }
 
     @FXML

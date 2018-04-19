@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="549.0" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stats.statsBarChart.StatsBarChartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="549.0" stylesheets="@../../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stats.statsDock.powerUsageEachDay.PowerUsageEachDayController">
    <children>
       <Button layoutX="248.0" layoutY="403.0" mnemonicParsing="false" onAction="#closeBarChart" text="Close" />
       <BarChart fx:id="barChart" layoutX="22.0" layoutY="54.0" prefHeight="355.0" prefWidth="506.0">
