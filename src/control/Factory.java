@@ -501,6 +501,7 @@ public class Factory {
 
         return sum;
     }
+// kommentar
 
     public double getTotalDistance(){
         return bikeStatsModel.getTotalDistance();
