@@ -36,8 +36,9 @@ public class DockStatsModel {
                 preparedStatement = connection.prepareStatement(usageQuery);
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return resultSet.getDouble("total_pwr_usg");
+                if(  resultSet.next()){
+                    return resultSet.getDouble("total_pwr_usg");
+                }else return 0;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getTotalPowerUsage()");
@@ -102,8 +103,10 @@ public class DockStatsModel {
                 preparedStatement = connection.prepareStatement(checkoutsQuery);
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return resultSet.getInt("checkouts");
+                if(resultSet.next()){
+                    return resultSet.getInt("checkouts");
+                }else return 0;
+
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getCheckouts()");
