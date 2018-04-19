@@ -44,7 +44,7 @@
                   <Font name="Times New Roman" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="netIncomeLbl" alignment="CENTER" layoutX="177.0" layoutY="350.0" prefHeight="17.0" prefWidth="80.0" styleClass="text" text="-">
+            <Label fx:id="netIncomeLbl" alignment="CENTER" layoutX="110.0" layoutY="350.0" prefHeight="21.0" prefWidth="216.0" styleClass="text" text="-">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>

@@ -1,11 +1,11 @@
 /**
-* Factory.java
-* @author Team007
-*
-* This class is an aggregate of Dock.java,Bike.java and Admin.java
-* It both updates and retrieves data from the model classes connected to the database
-* concerned the creation and edit of these objects.
-* The class will provide the view-control classes with data, which is why we add data from the
+ * Factory.java
+ * @author Team007
+ *
+ * This class is an aggregate of Dock.java,Bike.java and Admin.java
+ * It both updates and retrieves data from the model classes connected to the database
+ * concerned the creation and edit of these objects.
+ * The class will provide the view-control classes with data, which is why we add data from the
  * database into private arrays.
  */
 
@@ -24,8 +24,10 @@ public class Factory {
     private ArrayList<RepairSent> repairsNotReturned = new ArrayList<>();
     private AdminModel adminModel;
     private BikeModel bikeModel;
+    private BikeStatsModel bikeStatsModel;
     private BikeStatsModel bsm;
     private DockModel dockModel;
+    private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
     private TypeModel typeModel;
     private ArrayList<RepairReturned> repairsCompleted = new ArrayList<>();
@@ -35,9 +37,11 @@ public class Factory {
     public Factory(){
         adminModel = new AdminModel();
         bikeModel = new BikeModel();
+        bikeStatsModel = new BikeStatsModel();
         dockModel = new DockModel();
         repairModel = new RepairModel();
         typeModel = new TypeModel();
+        dockStatsModel = new DockStatsModel();
     }//end constructor
 
     //Access methods
@@ -55,16 +59,16 @@ public class Factory {
      * This is used every time the user starts the application
      */
     public void updateSystem(){
-       bikes = bikeModel.getAllBikes();
-       docks = dockModel.getAllDocks();
-       MAINDOCK = docks.get(0).getDockID();
-       for(Bike b:bikes)b.setDockId(MAINDOCK);
-       for(String name:typeModel.getTypes()){
-           Type type = new Type(name);
-           types.add(type);
-       }//end loop
+        bikes = bikeModel.getAllBikes();
+        docks = dockModel.getAllDocks();
+        MAINDOCK = docks.get(0).getDockID();
+        for(Bike b:bikes)b.setDockId(MAINDOCK);
+        for(String name:typeModel.getTypes()){
+            Type type = new Type(name);
+            types.add(type);
+        }//end loop
         fillRepair();
-       admins = adminModel.getAllAdmins();
+        admins = adminModel.getAllAdmins();
     }//end method
 
     /**
@@ -295,8 +299,8 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = dockModel.getDockID(bikeId);
-               newBike.setDockId(dockID);
+                int dockID = dockModel.getDockID(bikeId);
+                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
@@ -335,6 +339,7 @@ public class Factory {
         if(d.getDockID() == -1)throw new IllegalArgumentException("The dock ID given does not exist");
         return false;
     }//end method
+
 
     /**
      * Method to edit types.
@@ -411,12 +416,91 @@ public class Factory {
      * It then adds their power usage together and returns the value.
      */
     public double powerUsage(String dockName){
-        int[] docked = dockedBikes(dockName);
-        double pwr = 0;
-        for(int i = 0; i<docked.length;i++){
-            if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
-        }//end loop
-        return pwr;
+        return dockModel.getPowerAtDock(dockName);
     }//end method
+
+
+    /**
+     *
+     * Returns the Total Power Usage Of System.
+     *
+     * @return
+     */
+    public double getTotalPowerUsageOfSystem(){
+        return dockStatsModel.getTotalPowerUsageOfSystem();
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of all repairs combined.
+     *
+     * @return
+     */
+    public double getRepairExpenses(){
+        return repairModel.getPriceOfAllRepairs();
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of all bike purchases.
+     *
+     * @return
+     */
+    public double getBikePurchaseExpenses(){
+        return bikeModel.getPriceOfAllBikes();
+    }
+
+    /**
+     *
+     * Returns a double describing the expenses of the total power usage;
+     *
+     * @return
+     */
+    public double getPowerExpenses(){
+        double price = 0.53;
+        return getTotalPowerUsageOfSystem() * price;
+    }
+
+
+    /**
+     *
+     * Returns a double describing the income of bike rentals
+     *
+     * @return
+     */
+    public double getRentIncome(){
+        double price = 100; // sets price to rent each bke
+        return bikeStatsModel.getTotalTrips() * price;
+    }
+
+
+    /**
+     *
+     * Returns a double describing the net income.
+     *
+     * @return
+     */
+    public double getNetIncome(){
+        double sum = 0;
+
+        sum += getRentIncome();
+        sum -= getPowerExpenses();
+        sum -= getRepairExpenses();
+        sum -= getBikePurchaseExpenses();
+
+        return sum;
+    }
+
+    public double getTotalDistance(){
+        return bikeStatsModel.getTotalDistance();
+    }
+
+    public int getTotalTrips(){
+        return bikeStatsModel.getTotalTrips();
+    };
+
+    public double getAvgKmPerTrip(){
+        return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
+    }
 
 }//end class

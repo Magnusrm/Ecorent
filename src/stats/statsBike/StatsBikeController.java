@@ -1,16 +1,14 @@
-package stats;
+package stats.statsBike;
 
 import changescene.ChangeScene;
-import changescene.PopupScene;
 import control.Budget;
+import control.Factory;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,58 +16,28 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StatsController{
+public class StatsBikeController implements Initializable {
+
+    private Factory factory = new Factory();
 
     @FXML
-    private Button homeBtn;
+    private Label totalDistanceLbl;
 
     @FXML
-    private Button bikesBtn;
+    private Label avgKmPerTripLbl;
 
     @FXML
-    private Button docksBtn;
+    private Label totalTripsLbl;
 
-    @FXML
-    private Button mapBtn;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-
-
-    @FXML
-    void changeToBarChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsBarChart/StatsBarChartView.fxml", "Power usage");
-    }
-
-    @FXML
-    void changeToPieChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsPieChart/StatsPieChartView.fxml", "Checkouts");
+    totalDistanceLbl.setText("" + (Math.round(factory.getTotalDistance() * 100) / 100)/1000 + " km")  ;
+    avgKmPerTripLbl.setText("" + (Math.round(factory.getAvgKmPerTrip() * 100)  /100) /1000 + " km");
+    totalTripsLbl.setText("" + factory.getTotalTrips() + " trips");
 
     }
 
-    @FXML
-    void changeToAreaChartScene(ActionEvent event) throws Exception{
-        PopupScene ps = new PopupScene(event, "/stats/statsAreaChart/StatsAreaChartView.fxml", "Power usage");
-    }
-
-    @FXML
-    void changeToEconomyScene(ActionEvent event) throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsEconomy/StatsEconomyView.fxml");
-    }
-
-    @FXML
-    void changeToBikeStatsScene(ActionEvent event) throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/statsBike/StatsBikeView.fxml");
-    }
 
 
 
