@@ -79,7 +79,6 @@ public class MapViewController implements Initializable{
                 "document.setDockMarkers(items);");
     }
 
-
     @FXML
     void showBike(ActionEvent event) {
 

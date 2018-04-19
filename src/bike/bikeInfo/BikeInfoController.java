@@ -175,6 +175,7 @@ public class BikeInfoController implements Initializable {
             makeLbl.setText(make);
             dateLbl.setText(date);
             batteryLbl.setText(battery);
+
         }//end condition
         if(bike == null){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -183,7 +184,7 @@ public class BikeInfoController implements Initializable {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }//end condition
-        ArrayList<double[]> recentPositions = bsm.getRecentCoordinates();
+        ArrayList<double[]> recentPositions = bsm.getMostRecentCoordinates();
         for (double[] p : recentPositions){
             if (p[0] == bikeID){
                 engine.executeScript("document.createMarkerEgen(" + p[0] + ", " + p[1] + ", " + p[2] + ");");
@@ -191,7 +192,6 @@ public class BikeInfoController implements Initializable {
         }
 
     }//end method
-
 
 
 
