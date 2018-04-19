@@ -175,6 +175,10 @@ public class Factory {
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
         d.setDockID(dockModel.addDock(name,x,y));
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        dockStatsModel.updateDockStats(d.getDockID(), time, 1,0 );
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
