@@ -340,7 +340,6 @@ public class Factory {
         return false;
     }//end method
 
-
     /**
      * Method to edit types.
      * Takes in an original Type object and finds the given type.
