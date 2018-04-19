@@ -31,7 +31,7 @@ public class Factory {
     private RepairModel repairModel;
     private TypeModel typeModel;
     private ArrayList<RepairReturned> repairsCompleted = new ArrayList<>();
-    private int MAINDOCK = 0; //the default dock of the bikes.
+    private int MAINDOCK; //the default dock of the bikes. Initialized in updateSystem()
 
 
     public Factory(){
@@ -374,22 +374,36 @@ public class Factory {
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(type)){
                 types.remove(i);
-                return typeModel.deleteType(type.getName());
+                boolean result = deleteAllBikesWithNoType(); //Bikes with no types cannot exist
+                boolean result1 =  typeModel.deleteType(type.getName());
+                return result&&result1;
             }//end if
         }//end loop
         if(TypeModel.typeExists(type.getName()) == -1)throw new IllegalArgumentException("The type does not exist");
         return false;
     }//end method
 
-    //Method to delete all bikes without a type
-    public boolean deleteAllBikes(){
+    /**
+     * Method to delete all bikes with no type.
+     * A bike without a type cannot exist, so
+     * the system will use this method to delete
+     * all bikes with no types.
+     * @return
+     */
+    public boolean deleteAllBikesWithNoType(){
         for(int i = 0; i<bikes.size();i++){
             if(bikes.get(i).getType() == null)bikes.remove(i);
         }
         return bikeModel.deleteBikesWhereTypeIsNULL();
     }//end
 
-    //Method to get all bikes docked at a given dock
+    /**
+     * Method to get all bikes docked at a given dock.
+     * It will use the dock name to find the given dock
+     * and show all bikes located at the dock.
+     * @param dockName is an object of String.java
+     * @return an array of the bike IDs located at the dock.
+     */
     public int[] dockedBikes(String dockName){
         if(dockModel.bikesAtDock(dockName) != null) {
             ArrayList<Integer> docked = dockModel.bikesAtDock(dockName);
@@ -400,11 +414,11 @@ public class Factory {
                 }//end loop
                 return dockedBikes;
             } else {
-                int[] noBikes = new int[0];
+                int[] noBikes = new int[0]; //Variable to illustrate
                 return noBikes;
             }//end condition
         }else {
-            int[] noBikes = new int[0];
+            int[] noBikes = new int[0]; //Variable to illustrate
             return noBikes;
         }//end condition
     }//end method
@@ -413,6 +427,8 @@ public class Factory {
      * Method to get power usage from a given dock.
      * It uses the dockedBikes(dockName) method to find all bikes docked at the given dock name.
      * It then adds their power usage together and returns the value.
+     * @param dockName is an object of String.java
+     * @return double, the power usage of the dock.
      */
     public double powerUsage(String dockName){
         int[] docked = dockedBikes(dockName);
@@ -502,6 +518,39 @@ public class Factory {
 
     public double getAvgKmPerTrip(){
         return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
+    }
+
+    /**
+     * Method to find the number of bikes using each type.
+     * It is used in bike stats to show one types popularity.
+     * @return an two dimensional array of String.java
+     */
+    public String[][] getTypePopularity(){
+        String[][] numberOfTypes = new String[types.size()][2];
+        for(int i = 0; i<types.size();i++){
+            numberOfTypes[i][0] = types.get(i).getName();
+        }//end loop
+        for(int i = 0; i<types.size();i++){
+            int size = 0;
+            for(int j = 0; j<bikes.size();j++){
+                if(numberOfTypes[i][0].equals(bikes.get(j).getType().getName())){
+                    size++;
+                    numberOfTypes[i][1] = "" + size;
+                }//end loop
+                if(numberOfTypes[i][1] == null)numberOfTypes[i][1] = "" + 0; //If there are no bikes with that type
+            }//end loop
+        }//end loop
+        return numberOfTypes;
+    }//end method
+
+    public static void main(String[] args){
+        Factory f = new Factory();
+        f.updateSystem();
+        for(int i = 0; i<f.getTypes().size();i++){
+            for(int j = 0; j<2; j++){
+                System.out.println(f.getTypePopularity()[i][j]);
+            }
+        }
     }
 
 }//end class
