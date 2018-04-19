@@ -135,11 +135,11 @@ public class Factory {
         b.setDockId(MAINDOCK);
         int bikeID = bikeModel.addBike(date,price,make,type,pwrUsage,false);
         b.setBikeId(bikeID);
-        bikeModel.setDockID(bikeID, MAINDOCK);
+        bikeModel.setDockID(bikeID, MAINDOCK );
         LocalDateTime ldt = LocalDateTime.now();
         String time = ("" + ldt + "").replaceAll("T", " ");
         time = time.substring(0, time.length() - 4);
-        bikeStatsModel.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
+        bikeStatsModel.updateStats(time, bikeID, 100, docks.get(0).getxCoordinates(), docks.get(0).getyCoordinates(), 0, 0);
         return true;
     }//end method
 
