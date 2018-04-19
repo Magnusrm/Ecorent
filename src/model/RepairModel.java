@@ -22,8 +22,7 @@ public class RepairModel {
      * @param bikeID            bike_id of the bike that the repair should be registered on.
      * @param dateSent          the date that the bike is sent to repair.
      * @param bDescription      the description of what to be done to the bike.
-     * @return repairID         the repair_id of the repair that is registered.
-     * @return -1               if the method fails.
+     * @return                  the repair_id of the repair that is registered.
      */
     public int sendRepair(int bikeID, String dateSent, String bDescription){
         Connection connection = null;
@@ -71,8 +70,7 @@ public class RepairModel {
      * @param dateReceived      when the bike is returned from repair.
      * @param aDescription      the description of what is done.
      * @param price             the cost of the repair.
-     * @return true             if the second part of the repair is successfully saved.
-     * @return false            if the method fails.
+     * @return                  if the second part of the repair is successfully saved.
      */
     public boolean returnRepair(int repairID, String dateReceived, String aDescription, double price)
     {
@@ -106,8 +104,7 @@ public class RepairModel {
     /**
      * Returns an arraylist of all repairID's that is sent but not returned.
      *
-     * @return repIDs           an ArrayList of all repairs that is sent but not returned.
-     * @return null             if the method fails.
+     * @return             an ArrayList of all repairs that is sent but not returned.
      */
     public ArrayList<Integer> getRepairIDs(){
         Connection connection = null;
@@ -141,8 +138,7 @@ public class RepairModel {
     /**
      * Returns an ArrayList of all repair objects that are both sent and returned.
      *
-     * @return repairs          an ArrayList of repair objects.
-     * @return null             if method fails.
+     * @return           an ArrayList of repair objects.
      */
     public ArrayList<RepairReturned> getRepairsReturned(){
         Connection connection = null;
@@ -201,8 +197,7 @@ public class RepairModel {
      * Returns a repair Object from the database.
      *
      * @param repairID          the repair_id of the repair that is to be returned.
-     * @return repair           a repair object.
-     * @return null             if the method fails.
+     * @return                  a repair object.
      */
     public RepairSent getRepair(int repairID){
         Connection connection = null;
@@ -245,6 +240,10 @@ public class RepairModel {
         return null;
     }
 
+    /**
+     * Gets the total cost of all repairs to be used in statistical analysis.
+     * @return          the cost of all repairs.
+     */
     public double getPriceOfAllRepairs(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;

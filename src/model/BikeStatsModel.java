@@ -19,8 +19,7 @@ public class BikeStatsModel {
     /**
      * Returns an ArrayList of the most recent latitudes and longitudes + corresponding bikeID's.
      *
-     * @return coordinates      an ArrayList of double[] with the most recent latitudes and longitudes + their corresponding bike_id's.
-     * @return null             if the method fails.
+     * @return       an ArrayList of double[] with the most recent latitudes and longitudes + their corresponding bike_id's.
      */
     public ArrayList<double[]> getRecentCoordinates(){
         Connection connection = null;
@@ -60,8 +59,7 @@ public class BikeStatsModel {
     /**
      * Retrieves the most recent coordinates of all bikes.
      *
-     * @return recentCords          an ArrayList of double[] with the most recent x- and y-coordinate + the corresponding bikeID.
-     * @return null                 if the method fails.
+     * @return           an ArrayList of double[] with the most recent x- and y-coordinate + the corresponding bikeID.
      */
     public ArrayList<double[]> getMostRecentCoordinates() {
         Connection connection = null;
@@ -103,8 +101,7 @@ public class BikeStatsModel {
      * Returns the trip number of a given bike.
      *
      * @param bikeID        the bike_id of the bike that is to be searched for in the database.
-     * @return tripNr       the number of trips that bike has taken.
-     * @return -1           if the method fails.
+     * @return              the number of trips that bike has taken.
      */
     public int getTripNr(int bikeID){
         Connection connection = null;
@@ -140,8 +137,7 @@ public class BikeStatsModel {
 
     /**
      * Returns the total trips of all bikes in the system to be used in the economy part of the statistics.
-     * @return trips        the total number of trips.
-     * @return -1           if the method fails.
+     * @return         the total number of trips.
      */
     public int getTotalTrips(){
         Connection connection = null;
@@ -175,8 +171,7 @@ public class BikeStatsModel {
      * Returns the most recent battery percentage of a given bike.
      *
      * @param bikeID        the bike_id of the bike that is to be searched for.
-     * @return chargLvl     the current charg_lvl of that bike.
-     * @return -1           if the method fails.
+     * @return               the current charg_lvl of that bike.
      */
     public int getChargLvl(int bikeID){
         Connection connection = null;
@@ -215,8 +210,7 @@ public class BikeStatsModel {
      * Shows the total distance travelled by a given bike
      *
      * @param bikeID        the bike_id of the bike that is to be searched for
-     * @return distance     the total distance travelled
-     * @return -1           if the method fails
+     * @return              the total distance travelled
      */
     public double getDistance(int bikeID){
         Connection connection = null;
@@ -253,8 +247,7 @@ public class BikeStatsModel {
 
     /**
      * Returns the total distance travelled by all bikes.
-     * @return totalDistance        distance travelled.
-     * @return -1                   if method fails.
+     * @return          distance travelled.
      */
     public double getTotalDistance(){
         Connection connection = null;
@@ -294,8 +287,7 @@ public class BikeStatsModel {
      * @param yCord         the current y_cord of the bike.
      * @param distance      the total distance the bike has travelled.
      * @param tripNr        how many trips the bike has taken.
-     * @return true         if the update is successful.
-     * @return false        if the update failed.
+     * @return              if the update is successful.
      */
     public boolean updateStats(String time, int bikeID, int chargLvl, double xCord, double yCord, double distance, int tripNr){
         Connection connection = null;
