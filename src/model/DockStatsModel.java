@@ -39,7 +39,7 @@ public class DockStatsModel {
                 resultSet = preparedStatement.executeQuery();
                 if(  resultSet.next()){
                     return resultSet.getDouble("total_pwr_usg");
-                }else return -1;
+                }else return 0;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getTotalPowerUsage()");
@@ -104,7 +104,7 @@ public class DockStatsModel {
                 resultSet = preparedStatement.executeQuery();
                 if(resultSet.next()){
                     return resultSet.getInt("checkouts");
-                }else return -1;
+                }else return 0;
 
             }
         }catch(SQLException e){

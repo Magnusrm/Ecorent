@@ -178,7 +178,7 @@ public class Factory {
         LocalDateTime ldt = LocalDateTime.now();
         String time = ("" + ldt + "").replaceAll("T", " ");
         time = time.substring(0, time.length() - 4);
-        dockStatsModel.updateDockStats(d.getDockID(),time, 1,1);
+        dockStatsModel.updateDockStats(d.getDockID(),time, 0,0);
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
