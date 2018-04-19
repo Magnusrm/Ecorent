@@ -3,6 +3,7 @@ import control.Dock;
 import control.Factory;
 import model.BikeModel;
 import model.BikeStatsModel;
+import model.DockStatsModel;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ public class Simulation implements Runnable{
     private static Random random = new Random();
     private static BikeModel bm = new BikeModel();
     private static BikeStatsModel bts = new BikeStatsModel();
+    private static DockStatsModel dsm = new DockStatsModel();
 
     public Simulation(int id){
        this.id = id;
@@ -97,6 +99,7 @@ public class Simulation implements Runnable{
                 }
             }
             bm.setDockID(bikeID, randomD.getDockID());
+
 
             for (int j = 0; j < 5; j++){
                 ldt = LocalDateTime.now();

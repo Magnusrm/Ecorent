@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import mapTest.WebMap;
@@ -18,6 +19,10 @@ import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static java.lang.Thread.sleep;
+import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
+import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class DockNewController implements Initializable{
     private Factory factory = new Factory();
@@ -82,20 +87,56 @@ public class DockNewController implements Initializable{
             engine.load(this.getClass().getResource("newdockmap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
 
+            root.addEventHandler(MOUSE_CLICKED, e -> {
+                setJavaBridge();
+            });
 
             engine.getLoadWorker().stateProperty().addListener(e ->
             {
-                JSObject window = (JSObject) engine.executeScript("window");
-                JavaBridge bridge = new JavaBridge();
-
-                window.setMember("java", bridge);
-                engine.executeScript("console.log = function(message)\n" +
-                        "{\n" +
-                        "    java.log(message);\n" +
-                        "};");
+                setJavaBridge();
             });
 
         }catch (Exception e){e.printStackTrace();}
+    }
+
+    public void setJavaBridge(){
+        JSObject window = (JSObject) engine.executeScript("window");
+        JavaBridge bridge = new JavaBridge();
+
+        window.setMember("java", bridge);
+        engine.executeScript("console.log = function(message)\n" +
+                "{\n" +
+                "    java.log(message);\n" +
+                "};");
+    }
+
+    @FXML
+    private void zoomIn(){
+        engine.executeScript("document.zoomIn();");
+
+
+        JSObject window = (JSObject) engine.executeScript("window");
+        JavaBridge bridge = new JavaBridge();
+
+        window.setMember("java", bridge);
+        engine.executeScript("console.log = function(message)\n" +
+                "{\n" +
+                "    java.log(message);\n" +
+                "};");
+    }
+
+    @FXML
+    private void zoomOut(){
+        engine.executeScript("document.zoomOut();");
+
+        JSObject window = (JSObject) engine.executeScript("window");
+        JavaBridge bridge = new JavaBridge();
+
+        window.setMember("java", bridge);
+        engine.executeScript("console.log = function(message)\n" +
+                "{\n" +
+                "    java.log(message);\n" +
+                "};");
     }
 
     @FXML
