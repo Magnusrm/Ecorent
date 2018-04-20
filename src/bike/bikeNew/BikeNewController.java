@@ -31,6 +31,9 @@ public class BikeNewController implements Initializable{
     @FXML
     private TextField powerUsageField;
 
+    @FXML
+    private TextField buyDateField;
+
     //Notice the types are converted to String array.
     //This is to simplify the clicking and fetching process.
     @Override

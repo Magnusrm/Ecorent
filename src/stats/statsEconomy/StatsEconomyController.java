@@ -54,7 +54,7 @@ public class StatsEconomyController implements Initializable {
         // load dummy data
        incomeTableView.setItems(getIncome());
        expensesTableView.setItems(getExpenses());
-       netIncomeLbl.setText("" + factory.getNetIncome());
+       netIncomeLbl.setText("" + Math.round(factory.getNetIncome() * 100.0) / 100.0);
 
 
     }
@@ -66,7 +66,7 @@ public class StatsEconomyController implements Initializable {
     public ObservableList<Budget> getIncome(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
 
-        budget.add(new Budget("Rent", factory.getRentIncome()));
+        budget.add(new Budget("Rent", Math.round(factory.getRentIncome() * 100.0) / 100.0));
 
         return budget;
     }
@@ -78,9 +78,9 @@ public class StatsEconomyController implements Initializable {
     public ObservableList<Budget> getExpenses(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
 
-        budget.add(new Budget("Bike Purchase" , factory.getBikePurchaseExpenses()));
-        budget.add(new Budget("Power", factory.getPowerExpenses()));
-        budget.add(new Budget("Repairs", factory.getRepairExpenses()));
+        budget.add(new Budget("Bike Purchase" ,Math.round(factory.getBikePurchaseExpenses()  * 100.0) / 100.0));
+        budget.add(new Budget("Power", Math.round(factory.getPowerExpenses()  * 100.0) / 100.0));
+        budget.add(new Budget("Repairs", Math.round(factory.getRepairExpenses()  * 100.0) / 100.0));
 
         return budget;
     }
