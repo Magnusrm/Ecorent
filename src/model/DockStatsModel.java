@@ -28,7 +28,7 @@ public class DockStatsModel {
         ResultSet resultSet = null;
         DockModel dm = new DockModel();
 
-        String usageQuery = "SELECT total_pwr_usg FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
+        String usageQuery = "SELECT MAX(total_pwr_usg) FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
 
         try{
             connection = DBCleanup.getConnection();
@@ -37,7 +37,7 @@ public class DockStatsModel {
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
                 if(  resultSet.next()){
-                    return resultSet.getDouble("total_pwr_usg");
+                    return resultSet.getDouble("MAX(total_pwr_usg)");
                 }else return 0;
             }
         }catch(SQLException e){
@@ -95,7 +95,7 @@ public class DockStatsModel {
         ResultSet resultSet = null;
         DockModel dm = new DockModel();
 
-        String checkoutsQuery = "SELECT checkouts FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
+        String checkoutsQuery = "SELECT MAX(checkouts) FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
 
         try{
             connection = DBCleanup.getConnection();
@@ -104,7 +104,7 @@ public class DockStatsModel {
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
                 if(resultSet.next()){
-                    return resultSet.getInt("checkouts");
+                    return resultSet.getInt("MAX(checkouts)");
                 }else return 0;
 
             }
