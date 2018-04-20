@@ -3,6 +3,7 @@ import control.Dock;
 import control.Factory;
 import model.BikeModel;
 import model.BikeStatsModel;
+import model.DockStatsModel;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -11,19 +12,24 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Thread.sleep;
+import java.util.concurrent.*;
 
 public class Simulation implements Runnable{
     private int id;
     private Thread t;
+    private static Semaphore sem;
 
     private static Factory factory = new Factory();
-    private static ArrayList<Dock> docks;
+    private static ArrayList<Dock> docks = factory.getDocks();
     private static Random random = new Random();
     private static BikeModel bm = new BikeModel();
     private static BikeStatsModel bts = new BikeStatsModel();
+    private static DockStatsModel dsm = new DockStatsModel();
+    private static boolean access = true;
 
-    public Simulation(int id){
+    public Simulation(Semaphore sem, int id){
        this.id = id;
+       this.sem = sem;
     }
 
     public void run(){
@@ -57,6 +63,30 @@ public class Simulation implements Runnable{
             double xDestination = 0;
             double yDestination = 0;
             double distanceChange = 0;
+
+
+            factory.updateSystem();
+            ArrayList<Bike> bikes = factory.getBikes();
+            String time;
+            for (Bike b : bikes){
+                if (b.getBikeId() == bikeID){
+                    for (Dock d : docks){
+                        if (d.getDockID() == b.getDockId()){
+                            //int checkouts = dsm.getCheckouts(d.getDockID()) + 1;
+                            time = getNow();
+                            try {
+                                sem.acquire();
+                                dsm.updateDockStats(d.getDockID(), time, b.getPowerUsage() * 0.016666667, 1);
+                                sem.release();
+                            } catch(InterruptedException e){
+                                System.out.println("semaphore interrupted");
+                            }
+                        }
+                    }
+                }
+            }
+
+
             Dock randomD = null;
             while(check == 0) {
                 randomD = randomDock();
@@ -71,14 +101,10 @@ public class Simulation implements Runnable{
             double xDifference = xDestination - xPos;
             double yDifference = yDestination - yPos;
 
-            LocalDateTime ldt;
-
             bm.setDockID(bikeID, -1);
             for (int i = 0; i < steps; i++) {
 
-                ldt = LocalDateTime.now();
-                String time = ("" + ldt + "").replaceAll("T", " ");
-                time = time.substring(0, time.length() - 4);
+                time = getNow();
 
                 xPos += xDifference / steps;
                 yPos += yDifference / steps;
@@ -90,19 +116,17 @@ public class Simulation implements Runnable{
 
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
 
-
                 try {
                     sleep(3000);
                 } catch (Exception e) {
                     System.out.println("Error: " + e);
                 }
             }
+
             bm.setDockID(bikeID, randomD.getDockID());
 
             for (int j = 0; j < 5; j++){
-                ldt = LocalDateTime.now();
-                String time = ("" + ldt + "").replaceAll("T", " ");
-                time = time.substring(0, time.length() - 4);
+                time = getNow();
                 batteryLevel += 10;
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
                 try {
@@ -119,6 +143,15 @@ public class Simulation implements Runnable{
         docks = factory.getDocks();
         int randomIndex = random.nextInt(docks.size());
         return docks.get(randomIndex);
+    }
+
+    public static String getNow() {
+        String time;
+        LocalDateTime ldt;
+        ldt = LocalDateTime.now();
+        time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        return time;
     }
 
     /**
@@ -153,13 +186,14 @@ public class Simulation implements Runnable{
 class RunSimulation{
 
     public static void main(String[] args){
+        Semaphore sem = new Semaphore(1);
         Factory factory = new Factory();
         factory.updateSystem();
         ArrayList<Bike> bikes = factory.getBikes();
         System.out.println(bikes.size());
         Simulation[] simulations = new Simulation[bikes.size()];
         for (int i = 0; i < bikes.size(); i++){
-            simulations[i] = new Simulation(bikes.get(i).getBikeId());
+            simulations[i] = new Simulation(sem, bikes.get(i).getBikeId());
             simulations[i].start();
             try{
                 sleep(500);

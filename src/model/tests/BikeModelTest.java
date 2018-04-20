@@ -25,7 +25,7 @@ public class BikeModelTest {
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     BikeModel instance;
-    private final int BIKEID = 68;
+    private final int BIKEID = 68; //NB! THIS BIKE ID CANNOT BE REGISTERED IN THE DB FOR THE TESTS TO WORK
 
     @Override
     public boolean equals(Object o){
@@ -56,6 +56,13 @@ public class BikeModelTest {
     }
 
     @Test
+    public void testBikeExists(){
+        System.out.println("Testing the method bikeExists()");
+
+        assertTrue(instance.bikeExists(54));
+    }
+
+    @Test
     public void testAddBike(){
         System.out.println("Testing the method addBike()");
 
@@ -66,7 +73,7 @@ public class BikeModelTest {
         double pwrUsg = 0.36;
         boolean repairing = false;
 
-        int expResult = BIKEID; //Must be changed according to the self-incrementing bike_id in the DB
+        int expResult = BIKEID;
         int result = instance.addBike(date, price, make, typeName, pwrUsg, repairing);
 
         assertEquals(expResult, result);
@@ -117,6 +124,14 @@ public class BikeModelTest {
 
         assertTrue(instance.isRepairing(BIKEID));
     }
+
+    @Test
+    public void testIsRepairing() {
+        System.out.println("Testing the method isRepairing()");
+
+        assertTrue(instance.isRepairing(BIKEID));
+    }
+
 
 
     @Test

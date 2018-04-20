@@ -1,21 +1,21 @@
-/**
-* Factory.java
-* @author Team007
-*
-* This class is an aggregate of Dock.java,Bike.java and Admin.java
-* It both updates and retrieves data from the model classes connected to the database
-* concerned the creation and edit of these objects.
-* The class will provide the view-control classes with data, which is why we add data from the
- * database into private arrays.
- */
 
 package control;
+
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import model.*;
-
+/**
+ * Factory.java
+ * @author Team007
+ *
+ * This class is an aggregate of Dock.java,Bike.java and Admin.java
+ * It both updates and retrieves data from the model classes connected to the database
+ * concerned the creation and edit of these objects.
+ * The class will provide the view-control classes with data, which is why we add data from the
+ * database into private arrays.
+ */
 public class Factory {
     private ArrayList<Dock> docks = new ArrayList<>();
     private ArrayList<Bike> bikes = new ArrayList<>();
@@ -25,7 +25,6 @@ public class Factory {
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private BikeStatsModel bikeStatsModel;
-    private BikeStatsModel bsm;
     private DockModel dockModel;
     private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
@@ -62,13 +61,13 @@ public class Factory {
        bikes = bikeModel.getAllBikes();
        docks = dockModel.getAllDocks();
        MAINDOCK = docks.get(0).getDockID();
-       for(Bike b:bikes)b.setDockId(MAINDOCK);
+
        for(String name:typeModel.getTypes()){
            Type type = new Type(name);
            types.add(type);
        }//end loop
         fillRepair();
-       admins = adminModel.getAllAdmins();
+        admins = adminModel.getAllAdmins();
     }//end method
 
     /**
@@ -135,11 +134,11 @@ public class Factory {
         b.setDockId(MAINDOCK);
         int bikeID = bikeModel.addBike(date,price,make,type,pwrUsage,false);
         b.setBikeId(bikeID);
-        bikeModel.setDockID(bikeID, MAINDOCK);
+        bikeModel.setDockID(bikeID, MAINDOCK );
         LocalDateTime ldt = LocalDateTime.now();
         String time = ("" + ldt + "").replaceAll("T", " ");
         time = time.substring(0, time.length() - 4);
-        bsm.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
+        bikeStatsModel.updateStats(time, bikeID, 100, docks.get(0).getxCoordinates(), docks.get(0).getyCoordinates(), 0, 0);
         return true;
     }//end method
 
@@ -176,6 +175,10 @@ public class Factory {
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
         d.setDockID(dockModel.addDock(name,x,y));
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        dockStatsModel.updateDockStats(d.getDockID(),time, 0,0);
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
@@ -299,8 +302,8 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = dockModel.getDockID(bikeId);
-               newBike.setDockId(dockID);
+                int dockID = dockModel.getDockID(bikeId);
+                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
@@ -339,6 +342,7 @@ public class Factory {
         if(d.getDockID() == -1)throw new IllegalArgumentException("The dock ID given does not exist");
         return false;
     }//end method
+
 
     /**
      * Method to edit types.
@@ -388,7 +392,7 @@ public class Factory {
      * A bike without a type cannot exist, so
      * the system will use this method to delete
      * all bikes with no types.
-     * @return
+     * @return true if operation is successful
      */
     public boolean deleteAllBikesWithNoType(){
         for(int i = 0; i<bikes.size();i++){
@@ -428,23 +432,42 @@ public class Factory {
      * It uses the dockedBikes(dockName) method to find all bikes docked at the given dock name.
      * It then adds their power usage together and returns the value.
      * @param dockName is an object of String.java
-     * @return double, the power usage of the dock.
+     * @return the power usage of the dock.
      */
     public double powerUsage(String dockName){
-        int[] docked = dockedBikes(dockName);
-        double pwr = 0;
-        for(int i = 0; i<docked.length;i++){
-            if(bikes.get(i).getBikeId() == docked[i])pwr+=bikes.get(i).getPowerUsage();
-        }//end loop
-        return pwr;
+        return dockModel.getPowerAtDock(dockName);
     }//end method
 
+    /**
+     * Returns a double[] containing the daily power usage of each dock.
+     * @return daily power usage of each dock.
+     */
+    public double[] getDailyPowerUsage(){
+        return dockStatsModel.getDailyPowerUsage();
+    }
+
+    /**
+     * Returns an ArrayList of int[] containing maxCheckouts for each dock.
+     * @return  Max checkouts for each dock.
+     */
+    public ArrayList<int[]> getMaxCheckouts(){
+        return dockStatsModel.getMaxCheckouts();
+    }
+
+    /**
+     * Returns the dock name for a given dockID.
+     * @param dockID
+     * @return dock name for a given dockID.
+     */
+    public String getDockName(int dockID){
+        return dockModel.getDockName(dockID);
+    }
 
     /**
      *
      * Returns the Total Power Usage Of System.
      *
-     * @return
+     * @return Total Power Usage Of System.
      */
     public double getTotalPowerUsageOfSystem(){
         return dockStatsModel.getTotalPowerUsageOfSystem();
@@ -454,7 +477,7 @@ public class Factory {
      *
      * Returns a double describing the expenses of all repairs combined.
      *
-     * @return
+     * @return expenses of all repairs combined.
      */
     public double getRepairExpenses(){
         return repairModel.getPriceOfAllRepairs();
@@ -464,7 +487,7 @@ public class Factory {
      *
      * Returns a double describing the expenses of all bike purchases.
      *
-     * @return
+     * @return expenses of all bike purchases.
      */
     public double getBikePurchaseExpenses(){
         return bikeModel.getPriceOfAllBikes();
@@ -474,31 +497,29 @@ public class Factory {
      *
      * Returns a double describing the expenses of the total power usage;
      *
-     * @return
+     * @return describing the expenses of the total power usage;
      */
     public double getPowerExpenses(){
         double price = 0.53;
         return getTotalPowerUsageOfSystem() * price;
     }
 
-
     /**
      *
      * Returns a double describing the income of bike rentals
      *
-     * @return
+     * @return income of bike rentals
      */
     public double getRentIncome(){
         double price = 100; // sets price to rent each bke
         return bikeStatsModel.getTotalTrips() * price;
     }
 
-
     /**
      *
      * Returns a double describing the net income.
      *
-     * @return
+     * @return net income.
      */
     public double getNetIncome(){
         double sum = 0;
@@ -511,17 +532,30 @@ public class Factory {
         return sum;
     }
 
+    /**
+     * Returns the total distance of all bikes
+     * @return total distance of all bikes
+     */
     public double getTotalDistance(){
         return bikeStatsModel.getTotalDistance();
     }
 
+    /**
+     * Returns the total amount of trips for all bikes
+     * @return total amount of trips for all bikes
+     */
     public int getTotalTrips(){
         return bikeStatsModel.getTotalTrips();
     };
 
+    /**
+     * Returns the average kilometers per trip for all bikes.
+     * @return average kilometers per trip for all bikes.
+     */
     public double getAvgKmPerTrip(){
         return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
     }
+
 
     /**
      * Method to find the number of bikes using each type.

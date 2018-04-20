@@ -1,4 +1,4 @@
-package stats.statsAreaChart;
+package stats.statsDock.totalPowerUsage;
 
 import changescene.CloseWindow;
 import javafx.event.ActionEvent;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class StatsAreaChartController implements Initializable {
+public class TotalPowerUsageController implements Initializable {
 
     @FXML
     private AreaChart<?, ?> areaChart;

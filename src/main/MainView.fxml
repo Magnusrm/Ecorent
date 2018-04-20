@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,22 +13,30 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <Text fill="WHITE" layoutX="37.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Ecorent's management system">
-               <font>
-                  <Font name="Times New Roman" size="21.0" />
-               </font>
-            </Text>
-            <Line endX="380.0" layoutX="28.0" layoutY="50.0" stroke="WHITE" />
-            <Text fill="WHITE" layoutX="86.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="For any questions or inquires, contact us at:">
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="86.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="For any questions or inquires, contact us at:">
                <font>
                   <Font name="Times New Roman" size="15.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="112.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teamdoubleoseven007@gmail.com">
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="112.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="teamdoubleoseven007@gmail.com">
                <font>
                   <Font name="Times New Roman" size="15.0" />
                </font>
             </Text>
+            <Label fx:id="adminEmailLbl" alignment="CENTER" layoutX="62.0" layoutY="215.0" prefHeight="17.0" prefWidth="311.0" styleClass="text" text="email">
+               <font>
+                  <Font name="Times New Roman" size="20.0" />
+               </font></Label>
+            <ImageView fitHeight="126.0" fitWidth="417.0" layoutX="20.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/welcome.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="adminRightsLbl" alignment="CENTER" layoutX="62.0" layoutY="238.0" prefHeight="17.0" prefWidth="311.0" styleClass="text" text="rights">
+               <font>
+                  <Font name="Times New Roman" size="17.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>

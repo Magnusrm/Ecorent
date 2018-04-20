@@ -18,8 +18,7 @@ public class AdminModel {
      * Checks if an admin is in the database by searching by email.
      *
      * @param  email    the email that we want to know if exists.
-     * @return true     if that email is already in the database.
-     * @return false    if that email isn't in the database.
+     * @return           if that email is already in the database.
      */
     public boolean adminExists(String email){
         Connection connection = null;
@@ -55,8 +54,7 @@ public class AdminModel {
      *
      *
      * @param email         the email that is searched for in the database.
-     * @return Object       an admin object with that emails corresponding data.
-     * @return null         if the method fails.
+     * @return              an admin object with that emails corresponding data.
      */
     public Admin getAdmin(String email){
         Connection connection = null;
@@ -103,8 +101,7 @@ public class AdminModel {
      * @param email         the email of the new user.
      * @param hash          the value of the hashed password.
      * @param priviliged    if the administrator has priviliged rights.
-     * @return true         if the method is successful.
-     * @return false        if the method fails.
+     * @return              if the method is successful.
      */
     public boolean addAdmin(String email, String hash, boolean priviliged){
         Connection connection = null;
@@ -146,8 +143,7 @@ public class AdminModel {
      * Deletes an admin from the database.
      *
      * @param email         the email of the administrator that is to be deleted from the database.
-     * @return true         if the method is successful.
-     * @return false        if the method fails.
+     * @return              if the method is successful.
      */
     public boolean deleteAdmin(String email){
         Connection connection = null;
@@ -184,8 +180,7 @@ public class AdminModel {
      * Returns the hashed (with salt) value that belongs to a given email.
      *
      * @param email         the email address that the hash value belongs to.
-     * @return hash         the hashed password.
-     * @return null         if the method fails.
+     * @return              the hashed password.
      */
     public String getHash(String email){
         Connection connection = null;
@@ -220,8 +215,7 @@ public class AdminModel {
      * Checks if an admin has the rights to make new admins.
      *
      * @param email         the email of the admin that is to be checked.
-     * @return true         if the admin has priviliged rights.
-     * @return false        if the admin doesn't have priviliged rights.
+     * @return              if the admin has priviliged rights.
      */
     public boolean isPriviliged(String email){
         Connection connection = null;
@@ -261,8 +255,7 @@ public class AdminModel {
 
      * Returns an ArrayList of all the admins in the database.
      *
-     * @return allAdmins        an ArrayList of admin-objects.
-     * @return null             if the method fails.
+     * @return              an ArrayList of admin-objects.
      */
     public ArrayList<Admin> getAllAdmins(){
         Connection connection = null;

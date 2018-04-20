@@ -19,8 +19,7 @@ public class DockModel {
      * Returns a dock object from the database.
      *
      * @param name          the name of the dock that is to be retrieved from the database.
-     * @return dock         a dock object with data corresponding to the name of the dock.
-     * @return null         if the method fails.
+     * @return               a dock object with data corresponding to the name of the dock.
      */
     public Dock getDock(String name){
         Connection connection = null;
@@ -66,8 +65,7 @@ public class DockModel {
      *
      * @param xCord     the x_cord that is to be checked.
      * @param yCord     the y_cord that is to be checked
-     * @return true     if the coordinates are not taken.
-     * @return false    if the coordinates are taken.
+     * @return          if the coordinates are not taken.
      */
     public boolean dockCoordinatesAvailable(double xCord, double yCord){
         Connection connection = null;
@@ -95,8 +93,7 @@ public class DockModel {
      * Checks if a dock name is available or taken in the database.
      *
      * @param name          the name that is to be checked.
-     * @return true         if the name is available.
-     * @return false        if the name isn't available.
+     * @return              if the name is available.
      */
     public boolean dockNameAvailable(String name){
         Connection connection = null;
@@ -126,8 +123,7 @@ public class DockModel {
      * Method to check if a dock_id is available or taken.
      *
      * @param dockID        the dock_id that is to be checked.
-     * @return true         if the dock_id is available.
-     * @return false        if the dock_id isn't available.
+     * @return              if the dock_id is available.
      */
     public boolean dockIDAvailable(int dockID){
         Connection connection = null;
@@ -160,7 +156,7 @@ public class DockModel {
      * @param name          the name of the dock.
      * @param xCord         the x_cord of the dock.
      * @param yCord         the y_cord of the dock.
-     * @return dockID       the dock_id that is set by auto increment in the database.
+     * @return              the dock_id that is set by auto increment in the database.
      */
     public int addDock(String name, double xCord, double yCord){
         Connection connection = null;
@@ -205,8 +201,7 @@ public class DockModel {
      * @param name          the changed name of the dock.
      * @param xCord         the changed x_cord of the dock.
      * @param yCord         the changed y_cord of the dock.
-     * @return true         if the dock is successfully edited.
-     * @return false        if the method fails.
+     * @return              if the dock is successfully edited.
      */
     public boolean editDock(int dockID, String name, double xCord, double yCord){
         Connection connection = null;
@@ -238,7 +233,7 @@ public class DockModel {
      * Returns the dockID of the dock that a bike is docked at.
      *
      * @param bikeID        the bike_id that is supposed to be checked if is docked.
-     * @return dockID       the dock_id of the dock that the bike is docked at.
+     * @return              the dock_id of the dock that the bike is docked at.
      */
     public int getDockID(int bikeID){
         Connection connection = null;
@@ -269,8 +264,7 @@ public class DockModel {
      * Deletes a dock from the database.
      *
      * @param name          the name of the dock that is to be deleted.
-     * @return true         if the dock is successfully deleted.
-     * @return false        if the method fails.
+     * @return              if the dock is successfully deleted.
      */
     public boolean deleteDock(String name){
         Connection connection = null;
@@ -300,8 +294,7 @@ public class DockModel {
      * Returns an ArrayList of all bikes' bikeID's that is docked at a given dock.
 \     *
      * @param name          the name of the dock that is to be checked.
-     * @return bikes        an ArrayList of all bike_id's that is docked at that given dock.
-     * @return null         if the method fails.
+     * @return              an ArrayList of all bike_id's that is docked at that given dock.
      */
     public ArrayList<Integer> bikesAtDock(String name){
         Connection connection = null;
@@ -310,14 +303,14 @@ public class DockModel {
 
         ArrayList<Integer> bikes = new ArrayList<Integer>();
 
-        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE(dock.name = ?) AND bike.active = 1";
+        String bikesQuery = "SELECT bike_id FROM bike NATURAL JOIN dock WHERE LOWER(dock.name = ?) AND bike.active = 1";
 
         try{
             connection = DBCleanup.getConnection();
 
             if(!dockNameAvailable(name)) {
                 preparedStatement = connection.prepareStatement(bikesQuery);
-                preparedStatement.setString(1, name);
+                preparedStatement.setString(1, name.toLowerCase());
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     bikes.add(resultSet.getInt("bike_id"));
@@ -337,8 +330,7 @@ public class DockModel {
     /**
      * Returns an ArrayList of all dock Objects that are in the database.
      *
-     * @return allDocks         an ArrayList of all dock-objects that are saved in the database.
-     * @return null             if the method fails, or there are no docks.
+     * @return          an ArrayList of all dock-objects that are saved in the database.
      */
     public ArrayList<Dock> getAllDocks(){
         Connection connection = null;
@@ -368,6 +360,11 @@ public class DockModel {
         return null;
     }
 
+    /**
+     * Returns the name of the dock, given the dock_id.
+     * @param dockID        the dock_id that is to be searched for.
+     * @return              the name that corresponds to the given dock_id.
+     */
     public String getDockName(int dockID){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -391,5 +388,36 @@ public class DockModel {
             DBCleanup.closeConnection(connection);
         }
         return null;
+    }
+
+    /**
+     * Sums the power values of all the bikes at a given dock.
+     * @param dockName      the name of the dock that is asked for.
+     * @return              the sum of the power values of all bikes docked there.
+     */
+    public double getPowerAtDock(String dockName){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        String powerQuery = "SELECT SUM(power) from dock LEFT JOIN bike ON(bike.dock_id = dock.dock_id) " +
+                "WHERE dock.name = ? AND bike.active = 1";
+
+        try{
+            connection = DBCleanup.getConnection();
+
+            preparedStatement = connection.prepareStatement(powerQuery);
+            preparedStatement.setString(1, dockName);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble("SUM(power)");
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " getPowerAtDock()");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return -1;
     }
 }
