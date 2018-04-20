@@ -36,7 +36,7 @@ public class DockStatsModel {
                 preparedStatement = connection.prepareStatement(usageQuery);
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
-                if(    resultSet.next()){
+                if(  resultSet.next()){
                     return resultSet.getDouble("MAX(total_pwr_usg)");
                 }else return 0;
             }

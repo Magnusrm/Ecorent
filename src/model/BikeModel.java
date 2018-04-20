@@ -68,8 +68,7 @@ public class BikeModel {
         ResultSet resultSet = null;
 
 
-        String bikeQuery = "SELECT reg_date, price, make, power, name, dock_id FROM type LEFT JOIN bike " +
-                "ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
+        String bikeQuery = "SELECT reg_date, price, make, power, name, dock_id FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
 
         String regDate;
         LocalDate localDate;
