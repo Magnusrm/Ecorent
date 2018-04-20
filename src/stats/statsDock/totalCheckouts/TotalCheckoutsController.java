@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class TotalCheckoutsController implements Initializable {
 
-    Factory factory = new Factory();
+    private Factory factory = new Factory();
 
     @FXML
     private PieChart pieChart;

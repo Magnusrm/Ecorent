@@ -90,8 +90,11 @@ public class BikeNewController implements Initializable{
 
     @FXML
     void createNewBike(ActionEvent event) {
+        String date = buyDateField.getText().substring(0,4) + "-" + buyDateField.getText().substring(4,6) + "-" +
+                buyDateField.getText().substring(6);
+        LocalDate date1 = LocalDate.parse(date);
         try {
-           Bike bike = new Bike(LocalDate.now(),Double.parseDouble(priceField.getText()),
+           Bike bike = new Bike(date1,Double.parseDouble(priceField.getText()),
                    makeField.getText(),new Type(typeComboBox.getValue()),Double.parseDouble(powerUsageField.getText()));
            for(int i = 0; i<Integer.parseInt(amountField.getText())-1;i++){
             factory.addBike(bike);
@@ -170,7 +173,7 @@ public class BikeNewController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

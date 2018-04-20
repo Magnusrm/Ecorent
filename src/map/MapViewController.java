@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import loginAdm.CurrentAdmin;
 import model.BikeModel;
 import model.BikeStatsModel;
 import netscape.javascript.JSObject;
@@ -135,7 +136,7 @@ public class MapViewController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
