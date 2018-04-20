@@ -20,8 +20,7 @@ public class DockStatsModel {
     /**
      * Returns the total power usage of a dock
      * @param dockID            the dock_id of the dock that is searched for.
-     * @return total_pwr_usg    the power usage of the dock.
-     * @return -1               if the method fails.
+     * @return                  the power usage of the dock.
      */
     public double getTotalPowerUsage(int dockID){
         Connection connection = null;
@@ -29,7 +28,7 @@ public class DockStatsModel {
         ResultSet resultSet = null;
         DockModel dm = new DockModel();
 
-        String usageQuery = "SELECT total_pwr_usg FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
+        String usageQuery = "SELECT MAX(total_pwr_usg) FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
 
         try{
             connection = DBCleanup.getConnection();
@@ -37,8 +36,9 @@ public class DockStatsModel {
                 preparedStatement = connection.prepareStatement(usageQuery);
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return resultSet.getDouble("total_pwr_usg");
+                if(  resultSet.next()){
+                    return resultSet.getDouble("MAX(total_pwr_usg)");
+                }else return 0;
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getTotalPowerUsage()");
@@ -50,7 +50,10 @@ public class DockStatsModel {
         return -1;
     }
 
-
+    /**
+     * Returns the total power usage of all docks.
+     * @return      total power usage.
+     */
     public double getTotalPowerUsageOfSystem(){
 
         Connection connection = null;
@@ -84,8 +87,7 @@ public class DockStatsModel {
     /**
      * Returns the total number of checkouts at a given dock
      * @param dockID            the dock_id of the dock that is to be checked.
-     * @return checkouts        the number of checkouts.
-     * @return -1               if the method fails.
+     * @return                  the number of checkouts.
      */
     public int getCheckouts(int dockID){
         Connection connection = null;
@@ -93,7 +95,7 @@ public class DockStatsModel {
         ResultSet resultSet = null;
         DockModel dm = new DockModel();
 
-        String checkoutsQuery = "SELECT checkouts FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
+        String checkoutsQuery = "SELECT MAX(checkouts) FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
 
         try{
             connection = DBCleanup.getConnection();
@@ -101,8 +103,10 @@ public class DockStatsModel {
                 preparedStatement = connection.prepareStatement(checkoutsQuery);
                 preparedStatement.setInt(1, dockID);
                 resultSet = preparedStatement.executeQuery();
-                resultSet.next();
-                return resultSet.getInt("checkouts");
+                if(resultSet.next()){
+                    return resultSet.getInt("MAX(checkouts)");
+                }else return 0;
+
             }
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getCheckouts()");
@@ -120,8 +124,7 @@ public class DockStatsModel {
      * @param time              the current time.
      * @param pwrSinceLast      the power used since last (the last minute).
      * @param checkouts         the number of checkouts since last (the last minute).
-     * @return true             if the stats are successfully added.
-     * @return false            if the method fails.
+     * @return                  if the stats are successfully added.
      */
     public boolean updateDockStats(int dockID, String time, double pwrSinceLast, int checkouts){
         Connection connection = null;
@@ -152,6 +155,10 @@ public class DockStatsModel {
         return false;
     }
 
+    /**
+     * Returns the max power usage of all docks for each day in the last week.
+     * @return          a double[] with the max power usage values for each day the last week.
+     */
     public double[] getWeeklyMaxPowerUsage(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -244,6 +251,10 @@ public class DockStatsModel {
         return null;
     }
 
+    /**
+     * Returns the daily power usage (not max) of all docks.
+     * @return      a double[] with the power usage of all docks for the last week.
+     */
     public double[] getDailyPowerUsage(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -342,6 +353,10 @@ public class DockStatsModel {
         return null;
     }
 
+    /**
+     * Returns max checkouts of all docks.
+     * @return      an ArrayList of int[] where int[0] is the dockID and int[1] is the corresponding MAX(checkouts).
+     */
     public ArrayList<int[]> getMaxCheckouts(){
         Connection connection = null;
         PreparedStatement preparedStatement = null;

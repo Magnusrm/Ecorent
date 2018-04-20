@@ -11,6 +11,7 @@
 
 package control;
 
+
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -25,7 +26,6 @@ public class Factory {
     private AdminModel adminModel;
     private BikeModel bikeModel;
     private BikeStatsModel bikeStatsModel;
-    private BikeStatsModel bsm;
     private DockModel dockModel;
     private DockStatsModel dockStatsModel;
     private RepairModel repairModel;
@@ -59,13 +59,14 @@ public class Factory {
      * This is used every time the user starts the application
      */
     public void updateSystem(){
-        bikes = bikeModel.getAllBikes();
-        docks = dockModel.getAllDocks();
-        MAINDOCK = docks.get(0).getDockID();
-        for(String name:typeModel.getTypes()){
-            Type type = new Type(name);
-            types.add(type);
-        }//end loop
+       bikes = bikeModel.getAllBikes();
+       docks = dockModel.getAllDocks();
+       MAINDOCK = docks.get(0).getDockID();
+
+       for(String name:typeModel.getTypes()){
+           Type type = new Type(name);
+           types.add(type);
+       }//end loop
         fillRepair();
         admins = adminModel.getAllAdmins();
     }//end method
@@ -134,11 +135,11 @@ public class Factory {
         b.setDockId(MAINDOCK);
         int bikeID = bikeModel.addBike(date,price,make,type,pwrUsage,false);
         b.setBikeId(bikeID);
-        bikeModel.setDockID(bikeID, MAINDOCK);
+        bikeModel.setDockID(bikeID, MAINDOCK );
         LocalDateTime ldt = LocalDateTime.now();
         String time = ("" + ldt + "").replaceAll("T", " ");
         time = time.substring(0, time.length() - 4);
-        bikeStatsModel.updateStats(time, bikeID, 100, docks.get(MAINDOCK).getxCoordinates(), docks.get(MAINDOCK).getyCoordinates(), 0, 0);
+        bikeStatsModel.updateStats(time, bikeID, 100, docks.get(0).getxCoordinates(), docks.get(0).getyCoordinates(), 0, 0);
         return true;
     }//end method
 
@@ -175,6 +176,10 @@ public class Factory {
         double x = d.getxCoordinates();
         double y = d.getyCoordinates();
         d.setDockID(dockModel.addDock(name,x,y));
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        dockStatsModel.updateDockStats(d.getDockID(),time, 0,0);
         if(d.getDockID() != -1)return true;
         else return false;
     }//end method
@@ -298,8 +303,8 @@ public class Factory {
         for(int i = 0; i<bikes.size(); i++){
             if(bikes.get(i).getBikeId() == bikeId){
                 newBike.setBikeId(bikeId);
-               int dockID = dockModel.getDockID(bikeId);
-               newBike.setDockId(dockID);
+                int dockID = dockModel.getDockID(bikeId);
+                newBike.setDockId(dockID);
                 bikes.set(i,newBike);
                 String regDate = newBike.getBuyDate().toString();
                 double price = newBike.getPrice();
@@ -338,6 +343,7 @@ public class Factory {
         if(d.getDockID() == -1)throw new IllegalArgumentException("The dock ID given does not exist");
         return false;
     }//end method
+
 
     /**
      * Method to edit types.
@@ -550,6 +556,7 @@ public class Factory {
     public double getAvgKmPerTrip(){
         return (getTotalDistance())/(bikeStatsModel.getTotalTrips());
     }
+
 
     /**
      * Method to find the number of bikes using each type.
