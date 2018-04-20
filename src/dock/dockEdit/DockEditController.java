@@ -3,16 +3,22 @@ package dock.dockEdit;
 import changescene.ChangeScene;
 import control.Dock;
 import control.Factory;
+import dock.dockNew.DockNewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 public class DockEditController implements Initializable {
     private Factory factory = new Factory();
@@ -55,10 +61,43 @@ public class DockEditController implements Initializable {
     @FXML
     private Button homeBtn;
 
+    @FXML
+    private WebView root;
+
+    private WebEngine engine;
+
+    public class JavaBridge {
+
+        public String log(String pos) {
+            System.out.println(pos);
+            String[] data = pos.split(", ");
+            String xValue = data[0].substring(1);
+            String yValue = data[1].substring(0, data[1].length() - 1);
+            xCoordField.setText(xValue);
+            yCoordField.setText(yValue);
+            return pos;
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         try {
             factory.updateSystem();
+
+            // load map
+            engine = root.getEngine();
+            engine.load(this.getClass().getResource("/dock/dockNew/newdockmap.html").toExternalForm());
+            engine.setJavaScriptEnabled(true);
+
+            root.addEventHandler(MOUSE_CLICKED, e -> {
+                setJavaBridge();
+            });
+
+            engine.getLoadWorker().stateProperty().addListener(e ->
+            {
+                setJavaBridge();
+            });
+
             // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
             String[] visualized = new String[factory.getDocks().size()];
@@ -70,6 +109,18 @@ public class DockEditController implements Initializable {
 
             dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
+
+    }
+
+    public void setJavaBridge(){
+        JSObject window = (JSObject) engine.executeScript("window");
+        JavaBridge bridge = new JavaBridge();
+
+        window.setMember("java", bridge);
+        engine.executeScript("console.log = function(message)\n" +
+                "{\n" +
+                "    java.log(message);\n" +
+                "};");
     }
 
     @FXML
