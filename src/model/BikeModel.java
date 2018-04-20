@@ -68,8 +68,7 @@ public class BikeModel {
         ResultSet resultSet = null;
 
 
-        String bikeQuery = "SELECT reg_date, price, make, power, name FROM type LEFT JOIN bike " +
-                "ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
+        String bikeQuery = "SELECT reg_date, price, make, power, name, dock_id FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
 
         String regDate;
         LocalDate localDate;
@@ -77,6 +76,7 @@ public class BikeModel {
         String make;
         String typeName;
         double power;
+        int dockID;
 
         try {
             connection = DBCleanup.getConnection();
@@ -92,9 +92,14 @@ public class BikeModel {
                     typeName = resultSet.getString("name");
                     power = resultSet.getDouble("power");
                     localDate = LocalDate.parse(regDate);
+                    dockID = resultSet.getInt("dock_id");
                     type = new Type(typeName);
                     bike = new Bike(localDate, price, make, type, power);
                     bike.setBikeId(bikeID);
+                    if (dockID > 0) {
+                        bike.setDockId(dockID);
+                    }
+
                     bike.setRepairing(isRepairing(bikeID));
                     return bike;
                 }
