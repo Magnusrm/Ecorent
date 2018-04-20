@@ -18,7 +18,7 @@ public class Simulation implements Runnable{
     private Thread t;
 
     private static Factory factory = new Factory();
-    private static ArrayList<Dock> docks;
+    private static ArrayList<Dock> docks = factory.getDocks();
     private static Random random = new Random();
     private static BikeModel bm = new BikeModel();
     private static BikeStatsModel bts = new BikeStatsModel();
@@ -62,22 +62,22 @@ public class Simulation implements Runnable{
 
             factory.updateSystem();
             ArrayList<Bike> bikes = factory.getBikes();
-            Bike bike = null;
+            String time;
             for (Bike b : bikes){
                 if (b.getBikeId() == bikeID){
-                    bike = b;
-                }
-            }
-            Dock dock = null;
-            for (Dock d : docks){
-                if (d.getDockID() == bike.getDockId()){
-                    dock = d;
+                    for (Dock d : docks){
+                        if (d.getDockID() == b.getDockId()){
+                            //int checkouts = dsm.getCheckouts(d.getDockID()) + 1;
+                            time = getNow();
+                            dsm.updateDockStats(d.getDockID(), time, b.getPowerUsage()*0.016666667, 1);
+                        }
+                    }
                 }
             }
 
-            int checkouts = dsm.getCheckouts(dock.getDockID()) + 1;
-            String time = getNow();
-            dsm.updateDockStats(dock.getDockID(), time, factory.powerUsage(dock.getName())*0.016666667, checkouts);
+
+
+
 
             Dock randomD = null;
             while(check == 0) {
