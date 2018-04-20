@@ -39,7 +39,6 @@ public class StatsController{
     @FXML
     void changeToPieChartScene(ActionEvent event) throws Exception{
         PopupScene ps = new PopupScene(event, "/stats/statsDock/totalCheckouts/TotalCheckoutsView.fxml", "Checkouts");
-
     }
 
     @FXML
