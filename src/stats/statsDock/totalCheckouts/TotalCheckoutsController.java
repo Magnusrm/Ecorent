@@ -44,12 +44,6 @@ public class TotalCheckoutsController implements Initializable {
         }
 
 
-        // datos.add(new Tabla(v) );
-/*
-        for(int i = 0; i<7; i++){
-            new*/
-
-
         pieChart.setData(pieChartData);
 
     }

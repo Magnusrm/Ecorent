@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import loginAdm.CurrentAdmin;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
@@ -36,30 +37,6 @@ public class DockEditController implements Initializable {
 
     @FXML
     private ComboBox<String> dockNameComboBox;
-
-    @FXML
-    private Button saveChangesBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
 
     @FXML
     private WebView root;
@@ -185,11 +162,7 @@ public class DockEditController implements Initializable {
 
 
 
-
-
-
-    // main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -228,7 +201,7 @@ public class DockEditController implements Initializable {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

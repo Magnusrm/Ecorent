@@ -23,40 +23,10 @@ public class BikeNewController implements Initializable{
     private TextField makeField;
 
     @FXML
-    private Button bikeViewBtn;
-
-    @FXML
     private TextField priceField;
 
     @FXML
-    private TextField buyDateField;
-
-    @FXML
     private ComboBox<String> typeComboBox;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
 
     @FXML
     private TextField powerUsageField;
@@ -128,8 +98,9 @@ public class BikeNewController implements Initializable{
 
 
 
-    // main buttons below
 
+
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

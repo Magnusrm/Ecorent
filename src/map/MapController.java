@@ -1,45 +1,27 @@
 package map;
 
 import changescene.ChangeScene;
-import control.Bike;
 import control.Dock;
 import control.Factory;
-import control.Type;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import model.BikeModel;
 import model.BikeStatsModel;
-import netscape.javascript.JSObject;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
-public class MapViewController implements Initializable{
+public class MapController implements Initializable{
 
     private Factory myFactory = new Factory();
     private BikeStatsModel bsm= new BikeStatsModel();
     private ArrayList<Dock> allDocks;
-
-
-
-    @FXML
-    private Button showBikeBtn;
-
-    @FXML
-    private TextField bikeIdField;
 
     @FXML
     private WebView root;
@@ -52,7 +34,7 @@ public class MapViewController implements Initializable{
         myFactory.updateSystem();
 
         engine = root.getEngine();
-        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.load(this.getClass().getResource("/map/googlemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
 
         engine.getLoadWorker().stateProperty().addListener(e -> {
@@ -95,6 +77,10 @@ public class MapViewController implements Initializable{
         engine.executeScript("document.setMapOnAllBikes(document.map);");
 
     }
+
+
+
+
     // main buttons below
 
     @FXML
@@ -154,8 +140,4 @@ public class MapViewController implements Initializable{
         res += "]";
         return res;
     }
-
-
-
-
 }

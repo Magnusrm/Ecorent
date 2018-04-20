@@ -15,30 +15,6 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable{
 
     @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private TextField current;
-
-    @FXML
     private Label adminEmailLbl;
 
     @FXML
@@ -46,15 +22,12 @@ public class MainController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-    adminEmailLbl.setText("Welcome, " + CurrentAdmin.getInstance().getAdmin().getEmail() + "!");
-    if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()){
-        adminRightsLbl.setText("You have main admin priviliges");
-    } else {
-        adminRightsLbl.setText("Your priviliges might be restricted");
-    }
-
-
-
+        adminEmailLbl.setText("Welcome, " + CurrentAdmin.getInstance().getAdmin().getEmail() + "!");
+        if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()){
+            adminRightsLbl.setText("You have main admin priviliges");
+         } else {
+         adminRightsLbl.setText("Your priviliges might be restricted");
+        }
     }//end method
 
 
@@ -63,9 +36,7 @@ public class MainController implements Initializable{
 
 
 
-
-    // main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -104,7 +75,7 @@ public class MainController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

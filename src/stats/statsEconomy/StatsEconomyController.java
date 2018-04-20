@@ -91,11 +91,7 @@ public class StatsEconomyController implements Initializable {
 
 
 
-
-
-
-// main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
