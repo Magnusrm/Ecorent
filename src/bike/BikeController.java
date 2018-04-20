@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import changescene.ChangeScene;
+import loginAdm.CurrentAdmin;
 import model.BikeModel;
 
 import java.util.Optional;
@@ -175,7 +176,7 @@ public class BikeController {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
