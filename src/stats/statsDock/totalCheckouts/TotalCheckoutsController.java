@@ -1,6 +1,7 @@
 package stats.statsDock.totalCheckouts;
 
 import changescene.CloseWindow;
+import changescene.MainMethods;
 import control.Factory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,9 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class TotalCheckoutsController implements Initializable {
-
-    private Factory factory = new Factory();
+public class TotalCheckoutsController extends MainMethods implements Initializable {
 
     @FXML
     private PieChart pieChart;
@@ -50,6 +49,6 @@ public class TotalCheckoutsController implements Initializable {
 
     @FXML
     void closeBarChart(ActionEvent event) {
-        CloseWindow cs = new CloseWindow(event);
+        closeWindow(event);
     }
 }

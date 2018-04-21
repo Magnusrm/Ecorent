@@ -1,5 +1,6 @@
 package login;
 
+import changescene.MainMethods;
 import control.Admin;
 import control.Factory;
 import javafx.event.ActionEvent;
@@ -26,8 +27,7 @@ import java.util.ResourceBundle;
 
 import model.AdminModel;
 
-public class LoginController{
-    Factory factory = new Factory();
+public class LoginController extends MainMethods {
 
     @FXML
     private Label incorrectLbl;
@@ -48,8 +48,7 @@ public class LoginController{
             Admin admin = adminModel.getAdmin(loginBean.getEmail());
             CurrentAdmin currentAdmin = CurrentAdmin.getInstance();
             currentAdmin.setAdmin(admin);
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/main/MainView.fxml");
+            changeScene(event, "/main/MainView.fxml");
 
         }else{
             incorrectLbl.setTextFill(Color.web("#ff0000"));

@@ -1,6 +1,7 @@
 package dock.dockEdit;
 
 import changescene.ChangeScene;
+import changescene.MainMethods;
 import control.Dock;
 import control.Factory;
 import dock.dockNew.DockNewController;
@@ -23,10 +24,7 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
-public class DockEditController implements Initializable {
-    private Factory factory = new Factory();
-    @FXML
-    private ComboBox<String> bikeIdComboBox;
+public class DockEditController  extends MainMethods implements Initializable {
 
     @FXML
     private TextField dockNameField;
@@ -46,9 +44,12 @@ public class DockEditController implements Initializable {
     private WebEngine engine;
 
     public class JavaBridge {
-
+        /**
+         * This method is used to get a message from JavaScript.
+         * @param pos A string in the format "(" + number + ", " + number + ").
+         * @return The string.
+         */
         public String log(String pos) {
-            System.out.println(pos);
             String[] data = pos.split(", ");
             String xValue = data[0].substring(1);
             String yValue = data[1].substring(0, data[1].length() - 1);
@@ -108,6 +109,10 @@ public class DockEditController implements Initializable {
 
     }//end method
 
+    /**
+     * Sets the console.log() method in javascript to execute the method JavaBridge.log()
+     * We found this has to be set anew after we zoom or move the map.
+     */
     public void setJavaBridge(){
         JSObject window = (JSObject) engine.executeScript("window");
         JavaBridge bridge = new JavaBridge();
@@ -122,30 +127,11 @@ public class DockEditController implements Initializable {
     @FXML
     private void zoomIn(){
         engine.executeScript("document.zoomIn();");
-
-
-        JSObject window = (JSObject) engine.executeScript("window");
-        JavaBridge bridge = new JavaBridge();
-
-        window.setMember("java", bridge);
-        engine.executeScript("console.log = function(message)\n" +
-                "{\n" +
-                "    java.log(message);\n" +
-                "};");
     }
 
     @FXML
     private void zoomOut(){
         engine.executeScript("document.zoomOut();");
-
-        JSObject window = (JSObject) engine.executeScript("window");
-        JavaBridge bridge = new JavaBridge();
-
-        window.setMember("java", bridge);
-        engine.executeScript("console.log = function(message)\n" +
-                "{\n" +
-                "    java.log(message);\n" +
-                "};");
     }
 
 
@@ -172,57 +158,5 @@ public class DockEditController implements Initializable {
         }
 
         System.out.println("test4");
-
-    }
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-
     }
 }

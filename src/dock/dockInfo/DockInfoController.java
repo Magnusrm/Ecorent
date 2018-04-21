@@ -1,6 +1,7 @@
 package dock.dockInfo;
 
 import changescene.ChangeScene;
+import changescene.MainMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,9 +19,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import loginAdm.CurrentAdmin;
 
-public class DockInfoController implements Initializable {
-
-    private Factory factory = new Factory();
+public class DockInfoController extends MainMethods implements Initializable {
 
     @FXML
     private Label nameLbl;
@@ -48,7 +47,7 @@ public class DockInfoController implements Initializable {
             factory.updateSystem();
 
             engine = root.getEngine();
-            engine.load(this.getClass().getResource("dockmap.html").toExternalForm());
+            engine.load(this.getClass().getResource("/dock/dockNew/newdockmap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
 
             // add dockId's to comboBox
@@ -86,59 +85,9 @@ public class DockInfoController implements Initializable {
         ArrayList<Dock> docks = factory.getDocks();
         for (Dock d : docks){
             if (d.getName().equals(dockNameComboBox.getValue()) ){
-                engine.executeScript("document.createMarkerEgen(" + d.getDockID() + ", " + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
+                engine.executeScript("document.createMarker1(" + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
             }
         }
-
-    }
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
 
     }
 }
