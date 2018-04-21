@@ -48,7 +48,7 @@ public class DockInfoController implements Initializable {
             factory.updateSystem();
 
             engine = root.getEngine();
-            engine.load(this.getClass().getResource("dockmap.html").toExternalForm());
+            engine.load(this.getClass().getResource("/dock/dockNew/newdockmap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
 
             // add dockId's to comboBox
@@ -86,7 +86,7 @@ public class DockInfoController implements Initializable {
         ArrayList<Dock> docks = factory.getDocks();
         for (Dock d : docks){
             if (d.getName().equals(dockNameComboBox.getValue()) ){
-                engine.executeScript("document.createMarkerEgen(" + d.getDockID() + ", " + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
+                engine.executeScript("document.createMarker1(" + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
             }
         }
 

@@ -43,7 +43,11 @@ public class DockNewController implements Initializable{
     private TextField yCoordField;
 
     public class JavaBridge {
-
+        /**
+         * This method is used to get a message from JavaScript.
+         * @param pos A string in the format "(" + number + ", " + number + ").
+         * @return The string.
+         */
         public String log(String pos) {
             System.out.println(pos);
             String[] data = pos.split(", ");
@@ -76,6 +80,10 @@ public class DockNewController implements Initializable{
         }catch (Exception e){e.printStackTrace();}
     }
 
+    /**
+     * Sets the console.log() method in javascript to execute the method JavaBridge.log()
+     * We found this has to be set anew after we zoom or move the map.
+     */
     public void setJavaBridge(){
         JSObject window = (JSObject) engine.executeScript("window");
         JavaBridge bridge = new JavaBridge();
@@ -90,30 +98,11 @@ public class DockNewController implements Initializable{
     @FXML
     private void zoomIn(){
         engine.executeScript("document.zoomIn();");
-
-
-        JSObject window = (JSObject) engine.executeScript("window");
-        JavaBridge bridge = new JavaBridge();
-
-        window.setMember("java", bridge);
-        engine.executeScript("console.log = function(message)\n" +
-                "{\n" +
-                "    java.log(message);\n" +
-                "};");
     }
 
     @FXML
     private void zoomOut(){
         engine.executeScript("document.zoomOut();");
-
-        JSObject window = (JSObject) engine.executeScript("window");
-        JavaBridge bridge = new JavaBridge();
-
-        window.setMember("java", bridge);
-        engine.executeScript("console.log = function(message)\n" +
-                "{\n" +
-                "    java.log(message);\n" +
-                "};");
     }
 
     @FXML

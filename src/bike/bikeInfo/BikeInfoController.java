@@ -159,6 +159,7 @@ public class BikeInfoController implements Initializable {
             alert.setContentText("Cannot find the given bike!");
             alert.showAndWait();
         }//end condition
+        // show marker on map
         ArrayList<double[]> recentPositions = bsm.getMostRecentCoordinates();
         for (double[] p : recentPositions){
             if (p[0] == bikeID){

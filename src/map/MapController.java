@@ -54,6 +54,9 @@ public class MapController implements Initializable{
 
     }
 
+    /**
+     * @return All the docks and their dockID and positions in a double[][] format.
+     */
     private double[][] dockToArray(){
         double[][] res = new double[allDocks.size()][3];
         for (int i = 0; i < res.length; i++) {
@@ -138,6 +141,10 @@ public class MapController implements Initializable{
 
     }
 
+    /**
+     * @param data The double[][] you want to convert
+     * @return The text to create a similar two dimentional array in javascript.
+     */
     public String arrayToString(double[][] data){
         String res = "[[";
         for (int i = 0; i < data.length; i++){
