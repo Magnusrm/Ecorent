@@ -19,7 +19,7 @@ public class MainController extends MainMethods implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        adminEmailLbl.setText("Logged in as: " + CurrentAdmin.getInstance().getAdmin().getEmail());
+        adminEmailLbl.setText(CurrentAdmin.getInstance().getAdmin().getEmail());
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()){
             adminRightsLbl.setText("You have main admin priviliges");
          } else {
