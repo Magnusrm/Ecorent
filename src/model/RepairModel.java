@@ -26,12 +26,13 @@ public class RepairModel {
      */
     public int sendRepair(int bikeID, String dateSent, String bDescription){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String sendInsert = "INSERT INTO repair(repair_id, date_sent, before_desc, date_recieved, after_desc, price, bike_id)" +
                 "VALUES(DEFAULT, ?, ?,NULL, NULL, NULL, ?)";
         String maxQuery = "SELECT MAX(repair_id) FROM repair";
+
         try{
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
@@ -72,12 +73,13 @@ public class RepairModel {
      * @param price             the cost of the repair.
      * @return                  if the second part of the repair is successfully saved.
      */
-    public boolean returnRepair(int repairID, String dateReceived, String aDescription, double price)
-    {
+    public boolean returnRepair(int repairID, String dateReceived, String aDescription, double price) {
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String returnInsert = "UPDATE repair SET date_recieved = ?, after_desc = ?, price = ? WHERE repair_id = ?";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -108,11 +110,10 @@ public class RepairModel {
      */
     public ArrayList<Integer> getRepairIDs(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<Integer> repIDs = new ArrayList<>();
-
         String IDQuery = "SELECT repair_id FROM repair WHERE date_recieved IS NULL";
 
         try{
@@ -142,12 +143,8 @@ public class RepairModel {
      */
     public ArrayList<RepairReturned> getRepairsReturned(){
         Connection connection = null;
-
-        PreparedStatement preparedStatement = null;
-
-
         ResultSet resultSet = null;
-
+        PreparedStatement preparedStatement = null;
 
         String dateSent;
         String beforeDesc;
@@ -201,8 +198,8 @@ public class RepairModel {
      */
     public RepairSent getRepair(int repairID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String dateSent;
         String beforeDesc;
@@ -246,11 +243,10 @@ public class RepairModel {
      */
     public double getPriceOfAllRepairs(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         double sum = 0;
-
         String priceQuery = "SELECT price FROM repair";
 
         try {

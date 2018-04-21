@@ -1,5 +1,7 @@
 package model;
 
+import control.Type;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -53,6 +55,33 @@ public class TypeModel {
         return -1;
     }
 
+    public Type getType(int typeID){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
+        String typeQuery = "SELECT name FROM type WHERE type_id = ?";
+        Type type;
+
+        try {
+            connection = DBCleanup.getConnection();
+            preparedStatement = connection.prepareStatement(typeQuery);
+            preparedStatement.setInt(1, typeID);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            type = new Type(resultSet.getString("name"));
+            return type;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - getType()");
+        }finally {
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
 
     /**
      * Adds a new type to the database.
@@ -62,8 +91,9 @@ public class TypeModel {
      */
     public int addType(String name){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
         String typeInsert = "INSERT INTO type(type_id, name) VALUES (DEFAULT, ?);";
         String maxType = "SELECT MAX(type_id) FROM type";
         try{
@@ -108,6 +138,7 @@ public class TypeModel {
      */
     public boolean editType(int typeID, String name){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String typeInsert = "UPDATE type SET name = ? WHERE type_id = ?;";
@@ -141,6 +172,7 @@ public class TypeModel {
      */
     public boolean deleteType(String typeName){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         int typeID = typeExists(typeName);
@@ -175,8 +207,8 @@ public class TypeModel {
      */
     public ArrayList<String> getTypes(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<String> types = new ArrayList<String>();
 

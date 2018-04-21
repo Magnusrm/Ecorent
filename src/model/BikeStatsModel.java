@@ -16,6 +16,7 @@ import java.util.Properties;
  */
 public class BikeStatsModel {
 
+
     /**
      * Returns an ArrayList of the most recent latitudes and longitudes + corresponding bikeID's.
      *
@@ -23,11 +24,10 @@ public class BikeStatsModel {
      */
     public ArrayList<double[]> getRecentCoordinates(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<double[]> coordinates = new ArrayList<double[]>();
-
         String cordsQuery = "SELECT bike_id, x_cord, y_cord FROM bike_stats WHERE time >= (now() - INTERVAL 1 MINUTE)";
 
         try{
@@ -63,11 +63,10 @@ public class BikeStatsModel {
      */
     public ArrayList<double[]> getMostRecentCoordinates() {
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<double[]> recentCords = new ArrayList<>();
-
         String recentQuery = "SELECT bs.bike_id, bs.x_cord, bs.y_cord FROM bike_stats bs JOIN " +
                 "(SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
                 "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike " +
@@ -105,10 +104,10 @@ public class BikeStatsModel {
      */
     public int getTripNr(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        BikeModel bikeModel = new BikeModel();
+        PreparedStatement preparedStatement = null;
 
+        BikeModel bikeModel = new BikeModel();
         int tripNr;
         String tripQuery = "SELECT MAX(trip_number) FROM bike_stats WHERE bike_id = ?";
 
@@ -141,11 +140,10 @@ public class BikeStatsModel {
      */
     public int getTotalTrips(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         int trips = 0;
-
         String totalTripsQuery = "SELECT bike_id, MAX(trip_number) FROM bike_stats GROUP BY bike_id";
 
         try{
@@ -175,10 +173,10 @@ public class BikeStatsModel {
      */
     public int getChargLvl(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        BikeModel bikeModel = new BikeModel();
+        PreparedStatement preparedStatement = null;
 
+        BikeModel bikeModel = new BikeModel();
         String chargLvlQuery = "SELECT bs.bike_id, bs.charg_lvl FROM bike_stats bs " +
                 "JOIN (SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
                 "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike ON bs.bike_id = bike.bike_id " +
@@ -214,10 +212,10 @@ public class BikeStatsModel {
      */
     public double getDistance(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        BikeModel bikeModel = new BikeModel();
+        PreparedStatement preparedStatement = null;
 
+        BikeModel bikeModel = new BikeModel();
         String distanceQuery = "SELECT bs.bike_id, bs.distance FROM bike_stats bs " +
                 "JOIN (SELECT bike_id, MAX(time) AS maxtime FROM bike_stats GROUP BY bike_id) gbd " +
                 "ON bs.bike_id = gbd.bike_id AND bs.time = gbd.maxtime JOIN bike " +
@@ -251,11 +249,10 @@ public class BikeStatsModel {
      */
     public double getTotalDistance(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         double totalDistance = 0;
-
         String totalDistanceQuery = "SELECT bike_id, MAX(distance) FROM bike_stats GROUP BY bike_id";
 
         try{
@@ -291,10 +288,10 @@ public class BikeStatsModel {
      */
     public boolean updateStats(String time, int bikeID, int chargLvl, double xCord, double yCord, double distance, int tripNr){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        BikeModel bikeModel = new BikeModel();
+        PreparedStatement preparedStatement = null;
 
+        BikeModel bikeModel = new BikeModel();
         String insertCoordinates = "INSERT INTO bike_stats(time, bike_id, charg_lvl, x_cord, y_cord, distance, trip_number) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?)";
         try{

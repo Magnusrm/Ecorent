@@ -19,7 +19,6 @@ import java.util.zip.CheckedOutputStream;
  */
 public class BikeModel {
 
-
     /**
      * Checks if a given bike is in the database.
      *
@@ -28,8 +27,8 @@ public class BikeModel {
      */
     public boolean bikeExists(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String existsQuery = "SELECT bike_id FROM bike WHERE bike_id = ? AND active = 1";
 
@@ -58,15 +57,12 @@ public class BikeModel {
      * @return               the bike object with the data corresponding to the bike_id.
      */
     public Bike getBike(int bikeID)  {
-
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         Type type;
         Bike bike;
-
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
 
         String bikeQuery = "SELECT reg_date, price, make, power, name, dock_id FROM type LEFT JOIN bike ON bike.type_id = type.type_id WHERE bike_id = ? AND active = 1";
 
@@ -124,14 +120,14 @@ public class BikeModel {
      */
     public boolean setDockID(int bikeID, int dockID) {
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String bikeInsert = "UPDATE bike SET dock_id = ? WHERE bike_id = ? AND active = 1";
         String bikeInsert2 = "UPDATE bike SET dock_id = NULL WHERE bike_id = ? AND active = 1";
+
         try{
             connection = DBCleanup.getConnection();
-
 
             if(bikeExists(bikeID)) {
                 if(dockID <= 0){
@@ -168,13 +164,14 @@ public class BikeModel {
      * @return               if the edited changes has been saved.
      */
     public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double power, String typeName) {
-        int typeID = TypeModel.typeExists(typeName);
-
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
+        int typeID = TypeModel.typeExists(typeName);
         String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, power = ?, type_id = ? " +
                 "WHERE bike_id = ? AND active = 1";
+
         try{
             connection = DBCleanup.getConnection();
             connection.setAutoCommit(false);
@@ -217,6 +214,7 @@ public class BikeModel {
      */
     public boolean deleteBikesWhereTypeIsNULL(){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String deleteUpdate = "UPDATE bike SET active = 0 WHERE type_id IS NULL";
@@ -244,9 +242,11 @@ public class BikeModel {
      */
     public boolean deleteBike(int bikeID){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String deleteUpdate = "UPDATE bike SET active = 0 WHERE bike_id = ?";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -279,11 +279,10 @@ public class BikeModel {
      */
     public int addBike(String date, double price, String make, String typeName, double power, boolean repair){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         int typeID = TypeModel.typeExists(typeName);
-
         String bikeInsert = "INSERT INTO bike(bike_id, reg_date, price, make, type_id, power, repairing, active) VALUES " +
                 "(DEFAULT, ?, ?, ?, ?, ?, ?, 1);";
         String maxBikeID = "SELECT MAX(bike_id) FROM bike WHERE active = 1";
@@ -339,11 +338,10 @@ public class BikeModel {
      */
     public ArrayList<Bike> getAllBikes(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<Bike> allBikes = new ArrayList<Bike>();
-
         String bikesQuery = "SELECT bike_id FROM bike WHERE active = 1";
 
         try{
@@ -374,8 +372,8 @@ public class BikeModel {
      */
     public boolean isRepairing(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ? AND active = 1";
 
@@ -404,11 +402,10 @@ public class BikeModel {
      */
     public double getPriceOfAllBikes(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         double sum = 0;
-
         String priceQuery = "SELECT price FROM bike";
 
         try {
@@ -437,8 +434,8 @@ public class BikeModel {
      */
     public boolean changeRepair(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String repairQuery = "SELECT repairing FROM bike WHERE bike_id = ? AND active = 1";
         String repairUpdate = "UPDATE bike SET repairing = ? WHERE bike_id = ? AND active = 1";
@@ -480,8 +477,8 @@ public class BikeModel {
      */
     public int bikesNotDocked(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String notDockedQuery = "SELECT COUNT(*) FROM bike WHERE dock_id IS NULL AND active = 1";
 

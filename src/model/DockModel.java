@@ -1,9 +1,13 @@
 package model;
 
+import control.Bike;
 import control.Dock;
+import control.Type;
 
 import javax.print.DocFlavor;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +19,7 @@ import java.util.ArrayList;
  */
 public class DockModel {
 
+
     /**
      * Returns a dock object from the database.
      *
@@ -23,11 +28,10 @@ public class DockModel {
      */
     public Dock getDock(String name){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         Dock dock;
-
         int dockID;
         double xCord;
         double yCord;
@@ -69,8 +73,8 @@ public class DockModel {
      */
     public boolean dockCoordinatesAvailable(double xCord, double yCord){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String cordsQuery = "SELECT x_cord, y_cord FROM dock WHERE x_cord = ? AND y_cord = ?";
 
@@ -97,10 +101,11 @@ public class DockModel {
      */
     public boolean dockNameAvailable(String name){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String nameQuery = "SELECT name FROM dock WHERE LOWER(name = ?)";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -127,8 +132,8 @@ public class DockModel {
      */
     public boolean dockIDAvailable(int dockID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String IDQuery = "SELECT dock_id FROM dock WHERE dock_id = ?";
 
@@ -160,8 +165,8 @@ public class DockModel {
      */
     public int addDock(String name, double xCord, double yCord){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String dockInsert = "INSERT INTO dock(dock_id, name, x_cord, y_cord, active) VALUES(DEFAULT, ?, ?, ?, 1)";
         String maxQuery = "SELECT MAX(dock_id) FROM dock";
@@ -205,6 +210,7 @@ public class DockModel {
      */
     public boolean editDock(int dockID, String name, double xCord, double yCord){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String dockInsert = "UPDATE dock SET name = ?, x_cord = ?, y_cord = ? WHERE dock_id = ? AND active = 1";
@@ -237,8 +243,8 @@ public class DockModel {
      */
     public int getDockID(int bikeID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String IDQuery = "SELECT dock_id FROM bike WHERE bike_id = ? and active = 1";
 
@@ -268,6 +274,7 @@ public class DockModel {
      */
     public boolean deleteDock(String name){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String deleteQuery = "UPDATE dock SET active = 0 WHERE name = ?";
@@ -298,8 +305,8 @@ public class DockModel {
      */
     public ArrayList<Integer> bikesAtDock(String name){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<Integer> bikes = new ArrayList<Integer>();
 
@@ -327,6 +334,45 @@ public class DockModel {
         return null;
     }
 
+    public ArrayList<Bike> dockedBikes(String name){
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
+        TypeModel tm = new TypeModel();
+        ArrayList<Bike> dBikes= new ArrayList<>();
+        String dBikesQuery = "SELECT bike_id, reg_date, price, make, type_id, power FROM bike " +
+                "NATURAL JOIN dock WHERE LOWER(dock.name = ?) AND bike.active = 1";
+        Bike bike;
+
+
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        try{
+            connection = DBCleanup.getConnection();
+
+            if(!dockNameAvailable(name)){
+                preparedStatement = connection.prepareStatement(dBikesQuery);
+                preparedStatement.setString(1, name.toLowerCase());
+                resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()){
+                    LocalDate localDate = LocalDate.parse(resultSet.getString("reg_date"), formatter);
+                    bike = new Bike(localDate, resultSet.getDouble("price"), resultSet.getString("make"),
+                            tm.getType(resultSet.getInt("type_id")),  resultSet.getDouble("power"));
+                    bike.setBikeId(resultSet.getInt("bike_id"));
+                    dBikes.add(bike);
+                }
+            }
+            return dBikes;
+        }catch(SQLException e){
+            System.out.println(e.getMessage() + " - dockedBikes()");
+        }finally{
+            DBCleanup.closeResultSet(resultSet);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeConnection(connection);
+        }
+        return null;
+    }
+
     /**
      * Returns an ArrayList of all dock Objects that are in the database.
      *
@@ -334,11 +380,10 @@ public class DockModel {
      */
     public ArrayList<Dock> getAllDocks(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<Dock> allDocks = new ArrayList<Dock>();
-
         String docksQuery = "SELECT name FROM dock WHERE active = 1";
 
         try{
@@ -367,8 +412,8 @@ public class DockModel {
      */
     public String getDockName(int dockID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String nameQuery = "SELECT name FROM dock WHERE dock_id = ?";
 
@@ -397,8 +442,8 @@ public class DockModel {
      */
     public double getPowerAtDock(String dockName){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String powerQuery = "SELECT SUM(power) from dock LEFT JOIN bike ON(bike.dock_id = dock.dock_id) " +
                 "WHERE dock.name = ? AND bike.active = 1";

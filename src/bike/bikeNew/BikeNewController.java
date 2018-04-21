@@ -168,7 +168,7 @@ public class BikeNewController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
