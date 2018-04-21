@@ -18,33 +18,6 @@ public class BikeRepairController {
     private Factory factory = new Factory();
 
     @FXML
-    private Button bikeRepairReturnedBtn;
-
-    @FXML
-    private Button bikeRepairSentBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
     private TextArea descReturnedTextArea;
 
     @FXML
@@ -52,12 +25,6 @@ public class BikeRepairController {
 
     @FXML
     private TextField dateReturnedField;
-
-    @FXML
-    private Button submitSentBtn;
-
-    @FXML
-    private Button returnedSubmitBtn;
 
     @FXML
     private TextArea descSentTextArea;
@@ -70,22 +37,6 @@ public class BikeRepairController {
 
     @FXML
     private TextField bikeIdSentField;
-
-
-    @FXML
-    void changeToRepairReturnedView(ActionEvent event)throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
-        ps.setTitle("Register returned repair");
-
-    }
-
-    @FXML
-    void changeToRepairSentView(ActionEvent event) throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/bike/bikeRepair/BikeRepairSentView.fxml");
-        ps.setTitle("Register sent repair");
-    }
 
     @FXML
     void registerRepairSentConfirm(ActionEvent event){
@@ -173,6 +124,20 @@ public class BikeRepairController {
         CloseWindow cw = new CloseWindow(event);
     }//end method
 
+    @FXML
+    void changeToRepairReturnedView(ActionEvent event)throws Exception {
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
+        ps.setTitle("Register returned repair");
+
+    }
+
+    @FXML
+    void changeToRepairSentView(ActionEvent event) throws Exception {
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/bike/bikeRepair/BikeRepairSentView.fxml");
+        ps.setTitle("Register sent repair");
+    }
 
 
 
@@ -180,8 +145,7 @@ public class BikeRepairController {
 
 
 
-    // main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

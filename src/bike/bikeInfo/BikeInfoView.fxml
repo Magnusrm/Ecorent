@@ -13,64 +13,64 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeInfo.BikeInfoController">
    <children>
-      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
+      <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="545.0">
          <children>
-            <Button fx:id="showInfoBtn" layoutX="227.0" layoutY="20.0" mnemonicParsing="false" onAction="#showInfo" prefHeight="27.0" prefWidth="136.0" text="Show info" textAlignment="CENTER" />
-            <TextField fx:id="bikeIdField" layoutX="69.0" layoutY="20.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
-            <Line endX="80.0" layoutX="124.0" layoutY="47.0" startX="-55.0" stroke="WHITE" />
-            <Label alignment="CENTER_RIGHT" layoutX="174.0" layoutY="204.0" text="Battery:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Button fx:id="showInfoBtn" layoutX="284.0" layoutY="27.0" mnemonicParsing="false" onAction="#showInfo" prefHeight="27.0" prefWidth="136.0" text="Show info" textAlignment="CENTER" />
+            <TextField fx:id="bikeIdField" layoutX="126.0" layoutY="27.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
+            <Line endX="80.0" layoutX="181.0" layoutY="54.0" startX="-55.0" stroke="WHITE" />
+            <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="198.0" text="Battery:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="174.0" layoutY="169.0" prefHeight="21.0" prefWidth="61.0" text="Date:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="168.0" prefHeight="21.0" prefWidth="61.0" text="Date:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="174.0" layoutY="64.0" prefHeight="21.0" prefWidth="61.0" text="Price:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="83.0" prefHeight="21.0" prefWidth="61.0" text="Price:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="174.0" layoutY="134.0" prefHeight="21.0" prefWidth="61.0" text="Make:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="138.0" prefHeight="21.0" prefWidth="61.0" text="Make:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="174.0" layoutY="99.0" prefHeight="21.0" prefWidth="61.0" text="Type:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER_RIGHT" layoutX="20.0" layoutY="108.0" prefHeight="21.0" prefWidth="61.0" text="Type:" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="priceLbl" layoutX="244.0" layoutY="64.0" prefHeight="21.0" prefWidth="134.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="priceLbl" layoutX="90.0" layoutY="83.0" prefHeight="21.0" prefWidth="134.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="typeLbl" layoutX="244.0" layoutY="99.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="typeLbl" layoutX="90.0" layoutY="108.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="makeLbl" layoutX="244.0" layoutY="134.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="makeLbl" layoutX="90.0" layoutY="138.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="dateLbl" layoutX="244.0" layoutY="169.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="dateLbl" layoutX="90.0" layoutY="168.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="batteryLbl" layoutX="244.0" layoutY="204.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="batteryLbl" layoutX="90.0" layoutY="198.0" prefHeight="21.0" prefWidth="127.0" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <ListView fx:id="repairIdListView" layoutX="24.0" layoutY="79.0" prefHeight="146.0" prefWidth="122.0" />
-            <WebView fx:id="root" layoutX="22.0" layoutY="243.0" prefHeight="145.0" prefWidth="392.0" />
-            <Label layoutX="24.0" layoutY="60.0" prefHeight="21.0" prefWidth="61.0" text="Repairs" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <ListView fx:id="repairIdListView" layoutX="37.0" layoutY="246.0" prefHeight="130.0" prefWidth="149.0" />
+            <WebView fx:id="root" layoutX="229.0" layoutY="84.0" prefHeight="295.0" prefWidth="282.0" />
+            <Label alignment="CENTER" layoutX="80.0" layoutY="222.0" prefHeight="21.0" prefWidth="53.0" text="Repairs" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="16.0" />
                </font>

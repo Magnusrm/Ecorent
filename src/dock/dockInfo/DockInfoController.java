@@ -16,13 +16,11 @@ import control.*;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import loginAdm.CurrentAdmin;
 
 public class DockInfoController implements Initializable {
 
     private Factory factory = new Factory();
-
-    @FXML
-    private Button showInfoBtn;
 
     @FXML
     private Label nameLbl;
@@ -35,27 +33,6 @@ public class DockInfoController implements Initializable {
 
     @FXML
     private ListView<String> bikeIdListView;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
 
     private WebEngine engine;
 
@@ -71,7 +48,7 @@ public class DockInfoController implements Initializable {
             factory.updateSystem();
 
             engine = root.getEngine();
-            engine.load(this.getClass().getResource("dockmap.html").toExternalForm());
+            engine.load(this.getClass().getResource("/dock/dockNew/newdockmap.html").toExternalForm());
             engine.setJavaScriptEnabled(true);
 
             // add dockId's to comboBox
@@ -109,15 +86,18 @@ public class DockInfoController implements Initializable {
         ArrayList<Dock> docks = factory.getDocks();
         for (Dock d : docks){
             if (d.getName().equals(dockNameComboBox.getValue()) ){
-                engine.executeScript("document.createMarkerEgen(" + d.getDockID() + ", " + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
+                engine.executeScript("document.createMarker1(" + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
             }
         }
 
     }
 
 
-    // main buttons below
 
+
+
+
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -156,7 +136,7 @@ public class DockInfoController implements Initializable {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

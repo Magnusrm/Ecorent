@@ -12,20 +12,24 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Thread.sleep;
+import java.util.concurrent.*;
 
 public class Simulation implements Runnable{
     private int id;
     private Thread t;
+    private static Semaphore sem;
 
     private static Factory factory = new Factory();
-    private static ArrayList<Dock> docks;
+    private static ArrayList<Dock> docks = factory.getDocks();
     private static Random random = new Random();
     private static BikeModel bm = new BikeModel();
     private static BikeStatsModel bts = new BikeStatsModel();
     private static DockStatsModel dsm = new DockStatsModel();
+    private static boolean access = true;
 
-    public Simulation(int id){
+    public Simulation(Semaphore sem, int id){
        this.id = id;
+       this.sem = sem;
     }
 
     public void run(){
@@ -39,14 +43,20 @@ public class Simulation implements Runnable{
         }
     }
 
+    /**
+     * Simulates movement, charging, docking/undocking and power usages.
+     * @param bikeID the Bike id of the bike you want to start a simulation for.
+     */
     static void sim(int bikeID){
         int steps = 10;
 
         while (true) {
+
             double distance = bts.getDistance(bikeID);
             int trip = bts.getTripNr(bikeID) + 1;
             int batteryLevel = bts.getChargLvl(bikeID);
             ArrayList<double[]> lastPositions = bts.getMostRecentCoordinates();
+
             double xPos = 0;
             double yPos = 0;
             for (double[] d : lastPositions) {
@@ -60,24 +70,29 @@ public class Simulation implements Runnable{
             double yDestination = 0;
             double distanceChange = 0;
 
+
             factory.updateSystem();
             ArrayList<Bike> bikes = factory.getBikes();
-            Bike bike = null;
+
+            String time;
             for (Bike b : bikes){
                 if (b.getBikeId() == bikeID){
-                    bike = b;
-                }
-            }
-            Dock dock = null;
-            for (Dock d : docks){
-                if (d.getDockID() == bike.getDockId()){
-                    dock = d;
+                    for (Dock d : docks){
+                        if (d.getDockID() == b.getDockId()){
+                            //int checkouts = dsm.getCheckouts(d.getDockID()) + 1;
+                            time = getNow();
+                            try {
+                                sem.acquire();
+                                dsm.updateDockStats(d.getDockID(), time, b.getPowerUsage() * 0.016666667, 1);
+                                sem.release();
+                            } catch(InterruptedException e){
+                                System.out.println("semaphore interrupted");
+                            }
+                        }
+                    }
                 }
             }
 
-            int checkouts = dsm.getCheckouts(dock.getDockID()) + 1;
-            String time = getNow();
-            dsm.updateDockStats(dock.getDockID(), time, factory.powerUsage(dock.getName())*0.016666667, checkouts);
 
             Dock randomD = null;
             while(check == 0) {
@@ -94,6 +109,7 @@ public class Simulation implements Runnable{
             double yDifference = yDestination - yPos;
 
             bm.setDockID(bikeID, -1);
+
             for (int i = 0; i < steps; i++) {
 
                 time = getNow();
@@ -130,6 +146,10 @@ public class Simulation implements Runnable{
         }
     }
 
+    /**
+     * @return
+     * A random dock from the database.
+     */
     public static Dock randomDock(){
         factory.updateSystem();
         docks = factory.getDocks();
@@ -137,6 +157,10 @@ public class Simulation implements Runnable{
         return docks.get(randomIndex);
     }
 
+    /**
+     * @return
+     * The current date and time parsed to suit the input format of the database.
+     */
     public static String getNow() {
         String time;
         LocalDateTime ldt;
@@ -163,12 +187,12 @@ public class Simulation implements Runnable{
         return dist;
     }
 
-    /*::	This function converts decimal degrees to radians						 :*/
+    /*	This function converts decimal degrees to radians						 */
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    /*::	This function converts radians to decimal degrees						 :*/
+    /*	This function converts radians to decimal degrees						 */
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
@@ -178,13 +202,15 @@ public class Simulation implements Runnable{
 class RunSimulation{
 
     public static void main(String[] args){
+        Semaphore sem = new Semaphore(1);
+
         Factory factory = new Factory();
         factory.updateSystem();
         ArrayList<Bike> bikes = factory.getBikes();
-        System.out.println(bikes.size());
-        Simulation[] simulations = new Simulation[bikes.size()];
-        for (int i = 0; i < bikes.size(); i++){
-            simulations[i] = new Simulation(bikes.get(i).getBikeId());
+        System.out.println(6);
+        Simulation[] simulations = new Simulation[6];
+        for (int i = 0; i < 6; i++){
+            simulations[i] = new Simulation(sem, bikes.get(i).getBikeId());
             simulations[i].start();
             try{
                 sleep(500);
@@ -196,6 +222,4 @@ class RunSimulation{
     }
 
 }
-
-
 //'YYYY-MM-DD HH:MM:SS

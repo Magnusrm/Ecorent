@@ -12,6 +12,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import loginAdm.CurrentAdmin;
 
 public class BikeTypeController implements Initializable{
@@ -20,55 +22,6 @@ public class BikeTypeController implements Initializable{
 
     @FXML
     private ListView<String> typeListView;
-
-    @FXML
-    private TextField makeField;
-
-    @FXML
-    private Button bikeViewBtn;
-
-    @FXML
-    private TextField priceField;
-
-    @FXML
-    private TextField buyDateField;
-
-    @FXML
-    private ComboBox<?> typeComboBox;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button createTypeBtn;
-
-    @FXML
-    private Button deleteTypeBtn;
-
-    @FXML
-    private TextField newTypeField;
-
 
 
     //Notice the types are converted to String array.
@@ -104,8 +57,15 @@ public class BikeTypeController implements Initializable{
         //System.out.println(typeListView);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete type");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you would like to delete the selected type?");
+        alert.setHeaderText("re you sure you would like to delete the selected type? This will delete all the bikes with this type.");
+
+        Image image = new Image("/resources/warning.png");
+        ImageView imageView = new ImageView(image);
+        alert.setGraphic(imageView);
+        alert.showAndWait();
+
+
+        alert.setContentText("Are you sure you would like to delete the selected type? This will delete all the bikes with this type.");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
@@ -115,6 +75,7 @@ public class BikeTypeController implements Initializable{
                 alert1.setHeaderText(null);
                 alert1.setContentText("Type deleted!");
                 alert1.showAndWait();
+                deleteAllBikesWithoutType(event);
             }else{
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert1.setTitle("Delete type");
@@ -262,7 +223,7 @@ public class BikeTypeController implements Initializable{
 
     /**
      *
-     *
+     * Deletes all bikes that exist without a type.
      *
      * @param event
      */
@@ -290,8 +251,8 @@ public class BikeTypeController implements Initializable{
 
 
 
-    // main buttons below
 
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

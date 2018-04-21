@@ -1,3 +1,11 @@
+
+package control;
+
+
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.*;
+import model.*;
 /**
  * Factory.java
  * @author Team007
@@ -8,15 +16,6 @@
  * The class will provide the view-control classes with data, which is why we add data from the
  * database into private arrays.
  */
-
-package control;
-
-
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.*;
-import model.*;
-
 public class Factory {
     private ArrayList<Dock> docks = new ArrayList<>();
     private ArrayList<Bike> bikes = new ArrayList<>();
@@ -62,7 +61,7 @@ public class Factory {
        bikes = bikeModel.getAllBikes();
        docks = dockModel.getAllDocks();
        MAINDOCK = docks.get(0).getDockID();
-       for(Bike b:bikes)b.setDockId(MAINDOCK);
+
        for(String name:typeModel.getTypes()){
            Type type = new Type(name);
            types.add(type);
@@ -393,7 +392,7 @@ public class Factory {
      * A bike without a type cannot exist, so
      * the system will use this method to delete
      * all bikes with no types.
-     * @return
+     * @return true if operation is successful
      */
     public boolean deleteAllBikesWithNoType(){
         for(int i = 0; i<bikes.size();i++){
@@ -436,15 +435,17 @@ public class Factory {
      * @return the power usage of the dock.
      */
     public double powerUsage(String dockName){
-        ArrayList<Bike> bikes = dockModel.dockedBikes(dockName);
-        double sum = 0;
-        for(int i = 0; i < bikes.size(); i++){
-            if(bikes.get(i).getBattery() == 100){
-                sum += bikes.get(i).getPowerUsage();
-            }
+        int[] docked = dockedBikes(dockName);
+        double sum = dockModel.getPowerAtDock(dockName);
+        for(int i = 0; i < docked.length; i++){
+           int id = docked[i];
+           if(bikeStatsModel.getChargLvl(id-1) == 100){
+               sum -= bikes.get(id).getPowerUsage();
+            } else{
+               sum += 0;
+           }
         }
-
-        return dockModel.getPowerAtDock(dockName) - sum;
+        return sum;
     }//end method
 
     /**
@@ -573,11 +574,15 @@ public class Factory {
      */
     public String[][] getTypePopularity(){
         String[][] numberOfTypes = new String[types.size()][2];
+
+        //Filling the array with type names
         for(int i = 0; i<types.size();i++){
             numberOfTypes[i][0] = types.get(i).getName();
         }//end loop
+
+        //Finding the number of bikes using each type
         for(int i = 0; i<types.size();i++){
-            int size = 0;
+            int size = 0; //Always initialize to 0 bikes using the type
             for(int j = 0; j<bikes.size();j++){
                 if(numberOfTypes[i][0].equals(bikes.get(j).getType().getName())){
                     size++;

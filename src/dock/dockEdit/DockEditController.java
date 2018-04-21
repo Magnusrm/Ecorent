@@ -4,6 +4,8 @@ import changescene.ChangeScene;
 import control.Dock;
 import control.Factory;
 import dock.dockNew.DockNewController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import loginAdm.CurrentAdmin;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
@@ -38,38 +41,17 @@ public class DockEditController implements Initializable {
     private ComboBox<String> dockNameComboBox;
 
     @FXML
-    private Button saveChangesBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
     private WebView root;
 
     private WebEngine engine;
 
     public class JavaBridge {
-
+        /**
+         * This method is used to get a message from JavaScript.
+         * @param pos A string in the format "(" + number + ", " + number + ").
+         * @return The string.
+         */
         public String log(String pos) {
-            System.out.println(pos);
             String[] data = pos.split(", ");
             String xValue = data[0].substring(1);
             String yValue = data[1].substring(0, data[1].length() - 1);
@@ -110,8 +92,29 @@ public class DockEditController implements Initializable {
             dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
 
+
+        dockNameComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override //Auto filling info
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Dock dock = null;
+                for(Dock d: factory.getDocks())if(newValue.equals(d.getName()))dock = d; //Finding the dock in system
+                if(dock != null) { //filling text when found
+                    xCoordField.setText("" + dock.getxCoordinates());
+                    yCoordField.setText("" + dock.getyCoordinates());
+                    dockNameField.setText(dock.getName());
+                    //Setting marker
+                    engine.executeScript("document.createMarker1(" + xCoordField.getText() + ", " + yCoordField.getText() +
+                    ");");
+                }//end condition
+            }//end method
+        });
+
     }
 
+    /**
+     * Sets the console.log() method in javascript to execute the method JavaBridge.log()
+     * We found this has to be set anew after we zoom or move the map.
+     */
     public void setJavaBridge(){
         JSObject window = (JSObject) engine.executeScript("window");
         JavaBridge bridge = new JavaBridge();
@@ -122,6 +125,17 @@ public class DockEditController implements Initializable {
                 "    java.log(message);\n" +
                 "};");
     }
+
+    @FXML
+    private void zoomIn(){
+        engine.executeScript("document.zoomIn();");
+    }
+
+    @FXML
+    private void zoomOut(){
+        engine.executeScript("document.zoomOut();");
+    }
+
 
     @FXML
     void saveChanges(ActionEvent event) throws SQLException,ClassNotFoundException{
@@ -155,11 +169,7 @@ public class DockEditController implements Initializable {
 
 
 
-
-
-
-    // main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -198,7 +208,7 @@ public class DockEditController implements Initializable {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

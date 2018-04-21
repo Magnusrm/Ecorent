@@ -103,6 +103,17 @@
     -fx-fill: white;
 }
 
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -fx-mainMenu;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+
 
 .default-color0.chart-pie { -fx-pie-color: #2dd96b; }
 .default-color1.chart-pie { -fx-pie-color: #41d989; }

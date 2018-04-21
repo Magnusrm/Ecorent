@@ -30,9 +30,6 @@ public class LoginController{
     Factory factory = new Factory();
 
     @FXML
-    private Button signInBtn;
-
-    @FXML
     private Label incorrectLbl;
 
     @FXML
