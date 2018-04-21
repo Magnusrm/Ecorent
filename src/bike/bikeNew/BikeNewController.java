@@ -34,6 +34,9 @@ public class BikeNewController implements Initializable{
     @FXML
     private TextField buyDateField;
 
+    @FXML
+    private TextField amountField;
+
     //Notice the types are converted to String array.
     //This is to simplify the clicking and fetching process.
     @Override
@@ -52,27 +55,29 @@ public class BikeNewController implements Initializable{
 
 
     /**
-     * @Author Team 007
      *
      * Creates a new bike based on the information given in the TextFields.
      *
-     * @param event
+     * @param event is an object of ActionEvent.java
      */
 
     @FXML
     void createNewBike(ActionEvent event) {
+        String date = buyDateField.getText().substring(0,4) + "-" + buyDateField.getText().substring(4,6) + "-" +
+                buyDateField.getText().substring(6);
+        LocalDate date1 = LocalDate.parse(date);
         try {
-           Bike bike = new Bike(LocalDate.now(),Double.parseDouble(priceField.getText()),
+           Bike bike = new Bike(date1,Double.parseDouble(priceField.getText()),
                    makeField.getText(),new Type(typeComboBox.getValue()),Double.parseDouble(powerUsageField.getText()));
-           if(factory.addBike(bike)){
-               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-               alert.setTitle("Bike saved!");
-               alert.setHeaderText(null);
-               alert.setContentText("Bike is now saved and can be rented out");
-               alert.showAndWait();
-               for(Bike b:factory.getBikes()){
-                   System.out.println(b);
-               }//end loop
+           for(int i = 0; i<Integer.parseInt(amountField.getText())-1;i++){
+            factory.addBike(bike);
+           }
+            if(factory.addBike(bike)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Bike saved!");
+                alert.setHeaderText(null);
+                alert.setContentText("Bike is now saved and can be rented out");
+                alert.showAndWait();
                ChangeScene change = new ChangeScene();
                change.setScene(event, "/bike/BikeView.fxml");
            }//end if
@@ -142,7 +147,7 @@ public class BikeNewController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
