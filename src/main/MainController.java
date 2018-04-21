@@ -8,7 +8,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import changescene.MainMethods;
 
-
+/**
+ * MainController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * Displays welcome message and navigating between the main views.
+ */
 public class MainController extends MainMethods implements Initializable{
 
     @FXML
@@ -26,9 +32,5 @@ public class MainController extends MainMethods implements Initializable{
          adminRightsLbl.setText("Your priviliges might be restricted");
         }
     }//end method
-
-
-
-
 
 }

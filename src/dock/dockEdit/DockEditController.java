@@ -20,6 +20,13 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
+/**
+ * DockEditcontroller.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles editing of existing docks and DockEditView.fxml
+ */
 public class DockEditController  extends MainMethods implements Initializable {
 
     @FXML
@@ -132,12 +139,12 @@ public class DockEditController  extends MainMethods implements Initializable {
 
     /**
      * Saves the changes done in the docks textfields
-     * @param event
-     * @throws SQLException
-     * @throws ClassNotFoundException
+     * @param event Buttonclick
+     * @throws SQLException If something is wrong with the database connection.
+     * @throws ClassNotFoundException If there is something with with the combobox's value.
      */
     @FXML
-    void saveChanges(ActionEvent event) throws SQLException,ClassNotFoundException{
+    void saveChanges(ActionEvent event) throws SQLException, ClassNotFoundException{
         String dockName = dockNameComboBox.getValue();
         Dock editDock = new Dock(dockNameField.getText(),Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));
 

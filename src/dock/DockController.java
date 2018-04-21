@@ -13,11 +13,17 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * DockController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles deleting docks and navigating between DockNewView.fxml, DockInfoView.fxml, and DockEditView.fxml
+ */
 public class DockController extends MainMethods implements Initializable {
 
     @FXML
     private ComboBox<String> dockNameComboBox;
-
 
     //Notice the docks are converted to String array.
     //This is to simplify the clicking and fetching process.
@@ -51,6 +57,12 @@ public class DockController extends MainMethods implements Initializable {
        changeScene(event, "/dock/dockInfo/DockInfoView.fxml");
     }
 
+
+    /**
+     * Deletes a dock based on the dock selected in the dock combobox.
+     * @param event Buttonclick
+     * @throws Exception If there is something wrong with database connection, selected dock or DockView.fxml
+     */
     @FXML
     void deleteDock(ActionEvent event) throws Exception{
         boolean confirmation = newConfirmationAlert("Delete dock", "Are you sure you would like to delete the selected dock?");
