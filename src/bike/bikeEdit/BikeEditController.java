@@ -1,33 +1,31 @@
 package bike.bikeEdit;
 
-import changescene.MainMethods;
+import changescene.ChangeScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import loginAdm.CurrentAdmin;
 import control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-/**
- * BikeEditController.java
- * @author Team 007
- * @version 1.0
- *
- * This class handles displaying the bike edit scene by using bikeEditView.fxml.
- *
- */
-public class BikeEditController  extends MainMethods implements Initializable {
+public class BikeEditController implements Initializable{
+    private Factory factory = new Factory();
+    private Bike bike;
 
     @FXML
     private TextField bikeIdField;
 
     @FXML
     private TextField makeField;
+
+    @FXML
+    private Button bikeViewBtn;
 
     @FXML
     private TextField priceField;
@@ -39,11 +37,36 @@ public class BikeEditController  extends MainMethods implements Initializable {
     private ComboBox<String> typeComboBox;
 
     @FXML
+    private Button saveBtn;
+
+    @FXML
+    private Button homeBtn;
+
+    @FXML
+    private Button bikesBtn;
+
+    @FXML
+    private Button docksBtn;
+
+    @FXML
+    private Button mapBtn;
+
+    @FXML
+    private Button statsBtn;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Button adminBtn;
+
+    @FXML
     private TextField powerUsageField;
 
 
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb){
         factory.updateSystem();
         ObservableList<String> types = FXCollections.observableArrayList();
         String[] visualized = new String[factory.getTypes().size()];
@@ -61,21 +84,21 @@ public class BikeEditController  extends MainMethods implements Initializable {
         bikeIdField.setText(bikeID);
         makeField.setText(make);
         priceField.setText(price);
-        buyDateField.setText(buyDate.substring(0,4) + buyDate.substring(5,7) + buyDate.substring(8));
+        buyDateField.setText(buyDate);
         powerUsageField.setText(powerUsage);
         typeComboBox.getSelectionModel().select(bike.getType().getName());
-
-
     }//end method
 
 
     /**
+     * @Author Team 007
+     *
      * Fills the TextFields with the information about the bike that is already stored in the database.
-     * @param event     on button click.
+     *
+     * @param event
      */
     @FXML
     void fillInfo(ActionEvent event) {
-        for (Bike b : factory.getBikes()) System.out.println(b);
         int bikeID = Integer.parseInt(bikeIdField.getText());
         for (int i = 0; i < factory.getBikes().size(); i++) {
             if (factory.getBikes().get(i).getBikeId() == bikeID) bike = factory.getBikes().get(i);
@@ -87,7 +110,7 @@ public class BikeEditController  extends MainMethods implements Initializable {
             String powerUsage = "" + bike.getPowerUsage();
             makeField.setText(make);
             priceField.setText(price);
-            buyDateField.setText(buyDate.substring(0,4) + buyDate.substring(5,7) + buyDate.substring(8));
+            buyDateField.setText(buyDate);
             powerUsageField.setText(powerUsage);
             typeComboBox.getSelectionModel().select(bike.getType().getName());
         }//end if
@@ -95,25 +118,83 @@ public class BikeEditController  extends MainMethods implements Initializable {
 
 
     /**
+     * @Author Team 007
+     *
      * Confirms the changed made to the bike.
-     * @param event     on button click.
+     *
+     * @param event
      */
     @FXML
-    void saveChanges(ActionEvent event) {
+    void saveChanges(ActionEvent event){
         int bikeID = Integer.parseInt(bikeIdField.getText());
         String make = makeField.getText();
         double price = Double.parseDouble(priceField.getText());
-        String date = buyDateField.getText().substring(0,4) + "-" + buyDateField.getText().substring(4,6) + "-" +
-                buyDateField.getText().substring(6);
-        LocalDate localDate = LocalDate.parse(date);
+        LocalDate localDate = LocalDate.parse(buyDateField.getText());
         double pwr = Double.parseDouble(powerUsageField.getText());
         Type type = new Type(typeComboBox.getSelectionModel().getSelectedItem());
-        Bike editBike = new Bike(localDate, price, make, type, pwr);
-        if (factory.editBike(bikeID, editBike)) {
-            newInfoAlert("Success", "The info about bike with bike ID " + bikeID + " is now updated!");
-        } else {
-            newInfoAlert("Something went wrong!", "Cannot connect to system, please check your connection");
+        Bike editBike = new Bike(localDate,price,make,type,pwr);
+        if(factory.editBike(bikeID,editBike)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("The info about bike with bike ID " + bikeID + " is now updated!");
+            alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Something went wrong!");
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot connect to system, please check your connection");
+            alert.showAndWait();
         }//end else
     }//end method
-}
 
+
+
+
+    // main buttons below
+
+    @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/BikeView.fxml");
+    }
+
+    @FXML
+    void changeToDockScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/DockView.fxml");
+    }
+
+    @FXML
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
+    }
+
+    @FXML
+    void changeToStatsScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/StatsView.fxml");
+    }
+
+    @FXML
+    void changeToAdminScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/admin/AdminView.fxml");
+    }
+
+    @FXML
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/MainView.fxml");
+    }
+
+    @FXML
+    void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/login/LoginView.fxml");
+
+    }
+
+}

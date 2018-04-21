@@ -1,30 +1,44 @@
 package admin;
 
-import changescene.MainMethods;
+import changescene.ChangeScene;
+import changescene.CloseWindow;
+import changescene.PopupScene;
+import control.Factory;
 import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import control.*;
 import loginAdm.CurrentAdmin;
 import model.AdminModel;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-/**
- * AdminController.java
- * @author Team 007
- * @version 1.0
- *
- * This class handles displaying information, canging password, deleting admins and creating new admins by using
- * AdminChangePasswordView.fxml, AdminDeleteAdminView.fxml, AdminNewAdminView.fxml and AdminView.fxml.
- */
-public class AdminController extends MainMethods {
-
+public class AdminController {
+    Factory factory = new Factory();
     AdminModel model = new AdminModel();
+    @FXML
+    private Button homeBtn;
+
+    @FXML
+    private Button bikesBtn;
+
+    @FXML
+    private Button docksBtn;
+
+    @FXML
+    private Button mapBtn;
+
+    @FXML
+    private Button statsBtn;
+
+    @FXML
+    private Button logoutBtn;
+
+    @FXML
+    private Button adminBtn;
+
+    @FXML
+    private Button createNewAdminBtn;
 
     @FXML
     private CheckBox mainAdminCheck;
@@ -44,41 +58,36 @@ public class AdminController extends MainMethods {
     @FXML
     private TextField oldPasswordField;
 
-    /**
-     * Opens the popup window for creating a new admin.
-     * @param event         on button click.
-     * @throws Exception    if wrong file name.
-     */
+
+
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {
-        newPopup("/admin/AdminNewAdminView.fxml" ,"Create New Admin");
-    }
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/admin/AdminNewAdminView.fxml");
+    }//end method
 
-    /**
-     * Opens the popup window for deleting an existing admin.
-     * @param event         on button click.
-     */
     @FXML
-    void deleteAdmin(ActionEvent event){
-        newPopup("/admin/AdminDeleteAdminView.fxml", "Delete Admin");
-
+    void deleteAdmin(ActionEvent event) throws Exception {
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/admin/AdminDeleteAdminView.fxml");
     }
 
-    /**
-     * Opens the popup window for changing password.
-     * @param event         on button click.
-     */
     @FXML
-    void changePassword(ActionEvent event) {
-        newPopup("/admin/AdminChangePasswordView.fxml", "Change Password");
+    void changePassword(ActionEvent event) throws Exception {
+        PopupScene ps = new PopupScene();
+        ps.setScene(event, "/admin/AdminChangePasswordView.fxml");
     }
 
     /**
+     * @Author Team 007
+     *
      * Confirms the creation of a new admin.
-     * @param event         on button click.
+     *
+     * @param event
+     * @throws Exception
      */
     @FXML
-    void createNewAdminConfirm(ActionEvent event) {
+    void createNewAdminConfirm(ActionEvent event) throws Exception{
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
             String email = newAdminEmailField.getText();
             boolean main = mainAdminCheck.isSelected();
@@ -86,7 +95,7 @@ public class AdminController extends MainMethods {
             String hashed = Password.hashPassword(defaultPassword);
             Admin admin = new Admin(email, hashed, main);
             if (factory.addAdmin(admin)) System.out.println(admin);
-            closeWindow(event);
+            CloseWindow cw = new CloseWindow(event);
         }//end if
         else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -100,11 +109,15 @@ public class AdminController extends MainMethods {
 
 
     /**
+     * @Author
+     *
      * Confirms the deletion of the admin.
-     * @param event     on button click
+     *
+     * @param event
+     * @throws Exception
      */
     @FXML
-    void deleteAdminConfirm(ActionEvent event) {
+    void deleteAdminConfirm(ActionEvent event) throws Exception{
         String email = deleteAdminEmailField.getText();
         if(email.equals(CurrentAdmin.getInstance().getAdmin().getEmail())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -112,51 +125,46 @@ public class AdminController extends MainMethods {
             alert.setHeaderText(null);
             alert.setContentText("You cannot delete yourself");
             alert.showAndWait();
-            closeWindow(event);
+            CloseWindow cw = new CloseWindow(event);
         }//end if
-        if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
-            if (model.deleteAdmin(email)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Delete success");
-                alert.setHeaderText(Alert.AlertType.INFORMATION.name());
-                alert.setContentText("Admin with email " + email + " is deleted");
-                alert.showAndWait();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Failed");
-                alert.setHeaderText(Alert.AlertType.WARNING.name());
-                alert.setContentText("Something went wrong!");
-                alert.showAndWait();
-            }//end condition
-        }else{
+        if(model.deleteAdmin(email)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Delete success");
+            alert.setHeaderText(null);
+            alert.setContentText("Admin with email " + email + " is deleted");
+            alert.showAndWait();
+        }//end if
+        else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Failed");
-            alert.setHeaderText(Alert.AlertType.WARNING.name());
-            alert.setContentText("You do not have the privileges required to delete other admins." +
-                    " Contact your supervisor to require more privileges");
+            alert.setHeaderText(null);
+            alert.setContentText("Something went wrong!");
             alert.showAndWait();
         }
-        closeWindow(event);
+        CloseWindow cw = new CloseWindow(event);
 
     }//end
 
     /**
+     * @Author Team 007
+     *
      * Confirms the change of password.
      * The password will change if the old password is correct,
      * as well as if the new password meets the requirements.
-     * @param event     on button click.
+     *
+     * @param event
      */
     @FXML
     void changePasswordConfirm(ActionEvent event) {
-        boolean continiueBool = true;//Makes it easier to choose which error message to display
+        boolean continiue = true;//Makes it easier to choose which error message to display
         String oldPassword = oldPasswordField.getText();
         String newPassword = newPasswordField.getText();
         String newPassword2 = newPasswordField2.getText();
 
-        if(newPassword.length()<8 || newPassword.length()>30)continiueBool = false;
+        if(newPassword.length()<8 || newPassword.length()>30)continiue = false;
 
         if(Password.check(oldPassword,CurrentAdmin.getInstance().getAdmin().getPassword())&&newPassword.equals(newPassword2)&&
-                continiueBool){
+                continiue){
             String email = CurrentAdmin.getInstance().getAdmin().getEmail();
             boolean main = CurrentAdmin.getInstance().getAdmin().isMainAdmin();
             String password = Password.hashPassword(newPassword);
@@ -175,18 +183,18 @@ public class AdminController extends MainMethods {
                 alert.setContentText("Operation failed. Please make sure you fill out everything in the correct format and" +
                                 " have internet access");
                 alert.showAndWait();
-                closeWindow(event);
+                CloseWindow cw = new CloseWindow(event);
             }
         }//end if
 
         else{
-            if(continiueBool) { //if the passwords do not match
+            if(continiue) { //if the passwords do not match
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Something went wrong!");
                 alert.setHeaderText(null);
                 alert.setContentText("Your passwords do not match!");
                 alert.showAndWait();
-                closeWindow(event);
+                CloseWindow cw = new CloseWindow(event);
             }//end if
             else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -194,10 +202,62 @@ public class AdminController extends MainMethods {
                 alert.setHeaderText(null);
                 alert.setContentText("Your password must be between 8 and 30 characters!");
                 alert.showAndWait();
-                closeWindow(event);
+                CloseWindow cw = new CloseWindow(event);
             }//end else
         }//end else
 
-        closeWindow(event);
+        CloseWindow cw = new CloseWindow(event);
+    }
+
+
+
+
+
+
+
+
+    // main buttons
+
+    @FXML
+    void changeToBikeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/bike/BikeView.fxml");
+    }
+
+    @FXML
+    void changeToDockScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/dock/DockView.fxml");
+    }
+
+    @FXML
+    void changeToMapScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/map/MapView.fxml");
+    }
+
+    @FXML
+    void changeToStatsScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/stats/StatsView.fxml");
+    }
+
+    @FXML
+    void changeToAdminScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/admin/AdminView.fxml");
+    }
+
+    @FXML
+    void changeToHomeScene(ActionEvent event) throws Exception {
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/main/MainView.fxml");
+    }
+
+    @FXML
+    void logOut(ActionEvent event) throws Exception {
+        CurrentAdmin.getInstance().setAdmin(null);
+        ChangeScene cs = new ChangeScene();
+        cs.setScene(event, "/login/LoginView.fxml");
     }
 }
