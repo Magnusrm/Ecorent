@@ -55,33 +55,6 @@ public class TypeModel {
         return -1;
     }
 
-    public Type getType(int typeID){
-        Connection connection = null;
-        ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
-
-        String typeQuery = "SELECT name FROM type WHERE type_id = ?";
-        Type type;
-
-        try {
-            connection = DBCleanup.getConnection();
-            preparedStatement = connection.prepareStatement(typeQuery);
-            preparedStatement.setInt(1, typeID);
-            resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-
-            type = new Type(resultSet.getString("name"));
-            return type;
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + " - getType()");
-        }finally {
-            DBCleanup.closeResultSet(resultSet);
-            DBCleanup.closeStatement(preparedStatement);
-            DBCleanup.closeConnection(connection);
-        }
-        return null;
-    }
-
 
     /**
      * Adds a new type to the database.

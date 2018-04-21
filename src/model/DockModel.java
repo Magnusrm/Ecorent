@@ -334,44 +334,6 @@ public class DockModel {
         return null;
     }
 
-    public ArrayList<Bike> dockedBikes(String name){
-        Connection connection = null;
-        ResultSet resultSet = null;
-        PreparedStatement preparedStatement = null;
-
-        TypeModel tm = new TypeModel();
-        ArrayList<Bike> dBikes= new ArrayList<>();
-        String dBikesQuery = "SELECT bike_id, reg_date, price, make, type_id, power FROM bike " +
-                "NATURAL JOIN dock WHERE LOWER(dock.name = ?) AND bike.active = 1";
-        Bike bike;
-
-
-        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        try{
-            connection = DBCleanup.getConnection();
-
-            if(!dockNameAvailable(name)){
-                preparedStatement = connection.prepareStatement(dBikesQuery);
-                preparedStatement.setString(1, name.toLowerCase());
-                resultSet = preparedStatement.executeQuery();
-                while(resultSet.next()){
-                    LocalDate localDate = LocalDate.parse(resultSet.getString("reg_date"), formatter);
-                    bike = new Bike(localDate, resultSet.getDouble("price"), resultSet.getString("make"),
-                            tm.getType(resultSet.getInt("type_id")),  resultSet.getDouble("power"));
-                    bike.setBikeId(resultSet.getInt("bike_id"));
-                    dBikes.add(bike);
-                }
-            }
-            return dBikes;
-        }catch(SQLException e){
-            System.out.println(e.getMessage() + " - dockedBikes()");
-        }finally{
-            DBCleanup.closeResultSet(resultSet);
-            DBCleanup.closeStatement(preparedStatement);
-            DBCleanup.closeConnection(connection);
-        }
-        return null;
-    }
 
     /**
      * Returns an ArrayList of all dock Objects that are in the database.
