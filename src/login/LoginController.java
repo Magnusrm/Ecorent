@@ -15,6 +15,13 @@ import java.security.GeneralSecurityException;
 
 import model.AdminModel;
 
+/**
+ * LoginController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles logging in as an admin, authenticating password
+ */
 public class LoginController extends MainMethods {
 
     @FXML
@@ -26,7 +33,13 @@ public class LoginController extends MainMethods {
     @FXML
     private TextField passwordField;
 
-
+    /**
+     * Handles logging in based on the information given in the usernameField passwordField.
+     * Authenticates user by using LoginBean.
+     *
+     * @param event Buttonclick
+     * @throws Exception Throws exception if there is something wrong with loginbean, database connection or MainView.fxml
+     */
     @FXML
     void signIn(ActionEvent event) throws Exception {
         factory.updateSystem();

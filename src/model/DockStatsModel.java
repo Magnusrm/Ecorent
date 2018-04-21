@@ -24,10 +24,10 @@ public class DockStatsModel {
      */
     public double getTotalPowerUsage(int dockID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        DockModel dm = new DockModel();
+        PreparedStatement preparedStatement = null;
 
+        DockModel dm = new DockModel();
         String usageQuery = "SELECT MAX(total_pwr_usg) FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
 
         try{
@@ -55,13 +55,11 @@ public class DockStatsModel {
      * @return      total power usage.
      */
     public double getTotalPowerUsageOfSystem(){
-
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         double sum = 0;
-
         String query = "SELECT dock_id, MAX(total_pwr_usg) FROM dock_stats GROUP BY dock_id";
 
         try {
@@ -91,10 +89,10 @@ public class DockStatsModel {
      */
     public int getCheckouts(int dockID){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        DockModel dm = new DockModel();
+        PreparedStatement preparedStatement = null;
 
+        DockModel dm = new DockModel();
         String checkoutsQuery = "SELECT MAX(checkouts) FROM dock_stats NATURAL JOIN dock WHERE active = 1 AND dock_id = ?";
 
         try{
@@ -128,11 +126,11 @@ public class DockStatsModel {
      */
     public boolean updateDockStats(int dockID, String time, double pwrSinceLast, int checkouts){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         double currentPower = getTotalPowerUsage(dockID);
         int currentCheckouts = getCheckouts(dockID);
-
         String powerInsert = "INSERT INTO dock_stats(time, dock_id, total_pwr_usg, checkouts) VALUES " +
                 "(?, ?, ?, ?)";
 
@@ -161,8 +159,8 @@ public class DockStatsModel {
      */
     public double[] getWeeklyMaxPowerUsage(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         double[] days = new double[7];
 
@@ -257,8 +255,8 @@ public class DockStatsModel {
      */
     public double[] getDailyPowerUsage(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         double[] days = new double[7];
 
@@ -359,11 +357,10 @@ public class DockStatsModel {
      */
     public ArrayList<int[]> getMaxCheckouts(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<int[]> checkouts = new ArrayList<>();
-
         String getCheckouts ="SELECT dock_id, MAX(checkouts) FROM dock_stats GROUP BY dock_id";
 
         try{

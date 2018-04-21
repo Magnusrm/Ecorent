@@ -44,9 +44,4 @@ public class TotalPowerUsageController extends MainMethods implements Initializa
         areaChart.getData().addAll(set1);
     }
 
-    @FXML
-    void closeBarChart(ActionEvent event){
-        closeWindow(event);
-    }
-
 }

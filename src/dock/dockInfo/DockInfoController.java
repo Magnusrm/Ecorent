@@ -17,6 +17,13 @@ import control.*;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
 
+/**
+ * DockInfoController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles displaying information about docks and DockInfoView.fxml
+ */
 public class DockInfoController extends MainMethods implements Initializable {
 
     @FXML
@@ -72,10 +79,13 @@ public class DockInfoController extends MainMethods implements Initializable {
         }catch (Exception e){e.printStackTrace();}
     }
 
+    /**
+     * This methods fills out the TextFields based on the dock selected in the combobox.
+     */
     @FXML
     void showInfo(){
 
-        // add bikeId's to listview
+        // add dockID's to listview
         ObservableList<String> bikes= FXCollections.observableArrayList();
         int[] visualizedInt = factory.dockedBikes(dockNameComboBox.getValue());
         String[] visualized = new String[visualizedInt.length];

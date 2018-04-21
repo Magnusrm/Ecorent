@@ -595,4 +595,14 @@ public class Factory {
         return numberOfTypes;
     }//end method
 
+    public static void main(String[] args){
+        Factory f = new Factory();
+        f.updateSystem();
+        for(int i = 0; i<f.getTypes().size();i++){
+            for(int j = 0; j<2; j++){
+                System.out.println(f.getTypePopularity()[i][j]);
+            }
+        }
+    }
+
 }//end class

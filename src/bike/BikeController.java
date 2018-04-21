@@ -3,12 +3,15 @@ package bike;
 import changescene.MainMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
-import java.util.Optional;
-
+/**
+ * BikeController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles deleting bikes based on the bikeID given in bikeIdField, and the views BikeEditView.fxml, BikeTypeView.fxml, BikeNewView.fxml, BikeRepairView.fxml and BikeInfoView.fxml.
+ */
 public class BikeController extends MainMethods {
 
     @FXML
@@ -16,7 +19,7 @@ public class BikeController extends MainMethods {
 
     @FXML
     void changeToBikeEditView(ActionEvent event) throws Exception {
-        changeScene(event, "/bike/bikeEdit/bikeEditView.fxml");
+        changeScene(event, "/bike/bikeEdit/BikeEditView.fxml");
     }
 
     @FXML
@@ -35,17 +38,15 @@ public class BikeController extends MainMethods {
     }
 
     @FXML
-    void changetToBikeInfoView(ActionEvent event) throws Exception {
+    void changeToBikeInfoView(ActionEvent event) throws Exception {
         changeScene(event, "/bike/bikeInfo/BikeInfoView.fxml");
     }
 
 
     /**
-     * @Author Team 007
-     *
      * Deleted the bike based on the clients input in the TextField.
      *
-     * @param event
+     * @param event Buttonclick
      */
     @FXML
     void deleteBike(ActionEvent event) {
