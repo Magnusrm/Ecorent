@@ -29,6 +29,13 @@ import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * MapController.java
+ * @author Team007
+ *
+ * This is a controller for our map.
+ * It visualizes the docks and bikes on the created map.
+ */
 public class MapController extends MainMethods implements Initializable{
 
     private BikeStatsModel bsm= new BikeStatsModel();
@@ -52,6 +59,7 @@ public class MapController extends MainMethods implements Initializable{
     }
 
     /**
+     * Method to get all the docks ID and positions
      * @return All the docks and their dockID and positions in a double[][] format.
      */
     private double[][] dockToArray(){
@@ -64,7 +72,9 @@ public class MapController extends MainMethods implements Initializable{
         return res;
     }
 
-
+    /**
+     * Method to visualize docks on the map
+     */
     public void showDocks() {
         allDocks = factory.getDocks();
         String dockData = arrayToString(dockToArray());
@@ -72,6 +82,10 @@ public class MapController extends MainMethods implements Initializable{
                 "document.setDockMarkers(items);");
     }
 
+    /**
+     * Method to visualize bikes on the map.
+     * @param event is an object of ActionEvent.java
+     */
     @FXML
     void showBike(ActionEvent event) {
 
@@ -90,6 +104,8 @@ public class MapController extends MainMethods implements Initializable{
     }
 
     /**
+     * Method to convert a double[][] array to string so
+     * it can be executed in javascript
      * @param data The double[][] you want to convert
      * @return The text to create a similar two dimentional array in javascript.
      */
