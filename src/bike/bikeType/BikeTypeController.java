@@ -185,6 +185,4 @@ public class BikeTypeController extends MainMethods implements Initializable {
         typeListView.setItems(types);
     }
 
-
-
 }

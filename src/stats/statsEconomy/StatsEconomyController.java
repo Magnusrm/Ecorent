@@ -14,6 +14,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * StatsEconomyController.java
+ * @author Team 007
+ * @version 1.0
+ * This class shows statistics of the economy in a GUI.
+ */
 public class StatsEconomyController extends MainMethods implements Initializable {
 
 
@@ -56,8 +62,8 @@ public class StatsEconomyController extends MainMethods implements Initializable
     }
 
     /**
-     * Returnerer en ObservableList med income som String
-     * @return
+     * This method gets the income from the database.
+     * @return An ObservableList<> with income as a String.
      */
     public ObservableList<Budget> getIncome(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
@@ -68,8 +74,8 @@ public class StatsEconomyController extends MainMethods implements Initializable
     }
 
     /**
-     * Returnerer en ObservableList med expenses som String
-     * @return
+     * This method gets the expenses from the database.
+     * @return an ObservableList<> with expenses as a String
      */
     public ObservableList<Budget> getExpenses(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();

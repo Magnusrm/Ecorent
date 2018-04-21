@@ -13,6 +13,12 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * TotalPowerUsageController.java
+ * @author Team 007
+ * @version 1.0
+ * This class shows a view with statistics about the power usage of the docks in the system.
+ */
 public class TotalPowerUsageController extends MainMethods implements Initializable {
 
     @FXML
@@ -36,11 +42,6 @@ public class TotalPowerUsageController extends MainMethods implements Initializa
         }
 
         areaChart.getData().addAll(set1);
-    }
-
-    @FXML
-    void closeBarChart(ActionEvent event){
-        closeWindow(event);
     }
 
 }

@@ -18,6 +18,13 @@ import java.util.ResourceBundle;
 import static java.lang.Thread.sleep;
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
+/**
+ * DockNewController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles creating new docks and DockNewView.fxml
+ */
 public class DockNewController extends MainMethods implements Initializable{
 
     @FXML
@@ -97,6 +104,10 @@ public class DockNewController extends MainMethods implements Initializable{
         engine.executeScript("document.zoomOut();");
     }
 
+    /**
+     * Created a new dock based on the information given in the textfields.
+     * @param event Buttonclick
+     */
     @FXML
     void createNewDockConfirm(ActionEvent event){ // created a new dock
 

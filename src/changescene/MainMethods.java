@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import loginAdm.CurrentAdmin;
 import model.BikeStatsModel;
 import model.DockStatsModel;
-import model.RepairModel;
 
 import java.util.Optional;
 
@@ -26,7 +25,7 @@ import java.util.Optional;
  * MainMethods.java
  * @author Team007
  *
- *
+ * This class contains frequently used methods and object variables that all the classes inherits.
  */
 public class MainMethods {
 
@@ -126,10 +125,6 @@ public class MainMethods {
         window.setScene(scene);
         window.show();
     }
-
-
-
-
 
 
     // main buttons

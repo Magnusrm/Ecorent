@@ -12,6 +12,13 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * PowerUsageEachDayController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles informaiton about the docks power usage each day.
+ */
 public class PowerUsageEachDayController extends MainMethods implements Initializable {
 
     @FXML
@@ -38,8 +45,4 @@ public class PowerUsageEachDayController extends MainMethods implements Initiali
         barChart.getData().addAll(set1);
     }
 
-    @FXML
-    void closeBarChart(ActionEvent event){
-       closeWindow(event);
-    }
 }

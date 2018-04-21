@@ -13,6 +13,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * TotalCheckoutsController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles showing information about all checkouts of each dock ever.
+ */
 public class TotalCheckoutsController extends MainMethods implements Initializable {
 
     @FXML
@@ -38,13 +45,7 @@ public class TotalCheckoutsController extends MainMethods implements Initializab
 
         }
 
-
         pieChart.setData(pieChartData);
 
-    }
-
-    @FXML
-    void closeBarChart(ActionEvent event) {
-        closeWindow(event);
     }
 }
