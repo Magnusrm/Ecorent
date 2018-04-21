@@ -165,7 +165,7 @@ public class Simulation implements Runnable{
 
     /**
      * Gets the current date and time and parses it.
-     * @returnThe current date and time parsed to suit the input format of the database.
+     * @return The current date and time parsed to suit the input format of the database.
      */
     public static String getNow() {
         String time;

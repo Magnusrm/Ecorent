@@ -20,6 +20,12 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
+/**
+ * DockEditController.java
+ * @author Team 007
+ * @version 1.0
+ * This class shows a gui that lets you update the attributes of a dock in the database.
+ */
 public class DockEditController  extends MainMethods implements Initializable {
 
     @FXML
@@ -106,7 +112,7 @@ public class DockEditController  extends MainMethods implements Initializable {
     }
 
     /**
-     * Sets the console.log() method in javascript to execute the method JavaBridge.log()
+     * Sets the console.log() method in javascript to execute the method JavaBridge.log().
      * We found this has to be set anew after we zoom or move the map.
      */
     public void setJavaBridge(){
@@ -131,7 +137,7 @@ public class DockEditController  extends MainMethods implements Initializable {
     }
 
     /**
-     * Saves the changes done in the docks textfields
+     * Saves the changes done in the docks textfields.
      * @param event
      * @throws SQLException
      * @throws ClassNotFoundException
