@@ -26,7 +26,6 @@ public class Simulation implements Runnable{
     private static BikeModel bm = new BikeModel();
     private static BikeStatsModel bts = new BikeStatsModel();
     private static DockStatsModel dsm = new DockStatsModel();
-    private static boolean access = true;
 
     public Simulation(Semaphore sem, int id){
        this.id = id;
@@ -126,7 +125,7 @@ public class Simulation implements Runnable{
                 bts.updateStats(time, bikeID, batteryLevel, xPos, yPos, distance, trip);
 
                 try {
-                    sleep(3000);
+                    sleep(1000);
                 } catch (Exception e) {
                     System.out.println("Error: " + e);
                 }

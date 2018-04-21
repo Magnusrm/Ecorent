@@ -53,7 +53,7 @@ public class BikeEditController  extends MainMethods implements Initializable {
         bikeIdField.setText(bikeID);
         makeField.setText(make);
         priceField.setText(price);
-        buyDateField.setText(buyDate);
+        buyDateField.setText(buyDate.substring(0,4) + buyDate.substring(5,7) + buyDate.substring(8));
         powerUsageField.setText(powerUsage);
         typeComboBox.getSelectionModel().select(bike.getType().getName());
 
