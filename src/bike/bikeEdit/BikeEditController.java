@@ -13,6 +13,14 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * BikeEditController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles displaying the bike edit scene by using bikeEditView.fxml.
+ *
+ */
 public class BikeEditController  extends MainMethods implements Initializable {
 
     @FXML
@@ -62,10 +70,8 @@ public class BikeEditController  extends MainMethods implements Initializable {
 
 
     /**
-     * @param event
-     * @Author Team 007
-     * <p>
      * Fills the TextFields with the information about the bike that is already stored in the database.
+     * @param event     on button click.
      */
     @FXML
     void fillInfo(ActionEvent event) {
@@ -89,10 +95,8 @@ public class BikeEditController  extends MainMethods implements Initializable {
 
 
     /**
-     * @param event
-     * @Author Team 007
-     * <p>
      * Confirms the changed made to the bike.
+     * @param event     on button click.
      */
     @FXML
     void saveChanges(ActionEvent event) {
