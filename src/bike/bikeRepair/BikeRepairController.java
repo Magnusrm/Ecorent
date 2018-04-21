@@ -15,6 +15,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+/**
+ * BikeRepairController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles sending and returning repairs and navigating between BikeRepairReturnedView.fxml, BikeRepairSentView.fxml and BikeRepairView.fxml
+ */
 public class BikeRepairController extends MainMethods {
 
     @FXML
@@ -38,7 +45,10 @@ public class BikeRepairController extends MainMethods {
     @FXML
     private TextField bikeIdSentField;
 
-
+    /**
+     * Registers a new repair which takes the various fields as entries. Register the specific repair when it's sent to repair.
+     * @param event button click
+     */
     @FXML
     void registerRepairSentConfirm(ActionEvent event){
         factory.updateSystem();
@@ -56,12 +66,16 @@ public class BikeRepairController extends MainMethods {
                 newInfoAlert("Repair confirmed", "Bike with ID " + bikeId + " is now registered in repair");
             } else {
                 newWarningAlert("OPERATION FAILED", "Something went wrong! Please make sure you fill " +
-                        "out the form in the correct format");
+                        "out the form in the correct format and that the bike is not already in for repair");
             }//end condition
         }//end condition
         closeWindow(event);
     }//end method
 
+    /**
+     * Register a returned repair which takes the various fields as entries. Registers the specific repair when it's returned.
+     * @param event button click
+     */
     @FXML
     void registerRepairReturnedConfirm(ActionEvent event){
         factory.updateSystem();

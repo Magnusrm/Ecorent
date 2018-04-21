@@ -195,15 +195,18 @@ public class Factory {
         int bikeID = r.getBikeId();
         String beforeDescription = r.getBeforeDesc();
         String dateSent = r.getDateSent().toString();
-        r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescription));
-        bikeModel.changeRepair(bikeID);
-        repairsNotReturned.add(r);
-        if(r.getRepair_id() != -1){
-            for(Bike b: bikes){
-                if(b.getBikeId() == bikeID)b.setRepairing(true);
-            }//end loop
-            return true;
-        }else return false;
+
+        if(!bikeModel.isRepairing(bikeID)){
+            r.setRepairId(repairModel.sendRepair(bikeID,dateSent,beforeDescription));
+            bikeModel.changeRepair(bikeID);
+            repairsNotReturned.add(r);
+            if(r.getRepair_id() != -1){
+                for(Bike b: bikes){
+                    if(b.getBikeId() == bikeID)b.setRepairing(true);
+                }//end loop
+                return true;
+            }
+        } return false;
     }//end method
 
     /**
