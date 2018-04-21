@@ -439,8 +439,12 @@ public class Factory {
         double sum = dockModel.getPowerAtDock(dockName);
         for(int i = 0; i < docked.length; i++){
            int id = docked[i];
-           if(bikeStatsModel.getChargLvl(id-1) == 100){
-               sum -= bikes.get(id-1).getPowerUsage();
+           if(bikeStatsModel.getChargLvl(id) == 100){
+               for (Bike b : bikes){
+                   if (b.getBikeId() == id)
+                       sum -= b.getPowerUsage();
+               }
+
             } else{
                sum += 0;
            }
