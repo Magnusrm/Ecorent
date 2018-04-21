@@ -204,7 +204,7 @@ public class BikeTypeController extends MainMethods implements Initializable{
     @FXML
     void deleteAllBikesWithoutType(ActionEvent event){
         factory.updateSystem();
-        if(factory.deleteAllBikesWithNoType()){
+        if(factory.deleteAllBikesWithoutType()){
             newInfoAlert("All bikes with type null deleted","Operation successful! All bikes have a type");
         }//end if
         else{
