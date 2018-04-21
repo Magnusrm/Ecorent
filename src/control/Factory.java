@@ -440,7 +440,7 @@ public class Factory {
         for(int i = 0; i < docked.length; i++){
            int id = docked[i];
            if(bikeStatsModel.getChargLvl(id-1) == 100){
-               sum -= bikes.get(id).getPowerUsage();
+               sum -= bikes.get(id-1).getPowerUsage();
             } else{
                sum += 0;
            }
