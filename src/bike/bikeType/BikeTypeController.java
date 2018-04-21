@@ -44,9 +44,7 @@ public class BikeTypeController extends MainMethods implements Initializable {
             //System.out.println(factory.getTypes().get(0).getName());
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }catch (Exception e){e.printStackTrace();}
     }
 
     /**
@@ -106,7 +104,6 @@ public class BikeTypeController extends MainMethods implements Initializable {
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
-            // System.out.println(name + " blir registrert som en ny type");
             type = new Type(name);
             try {
                 saveChanges(event);

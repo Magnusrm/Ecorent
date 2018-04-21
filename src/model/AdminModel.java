@@ -22,10 +22,11 @@ public class AdminModel {
      */
     public boolean adminExists(String email){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String emailQuery = "SELECT email FROM admin WHERE email = ?";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -58,13 +59,10 @@ public class AdminModel {
      */
     public Admin getAdmin(String email){
         Connection connection = null;
-
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
-        ResultSet resultSet = null;
-
         String adminQuery = "SELECT hash, priviliged FROM admin WHERE email = ?";
-
         String hash;
         boolean isPriviliged;
 
@@ -105,6 +103,7 @@ public class AdminModel {
      */
     public boolean addAdmin(String email, String hash, boolean priviliged){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String userInsert = "INSERT INTO admin(email, hash, priviliged) VALUES(?, ?, ?)";
@@ -147,6 +146,7 @@ public class AdminModel {
      */
     public boolean deleteAdmin(String email){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String deleteQuery = "DELETE FROM admin WHERE email = ?";
@@ -184,12 +184,12 @@ public class AdminModel {
      */
     public String getHash(String email){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String hash;
-
         String hashQuery = "SELECT hash FROM admin WHERE email = ?";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -219,8 +219,8 @@ public class AdminModel {
      */
     public boolean isPriviliged(String email){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String priviligedQuery = "SELECT priviliged FROM admin WHERE email = ?";
 
@@ -259,11 +259,10 @@ public class AdminModel {
      */
     public ArrayList<Admin> getAllAdmins(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<Admin> allAdmins = new ArrayList<Admin>();
-
         String docksQuery = "SELECT email FROM admin";
 
         try{
