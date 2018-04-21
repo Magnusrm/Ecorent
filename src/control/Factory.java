@@ -435,7 +435,17 @@ public class Factory {
      * @return the power usage of the dock.
      */
     public double powerUsage(String dockName){
-        return dockModel.getPowerAtDock(dockName);
+        int[] docked = dockedBikes(dockName);
+        double sum = dockModel.getPowerAtDock(dockName);
+        for(int i = 0; i < docked.length; i++){
+           int id = docked[i];
+           if(bikeStatsModel.getChargLvl(id-1) == 100){
+               sum -= bikes.get(id).getPowerUsage();
+            } else{
+               sum += 0;
+           }
+        }
+        return sum;
     }//end method
 
     /**
