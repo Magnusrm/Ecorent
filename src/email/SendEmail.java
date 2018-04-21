@@ -27,8 +27,8 @@ public class SendEmail {
 
 
         String subject = "Your randomly generated password";
-        String body = "Your password is " + password + ". Use this alongside your email to rent bikes" +
-                "\n(note: please do not reply to this email).";
+        String body = "Your password is " + password + ". Use this alongside your email to log in to the system" +
+                "\n(Note: please do not reply to this email).";
 
         try {
 

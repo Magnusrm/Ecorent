@@ -12,6 +12,7 @@ import control.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 
@@ -48,10 +49,10 @@ public class BikeNewController extends MainMethods implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeComboBox.setItems(types);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
             LocalDateTime ldt = LocalDateTime.now();
-            String time = ("" + ldt + "").replaceAll("T", " ");
-            time = time.substring(0, time.length() - 4);
+            String time = ldt.format(formatter);
             buyDateField.setText(time);
 
         }catch (Exception e){e.printStackTrace();}
