@@ -21,9 +21,6 @@ public class Repair {
     private double price;
     private int bike_id;
 
-    /**
-     * Constructor for repair sent in view classes and RepairSent.java
-     */
     protected Repair(String dateSent, String beforeDesc, int bikeId){
             this.repair_id = -1; //use the database to set repairId
 
@@ -35,9 +32,6 @@ public class Repair {
             this.bike_id = bikeId;
     }//end constructor
 
-    /**
-     * Constructor for repairs returned in view
-     */
     protected Repair(String dateReceived, String afterDesc, double price, int bikeId){
             this.repair_id = -1; //use the database to set repairId
             this.date_received = toDate(dateReceived);
@@ -46,9 +40,6 @@ public class Repair {
             this.bike_id = bikeId;
     }//end constructor
 
-    /**
-     * Constructor for model classes, view classes and RepairReturned.java
-     */
     protected Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
             this.repair_id = -1; //use the database to set repairId
             this.date_sent = toDate(dateSent);
@@ -149,7 +140,7 @@ public class Repair {
     }
     /**
      * Override of the standard toString()-method to make it list out the information about a repair
-     * @return
+     * @return String of the repair
      */
     @Override
     public String toString(){

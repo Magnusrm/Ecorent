@@ -3,7 +3,8 @@
 
  /**
   * Type.java
-  * @author Team007
+  * @author Team 007
+  * @version 1.0
   *
   * Class to define different bike types.
   * The type name can be changed
@@ -30,9 +31,8 @@ public class Type {
 
     /**
      * Override of the standard equals()-method to indifference upper and lower case letters when comparing Type-objects.
-     * @param b
-     * @return
-     * @author Team 007
+     * @param b an object of the class
+     * @return boolean if the objects are equal or not
      */
     @Override
     public boolean equals(Object b) {
@@ -45,7 +45,7 @@ public class Type {
 
     /**
      * Override of the standard toString()-method to make it only return the name of the type.
-     * @return
+     * @return String name of the type
      */
     @Override
     public String toString() {

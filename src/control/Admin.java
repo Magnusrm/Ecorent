@@ -60,9 +60,8 @@ public class Admin {
 
     /**
      * Makes the equals method of this class to only check the email parameter of the object, overrides the standard equals method.
-     * @param o
-     * @return true     if the parameters compared are equal
-     * @return false    if the parameters compared are not equal
+     * @param o an object of the class
+     * @return boolean     if the parameters compared are equal
      */
     @Override
     public boolean equals(Object o){

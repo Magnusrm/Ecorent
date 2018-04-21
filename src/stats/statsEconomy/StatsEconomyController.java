@@ -63,7 +63,7 @@ public class StatsEconomyController extends MainMethods implements Initializable
 
     /**
      * This method gets the income from the database.
-     * @return An ObservableList<> with income as a String.
+     * @return An ObservableList with income as a String.
      */
     public ObservableList<Budget> getIncome(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();
@@ -75,7 +75,7 @@ public class StatsEconomyController extends MainMethods implements Initializable
 
     /**
      * This method gets the expenses from the database.
-     * @return an ObservableList<> with expenses as a String
+     * @return an ObservableList with expenses as a String
      */
     public ObservableList<Budget> getExpenses(){
         ObservableList<Budget> budget = FXCollections.observableArrayList();

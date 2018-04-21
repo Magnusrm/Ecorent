@@ -99,9 +99,6 @@ public final class PasswordGenerator {
             return this;
         }
 
-        /**
-         * Get an object to use.
-         */
         public PasswordGenerator build() {
             return new PasswordGenerator(this);
         }
