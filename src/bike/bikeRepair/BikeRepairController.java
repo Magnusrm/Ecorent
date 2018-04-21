@@ -4,12 +4,17 @@ import changescene.MainMethods;
 import control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import model.BikeModel;
 
-public class BikeRepairController extends MainMethods {
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.ResourceBundle;
+
+public class BikeRepairController extends MainMethods implements Initializable {
 
     @FXML
     private TextArea descReturnedTextArea;
@@ -31,6 +36,14 @@ public class BikeRepairController extends MainMethods {
 
     @FXML
     private TextField bikeIdSentField;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        LocalDateTime ldt = LocalDateTime.now();
+        String time = ("" + ldt + "").replaceAll("T", " ");
+        time = time.substring(0, time.length() - 4);
+        dateSentField.setText(time);
+    }
 
     @FXML
     void registerRepairSentConfirm(ActionEvent event){
