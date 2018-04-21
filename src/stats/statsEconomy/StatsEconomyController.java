@@ -1,6 +1,7 @@
 package stats.statsEconomy;
 
 import changescene.ChangeScene;
+import changescene.MainMethods;
 import control.Budget;
 import control.Factory;
 import javafx.collections.FXCollections;
@@ -16,9 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StatsEconomyController implements Initializable {
+public class StatsEconomyController extends MainMethods implements Initializable {
 
-    private Factory factory = new Factory();
 
     @FXML
     private TableView<Budget> incomeTableView;
@@ -82,56 +82,5 @@ public class StatsEconomyController implements Initializable {
         budget.add(new Budget("Repairs", Math.round(factory.getRepairExpenses()  * 100.0) / 100.0));
 
         return budget;
-    }
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-
     }
 }

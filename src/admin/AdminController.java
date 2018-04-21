@@ -1,9 +1,8 @@
 package admin;
 
-import changescene.ChangeScene;
+import changescene.MainMethods;
 import changescene.CloseWindow;
 import changescene.PopupScene;
-import control.Factory;
 import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,9 +12,8 @@ import control.*;
 import loginAdm.CurrentAdmin;
 import model.AdminModel;
 
-public class AdminController {
+public class AdminController extends MainMethods {
 
-    Factory factory = new Factory();
     AdminModel model = new AdminModel();
 
     @FXML
@@ -40,20 +38,18 @@ public class AdminController {
 
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/admin/AdminNewAdminView.fxml");
-    }//end method
+        newPopup("/admin/AdminNewAdminView.fxml" ,"Create New Admin");
+    }
 
     @FXML
     void deleteAdmin(ActionEvent event) throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/admin/AdminDeleteAdminView.fxml");
+        newPopup("/admin/AdminDeleteAdminView.fxml", "Delete Admin");
+
     }
 
     @FXML
     void changePassword(ActionEvent event) throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/admin/AdminChangePasswordView.fxml");
+        newPopup("/admin/AdminChangePasswordView.fxml", "Change Password");
     }
 
     /**
@@ -73,7 +69,7 @@ public class AdminController {
             String hashed = Password.hashPassword(defaultPassword);
             Admin admin = new Admin(email, hashed, main);
             if (factory.addAdmin(admin)) System.out.println(admin);
-            CloseWindow cw = new CloseWindow(event);
+            closeWindow(event);
         }//end if
         else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -103,7 +99,7 @@ public class AdminController {
             alert.setHeaderText(null);
             alert.setContentText("You cannot delete yourself");
             alert.showAndWait();
-            CloseWindow cw = new CloseWindow(event);
+            closeWindow(event);
         }//end if
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
             if (model.deleteAdmin(email)) {
@@ -127,7 +123,7 @@ public class AdminController {
                     " Contact your supervisor to require more privileges");
             alert.showAndWait();
         }
-        CloseWindow cw = new CloseWindow(event);
+        closeWindow(event);
 
     }//end
 
@@ -169,7 +165,7 @@ public class AdminController {
                 alert.setContentText("Operation failed. Please make sure you fill out everything in the correct format and" +
                                 " have internet access");
                 alert.showAndWait();
-                CloseWindow cw = new CloseWindow(event);
+                closeWindow(event);
             }
         }//end if
 
@@ -180,7 +176,7 @@ public class AdminController {
                 alert.setHeaderText(null);
                 alert.setContentText("Your passwords do not match!");
                 alert.showAndWait();
-                CloseWindow cw = new CloseWindow(event);
+                closeWindow(event);
             }//end if
             else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -188,61 +184,10 @@ public class AdminController {
                 alert.setHeaderText(null);
                 alert.setContentText("Your password must be between 8 and 30 characters!");
                 alert.showAndWait();
-                CloseWindow cw = new CloseWindow(event);
+                closeWindow(event);
             }//end else
         }//end else
 
-        CloseWindow cw = new CloseWindow(event);
-    }
-
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
+        closeWindow(event);
     }
 }

@@ -1,6 +1,7 @@
 package stats.statsDock.powerUsageEachDay;
 
 import changescene.CloseWindow;
+import changescene.MainMethods;
 import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +15,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class PowerUsageEachDayController implements Initializable {
-
-    Factory factory = new Factory();
+public class PowerUsageEachDayController extends MainMethods implements Initializable {
 
     @FXML
     private BarChart<?, ?> barChart;
@@ -44,6 +43,6 @@ public class PowerUsageEachDayController implements Initializable {
 
     @FXML
     void closeBarChart(ActionEvent event){
-        CloseWindow cs = new CloseWindow(event);
+       closeWindow(event);
     }
 }

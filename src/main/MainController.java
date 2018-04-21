@@ -1,19 +1,15 @@
 package main;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import changescene.ChangeScene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import loginAdm.CurrentAdmin;
 import java.net.URL;
 import java.util.ResourceBundle;
-import changescene.ChangeToMainScenes;
+import changescene.MainMethods;
 
 
-public class MainController extends ChangeToMainScenes implements Initializable{
+public class MainController extends MainMethods implements Initializable{
 
     @FXML
     private Label adminEmailLbl;

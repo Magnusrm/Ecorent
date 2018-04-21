@@ -1,6 +1,7 @@
 package map;
 
 import changescene.ChangeScene;
+import changescene.MainMethods;
 import control.Bike;
 import control.Dock;
 import control.Factory;
@@ -28,21 +29,17 @@ import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
-public class MapController implements Initializable{
+public class MapController extends MainMethods implements Initializable{
 
-    private Factory myFactory = new Factory();
     private BikeStatsModel bsm= new BikeStatsModel();
     private ArrayList<Dock> allDocks;
 
     @FXML
     private WebView root;
 
-    private WebEngine engine;
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        myFactory.updateSystem();
+        factory.updateSystem();
 
         engine = root.getEngine();
         engine.load(this.getClass().getResource("/map/googlemap.html").toExternalForm());
@@ -69,7 +66,7 @@ public class MapController implements Initializable{
 
 
     public void showDocks() {
-        allDocks = myFactory.getDocks();
+        allDocks = factory.getDocks();
         String dockData = arrayToString(dockToArray());
         engine.executeScript("var items = " + dockData + ";" +
                 "document.setDockMarkers(items);");
@@ -89,55 +86,6 @@ public class MapController implements Initializable{
             engine.executeScript("document.createBikeMarker(" + bikeXPos + ", " + bikeYPos + ");");
         }
         engine.executeScript("document.setMapOnAllBikes(document.map);");
-
-    }
-
-
-
-
-    // main buttons below
-
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
 
     }
 

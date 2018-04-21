@@ -1,6 +1,7 @@
 package bike.bikeInfo;
 
 import changescene.ChangeScene;
+import changescene.MainMethods;
 import control.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,9 +27,7 @@ import java.util.DuplicateFormatFlagsException;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
-public class BikeInfoController implements Initializable {
-    private Factory factory = new Factory();
-    private BikeStatsModel bsm= new BikeStatsModel();
+public class BikeInfoController   extends MainMethods implements Initializable {
 
     @FXML
     private Label priceLbl;
@@ -132,7 +131,6 @@ public class BikeInfoController implements Initializable {
         repairIds.addAll(complete);
         repairIdListView.setItems(repairIds);
 
-        RepairModel repairModel = new RepairModel();
         for(RepairSent i : factory.getRepairsNotReturned())System.out.println(i);
 
         Bike bike = null;
@@ -168,56 +166,4 @@ public class BikeInfoController implements Initializable {
         }
 
     }//end method
-
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-
-    }
 }

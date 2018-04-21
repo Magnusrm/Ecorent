@@ -1,3 +1,4 @@
+import changescene.MainMethods;
 import control.Bike;
 import control.Dock;
 import control.Factory;

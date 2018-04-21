@@ -2,6 +2,7 @@ package bike.bikeRepair;
 
 import changescene.ChangeScene;
 import changescene.CloseWindow;
+import changescene.MainMethods;
 import changescene.PopupScene;
 import control.*;
 import javafx.event.ActionEvent;
@@ -14,9 +15,7 @@ import loginAdm.CurrentAdmin;
 import control.*;
 import model.BikeModel;
 
-public class BikeRepairController {
-
-    private Factory factory = new Factory();
+public class BikeRepairController extends MainMethods {
 
     @FXML
     private TextArea descReturnedTextArea;
@@ -54,7 +53,6 @@ public class BikeRepairController {
             String date = dateSentField.getText().substring(0,4) + "-" +
                     dateSentField.getText().substring(4,6) + "-" +
                     dateSentField.getText().substring(6);
-            System.out.println(date);
             String description = descSentTextArea.getText();
             RepairSent repairSent = new RepairSent(date, description, bikeId);
             if (factory.repairSent(repairSent)) {
@@ -72,7 +70,7 @@ public class BikeRepairController {
                 alert.showAndWait();
             }//end condition
         }//end condition
-        CloseWindow cw = new CloseWindow(event);
+        closeWindow(event);
     }//end method
 
     @FXML
@@ -122,71 +120,17 @@ public class BikeRepairController {
                 alert.showAndWait();
             }//end condition
         }//end condition
-        CloseWindow cw = new CloseWindow(event);
+        closeWindow(event);
     }//end method
 
     @FXML
     void changeToRepairReturnedView(ActionEvent event)throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/bike/bikeRepair/BikeRepairReturnedView.fxml");
-        ps.setTitle("Register returned repair");
+        newPopup("/bike/bikeRepair/BikeRepairReturnedView.fxml", "Register Returned Repair");
 
     }
 
     @FXML
     void changeToRepairSentView(ActionEvent event) throws Exception {
-        PopupScene ps = new PopupScene();
-        ps.setScene(event, "/bike/bikeRepair/BikeRepairSentView.fxml");
-        ps.setTitle("Register sent repair");
+        newPopup("/bike/bikeRepair/BikeRepairSentView.fxml", "Register Sent Repair");
     }
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-    }//end method
 }//end class

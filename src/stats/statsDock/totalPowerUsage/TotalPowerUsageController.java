@@ -1,6 +1,7 @@
 package stats.statsDock.totalPowerUsage;
 
 import changescene.CloseWindow;
+import changescene.MainMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,7 +14,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class TotalPowerUsageController implements Initializable {
+public class TotalPowerUsageController extends MainMethods implements Initializable {
 
     @FXML
     private AreaChart<?, ?> areaChart;
@@ -40,7 +41,7 @@ public class TotalPowerUsageController implements Initializable {
 
     @FXML
     void closeBarChart(ActionEvent event){
-        CloseWindow cs = new CloseWindow(event);
+        closeWindow(event);
     }
 
 }
