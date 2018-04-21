@@ -143,15 +143,15 @@ public class AdminController extends MainMethods implements Initializable {
      */
     @FXML
     void changePasswordConfirm(ActionEvent event) {
-        boolean continiue = true;//Makes it easier to choose which error message to display
+        boolean continiueBool = true;//Makes it easier to choose which error message to display
         String oldPassword = oldPasswordField.getText();
         String newPassword = newPasswordField.getText();
         String newPassword2 = newPasswordField2.getText();
 
-        if(newPassword.length()<8 || newPassword.length()>30)continiue = false;
+        if(newPassword.length()<8 || newPassword.length()>30)continiueBool = false;
 
         if(Password.check(oldPassword,CurrentAdmin.getInstance().getAdmin().getPassword())&&newPassword.equals(newPassword2)&&
-                continiue){
+                continiueBool){
             String email = CurrentAdmin.getInstance().getAdmin().getEmail();
             boolean main = CurrentAdmin.getInstance().getAdmin().isMainAdmin();
             String password = Password.hashPassword(newPassword);
@@ -175,7 +175,7 @@ public class AdminController extends MainMethods implements Initializable {
         }//end if
 
         else{
-            if(continiue) { //if the passwords do not match
+            if(continiueBool) { //if the passwords do not match
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Something went wrong!");
                 alert.setHeaderText(null);

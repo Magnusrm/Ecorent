@@ -45,6 +45,10 @@ public class BikeRepairController extends MainMethods implements Initializable {
         dateSentField.setText(time);
     }
 
+    /**
+     * Registers new repairs based on the information given by the client.
+     * @param event
+     */
     @FXML
     void registerRepairSentConfirm(ActionEvent event){
         factory.updateSystem();
@@ -68,6 +72,10 @@ public class BikeRepairController extends MainMethods implements Initializable {
         closeWindow(event);
     }//end method
 
+    /**
+     * Registers returned repairs based on the information given by the client.
+     * @param event
+     */
     @FXML
     void registerRepairReturnedConfirm(ActionEvent event){
         factory.updateSystem();

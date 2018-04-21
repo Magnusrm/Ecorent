@@ -22,6 +22,12 @@ import model.RepairModel;
 
 import java.util.Optional;
 
+/**
+ * MainMethods.java
+ * @author Team007
+ *
+ *
+ */
 public class MainMethods {
 
     public Factory factory = new Factory();
@@ -38,6 +44,11 @@ public class MainMethods {
     public Button adminBtn;
     public Button logoutBtn;
 
+    /**
+     * Creates an information alert window.
+     * @param title
+     * @param content
+     */
     public void newInfoAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -46,6 +57,11 @@ public class MainMethods {
         alert.showAndWait();
     }
 
+    /**
+     * Creates a warning alert window
+     * @param title
+     * @param content
+     */
     public void newWarningAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
@@ -54,6 +70,12 @@ public class MainMethods {
         alert.showAndWait();
     }
 
+    /**
+     * Crea
+     * @param title
+     * @param content
+     * @return
+     */
     public boolean newConfirmationAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
@@ -67,6 +89,11 @@ public class MainMethods {
         }
     }
 
+    /**
+     * Creates a new popup
+     * @param fxmlname
+     * @param title
+     */
     public void newPopup(String fxmlname, String title){
         Stage popup;
         try{
