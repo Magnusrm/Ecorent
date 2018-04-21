@@ -3,10 +3,12 @@ package loginAdm;
 
 import control.Admin;
 /**
- * This class uses the Singleton pattern to store the user logged in to the system
- * An instance of this class stores an Admin-object
- *
+ * CurrentAdmin.java
  * @author Team 007
+ * @version 1.0
+ *
+ * This class uses the Singleton pattern to store the user logged in to the system.
+ * An instance of this class stores an Admin-object.
  */
 public class CurrentAdmin {
     private Admin admin;
