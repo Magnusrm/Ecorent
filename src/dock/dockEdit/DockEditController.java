@@ -1,9 +1,7 @@
 package dock.dockEdit;
 
-import changescene.ChangeScene;
+import changescene.MainMethods;
 import control.Dock;
-import control.Factory;
-import dock.dockNew.DockNewController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
@@ -23,10 +20,7 @@ import java.util.ResourceBundle;
 
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
-public class DockEditController implements Initializable {
-    private Factory factory = new Factory();
-    @FXML
-    private ComboBox<String> bikeIdComboBox;
+public class DockEditController  extends MainMethods implements Initializable {
 
     @FXML
     private TextField dockNameField;
@@ -136,7 +130,12 @@ public class DockEditController implements Initializable {
         engine.executeScript("document.zoomOut();");
     }
 
-
+    /**
+     * Saves the changes done in the docks textfields
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @FXML
     void saveChanges(ActionEvent event) throws SQLException,ClassNotFoundException{
         String dockName = dockNameComboBox.getValue();
@@ -144,73 +143,9 @@ public class DockEditController implements Initializable {
 
         System.out.println("test0");
         if(factory.editDocks(dockName, editDock)){
-            System.out.println("test02");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("The info about dock " + dockNameComboBox.getValue() + " is now updated!");
-            alert.showAndWait();
+            newInfoAlert("Success", "The info about dock " + dockNameComboBox.getValue() + " is now updated!");
         }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Cannot connect to system, please check your connection");
-            alert.showAndWait();
-            System.out.println("test3");
+            newInfoAlert("Something went wrong!", "Cannot connect to system, please check your connection");
         }
-
-        System.out.println("test4");
-
-    }
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-
     }
 }

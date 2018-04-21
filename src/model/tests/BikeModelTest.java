@@ -106,9 +106,8 @@ public class BikeModelTest {
         String typeName = "Landevei";
         Type type = new Type(typeName);
         double pwrUsg = 0.36;
-        int dockID = 1;
 
-        instance.editBike(BIKEID, date, price, make, dockID, pwrUsg, typeName);
+        instance.editBike(BIKEID, date, price, make, pwrUsg, typeName);
 
         Bike expResult = new Bike(regDate, price, make, type, pwrUsg);
         expResult.setBikeId(BIKEID);

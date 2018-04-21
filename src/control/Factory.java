@@ -310,7 +310,8 @@ public class Factory {
                 String make = newBike.getMake();
                 double pwrUsage = newBike.getPowerUsage();
                 String typeName = newBike.getType().getName();
-                return bikeModel.editBike(bikeId,regDate,price,make,dockID,pwrUsage,typeName);
+
+                return bikeModel.editBike(bikeId,regDate,price,make,pwrUsage,typeName);
             }//end if
         }//end loop
         if(newBike.getBikeId() == -1)throw new IllegalArgumentException("The bike ID given does not exist");
@@ -378,8 +379,8 @@ public class Factory {
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(type)){
                 types.remove(i);
-                boolean result = deleteAllBikesWithNoType(); //Bikes with no types cannot exist
                 boolean result1 =  typeModel.deleteType(type.getName());
+                boolean result = deleteAllBikesWithoutType(); //Bikes with no types cannot exist
                 return result&&result1;
             }//end if
         }//end loop
@@ -394,10 +395,8 @@ public class Factory {
      * all bikes with no types.
      * @return true if operation is successful
      */
-    public boolean deleteAllBikesWithNoType(){
-        for(int i = 0; i<bikes.size();i++){
-            if(bikes.get(i).getType() == null)bikes.remove(i);
-        }
+    public boolean deleteAllBikesWithoutType(){
+
         return bikeModel.deleteBikesWhereTypeIsNULL();
     }//end
 
@@ -439,11 +438,13 @@ public class Factory {
         double sum = dockModel.getPowerAtDock(dockName);
         for(int i = 0; i < docked.length; i++){
            int id = docked[i];
-           if(bikeStatsModel.getChargLvl(id-1) == 100){
-               sum -= bikes.get(id).getPowerUsage();
-            } else{
-               sum += 0;
-           }
+           if(bikeStatsModel.getChargLvl(id) == 100){
+               for (Bike b : bikes){
+                   if (b.getBikeId() == id)
+                       sum -= b.getPowerUsage();
+               }
+
+            }
         }
         return sum;
     }//end method

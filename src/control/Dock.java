@@ -21,7 +21,6 @@ public class Dock {
 
     public Dock(String name, double x, double y){
         if(name == null)throw new IllegalArgumentException("Your dock must have a name!");
-        if(x<0 || y<0)throw new IllegalArgumentException("Your coordinates can't be negative numbers");
         this.name = name;
         xCoordinates = x;
         yCoordinates = y;
@@ -80,9 +79,3 @@ public class Dock {
 
 }//end class
 
-
-/* DOCK POSISJONER
-63.42-43
-10.38-40
-
- */

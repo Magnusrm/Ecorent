@@ -23,7 +23,6 @@ public class Bike {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         if (make == null) {throw new IllegalArgumentException("Make cannot be null.");}
-        if (type == null) {throw new IllegalArgumentException("Type cannot be null.");}
         if (powerUsage < 0) {throw new IllegalArgumentException("Power usage cannot be negative.");}
         this.buyDate = buyDate;
         this.price = price;
@@ -84,7 +83,6 @@ public class Bike {
     }
 
     public void setType(Type type) {
-        if (type == null) {throw new IllegalArgumentException("Type cannot be null.");}
         this.type = type;
     }
     public void setPowerUsage(double powerUsage) {
