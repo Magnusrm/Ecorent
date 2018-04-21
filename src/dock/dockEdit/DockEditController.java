@@ -110,7 +110,7 @@ public class DockEditController  extends MainMethods implements Initializable {
             }//end method
         });
 
-    }
+    }//end method
 
     /**
      * Sets the console.log() method in javascript to execute the method JavaBridge.log().
