@@ -12,7 +12,7 @@
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
             <Button fx:id="editBikeBtn" layoutX="60.0" layoutY="241.0" mnemonicParsing="false" onAction="#changeToBikeEditView" prefHeight="35.0" prefWidth="134.0" text="Edit bike" textAlignment="CENTER" />
-            <Button fx:id="infoBikeBtn" layoutX="60.0" layoutY="131.0" mnemonicParsing="false" onAction="#changetToBikeInfoView" prefHeight="35.0" prefWidth="134.0" text="Bike info" textAlignment="CENTER" />
+            <Button fx:id="infoBikeBtn" layoutX="60.0" layoutY="131.0" mnemonicParsing="false" onAction="#changeToBikeInfoView" prefHeight="35.0" prefWidth="134.0" text="Bike info" textAlignment="CENTER" />
             <Button fx:id="deleteBikeBtn" layoutX="249.0" layoutY="205.0" mnemonicParsing="false" onAction="#deleteBike" prefHeight="35.0" prefWidth="134.0" text="Delete bike" textAlignment="CENTER" />
             <Button fx:id="repairBikeBtn" layoutX="60.0" layoutY="296.0" mnemonicParsing="false" onAction="#changeToBikeRepairView" prefHeight="35.0" prefWidth="134.0" text="Repair Bike" textAlignment="CENTER" />
             <Button fx:id="newBikeBtn" layoutX="60.0" layoutY="76.0" mnemonicParsing="false" onAction="#changeToBikeNewView" prefHeight="35.0" prefWidth="134.0" text="New Bike" textAlignment="CENTER" />
