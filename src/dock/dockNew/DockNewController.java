@@ -1,20 +1,14 @@
 package dock.dockNew;
 
-import changescene.ChangeScene;
+import changescene.MainMethods;
 import control.Dock;
-import control.Factory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
 
 import netscape.javascript.JSObject;
 
@@ -23,10 +17,8 @@ import java.util.ResourceBundle;
 
 import static java.lang.Thread.sleep;
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
-public class DockNewController implements Initializable{
-    private Factory factory = new Factory();
+public class DockNewController extends MainMethods implements Initializable{
 
     @FXML
     private WebView root;
@@ -113,85 +105,19 @@ public class DockNewController implements Initializable{
             Dock dock = new Dock(dockNameField.getText(), Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));
 
             if(factory.addDock(dock)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("New dock saved!");
-                alert.setHeaderText(null);
-                alert.setContentText("Dock is now saved and can be used to store bikes.");
-                alert.showAndWait();
+                newInfoAlert("New dock saved!", "Dock is now saved and can be used to store bikes.");
                 for (Dock d : factory.getDocks()) {
                     System.out.println(d);
                 }
-                ChangeScene cs = new ChangeScene();
-                cs.setScene(event, "/dock/DockView.fxml");
+               changeScene(event, "/dock/DockView.fxml");
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Something went wrong!");
-                alert.setHeaderText(null);
-                alert.setContentText("Dock is not saved, make sure to fill out the form in the given format.");
-                alert.showAndWait();
-                ChangeScene cs1 = new ChangeScene();
-                cs1.setScene(event, "/dock/DockNew/DockNewView.fxml");
+                newInfoAlert("Something went wrong", "Dock is not saved, make sure to fill out the form in the given format.");
+                changeScene(event, "/dock/DockNew/DockNewView.fxml");
             }
         } catch (Exception e){
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Dock is not saved, make sure to fill out the form in the given format");
-            alert.showAndWait();
+            newInfoAlert("Something went wrong!", "Dock is not saved, make sure to fill out the form in the given format");
             System.out.println("Error createNewDockConfirm: " + e);
         }
-
-    }
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-
     }
 }
