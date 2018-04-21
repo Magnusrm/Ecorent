@@ -1,6 +1,8 @@
 package bike.bikeEdit;
 
 import changescene.ChangeScene;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +14,7 @@ import control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BikeEditController implements Initializable{
@@ -60,6 +63,8 @@ public class BikeEditController implements Initializable{
         buyDateField.setText(buyDate);
         powerUsageField.setText(powerUsage);
         typeComboBox.getSelectionModel().select(bike.getType().getName());
+
+
     }//end method
 
 

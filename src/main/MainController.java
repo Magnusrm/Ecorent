@@ -22,7 +22,7 @@ public class MainController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        adminEmailLbl.setText("Welcome, " + CurrentAdmin.getInstance().getAdmin().getEmail() + "!");
+        adminEmailLbl.setText("Logged in as: " + CurrentAdmin.getInstance().getAdmin().getEmail());
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()){
             adminRightsLbl.setText("You have main admin priviliges");
          } else {

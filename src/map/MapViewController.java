@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
-public class MapViewController implements Initializable{
+public class MapController implements Initializable{
 
     private Factory myFactory = new Factory();
     private BikeStatsModel bsm= new BikeStatsModel();
@@ -53,7 +53,7 @@ public class MapViewController implements Initializable{
         myFactory.updateSystem();
 
         engine = root.getEngine();
-        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.load(this.getClass().getResource("/map/googlemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
 
         engine.getLoadWorker().stateProperty().addListener(e -> {
