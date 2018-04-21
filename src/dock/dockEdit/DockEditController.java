@@ -89,11 +89,18 @@ public class DockEditController implements Initializable {
 
 
         dockNameComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
+            @Override //Auto filling info
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("nice: " + oldValue + ", " + newValue + " bror");
-                alert.showAndWait();
+                Dock dock = null;
+                for(Dock d: factory.getDocks())if(newValue.equals(d.getName()))dock = d; //Finding the dock in system
+                if(dock != null) { //filling text when found
+                    xCoordField.setText("" + dock.getxCoordinates());
+                    yCoordField.setText("" + dock.getyCoordinates());
+                    dockNameField.setText(dock.getName());
+                    //Setting marker
+                    engine.executeScript("document.createMarker1(" + xCoordField.getText() + ", " + yCoordField.getText() +
+                    ");");
+                }//end condition
             }//end method
         });
 

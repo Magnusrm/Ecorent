@@ -69,10 +69,10 @@ public class BikeNewController implements Initializable{
         try {
            Bike bike = new Bike(date1,Double.parseDouble(priceField.getText()),
                    makeField.getText(),new Type(typeComboBox.getValue()),Double.parseDouble(powerUsageField.getText()));
-           for(int i = 0; i<Integer.parseInt(amountField.getText())-1;i++){
+           for(int i = 0; i<Integer.parseInt(amountField.getText())-1;i++){ //Loop to add multiple bikes
             factory.addBike(bike);
-           }
-            if(factory.addBike(bike)) {
+           }//end loop
+            if(factory.addBike(bike)) { //The last bike (so we can check the success)
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Bike saved!");
                 alert.setHeaderText(null);

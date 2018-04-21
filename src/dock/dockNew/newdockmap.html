@@ -85,9 +85,23 @@
                 markers.push(document.marker);
                 document.setMapOnAll(document.map);
             }
-
+            document.createMarker1 = function (xPos,yPos) {
+                document.setMapOnAll(null);
+                markers = [];
+                var position = new google.maps.LatLng(xPos,yPos);
+                document.marker = new google.maps.Marker({
+                    position: position,
+                    map: document.map,
+                    draggable: false,
+                    visible: true
+                });
+                markers.push(document.marker);
+                document.setMapOnAll(document.map);
+            }
 
         }// initialize end
+
+
 
     </script>
 </head>
