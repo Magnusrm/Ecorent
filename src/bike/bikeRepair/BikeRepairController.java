@@ -15,6 +15,7 @@ import control.*;
 import model.BikeModel;
 
 public class BikeRepairController {
+
     private Factory factory = new Factory();
 
     @FXML
