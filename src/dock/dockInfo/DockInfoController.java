@@ -1,6 +1,8 @@
 package dock.dockInfo;
 
 import changescene.MainMethods;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,11 +58,22 @@ public class DockInfoController extends MainMethods implements Initializable {
             dockNameComboBox.setItems(docks);
 
             dockNameComboBox.getSelectionModel().selectFirst();
+            engine.getLoadWorker().stateProperty().addListener(e ->
+            {
+                showInfo();
+            });
+
+            dockNameComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override //Auto filling info
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    showInfo();
+                }//end method
+            });
         }catch (Exception e){e.printStackTrace();}
     }
 
     @FXML
-    void showInfo(ActionEvent event){
+    void showInfo(){
 
         // add bikeId's to listview
         ObservableList<String> bikes= FXCollections.observableArrayList();

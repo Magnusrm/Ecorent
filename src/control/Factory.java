@@ -436,10 +436,13 @@ public class Factory {
         int[] docked = dockedBikes(dockName);
         double sum = dockModel.getPowerAtDock(dockName);
         for(int i = 0; i < docked.length; i++){
-            int id = docked[i];
-            if(bikeStatsModel.getChargLvl(id) == 100){
+           int id = docked[i];
+           if(bikeStatsModel.getChargLvl(id) == 100){
+               for (Bike b : bikes){
+                   if (b.getBikeId() == id)
+                       sum -= b.getPowerUsage();
+               }
 
-                sum -= bikes.get(id-1).getPowerUsage();
             } else{
                 sum += 0;
             }

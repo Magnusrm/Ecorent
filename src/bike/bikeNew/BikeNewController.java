@@ -11,6 +11,7 @@ import control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 
@@ -47,6 +48,12 @@ public class BikeNewController extends MainMethods implements Initializable{
             }//end loop
             types.addAll(visualized);
             typeComboBox.setItems(types);
+
+            LocalDateTime ldt = LocalDateTime.now();
+            String time = ("" + ldt + "").replaceAll("T", " ");
+            time = time.substring(0, time.length() - 4);
+            buyDateField.setText(time);
+
         }catch (Exception e){e.printStackTrace();}
     }//end constructor
 
