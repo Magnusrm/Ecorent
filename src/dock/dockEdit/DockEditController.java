@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 /**
- * DockEditcontroller.java
- * @author Team007
+ * DockEditController.java
+ * @author Team 007
  * @version 1.0
  *
  * This class handles editing of existing docks and DockEditView.fxml

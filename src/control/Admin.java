@@ -1,6 +1,7 @@
 package control;
 
 /**
+ * Admin.java
  * Class for Admin objects
  *
  * @author Team 007
@@ -35,7 +36,6 @@ public class Admin {
      * Method which sets the password using the Password class and its hashing algorithm
      *
      *@param password is the String input the user sets in the program
-     * @author Team 007
      */
     public void setPassword(String password) {
         if (password == null) { throw new IllegalArgumentException("Password cannot be null."); }
@@ -63,7 +63,6 @@ public class Admin {
      * @param o
      * @return true     if the parameters compared are equal
      * @return false    if the parameters compared are not equal
-     * @author Team 007
      */
     @Override
     public boolean equals(Object o){

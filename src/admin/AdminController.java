@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * This class handles displaying information, canging password, deleting admins and creating new admins by using
  * AdminChangePasswordView.fxml, AdminDeleteAdminView.fxml, AdminNewAdminView.fxml and AdminView.fxml.
  */
-public class AdminController extends MainMethods implements Initializable {
+public class AdminController extends MainMethods {
 
     AdminModel model = new AdminModel();
 
@@ -43,11 +43,6 @@ public class AdminController extends MainMethods implements Initializable {
 
     @FXML
     private TextField oldPasswordField;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("wow");
-    }
 
     /**
      * Opens the popup window for creating a new admin.

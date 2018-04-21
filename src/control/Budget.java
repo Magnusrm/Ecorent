@@ -1,5 +1,10 @@
 package control;
 
+/**
+ * Budget.java
+ * @author Team 007
+ * Class for Budget objects.
+ */
 public class Budget {
     private String type;
 

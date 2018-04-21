@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 /**
  * DockController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * This class handles deleting docks and navigating between DockNewView.fxml, DockInfoView.fxml, and DockEditView.fxml
