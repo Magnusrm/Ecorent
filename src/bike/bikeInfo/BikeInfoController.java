@@ -46,31 +46,7 @@ public class BikeInfoController implements Initializable {
     private Label batteryLbl;
 
     @FXML
-    private Button showInfoBtn;
-
-    @FXML
     private TextField bikeIdField;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
 
     private WebEngine engine;
 
@@ -115,7 +91,6 @@ public class BikeInfoController implements Initializable {
     /**
      * Displays the info about the bike described in the bikeIdField.
      * This method also fills the ListView with the repairs the bike have had in the past.
-     *
      */
     @FXML
     void showInfo(){
@@ -199,8 +174,8 @@ public class BikeInfoController implements Initializable {
 
 
 
-    // main buttons below
 
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

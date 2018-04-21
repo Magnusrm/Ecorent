@@ -96,6 +96,10 @@ public class MapViewController implements Initializable{
         engine.executeScript("document.setMapOnAllBikes(document.map);");
 
     }
+
+
+
+
     // main buttons below
 
     @FXML
@@ -155,8 +159,4 @@ public class MapViewController implements Initializable{
         res += "]";
         return res;
     }
-
-
-
-
 }
