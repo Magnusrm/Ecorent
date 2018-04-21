@@ -1,21 +1,14 @@
 package dock.dockNew;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
 import control.Dock;
-import control.Factory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
 
 import netscape.javascript.JSObject;
 
@@ -24,7 +17,6 @@ import java.util.ResourceBundle;
 
 import static java.lang.Thread.sleep;
 import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-import static javafx.scene.input.MouseEvent.MOUSE_PRESSED;
 
 public class DockNewController extends MainMethods implements Initializable{
 
@@ -113,32 +105,19 @@ public class DockNewController extends MainMethods implements Initializable{
             Dock dock = new Dock(dockNameField.getText(), Double.parseDouble(xCoordField.getText()), Double.parseDouble(yCoordField.getText()));
 
             if(factory.addDock(dock)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("New dock saved!");
-                alert.setHeaderText(null);
-                alert.setContentText("Dock is now saved and can be used to store bikes.");
-                alert.showAndWait();
+                newInfoAlert("New dock saved!", "Dock is now saved and can be used to store bikes.");
                 for (Dock d : factory.getDocks()) {
                     System.out.println(d);
                 }
                changeScene(event, "/dock/DockView.fxml");
             } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Something went wrong!");
-                alert.setHeaderText(null);
-                alert.setContentText("Dock is not saved, make sure to fill out the form in the given format.");
-                alert.showAndWait();
+                newInfoAlert("Something went wrong", "Dock is not saved, make sure to fill out the form in the given format.");
                 changeScene(event, "/dock/DockNew/DockNewView.fxml");
             }
         } catch (Exception e){
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Dock is not saved, make sure to fill out the form in the given format");
-            alert.showAndWait();
+            newInfoAlert("Something went wrong!", "Dock is not saved, make sure to fill out the form in the given format");
             System.out.println("Error createNewDockConfirm: " + e);
         }
-
     }
 }

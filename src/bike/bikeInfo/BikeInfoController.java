@@ -1,30 +1,22 @@
 package bike.bikeInfo;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
 import control.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
-import model.BikeStatsModel;
-import model.RepairModel;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.DuplicateFormatFlagsException;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class BikeInfoController   extends MainMethods implements Initializable {
@@ -69,16 +61,13 @@ public class BikeInfoController   extends MainMethods implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                     int repairID = Integer.parseInt(newValue);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Information about repair " + repairID);
-                    alert.setHeaderText(Alert.AlertType.INFORMATION.name());
                     ArrayList<Repair> repairs = new ArrayList<>();
                     repairs.addAll(factory.getRepairsNotReturned());
                     repairs.addAll(factory.getRepairsCompleted());
                     String s = "";
                     for(Repair r:repairs)if(repairID == r.getRepair_id())s+=r.toString();
-                    alert.setContentText(s);
-                    alert.showAndWait();
+
+                    newInfoAlert("Information about repair " + repairID, s);
                 }//end method
             });
 
@@ -151,11 +140,7 @@ public class BikeInfoController   extends MainMethods implements Initializable {
 
         }//end condition
         if(bike == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Cannot find the given bike!");
-            alert.showAndWait();
+            newInfoAlert("Something went wrong!", "Cannot find the given bike!");
         }//end condition
         // show marker on map
         ArrayList<double[]> recentPositions = bsm.getMostRecentCoordinates();

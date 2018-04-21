@@ -1,31 +1,16 @@
 package map;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
-import control.Bike;
 import control.Dock;
-import control.Factory;
-import control.Type;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
-import model.BikeModel;
 import model.BikeStatsModel;
-import netscape.javascript.JSObject;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 

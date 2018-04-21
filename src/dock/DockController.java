@@ -1,17 +1,12 @@
 package dock;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
-import control.Factory;
-import control.Type;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
 import model.DockModel;
 
 import java.net.URL;
@@ -58,14 +53,8 @@ public class DockController extends MainMethods implements Initializable {
 
     @FXML
     void deleteDock(ActionEvent event) throws Exception{
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete dock");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you would like to delete the selected dock?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        boolean confirmation = newConfirmationAlert("Delete dock", "Are you sure you would like to delete the selected dock?");
+        if (confirmation){
             DockModel dm = new DockModel();
             dm.deleteDock(dockNameComboBox.getValue());
             changeScene(event,"/dock/DockView.fxml");

@@ -1,10 +1,7 @@
 package dock.dockEdit;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
 import control.Dock;
-import control.Factory;
-import dock.dockNew.DockNewController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
@@ -142,21 +138,9 @@ public class DockEditController  extends MainMethods implements Initializable {
 
         System.out.println("test0");
         if(factory.editDocks(dockName, editDock)){
-            System.out.println("test02");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("The info about dock " + dockNameComboBox.getValue() + " is now updated!");
-            alert.showAndWait();
+            newInfoAlert("Success", "The info about dock " + dockNameComboBox.getValue() + " is now updated!");
         }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Cannot connect to system, please check your connection");
-            alert.showAndWait();
-            System.out.println("test3");
+            newInfoAlert("Something went wrong!", "Cannot connect to system, please check your connection");
         }
-
-        System.out.println("test4");
     }
 }

@@ -1,21 +1,16 @@
 package bike.bikeEdit;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import loginAdm.CurrentAdmin;
 import control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BikeEditController  extends MainMethods implements Initializable {
@@ -109,17 +104,9 @@ public class BikeEditController  extends MainMethods implements Initializable {
         Type type = new Type(typeComboBox.getSelectionModel().getSelectedItem());
         Bike editBike = new Bike(localDate, price, make, type, pwr);
         if (factory.editBike(bikeID, editBike)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("The info about bike with bike ID " + bikeID + " is now updated!");
-            alert.showAndWait();
+            newInfoAlert("Success", "The info about bike with bike ID " + bikeID + " is now updated!");
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Something went wrong!");
-            alert.setHeaderText(null);
-            alert.setContentText("Cannot connect to system, please check your connection");
-            alert.showAndWait();
+            newInfoAlert("Something went wrong!", "Cannot connect to system, please check your connection");
         }//end else
     }//end method
 }

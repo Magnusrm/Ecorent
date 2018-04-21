@@ -1,12 +1,9 @@
 package stats.statsEconomy;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
 import control.Budget;
-import control.Factory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

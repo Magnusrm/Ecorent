@@ -10,12 +10,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebEngine;
 import javafx.stage.Stage;
 import loginAdm.CurrentAdmin;
 import model.BikeStatsModel;
 import model.DockStatsModel;
 import model.RepairModel;
+
+import java.util.Optional;
 
 public class MainMethods {
 
@@ -28,6 +32,34 @@ public class MainMethods {
     public DockStatsModel dsm = new DockStatsModel();
     public DockStatsModel dockStatsModel = new DockStatsModel();
 
+    public void newInfoAlert(String title, String content){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(Alert.AlertType.INFORMATION.name());
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public void newWarningAlert(String title, String content){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(Alert.AlertType.WARNING.name());
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public boolean newConfirmationAlert(String title, String content){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public void newPopup(String fxmlname, String title){
         Stage popup;

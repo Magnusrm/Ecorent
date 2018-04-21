@@ -1,11 +1,8 @@
 package stats;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
-import changescene.PopupScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 public class StatsController extends MainMethods {
 

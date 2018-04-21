@@ -1,6 +1,5 @@
 package stats.statsDock.totalPowerUsage;
 
-import changescene.CloseWindow;
 import changescene.MainMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

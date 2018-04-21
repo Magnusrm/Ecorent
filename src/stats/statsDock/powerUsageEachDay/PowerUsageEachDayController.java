@@ -1,15 +1,12 @@
 package stats.statsDock.powerUsageEachDay;
 
-import changescene.CloseWindow;
 import changescene.MainMethods;
-import control.Factory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import model.DockStatsModel;
 
 import java.net.URL;
 import java.time.LocalDate;

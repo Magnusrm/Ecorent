@@ -1,18 +1,12 @@
 package bike.bikeRepair;
 
-import changescene.ChangeScene;
-import changescene.CloseWindow;
 import changescene.MainMethods;
-import changescene.PopupScene;
 import control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import loginAdm.CurrentAdmin;
-import control.*;
 import model.BikeModel;
 
 public class BikeRepairController extends MainMethods {
@@ -44,11 +38,7 @@ public class BikeRepairController extends MainMethods {
         int bikeId = Integer.parseInt(bikeIdSentField.getText());
         BikeModel b = new BikeModel();
         if(!b.bikeExists(bikeId)){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Bike does not exist!");
-            alert.setHeaderText(Alert.AlertType.WARNING.name());
-            alert.setContentText("Bike with ID " + bikeId + " does not exist!");
-            alert.showAndWait();
+            newWarningAlert("Bike does not exist!", "Bike with ID " + bikeId + " does not exist!");
         }else {
             String date = dateSentField.getText().substring(0,4) + "-" +
                     dateSentField.getText().substring(4,6) + "-" +
@@ -56,18 +46,10 @@ public class BikeRepairController extends MainMethods {
             String description = descSentTextArea.getText();
             RepairSent repairSent = new RepairSent(date, description, bikeId);
             if (factory.repairSent(repairSent)) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Repair confirmed");
-                alert.setHeaderText(Alert.AlertType.INFORMATION.name());
-                alert.setContentText("Bike with ID " + bikeId + " is now registered in repair");
-                alert.showAndWait();
+                newInfoAlert("Repair confirmed", "Bike with ID " + bikeId + " is now registered in repair");
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("OPERATION FAILED");
-                alert.setHeaderText(Alert.AlertType.WARNING.name());
-                alert.setContentText("Something went wrong! Please make sure you fill " +
+                newWarningAlert("OPERATION FAILED", "Something went wrong! Please make sure you fill " +
                         "out the form in the correct format");
-                alert.showAndWait();
             }//end condition
         }//end condition
         closeWindow(event);
@@ -80,11 +62,7 @@ public class BikeRepairController extends MainMethods {
         int bikeID = Integer.parseInt(bikeIdReturnedField.getText());
         BikeModel b = new BikeModel();
         if(!b.bikeExists(bikeID)){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Bike does not exist!");
-            alert.setHeaderText(Alert.AlertType.WARNING.name());
-            alert.setContentText("Bike with ID " + bikeID + " does not exist!");
-            alert.showAndWait();
+            newWarningAlert("Bike does not exist!","Bike with ID " + bikeID + " does not exist!");
         }else{
             for(Bike b1:factory.getBikes()){
                 if(b1.getBikeId() == bikeID){
@@ -99,25 +77,13 @@ public class BikeRepairController extends MainMethods {
                 String description = descReturnedTextArea.getText();
                 RepairReturned repairReturned = new RepairReturned(date,description,price,bikeID);
                 if(factory.repairReturned(repairReturned)){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Repair confirmed");
-                    alert.setHeaderText(Alert.AlertType.INFORMATION.name());
-                    alert.setContentText("Bike with ID " + bikeID + " is now returned from repair");
-                    alert.showAndWait();
+                    newInfoAlert("Repair confirmed", "Bike with ID " + bikeID + " is now returned from repair");
                 }else{
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("OPERATION FAILED");
-                    alert.setHeaderText(Alert.AlertType.WARNING.name());
-                    alert.setContentText("Something went wrong! Please make sure you fill " +
+                    newWarningAlert("OPERATION FAILED","Something went wrong! Please make sure you fill " +
                             "out the form in the correct format");
-                    alert.showAndWait();
                 }//end condition
             }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("OPERATION FAILED");
-                alert.setHeaderText(Alert.AlertType.WARNING.name());
-                alert.setContentText("The given bike is not in repairing!");
-                alert.showAndWait();
+                newWarningAlert("OPERATION FAILED", "The given bike is not in repairing!");
             }//end condition
         }//end condition
         closeWindow(event);

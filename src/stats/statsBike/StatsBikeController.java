@@ -1,24 +1,13 @@
 package stats.statsBike;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
-import control.Budget;
-import control.Factory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.DockStatsModel;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class StatsBikeController extends MainMethods implements Initializable {
@@ -55,7 +44,7 @@ public class StatsBikeController extends MainMethods implements Initializable {
 
 
     totalDistanceLbl.setText("" + (Math.round(factory.getTotalDistance() * 100) / 100)/1000 + " km")  ;
-    avgKmPerTripLbl.setText("" + (Math.round(factory.getAvgKmPerTrip() * 100)  /100) /1000 + " km");
+    avgKmPerTripLbl.setText("" + (Math.round(factory.getAvgKmPerTrip() * 100)  /100) + " m");
     totalTripsLbl.setText("" + factory.getTotalTrips() + " trips");
 
     }

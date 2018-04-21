@@ -1,8 +1,6 @@
 package admin;
 
 import changescene.MainMethods;
-import changescene.CloseWindow;
-import changescene.PopupScene;
 import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

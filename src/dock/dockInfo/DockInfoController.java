@@ -1,6 +1,5 @@
 package dock.dockInfo;
 
-import changescene.ChangeScene;
 import changescene.MainMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,13 +10,10 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import control.*;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import loginAdm.CurrentAdmin;
 
 public class DockInfoController extends MainMethods implements Initializable {
 
