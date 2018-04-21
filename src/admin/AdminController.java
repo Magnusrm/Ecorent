@@ -14,31 +14,9 @@ import loginAdm.CurrentAdmin;
 import model.AdminModel;
 
 public class AdminController {
+
     Factory factory = new Factory();
     AdminModel model = new AdminModel();
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button createNewAdminBtn;
 
     @FXML
     private CheckBox mainAdminCheck;
@@ -225,7 +203,6 @@ public class AdminController {
 
 
     // main buttons
-
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

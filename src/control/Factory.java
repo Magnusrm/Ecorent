@@ -1,3 +1,11 @@
+
+package control;
+
+
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.*;
+import model.*;
 /**
  * Factory.java
  * @author Team007
@@ -8,15 +16,6 @@
  * The class will provide the view-control classes with data, which is why we add data from the
  * database into private arrays.
  */
-
-package control;
-
-
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.*;
-import model.*;
-
 public class Factory {
     private ArrayList<Dock> docks = new ArrayList<>();
     private ArrayList<Bike> bikes = new ArrayList<>();
@@ -393,7 +392,7 @@ public class Factory {
      * A bike without a type cannot exist, so
      * the system will use this method to delete
      * all bikes with no types.
-     * @return
+     * @return true if operation is successful
      */
     public boolean deleteAllBikesWithNoType(){
         for(int i = 0; i<bikes.size();i++){
@@ -565,11 +564,15 @@ public class Factory {
      */
     public String[][] getTypePopularity(){
         String[][] numberOfTypes = new String[types.size()][2];
+
+        //Filling the array with type names
         for(int i = 0; i<types.size();i++){
             numberOfTypes[i][0] = types.get(i).getName();
         }//end loop
+
+        //Finding the number of bikes using each type
         for(int i = 0; i<types.size();i++){
-            int size = 0;
+            int size = 0; //Always initialize to 0 bikes using the type
             for(int j = 0; j<bikes.size();j++){
                 if(numberOfTypes[i][0].equals(bikes.get(j).getType().getName())){
                     size++;
@@ -580,15 +583,5 @@ public class Factory {
         }//end loop
         return numberOfTypes;
     }//end method
-
-    public static void main(String[] args){
-        Factory f = new Factory();
-        f.updateSystem();
-        for(int i = 0; i<f.getTypes().size();i++){
-            for(int j = 0; j<2; j++){
-                System.out.println(f.getTypePopularity()[i][j]);
-            }
-        }
-    }
 
 }//end class

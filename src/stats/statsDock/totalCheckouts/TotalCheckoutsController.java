@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class TotalCheckoutsController implements Initializable {
 
-    Factory factory = new Factory();
+    private Factory factory = new Factory();
 
     @FXML
     private PieChart pieChart;
@@ -42,12 +42,6 @@ public class TotalCheckoutsController implements Initializable {
             pieChartData.add(new PieChart.Data(factory.getDockName(i[0]), i[1]));
 
         }
-
-
-        // datos.add(new Tabla(v) );
-/*
-        for(int i = 0; i<7; i++){
-            new*/
 
 
         pieChart.setData(pieChartData);

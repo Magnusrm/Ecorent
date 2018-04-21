@@ -1,6 +1,8 @@
 package bike.bikeEdit;
 
 import changescene.ChangeScene;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +14,7 @@ import control.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BikeEditController implements Initializable{
@@ -25,9 +28,6 @@ public class BikeEditController implements Initializable{
     private TextField makeField;
 
     @FXML
-    private Button bikeViewBtn;
-
-    @FXML
     private TextField priceField;
 
     @FXML
@@ -35,30 +35,6 @@ public class BikeEditController implements Initializable{
 
     @FXML
     private ComboBox<String> typeComboBox;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
 
     @FXML
     private TextField powerUsageField;
@@ -87,6 +63,8 @@ public class BikeEditController implements Initializable{
         buyDateField.setText(buyDate);
         powerUsageField.setText(powerUsage);
         typeComboBox.getSelectionModel().select(bike.getType().getName());
+
+
     }//end method
 
 
@@ -99,6 +77,7 @@ public class BikeEditController implements Initializable{
      */
     @FXML
     void fillInfo(ActionEvent event) {
+        for(Bike b: factory.getBikes())System.out.println(b);
         int bikeID = Integer.parseInt(bikeIdField.getText());
         for (int i = 0; i < factory.getBikes().size(); i++) {
             if (factory.getBikes().get(i).getBikeId() == bikeID) bike = factory.getBikes().get(i);
@@ -152,8 +131,10 @@ public class BikeEditController implements Initializable{
 
 
 
-    // main buttons below
 
+
+
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

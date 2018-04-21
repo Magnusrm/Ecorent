@@ -4,6 +4,8 @@ import changescene.ChangeScene;
 import control.Dock;
 import control.Factory;
 import dock.dockNew.DockNewController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,30 +39,6 @@ public class DockEditController implements Initializable {
 
     @FXML
     private ComboBox<String> dockNameComboBox;
-
-    @FXML
-    private Button saveChangesBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
 
     @FXML
     private WebView root;
@@ -110,6 +88,16 @@ public class DockEditController implements Initializable {
 
             dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
+
+
+        dockNameComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("nice: " + oldValue + ", " + newValue + " bror");
+                alert.showAndWait();
+            }//end method
+        });
 
     }
 
@@ -186,11 +174,7 @@ public class DockEditController implements Initializable {
 
 
 
-
-
-
-    // main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();

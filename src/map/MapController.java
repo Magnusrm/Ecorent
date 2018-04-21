@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import loginAdm.CurrentAdmin;
 import model.BikeModel;
 import model.BikeStatsModel;
 import netscape.javascript.JSObject;
@@ -27,7 +28,7 @@ import java.util.concurrent.Executors;
 
 import static java.lang.Thread.sleep;
 
-public class MapViewController implements Initializable{
+public class MapController implements Initializable{
 
     private Factory myFactory = new Factory();
     private BikeStatsModel bsm= new BikeStatsModel();
@@ -52,7 +53,7 @@ public class MapViewController implements Initializable{
         myFactory.updateSystem();
 
         engine = root.getEngine();
-        engine.load(this.getClass().getResource("/mapTest/googlemap.html").toExternalForm());
+        engine.load(this.getClass().getResource("/map/googlemap.html").toExternalForm());
         engine.setJavaScriptEnabled(true);
 
         engine.getLoadWorker().stateProperty().addListener(e -> {
@@ -95,6 +96,10 @@ public class MapViewController implements Initializable{
         engine.executeScript("document.setMapOnAllBikes(document.map);");
 
     }
+
+
+
+
     // main buttons below
 
     @FXML
@@ -135,7 +140,7 @@ public class MapViewController implements Initializable{
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 
@@ -154,8 +159,4 @@ public class MapViewController implements Initializable{
         res += "]";
         return res;
     }
-
-
-
-
 }

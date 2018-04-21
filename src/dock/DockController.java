@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.web.WebView;
+import loginAdm.CurrentAdmin;
 import model.DockModel;
 
 import java.net.URL;
@@ -22,45 +23,6 @@ public class DockController implements Initializable {
 
     @FXML
     private ComboBox<String> dockNameComboBox;
-
-    @FXML
-    private Button editDockBtn;
-
-    @FXML
-    private Button dockInfoBtn;
-
-    @FXML
-    private Button deleteDockBtn;
-
-    @FXML
-    private Button newDockBtn;
-
-    @FXML
-    private TextField dockIdField;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button deleteDockConfirmBtn;
 
 
     //Notice the docks are converted to String array.
@@ -121,10 +83,7 @@ public class DockController implements Initializable {
 
 
 
-
-
-    // main buttons below
-
+    // main buttons
     @FXML
     void changeToBikeScene(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
@@ -163,7 +122,7 @@ public class DockController implements Initializable {
 
     @FXML
     void logOut(ActionEvent event) throws Exception {
-
+        CurrentAdmin.getInstance().setAdmin(null);
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/login/LoginView.fxml");
 

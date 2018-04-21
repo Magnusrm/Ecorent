@@ -18,9 +18,9 @@
                </font>
             </Label>
             <Line endX="80.0" layoutX="277.0" layoutY="66.0" startX="-200.0" stroke="WHITE" style="-fx-fill: -fx-secondary;" styleClass="line" />
-            <Button fx:id="createNewAdminBtn" layoutX="142.0" layoutY="173.0" mnemonicParsing="false" onAction="#createNewAdmin" prefHeight="26.0" prefWidth="150.0" text="Create new admin" />
-            <Button layoutX="142.0" layoutY="215.0" mnemonicParsing="false" onAction="#deleteAdmin" prefHeight="26.0" prefWidth="150.0" text="Delete admin" />
-            <Button layoutX="142.0" layoutY="255.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="26.0" prefWidth="150.0" text="Change password" />
+            <Button fx:id="createNewAdminBtn" layoutX="142.0" layoutY="170.0" mnemonicParsing="false" onAction="#createNewAdmin" prefHeight="35.0" prefWidth="150.0" text="Create new admin" />
+            <Button layoutX="142.0" layoutY="220.0" mnemonicParsing="false" onAction="#deleteAdmin" prefHeight="35.0" prefWidth="150.0" text="Delete admin" />
+            <Button layoutX="142.0" layoutY="270.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="35.0" prefWidth="150.0" text="Change password" />
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
