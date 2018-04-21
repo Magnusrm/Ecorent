@@ -1,6 +1,6 @@
 package bike.bikeType;
 
-import changescene.ChangeScene;
+import changescene.MainMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +14,8 @@ import java.util.ResourceBundle;
 import control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import loginAdm.CurrentAdmin;
 
-public class BikeTypeController implements Initializable{
-    private Type type;
-    private Factory factory = new Factory();
+public class BikeTypeController extends MainMethods implements Initializable{
 
     @FXML
     private ListView<String> typeListView;
@@ -70,18 +67,10 @@ public class BikeTypeController implements Initializable{
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             if(factory.deleteType(new Type(typeListView.getSelectionModel().getSelectedItem()))){
-                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                alert1.setTitle("Delete type");
-                alert1.setHeaderText(null);
-                alert1.setContentText("Type deleted!");
-                alert1.showAndWait();
+                newInfoAlert("Delete type", "Type deleted!");
                 deleteAllBikesWithoutType(event);
             }else{
-                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                alert1.setTitle("Delete type");
-                alert1.setHeaderText(null);
-                alert1.setContentText("Something went wrong! Type not deleted");
-                alert1.showAndWait();
+                newInfoAlert("Delete type", "Something went wrong! Type not deleted");
             }//end else
             try{
                 saveChanges(event);
@@ -92,11 +81,7 @@ public class BikeTypeController implements Initializable{
 
         } else {
             //IF CANCEL
-            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-            alert1.setTitle("Delete type");
-            alert1.setHeaderText(null);
-            alert1.setContentText("Type will not be deleted");
-            alert1.showAndWait();
+            newInfoAlert("Delete type", "Type will not be deleted");
         }//end else
     }//end method
 
@@ -152,17 +137,10 @@ public class BikeTypeController implements Initializable{
            Type edit = new Type(name);
            if(factory.editType(originial,edit)){
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-               alert.setTitle("Edit the name of the type");
-               alert.setHeaderText(null);
-               alert.setContentText("Your type has now a new name: " + name);
-               alert.showAndWait();
+               newInfoAlert("Edit the name of the type", "Your type has now a new name: " + name);
            }//end if
            else{
-               Alert alert = new Alert(Alert.AlertType.INFORMATION);
-               alert.setTitle("Edit the name of the type");
-               alert.setHeaderText(null);
-               alert.setContentText("Something went wrong! Please make sure to fill in the name of the type");
-               alert.showAndWait();
+               newInfoAlert("Edit the name of the type", "Something went wrong! Please make sure to fill in the name of the type");
            }//end else
            try{
                saveChanges(event);
@@ -186,16 +164,12 @@ public class BikeTypeController implements Initializable{
      */
     @FXML
     void saveChanges(ActionEvent event) throws Exception {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Save type");
-        alert.setHeaderText(null);
-        alert.setContentText("Would you like to save your type?");
-        if (factory.addType(type)) {
-            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-            alert1.setTitle("Saved!");
-            alert1.setHeaderText(null);
-            alert1.setContentText(type.getName() + " has been saved!");
-        }//end if
+        boolean confirmation = newConfirmationAlert("Save type", "Would you like to save your type?");
+        if(confirmation){
+            if (factory.addType(type)) {
+                newInfoAlert("Saved!", type.getName() + " has been saved!");
+            }//end if
+        }
     }
 
 
@@ -231,69 +205,10 @@ public class BikeTypeController implements Initializable{
     void deleteAllBikesWithoutType(ActionEvent event){
         factory.updateSystem();
         if(factory.deleteAllBikesWithNoType()){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("All bikes with type null deleted");
-            alert.setHeaderText(null);
-            alert.setContentText("Operation successful! All bikes have a type");
-            alert.showAndWait();
+            newInfoAlert("All bikes with type null deleted","Operation successful! All bikes have a type");
         }//end if
         else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("OOPS");
-            alert.setHeaderText(null);
-            alert.setContentText("Something went wrong! There might not be any bikes without a type.");
-            alert.showAndWait();
+            newInfoAlert("Something went wrong!", "Something went wrong! There might not be any bikes without a type.");
         }//end else
-    }
-
-
-
-
-
-
-
-    // main buttons
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event)throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        CurrentAdmin.getInstance().setAdmin(null);
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
     }
 }
