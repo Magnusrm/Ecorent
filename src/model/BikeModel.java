@@ -167,13 +167,13 @@ public class BikeModel {
      * @param typeName      the edited type.name. This uses the method typeExists to return the correct type_id.
      * @return               if the edited changes has been saved.
      */
-    public boolean editBike(int bikeID, String regDate, double price, String make, int dockID, double power, String typeName) {
+    public boolean editBike(int bikeID, String regDate, double price, String make, double power, String typeName) {
         int typeID = TypeModel.typeExists(typeName);
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, dock_id = ?, power = ?, type_id = ? " +
+        String bikeInsert = "UPDATE bike SET reg_date = ?, price = ?, make = ?, power = ?, type_id = ? " +
                 "WHERE bike_id = ? AND active = 1";
         try{
             connection = DBCleanup.getConnection();
@@ -185,10 +185,9 @@ public class BikeModel {
                 preparedStatement.setString(1, regDate);
                 preparedStatement.setDouble(2, price);
                 preparedStatement.setString(3, make);
-                preparedStatement.setInt(4, dockID);
-                preparedStatement.setDouble(5, power);
-                preparedStatement.setInt(6, typeID);
-                preparedStatement.setInt(7, bikeID);
+                preparedStatement.setDouble(4, power);
+                preparedStatement.setInt(5, typeID);
+                preparedStatement.setInt(6, bikeID);
 
 
                 if (preparedStatement.executeUpdate() != 0) {

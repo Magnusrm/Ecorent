@@ -99,7 +99,9 @@ public class BikeEditController  extends MainMethods implements Initializable {
         int bikeID = Integer.parseInt(bikeIdField.getText());
         String make = makeField.getText();
         double price = Double.parseDouble(priceField.getText());
-        LocalDate localDate = LocalDate.parse(buyDateField.getText());
+        String date = buyDateField.getText().substring(0,4) + "-" + buyDateField.getText().substring(4,6) + "-" +
+                buyDateField.getText().substring(6);
+        LocalDate localDate = LocalDate.parse(date);
         double pwr = Double.parseDouble(powerUsageField.getText());
         Type type = new Type(typeComboBox.getSelectionModel().getSelectedItem());
         Bike editBike = new Bike(localDate, price, make, type, pwr);

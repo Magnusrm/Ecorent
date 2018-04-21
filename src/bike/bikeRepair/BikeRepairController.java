@@ -12,9 +12,10 @@ import model.BikeModel;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class BikeRepairController extends MainMethods implements Initializable {
+public class BikeRepairController extends MainMethods {
 
     @FXML
     private TextArea descReturnedTextArea;
@@ -37,13 +38,6 @@ public class BikeRepairController extends MainMethods implements Initializable {
     @FXML
     private TextField bikeIdSentField;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        LocalDateTime ldt = LocalDateTime.now();
-        String time = ("" + ldt + "").replaceAll("T", " ");
-        time = time.substring(0, time.length() - 4);
-        dateSentField.setText(time);
-    }
 
     @FXML
     void registerRepairSentConfirm(ActionEvent event){
