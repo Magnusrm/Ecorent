@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bike.bikeType.BikeTypeController">
    <children>
@@ -16,11 +15,6 @@
             <Button fx:id="deleteTypeBtn" layoutX="239.0" layoutY="190.0" mnemonicParsing="false" onAction="#deleteType" prefHeight="35.0" prefWidth="167.0" text="Delete Type" />
             <Button fx:id="editTypeNameBtn" layoutX="239.0" layoutY="238.0" mnemonicParsing="false" onAction="#editTypeName" prefHeight="35.0" prefWidth="167.0" text="Edit Type Name" />
             <ListView fx:id="typeListView" layoutX="36.0" layoutY="79.0" prefHeight="248.0" prefWidth="176.0" />
-            <Button fx:id="deleteAllBikesWithoutTypeBtn" layoutX="233.0" layoutY="266.0" mnemonicParsing="false" onAction="#deleteAllBikesWithoutType" prefHeight="27.0" prefWidth="167.0" text="Delete bikes without types" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="12.0" />
-               </font>
-            </Button>
          </children></AnchorPane>
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">
          <children>
