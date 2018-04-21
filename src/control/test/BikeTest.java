@@ -1,4 +1,6 @@
-package control;
+package control.test;
+import control.Bike;
+import control.Type;
 import org.junit.jupiter.api.*;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * Simple Junit test for Bike.java
  */
+
 public class BikeTest {
     private Bike instance;
     private LocalDate date;
@@ -104,4 +107,14 @@ public class BikeTest {
         boolean result = instance.equals(b);
         assertEquals(true,result);
     }//end method
+
+    @Test
+    void testSetDockId(){
+        System.out.println("Testing setDockID-method");
+        Bike b = new Bike(date, price, make, type, pwr);
+        b.setDockId(1);
+        int expResult = 1;
+        int result = b.getDockId();
+        assertEquals(expResult, result);
+    }
 }//end class

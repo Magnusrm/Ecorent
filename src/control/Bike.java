@@ -2,11 +2,17 @@ package control;
 
 import java.time.LocalDate;
 
+/**
+ * Bike.java
+ * @author Team 007
+ *
+ *  Class for Bike objects
+ */
 public class Bike {
     private int bikeId = -1; // this will be updated after the bike is added to the database.
     private final LocalDate buyDate;
     private double price;
-    private int dockId;
+    private int dockId = -1;
     private String make;
     private Type type;
     private double powerUsage;
@@ -18,7 +24,6 @@ public class Bike {
         if (buyDate == null) {throw new IllegalArgumentException("Buy date cannot be null.");}
         if (price < 0) {throw new IllegalArgumentException("Price cannot be negative.");}
         if (make == null) {throw new IllegalArgumentException("Make cannot be null.");}
-        if (type == null) {throw new IllegalArgumentException("Type cannot be null.");}
         if (powerUsage < 0) {throw new IllegalArgumentException("Power usage cannot be negative.");}
         this.buyDate = buyDate;
         this.price = price;
@@ -36,6 +41,7 @@ public class Bike {
     public LocalDate getBuyDate() {
         return buyDate;
     }
+    public int getBattery(){return battery;}
 
     public double getPrice() {
         return price;
@@ -78,7 +84,6 @@ public class Bike {
     }
 
     public void setType(Type type) {
-        if (type == null) {throw new IllegalArgumentException("Type cannot be null.");}
         this.type = type;
     }
     public void setPowerUsage(double powerUsage) {
@@ -93,7 +98,7 @@ public class Bike {
     /**
      * Method to deactivate bike (means it is deleted,
      * still has stats). If param is true then it will deactivate.
-     * @param deactivate
+     * @param deactivate boolean
      */
     public void deactivate(boolean deactivate){active = !deactivate;}
 
@@ -106,14 +111,19 @@ public class Bike {
     /**
      * Method to update the battery percent.
      * Subtracts the battery with the argument.
-     * @param percent
-     * @return int
+     * @param percent percentage of how much the battery is drained
+     * @return int the updated battery percentage
      */
     public int updateBatteryPercent(int percent) {
         battery -= percent;
         return battery;
     }//end method
 
+    /**
+     * Override of the toString()-method to display a bike's info
+     * @return The bike info listed out
+     */
+    @Override
     public String toString() {
         String r = "";
         if (repairing) {
@@ -125,6 +135,11 @@ public class Bike {
                 + "\n Make: " + make + "\n Type: " + type.getName() + "\n Repairing: " + r;
     }
 
+    /**
+     * Override of the equals()-method to compare objects of the class
+     * @param o an object of the class
+     * @return boolean     if the parameters compared are equal
+     */
     @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }

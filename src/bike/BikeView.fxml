@@ -11,15 +11,14 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="435.0">
          <children>
-            <Button fx:id="editBikeBtn" layoutX="225.0" layoutY="184.0" mnemonicParsing="false" onAction="#changeToBikeEditView" prefHeight="35.0" prefWidth="134.0" text="Edit bike" textAlignment="CENTER" />
-            <Button fx:id="infoBikeBtn" layoutX="75.0" layoutY="184.0" mnemonicParsing="false" onAction="#changetoBikeInfoView" prefHeight="35.0" prefWidth="134.0" text="Bike info" textAlignment="CENTER" />
-            <Button fx:id="deleteBikeBtn" layoutX="223.0" layoutY="123.0" mnemonicParsing="false" onAction="#deleteBike" prefHeight="35.0" prefWidth="134.0" text="Delete bike" textAlignment="CENTER" />
-            <Button fx:id="repairBikeBtn" layoutX="225.0" layoutY="239.0" mnemonicParsing="false" onAction="#changeToBikeRepairView" prefHeight="35.0" prefWidth="134.0" text="Repair Bike" textAlignment="CENTER" />
-            <Button fx:id="newBikeBtn" layoutX="75.0" layoutY="123.0" mnemonicParsing="false" onAction="#changeToBikeNewView" prefHeight="35.0" prefWidth="134.0" text="New Bike" textAlignment="CENTER" />
-            <Button fx:id="editBikeTypesBtn" layoutX="75.0" layoutY="239.0" mnemonicParsing="false" onAction="#changeToBikeTypeView" prefHeight="35.0" prefWidth="134.0" stylesheets="@../resources/darkTheme.css" text="Edit Bike Types" textAlignment="CENTER" />
-            <TextField fx:id="bikeIdField" layoutX="224.0" layoutY="85.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
-            <Line endX="80.0" layoutX="279.0" layoutY="112.0" startX="-55.0" stroke="WHITE" />
-            <Button fx:id="deleteAllBikesWithoutTypeBtn" layoutX="40.0" layoutY="357.0" mnemonicParsing="false" onAction="#deleteAllBikesWithoutType" prefHeight="35.0" prefWidth="355.0" style="-fx-background-color: gray;" text="Midlertidig knapp - slett alle sykler med type lik null" textAlignment="CENTER" textFill="WHITE" />
+            <Button fx:id="editBikeBtn" layoutX="60.0" layoutY="241.0" mnemonicParsing="false" onAction="#changeToBikeEditView" prefHeight="35.0" prefWidth="134.0" text="Edit bike" textAlignment="CENTER" />
+            <Button fx:id="infoBikeBtn" layoutX="60.0" layoutY="131.0" mnemonicParsing="false" onAction="#changeToBikeInfoView" prefHeight="35.0" prefWidth="134.0" text="Bike info" textAlignment="CENTER" />
+            <Button fx:id="deleteBikeBtn" layoutX="249.0" layoutY="205.0" mnemonicParsing="false" onAction="#deleteBike" prefHeight="35.0" prefWidth="134.0" text="Delete bike" textAlignment="CENTER" />
+            <Button fx:id="repairBikeBtn" layoutX="60.0" layoutY="296.0" mnemonicParsing="false" onAction="#changeToBikeRepairView" prefHeight="35.0" prefWidth="134.0" text="Repair Bike" textAlignment="CENTER" />
+            <Button fx:id="newBikeBtn" layoutX="60.0" layoutY="76.0" mnemonicParsing="false" onAction="#changeToBikeNewView" prefHeight="35.0" prefWidth="134.0" text="New Bike" textAlignment="CENTER" />
+            <Button fx:id="editBikeTypesBtn" layoutX="60.0" layoutY="186.0" mnemonicParsing="false" onAction="#changeToBikeTypeView" prefHeight="35.0" prefWidth="134.0" stylesheets="@../resources/darkTheme.css" text="Edit Bike Types" textAlignment="CENTER" />
+            <TextField fx:id="bikeIdField" layoutX="249.0" layoutY="167.0" prefHeight="27.0" prefWidth="134.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" />
+            <Line endX="130.0" layoutX="249.0" layoutY="194.0" stroke="WHITE" />
          </children></AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />
       <AnchorPane prefHeight="400.0" prefWidth="170.0" style="-fx-background-color: -fx-mainMenu;">

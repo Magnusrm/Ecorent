@@ -1,10 +1,17 @@
-package model;
+package model.tests;
+import model.DBCleanup;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.*;
 
-
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * This is a test class for the class DBCleanup
+ */
 public class DBCleanupTest {
 
     Connection connection;

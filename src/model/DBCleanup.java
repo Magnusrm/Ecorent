@@ -8,16 +8,20 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-
+/**
+ * DBCleanup.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * A cleanup class to handle the creation and closing of connection.
+ * Also closes ResultSets and PreparedStatements.
+ */
 public class DBCleanup {
 
     /**
-     * @Author Team 007
-     *
      * Uses the property-file to establish connection to the database.
-     * Returns the Connection.
      *
-     * @return Connection
+     * @return connection       the connection to the database.
      */
     public static Connection getConnection(){
 
@@ -42,11 +46,10 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * Closes the ResultSet that is given as parameter.
      *
-     * @param rs
+     * @param rs        the ResultSet that is to be closed.
      */
     public static void closeResultSet(ResultSet rs){
         try{
@@ -59,11 +62,10 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * Closes the PreparedStatement that is given as parameter.
      *
-     * @param st
+     * @param st        the PreparedStatement that is to be closed.
      */
     public static void closeStatement(PreparedStatement st){
         try {
@@ -76,11 +78,10 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * Closes the connection that is given as parameter.
      *
-     * @param con
+     * @param con       the connection that is to be closed.
      */
     public static void closeConnection(Connection con){
         try{
@@ -93,11 +94,10 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * If AutoCommit is turned off, this method turns it back on.
      *
-     * @param con
+     * @param con       the connection where the AutoCommit is set to false.
      */
     public static void setAutoCommit(Connection con){
         try{

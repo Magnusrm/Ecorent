@@ -10,7 +10,7 @@
    <children>
       <Button fx:id="submitSentBtn" layoutX="105.0" layoutY="318.0" mnemonicParsing="false" onAction="#registerRepairSentConfirm" prefWidth="94.0" text="Submit" />
       <TextArea fx:id="descSentTextArea" layoutX="55.0" layoutY="153.0" prefHeight="143.0" prefWidth="196.0" promptText="Description" />
-      <TextField fx:id="dateSentField" alignment="TOP_CENTER" layoutX="69.0" layoutY="103.0" promptText="Date (YYYY-MM-DD)" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
+      <TextField fx:id="dateSentField" alignment="TOP_CENTER" layoutX="69.0" layoutY="103.0" promptText="Date (YYYYMMDD)" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
       <Line endX="100.0" layoutX="137.0" layoutY="130.0" startX="-70.0" stroke="WHITE" styleClass="line" />
       <TextField fx:id="bikeIdSentField" alignment="TOP_CENTER" layoutX="69.0" layoutY="66.0" promptText="Bike ID" style="-fx-background-color: -fx-primary;" stylesheets="@../../resources/darkTheme.css" />
       <Line endX="100.0" layoutX="137.0" layoutY="92.0" startX="-70.0" stroke="WHITE" styleClass="line" />

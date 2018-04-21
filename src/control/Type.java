@@ -1,11 +1,14 @@
-/*
- * Type.java
- * @Team007
- *
- * Class to define different bike types.
- * The type name can be changed
- */
+
  package control;
+
+ /**
+  * Type.java
+  * @author Team 007
+  * @version 1.0
+  *
+  * Class to define different bike types.
+  * The type name can be changed
+  */
 public class Type {
     private String name;
 
@@ -25,6 +28,12 @@ public class Type {
 
     //Equals method.
     //Created to avoid indifference between lower and upper case characters
+
+    /**
+     * Override of the standard equals()-method to indifference upper and lower case letters when comparing Type-objects.
+     * @param b an object of the class
+     * @return boolean if the objects are equal or not
+     */
     @Override
     public boolean equals(Object b) {
         if (b == null) throw new IllegalArgumentException("Error at Type.java, object not created");
@@ -34,6 +43,10 @@ public class Type {
         else return false;
     }//end method
 
+    /**
+     * Override of the standard toString()-method to make it only return the name of the type.
+     * @return String name of the type
+     */
     @Override
     public String toString() {
         return name;

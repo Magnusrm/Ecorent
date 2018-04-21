@@ -5,23 +5,28 @@ import control.Admin;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * AdminModel.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * The class that handles saving, deleting and editing new administrators to the database.
+ */
 public class AdminModel {
 
     /**
-     * @Author Team 007
-     *
      * Checks if an admin is in the database by searching by email.
-     * Returns true/false.
      *
-     * @param  email
-     * @return boolean
+     * @param  email    the email that we want to know if exists.
+     * @return           if that email is already in the database.
      */
     public boolean adminExists(String email){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String emailQuery = "SELECT email FROM admin WHERE email = ?";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -46,28 +51,18 @@ public class AdminModel {
 
 
     /**
-     *@Author Team 007
-     *
      * Returns an admin Object from the database.
-     * Returns null if the method fails.
      *
-     * @param email
-     * @return Object
+     *
+     * @param email         the email that is searched for in the database.
+     * @return              an admin object with that emails corresponding data.
      */
     public Admin getAdmin(String email){
         Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
-        PreparedStatement getHash = null;
-        PreparedStatement getPriviliged = null;
-
-        ResultSet rsHash = null;
-        ResultSet rsPriviliged = null;
-
-        String hashQuery = "SELECT hash FROM admin WHERE email = ?";
-        String priviligedQuery = "SELECT priviliged FROM admin WHERE email = ?";
-
-        Admin admin;
-
+        String adminQuery = "SELECT hash, priviliged FROM admin WHERE email = ?";
         String hash;
         boolean isPriviliged;
 
@@ -75,22 +70,14 @@ public class AdminModel {
             connection = DBCleanup.getConnection();
 
             if(adminExists(email)) {
-                getHash = connection.prepareStatement(hashQuery);
-                getHash.setString(1, email);
-                rsHash = getHash.executeQuery();
-                rsHash.next();
-                hash = rsHash.getString("hash");
-
-                getPriviliged = connection.prepareStatement(priviligedQuery);
-                getPriviliged.setString(1, email);
-                rsPriviliged = getPriviliged.executeQuery();
-                rsPriviliged.next();
-                if(rsPriviliged.getByte("priviliged") == 1){
-                    isPriviliged = true;
-                }else{
-                    isPriviliged = false;
+                preparedStatement = connection.prepareStatement(adminQuery);
+                preparedStatement.setString(1, email);
+                resultSet = preparedStatement.executeQuery();
+                while(resultSet.next()) {
+                    hash = resultSet.getString("hash");
+                    isPriviliged = resultSet.getByte("priviliged") == 1;
+                    return new Admin(email, hash, isPriviliged);
                 }
-                return new Admin(email, hash, isPriviliged);
             }else{
                 System.out.println("Given email does not exist");
                 return null;
@@ -98,28 +85,25 @@ public class AdminModel {
         }catch(SQLException e){
             System.out.println(e.getMessage() + " - getAdmin()");
         }finally{
-            DBCleanup.closeStatement(getHash);
-            DBCleanup.closeStatement(getPriviliged);
-            DBCleanup.closeResultSet(rsHash);
-            DBCleanup.closeResultSet(rsPriviliged);
+            DBCleanup.closeStatement(preparedStatement);
+            DBCleanup.closeResultSet(resultSet);
             DBCleanup.closeConnection(connection);
         }
         return null;
     }
 
     /**
-     * @Author Team 007
-     *
+
      * Adds a new admin to the database.
-     * Returns true/false.
      *
-     * @param email
-     * @param hash
-     * @param priviliged
-     * @return boolean
+     * @param email         the email of the new user.
+     * @param hash          the value of the hashed password.
+     * @param priviliged    if the administrator has priviliged rights.
+     * @return              if the method is successful.
      */
     public boolean addAdmin(String email, String hash, boolean priviliged){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String userInsert = "INSERT INTO admin(email, hash, priviliged) VALUES(?, ?, ?)";
@@ -155,16 +139,14 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Deletes an admin from the database.
-     * Returns true/false.
      *
-     * @param email
-     * @return boolean
+     * @param email         the email of the administrator that is to be deleted from the database.
+     * @return              if the method is successful.
      */
     public boolean deleteAdmin(String email){
         Connection connection = null;
+        ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         String deleteQuery = "DELETE FROM admin WHERE email = ?";
@@ -195,22 +177,19 @@ public class AdminModel {
 
 
     /**
-     *@Author Team 007
-     *
      * Returns the hashed (with salt) value that belongs to a given email.
-     * Returns null if the method fails.
      *
-     * @param email
-     * @return String
+     * @param email         the email address that the hash value belongs to.
+     * @return              the hashed password.
      */
     public String getHash(String email){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String hash;
-
         String hashQuery = "SELECT hash FROM admin WHERE email = ?";
+
         try{
             connection = DBCleanup.getConnection();
 
@@ -233,18 +212,15 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
      * Checks if an admin has the rights to make new admins.
-     * Returns true/false.
      *
-     * @param email
-     * @return boolean
+     * @param email         the email of the admin that is to be checked.
+     * @return              if the admin has priviliged rights.
      */
     public boolean isPriviliged(String email){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         String priviligedQuery = "SELECT priviliged FROM admin WHERE email = ?";
 
@@ -276,20 +252,17 @@ public class AdminModel {
     }
 
     /**
-     * @Author Team 007
-     *
+
      * Returns an ArrayList of all the admins in the database.
-     * Returns null if the method fails.
      *
-     * @return ArrayList
+     * @return              an ArrayList of admin-objects.
      */
     public ArrayList<Admin> getAllAdmins(){
         Connection connection = null;
-        PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
 
         ArrayList<Admin> allAdmins = new ArrayList<Admin>();
-
         String docksQuery = "SELECT email FROM admin";
 
         try{

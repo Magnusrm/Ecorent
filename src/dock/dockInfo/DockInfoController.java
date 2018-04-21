@@ -1,6 +1,8 @@
 package dock.dockInfo;
 
-import changescene.ChangeScene;
+import changescene.MainMethods;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,16 +11,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import control.*;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
 
-public class DockInfoController implements Initializable {
-
-    private Factory factory = new Factory();
-
-    @FXML
-    private Button showInfoBtn;
+/**
+ * DockInfoController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles displaying information about docks and DockInfoView.fxml
+ */
+public class DockInfoController extends MainMethods implements Initializable {
 
     @FXML
     private Label nameLbl;
@@ -32,26 +38,10 @@ public class DockInfoController implements Initializable {
     @FXML
     private ListView<String> bikeIdListView;
 
-    @FXML
-    private Button bikesBtn;
+    private WebEngine engine;
 
     @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
+    private WebView root;
 
 
     //Notice the bikes and docks are converted to String array.
@@ -60,6 +50,10 @@ public class DockInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         try {
             factory.updateSystem();
+
+            engine = root.getEngine();
+            engine.load(this.getClass().getResource("/dock/dockNew/newdockmap.html").toExternalForm());
+            engine.setJavaScriptEnabled(true);
 
             // add dockId's to comboBox
             ObservableList<String> docks = FXCollections.observableArrayList();
@@ -71,13 +65,27 @@ public class DockInfoController implements Initializable {
             dockNameComboBox.setItems(docks);
 
             dockNameComboBox.getSelectionModel().selectFirst();
+            engine.getLoadWorker().stateProperty().addListener(e ->
+            {
+                showInfo();
+            });
+
+            dockNameComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override //Auto filling info
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    showInfo();
+                }//end method
+            });
         }catch (Exception e){e.printStackTrace();}
     }
 
+    /**
+     * This methods fills out the TextFields based on the dock selected in the combobox.
+     */
     @FXML
-    void showInfo(ActionEvent event){
+    void showInfo(){
 
-        // add bikeId's to listview
+        // add dockID's to listview
         ObservableList<String> bikes= FXCollections.observableArrayList();
         int[] visualizedInt = factory.dockedBikes(dockNameComboBox.getValue());
         String[] visualized = new String[visualizedInt.length];
@@ -92,57 +100,13 @@ public class DockInfoController implements Initializable {
 
         // add powerDraw to powerDrawLbl
         powerDrawLbl.setText("" + factory.powerUsage(dockNameComboBox.getValue()));
-
-    }
-
-
-
-
-
-
-    // main buttons below
-
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
+        // show marker on map
+        ArrayList<Dock> docks = factory.getDocks();
+        for (Dock d : docks){
+            if (d.getName().equals(dockNameComboBox.getValue()) ){
+                engine.executeScript("document.createMarker1(" + d.getxCoordinates() + ", " + d.getyCoordinates() + ");");
+            }
+        }
 
     }
 }

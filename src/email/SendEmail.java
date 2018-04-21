@@ -10,7 +10,16 @@ import javax.mail.internet.*;
 
 public class SendEmail {
 
-    public static String sendFromGmail(String to){
+    /**
+     * @author Team 007
+     *
+     * The method generates a password, and sends this password in an email to the new user.
+     *
+     *
+     * @param to            the email address of the recipient of the email.
+     * @return password     the password that is generated, to be hashed and saved in the database.
+     */
+    public static String sendFromGmail(String to) {
         ResourceBundle rb = ResourceBundle.getBundle("resources.DBProp");
 
         PasswordGenerator passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder().useDigits(true).useLower(true).useUpper(true).build();
@@ -18,8 +27,8 @@ public class SendEmail {
 
 
         String subject = "Your randomly generated password";
-        String body = "Your password is " + password + ". Use this alongside your email to rent bikes" +
-                "\n(note: please do not reply to this email)." ;
+        String body = "Your password is " + password + ". Use this alongside your email to log in to the system" +
+                "\n(Note: please do not reply to this email).";
 
         try {
 
@@ -54,13 +63,9 @@ public class SendEmail {
             } catch (AddressException e) {
                 System.out.println(e.getMessage() + " - sendFromGmail()");
             }
-        }  catch (MessagingException e) {
+        } catch (MessagingException e) {
             System.out.println(e.getMessage() + " - sendFromGmail()");
         }
         return null;
-    }
-
-    public static void main(String[] args){
-        sendFromGmail("msandn3s@gmail.com");
     }
 }

@@ -5,7 +5,13 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
+/**
+ * Repair.java
+ * @author Team007
+ * @version 1.0
+ *
+ * Handles everything related to repairs.
+ */
 public class Repair {
     private int repair_id;
     private LocalDate date_sent;
@@ -15,59 +21,34 @@ public class Repair {
     private double price;
     private int bike_id;
 
-    @Override
-    public boolean equals(Object o){
-        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
-        if (!(o instanceof Repair)) {
-            return false;
-        }
+    protected Repair(String dateSent, String beforeDesc, int bikeId){
+            this.repair_id = -1; //use the database to set repairId
 
-        Repair r = (Repair) o;
+            this.date_sent = toDate(dateSent);
+            this.before_desc = beforeDesc;
+            this.date_received = null;
+            this.after_desc = null;
+            this.price = 0;
+            this.bike_id = bikeId;
+    }//end constructor
 
-        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
-                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
-                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
+    protected Repair(String dateReceived, String afterDesc, double price, int bikeId){
+            this.repair_id = -1; //use the database to set repairId
+            this.date_received = toDate(dateReceived);
+            this.after_desc = afterDesc;
+            this.price = price;
+            this.bike_id = bikeId;
+    }//end constructor
 
-    }
-
-    /**
-     * Constructor for repair sent
-     */
-    public Repair(String dateSent, String beforeDesc, int bikeId){
-        this.repair_id = -1; //use the database to set repairId
-
-        this.date_sent = toDate(dateSent);
-        this.before_desc = beforeDesc;
-        this.date_received = null;
-        this.after_desc = null;
-        this.price = 0;
-        this.bike_id = bikeId;
-    }
-
-    /**
-     * Constructor for repair returned
-     */
-    public Repair(String dateReceived, String afterDesc, double price, int bikeId){
-        this.repair_id = -1; //use the database to set repairId
-        this.date_received = toDate(dateReceived);
-        this.after_desc = afterDesc;
-        this.price = price;
-        this.bike_id = bikeId;
-    }
-
-    /**
-     * Constructor for model classes
-     */
-    public Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
-        this.repair_id = -1; //use the database to set repairId
-
-        this.date_sent = toDate(dateSent);
-        this.before_desc = beforeDesc;
-        this.date_received = toDate(dateReceived);
-        this.after_desc = afterDesc;
-        this.price = price;
-        this.bike_id = bikeId;
-    }
+    protected Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
+            this.repair_id = -1; //use the database to set repairId
+            this.date_sent = toDate(dateSent);
+            this.before_desc = beforeDesc;
+            this.date_received = toDate(dateReceived);
+            this.after_desc = afterDesc;
+            this.price = price;
+            this.bike_id = bikeId;
+    }//end constructor
 
 
     public int getRepair_id(){
@@ -126,45 +107,49 @@ public class Repair {
         this.date_received = toDate(dateReceived);
     }
 
+    /**
+     * Formats a date in string format to LocalDate.
+     * @param date This is the String that will get parsed LocalDate.
+     * @return LocalDate This is the formatted date.
+     */
     public LocalDate toDate(String date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate toDate = LocalDate.parse(date, formatter);
-        return toDate;
+        return LocalDate.parse(date, formatter);
     }
 
+
+
+    /**
+     * Override of the standard equals()-method to compare the information about two Repair-objects.
+     * @param o Object.java object.
+     * @return boolean Based on whether the object is equal or not.
+     */
+    @Override
+    public boolean equals(Object o){
+        if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
+        if (!(o instanceof Repair)) {
+            return false;
+        }
+
+        Repair r = (Repair) o;
+
+        return (((Repair) o).getBikeId() == r.getBikeId() && (((Repair) o).getAfterDesc().equals(r.getAfterDesc())
+                && (((Repair)o).getBeforeDesc()).equals(r.getBeforeDesc()) && (((Repair)o).getDateSent()).equals(r.getDateSent())
+                && (((Repair)o).getDateReceived()).equals(r.getDateReceived()) &&(((Repair)o).getPrice()) == r.getPrice()));
+
+    }
+    /**
+     * Override of the standard toString()-method to make it list out the information about a repair
+     * @return String of the repair
+     */
+    @Override
     public String toString(){
-        return "control.Repair ID: " + repair_id
+        return "Repair ID: " + repair_id
                 +"\nBike ID: " + bike_id
                 + "\nDate sent: " + date_sent
                 + "\nDescription before: " + before_desc
                 + "\nDate received: " + date_received
                 + "\nDescrifton after: " + after_desc
                 + "\nPrice: " + price;
-    }
-
-    //Test
-    public static void main(String[] args) throws ParseException {
-        String now = "2018-03-12";
-        Repair test = new Repair(now, "Problems with front wheel", 1);
-        Repair test2 = new Repair("2018-02-22", "Punctured tire", "2018-02-27", "Change tube and rutine check", 30.4, 1);
-        System.out.println("\nOutprint of bike before testing\n");
-        System.out.println(test2);
-        System.out.println("\nTests");
-        if(test2.getPrice() == 30.4){
-            System.out.println("Test 1 successful");
-        }
-        test2.setPrice(45);
-        if(test2.getPrice() == 45){
-            System.out.println("Test 2 successful");
-        }
-        test2.setRepairId(3);
-        test2.setAfterDesc("setTEST");
-        test2.setBeforeDesc("setTEST");
-        test2.setDateSent("2000-01-01");
-        test2.setDateReceived("2001-01-01");
-        test2.setBikeId(5);
-
-        System.out.println("\nOutprint of repair after testing\n");
-        System.out.println(test2);
-    }
-}
+    }//end method
+}//end class

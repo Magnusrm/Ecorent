@@ -1,6 +1,8 @@
-package model;
+package model.tests;
 import control.Bike;
 import control.Dock;
+import model.DBCleanup;
+import model.DockModel;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
@@ -8,6 +10,13 @@ import java.sql.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * This is a test class for the class DockModel
+ */
 public class DockModelTest {
 
     Connection connection;
@@ -15,7 +24,7 @@ public class DockModelTest {
     ResultSet resultSet;
     DockModel instance;
 
-    int DOCKID = 11;
+    int DOCKID = 11; //NB! THIS DOCK ID CANNOT BE IN THE DATABASE FOR THE TESTS TO WORK.
 
 
 
@@ -54,7 +63,6 @@ public class DockModelTest {
         assertFalse(instance.dockNameAvailable(dockName));
     }
 
-    //The expected result has to match the auto-incremented dock_id in the database
     @Test
     public void testAddDock(){
         System.out.println("Testing the method addDock()");
@@ -67,8 +75,6 @@ public class DockModelTest {
         int result = instance.addDock(dockName, xCord, yCord);
         assertEquals(expResult, result);
     }
-
-    //The dockID has to match the auto-incremented dock_id in the database
     @Test
     public void testEditDock(){
         System.out.println("Testing the method editDock()");
@@ -83,6 +89,15 @@ public class DockModelTest {
             Dock result = instance.getDock(dockName);
             assertEquals(expResult, result);
         }
+    }
+
+    @Test
+    public void testGetDockName(){
+        System.out.println("Testing the method getDockName()");
+
+        String expResult = "testdock22";
+        String result = instance.getDockName(DOCKID);
+        assertEquals(expResult, result);
     }
 
     @Test

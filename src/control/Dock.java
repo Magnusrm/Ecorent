@@ -9,6 +9,12 @@
 
 package control;
 
+/**
+ * Dock.java
+ * @author Team 007
+ *
+ * Class for Dock objects
+ */
 public class Dock {
     private int dockID = -1; //This will be fetched from the database
     private String name;
@@ -18,7 +24,6 @@ public class Dock {
 
     public Dock(String name, double x, double y){
         if(name == null)throw new IllegalArgumentException("Your dock must have a name!");
-        if(x<0 || y<0)throw new IllegalArgumentException("Your coordinates can't be negative numbers");
         this.name = name;
         xCoordinates = x;
         yCoordinates = y;
@@ -46,7 +51,11 @@ public class Dock {
     }//end method
 
     //Equals-method.
-    //Created to avoid indifference between lower and upper case characters
+    /**
+     * Override of the standard equals()-method to compare objects of the class. Checks if name and position are the same.
+     * @param o an object of the class
+     * @return boolean     if the parameters compared are equal
+     */
     @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
@@ -58,6 +67,10 @@ public class Dock {
                 ((Dock) o).getyCoordinates() == b.getyCoordinates());
     }
 
+    /**
+     * Override of the standard toString()-method to list a docks information.
+     * @return String outprint of the dock information
+     */
     @Override
     public String toString(){
         return "Dock name: " + name + "\nPower usage at the moment is " + powerUsage +
@@ -66,9 +79,3 @@ public class Dock {
 
 }//end class
 
-
-/* DOCK POSISJONER
-63.42-43
-10.38-40
-
- */

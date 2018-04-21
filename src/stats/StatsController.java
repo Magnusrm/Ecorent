@@ -1,74 +1,39 @@
 package stats;
 
-import changescene.ChangeScene;
+import changescene.MainMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
-public class StatsController {
-// tester commit etter reformatering
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
+/**
+ * StatsController.java
+ * @author Team 077
+ * @version 1.0
+ * This class changes between the views to show the different statistics in the system.
+ */
+public class StatsController extends MainMethods {
 
     @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
+    void changeToBarChartScene(ActionEvent event) throws Exception{
+        newPopup("/stats/statsDock/powerUsageEachDay/PowerUsageEachDayView.fxml", "Power Usage");
     }
 
     @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
+    void changeToPieChartScene(ActionEvent event) throws Exception{
+        newPopup("/stats/statsDock/totalCheckouts/TotalCheckoutsView.fxml", "Checkouts");
     }
 
     @FXML
-    void changeToMapScene(ActionEvent event) {
-        /*ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "");*/
+    void changeToAreaChartScene(ActionEvent event) throws Exception{
+        newPopup("/stats/statsDock/totalPowerUsage/TotalPowerUsageView.fxml", "Power Usage");
     }
 
     @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
+    void changeToEconomyScene(ActionEvent event) throws Exception{
+        changeScene(event, "/stats/statsEconomy/StatsEconomyView.fxml");
     }
 
     @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
+    void changeToBikeStatsScene(ActionEvent event) throws Exception{
+        changeScene(event, "/stats/statsBike/StatsBikeView.fxml");
     }
 }

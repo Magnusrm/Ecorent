@@ -1,6 +1,8 @@
-package model;
+package model.tests;
 import control.Bike;
 import control.Type;
+import model.BikeModel;
+import model.DBCleanup;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
@@ -10,13 +12,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * @author Team 007
+ *
+ * @version 1.0
+ *
+ * This is a test class for the class BikeModel
+ */
 public class BikeModelTest {
 
     Connection connection;
     PreparedStatement preparedStatement;
     ResultSet resultSet;
     BikeModel instance;
-    private final int BIKEID = 68;
+    private final int BIKEID = 68; //NB! THIS BIKE ID CANNOT BE REGISTERED IN THE DB FOR THE TESTS TO WORK
 
     @Override
     public boolean equals(Object o){
@@ -47,6 +56,13 @@ public class BikeModelTest {
     }
 
     @Test
+    public void testBikeExists(){
+        System.out.println("Testing the method bikeExists()");
+
+        assertTrue(instance.bikeExists(54));
+    }
+
+    @Test
     public void testAddBike(){
         System.out.println("Testing the method addBike()");
 
@@ -57,7 +73,7 @@ public class BikeModelTest {
         double pwrUsg = 0.36;
         boolean repairing = false;
 
-        int expResult = BIKEID; //Must be changed according to the self-incrementing bike_id in the DB
+        int expResult = BIKEID;
         int result = instance.addBike(date, price, make, typeName, pwrUsg, repairing);
 
         assertEquals(expResult, result);
@@ -90,9 +106,8 @@ public class BikeModelTest {
         String typeName = "Landevei";
         Type type = new Type(typeName);
         double pwrUsg = 0.36;
-        int dockID = 1;
 
-        instance.editBike(BIKEID, date, price, make, dockID, pwrUsg, typeName);
+        instance.editBike(BIKEID, date, price, make, pwrUsg, typeName);
 
         Bike expResult = new Bike(regDate, price, make, type, pwrUsg);
         expResult.setBikeId(BIKEID);
@@ -108,6 +123,14 @@ public class BikeModelTest {
 
         assertTrue(instance.isRepairing(BIKEID));
     }
+
+    @Test
+    public void testIsRepairing() {
+        System.out.println("Testing the method isRepairing()");
+
+        assertTrue(instance.isRepairing(BIKEID));
+    }
+
 
 
     @Test

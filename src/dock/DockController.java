@@ -1,8 +1,6 @@
 package dock;
 
-import changescene.ChangeScene;
-import control.Factory;
-import control.Type;
+import changescene.MainMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,52 +13,17 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class DockController implements Initializable {
-
-    private Factory factory = new Factory();
+/**
+ * DockController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles deleting docks and navigating between DockNewView.fxml, DockInfoView.fxml, and DockEditView.fxml
+ */
+public class DockController extends MainMethods implements Initializable {
 
     @FXML
     private ComboBox<String> dockNameComboBox;
-
-    @FXML
-    private Button editDockBtn;
-
-    @FXML
-    private Button dockInfoBtn;
-
-    @FXML
-    private Button deleteDockBtn;
-
-    @FXML
-    private Button newDockBtn;
-
-    @FXML
-    private TextField dockIdField;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button deleteDockConfirmBtn;
-
 
     //Notice the docks are converted to String array.
     //This is to simplify the clicking and fetching process.
@@ -81,90 +44,32 @@ public class DockController implements Initializable {
 
     @FXML
     void changeToNewDockView(ActionEvent event) throws Exception{
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockNew/DockNewView.fxml");
+        changeScene(event, "/dock/dockNew/DockNewView.fxml");
     }
 
     @FXML
     void changeToDockEditView(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockEdit/DockEditView.fxml");
+        changeScene(event, "/dock/dockEdit/DockEditView.fxml");
     }
 
     @FXML
     void changeToDockInfoView(ActionEvent event) throws Exception {
-       ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/dockInfo/DockInfoView.fxml");
+       changeScene(event, "/dock/dockInfo/DockInfoView.fxml");
     }
 
+
+    /**
+     * Deletes a dock based on the dock selected in the dock combobox.
+     * @param event Buttonclick
+     * @throws Exception If there is something wrong with database connection, selected dock or DockView.fxml
+     */
     @FXML
     void deleteDock(ActionEvent event) throws Exception{
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete dock");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you would like to delete the selected dock?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        boolean confirmation = newConfirmationAlert("Delete dock", "Are you sure you would like to delete the selected dock?");
+        if (confirmation){
             DockModel dm = new DockModel();
             dm.deleteDock(dockNameComboBox.getValue());
-            ChangeScene cs = new ChangeScene();
-            cs.setScene(event, "/dock/DockView.fxml");
+            changeScene(event,"/dock/DockView.fxml");
         }
-    }
-
-
-
-
-
-
-
-
-
-    // main buttons below
-
-    @FXML
-    void changeToBikeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/bike/BikeView.fxml");
-    }
-
-    @FXML
-    void changeToDockScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/dock/DockView.fxml");
-    }
-
-    @FXML
-    void changeToMapScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/map/MapView.fxml");
-    }
-
-    @FXML
-    void changeToStatsScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/stats/StatsView.fxml");
-    }
-
-    @FXML
-    void changeToAdminScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/admin/AdminView.fxml");
-    }
-
-    @FXML
-    void changeToHomeScene(ActionEvent event) throws Exception {
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/main/MainView.fxml");
-    }
-
-    @FXML
-    void logOut(ActionEvent event) throws Exception {
-
-        ChangeScene cs = new ChangeScene();
-        cs.setScene(event, "/login/LoginView.fxml");
-
     }
 }
