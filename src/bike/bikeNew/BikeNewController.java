@@ -15,7 +15,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-
+/**
+ * BikeNewController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles displaying the window for registering new bike using BikeNewView.fxml.
+ */
 public class BikeNewController extends MainMethods implements Initializable{
 
     @FXML
@@ -60,10 +66,8 @@ public class BikeNewController extends MainMethods implements Initializable{
 
 
     /**
-     *
      * Creates a new bike based on the information given in the TextFields.
-     *
-     * @param event is an object of ActionEvent.java
+     * @param event     on button click.
      */
 
     @FXML

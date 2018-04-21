@@ -113,7 +113,7 @@ public class DockEditController  extends MainMethods implements Initializable {
     }//end method
 
     /**
-     * Sets the console.log() method in javascript to execute the method JavaBridge.log()
+     * Sets the console.log() method in javascript to execute the method JavaBridge.log().
      * We found this has to be set anew after we zoom or move the map.
      */
     public void setJavaBridge(){

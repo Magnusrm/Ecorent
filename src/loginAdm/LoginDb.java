@@ -8,18 +8,18 @@ import java.sql.*;
 
 import static control.Password.*;
 /**
- * Class which is used to authenticate an user trying to login.
- *
+ * LoginDb.java
  * @author Team 007
+ * @version 1.0
+ * Class which is used to authenticate an user trying to login.
  */
 public class LoginDb {
 
     /**
      * Checks if the login credentials are identical to the ones stored in the database. Checks if an users email and password correspond.
      *
-     * @param loginBean
-     * @return true     if the user credentials are correct
-     * @return false    if the user credentials are incorrect
+     * @param loginBean login credentials
+     * @return     if the user credentials are correct
      */
     public static boolean authenticateUser(LoginBean loginBean) {
         Connection connection = null;

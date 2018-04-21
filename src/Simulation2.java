@@ -158,7 +158,7 @@ public class Simulation2 implements Runnable{
 
     /**
      * looks for a random dock
-     * @return A random dock from the database
+     * @return A random Dock from the database
      */
     public static Dock randomDock(){
         factory.updateSystem();
@@ -169,7 +169,7 @@ public class Simulation2 implements Runnable{
 
     /**
      * Gets the current date and time and parses it.
-     * @returnThe current date and time parsed to suit the input format of the database.
+     * @return String The current date and time parsed to suit the input format of the database.
      */
     public static String getNow() {
         String time;
@@ -186,7 +186,7 @@ public class Simulation2 implements Runnable{
      * @param lon1 y coordinate 1
      * @param lat2 x coordinate 2
      * @param lon2 y coordinate 2
-     * @return distance between position 1 and 2 in meters.
+     * @return Double distance between position 1 and 2 in meters.
      */
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;

@@ -47,7 +47,6 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * Closes the ResultSet that is given as parameter.
      *
@@ -64,7 +63,6 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * Closes the PreparedStatement that is given as parameter.
      *
@@ -81,7 +79,6 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * Closes the connection that is given as parameter.
      *
@@ -98,7 +95,6 @@ public class DBCleanup {
     }
 
     /**
-     * @Author Team 007
      *
      * If AutoCommit is turned off, this method turns it back on.
      *

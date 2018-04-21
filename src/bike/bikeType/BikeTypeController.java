@@ -15,6 +15,13 @@ import control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * BikeTypeController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles adding, deleting and editing bike types.
+ */
 public class BikeTypeController extends MainMethods implements Initializable {
 
     @FXML
@@ -41,10 +48,10 @@ public class BikeTypeController extends MainMethods implements Initializable {
     }
 
     /**
-     * @param event
-     * @throws Exception
-     * @Author Team 007
      * Gives the client an option to either accept or decline the deletion of the selected type.
+     *
+     * @param event button click
+     * @throws Exception if updating the list doesn't work.
      */
     @FXML
     void deleteType(ActionEvent event) throws Exception {
@@ -82,8 +89,10 @@ public class BikeTypeController extends MainMethods implements Initializable {
 
 
     /**
-     * @param event
+     *
      * Gives the client a textfield and created a new type based on the input.
+     *
+     * @param event button click
      */
     @FXML
     void newType(ActionEvent event) {
@@ -110,8 +119,8 @@ public class BikeTypeController extends MainMethods implements Initializable {
      * Gives the client an option to enter a new type name.
      * Confirming will change the type based on the clients input.
      *
-     * @param event
-     * @throws Exception
+     * @param event button click
+     * @throws Exception if saveChanges or updateList methods fail
      */
     @FXML
     void editTypeName(ActionEvent event) throws Exception {
@@ -146,8 +155,8 @@ public class BikeTypeController extends MainMethods implements Initializable {
      * Saves changes.
      * This method gets called each time
      *
-     * @param event
-     * @throws Exception
+     * @param event button click
+     * @throws Exception if adding the type fails
      */
     @FXML
     void saveChanges(ActionEvent event){
