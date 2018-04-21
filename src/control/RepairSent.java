@@ -1,3 +1,5 @@
+package control;
+
 /**
  * RepairSent.java
  * @author Team007
@@ -8,9 +10,6 @@
  * each other.
  * Has it own versions of equals- and toString-method.
  */
-
-package control;
-
 public class RepairSent extends Repair{
     public RepairSent(String dateSent, String beforeDesc, int bikeId){
         super(dateSent,beforeDesc,bikeId);

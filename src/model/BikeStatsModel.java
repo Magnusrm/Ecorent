@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.Properties;
 
 /**
+ * BikeStatsModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving and retrieving statistics about a bike.

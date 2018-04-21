@@ -16,7 +16,7 @@ import static java.lang.Thread.sleep;
 
 /**
  * MapController.java
- * @author Team007
+ * @author Team 007
  *
  * This is a controller for our map.
  * It visualizes the docks and bikes on the created map.

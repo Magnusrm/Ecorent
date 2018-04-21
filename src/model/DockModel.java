@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
+ * DockModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving, deleting and editing of docks to the database.

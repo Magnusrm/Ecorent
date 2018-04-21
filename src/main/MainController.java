@@ -10,7 +10,7 @@ import changescene.MainMethods;
 
 /**
  * MainController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * Displays welcome message and navigating between the main views.

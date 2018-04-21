@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.zip.CheckedOutputStream;
 
 /**
+ * BikeModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving, deleting and editing new bikes to the database.

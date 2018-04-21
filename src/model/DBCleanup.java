@@ -9,8 +9,8 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
+ * DBCleanup.java
  * @author Team 007
- *
  * @version 1.0
  *
  * A cleanup class to handle the creation and closing of connection.

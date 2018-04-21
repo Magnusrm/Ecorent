@@ -1,3 +1,5 @@
+package control;
+
 /**
  * RepairReturned.java
  * @author Team007
@@ -7,9 +9,6 @@
  * each other.
  * This is a class for completed/returned repairs.
  */
-
-package control;
-
 public class RepairReturned extends Repair{
     public RepairReturned(String dateSent, String beforeDesc, String dateReceived,
                   String afterDesc, double price, int bikeId){
