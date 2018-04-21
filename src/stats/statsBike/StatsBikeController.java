@@ -10,6 +10,13 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * StatsBikeController.java
+ * @author Team007
+ * @version 1.0
+ *
+ * This class handles stats about bike.
+ */
 public class StatsBikeController extends MainMethods implements Initializable {
 
     @FXML

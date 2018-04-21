@@ -37,8 +37,8 @@ public class LoginController extends MainMethods {
      * Handles logging in based on the information given in the usernameField passwordField.
      * Authenticates user by using LoginBean.
      *
-     * @param event
-     * @throws Exception
+     * @param event Buttonclick
+     * @throws Exception Throws exception if there is something wrong with loginbean, database connection or MainView.fxml
      */
     @FXML
     void signIn(ActionEvent event) throws Exception {
