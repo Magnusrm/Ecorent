@@ -17,46 +17,7 @@ public class BikeController {
     Factory factory = new Factory();
 
     @FXML
-    private Button editBikeBtn;
-
-    @FXML
-    private Button infoBikeBtn;
-
-    @FXML
-    private Button homeBtn;
-
-    @FXML
-    private Button deleteBikeBtn;
-
-    @FXML
-    private Button repairBikeBtn;
-
-    @FXML
-    private Button newBikeBtn;
-
-    @FXML
-    private Button editBikeTypesBtn;
-
-    @FXML
     private TextField bikeIdField;
-
-    @FXML
-    private Button bikesBtn;
-
-    @FXML
-    private Button docksBtn;
-
-    @FXML
-    private Button mapBtn;
-
-    @FXML
-    private Button statsBtn;
-
-    @FXML
-    private Button logoutBtn;
-
-    @FXML
-    private Button adminBtn;
 
     @FXML
     void changeToBikeEditView(ActionEvent event) throws Exception {
@@ -83,7 +44,7 @@ public class BikeController {
     }
 
     @FXML
-    void changetoBikeInfoView(ActionEvent event) throws Exception {
+    void changetToBikeInfoView(ActionEvent event) throws Exception {
         ChangeScene cs = new ChangeScene();
         cs.setScene(event, "/bike/bikeInfo/BikeInfoView.fxml");
     }

@@ -34,14 +34,6 @@ public class MapController implements Initializable{
     private BikeStatsModel bsm= new BikeStatsModel();
     private ArrayList<Dock> allDocks;
 
-
-
-    @FXML
-    private Button showBikeBtn;
-
-    @FXML
-    private TextField bikeIdField;
-
     @FXML
     private WebView root;
 

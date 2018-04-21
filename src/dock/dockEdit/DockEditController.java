@@ -25,8 +25,6 @@ import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 public class DockEditController implements Initializable {
     private Factory factory = new Factory();
-    @FXML
-    private ComboBox<String> bikeIdComboBox;
 
     @FXML
     private TextField dockNameField;
