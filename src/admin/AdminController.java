@@ -4,13 +4,17 @@ import changescene.MainMethods;
 import email.SendEmail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import control.*;
 import loginAdm.CurrentAdmin;
 import model.AdminModel;
 
-public class AdminController extends MainMethods {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AdminController extends MainMethods implements Initializable {
 
     AdminModel model = new AdminModel();
 
@@ -32,7 +36,10 @@ public class AdminController extends MainMethods {
     @FXML
     private TextField oldPasswordField;
 
-
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("wow");
+    }
 
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {
