@@ -106,7 +106,7 @@ public class DockEditController implements Initializable {
             }//end method
         });
 
-    }
+    }//end method
 
     public void setJavaBridge(){
         JSObject window = (JSObject) engine.executeScript("window");
