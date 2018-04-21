@@ -6,8 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
+ * AdminModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving, deleting and editing new administrators to the database.

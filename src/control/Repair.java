@@ -5,7 +5,13 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
+/**
+ * Repair.java
+ * @author Team007
+ * @version 1.0
+ *
+ * Handles everything related to repairs.
+ */
 public class Repair {
     private int repair_id;
     private LocalDate date_sent;
@@ -110,6 +116,11 @@ public class Repair {
         this.date_received = toDate(dateReceived);
     }
 
+    /**
+     * Formats a date in string format to LocalDate.
+     * @param date This is the String that will get parsed LocalDate.
+     * @return LocalDate This is the formatted date.
+     */
     public LocalDate toDate(String date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(date, formatter);
@@ -120,9 +131,8 @@ public class Repair {
     /**
      * Override of the standard equals()-method to compare the information about two Repair-objects.
      * @param o Object.java object.
-     * @return boolean
+     * @return boolean Based on whether the object is equal or not.
      */
-
     @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }

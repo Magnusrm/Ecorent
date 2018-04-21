@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 /**
  * PowerUsageEachDayController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * This class handles informaiton about the docks power usage each day.

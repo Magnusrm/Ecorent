@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * DockStatsModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving and retrieving statistics about the docking stations

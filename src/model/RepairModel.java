@@ -8,8 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
+ * RepairModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving and retrieving repairs to the database.

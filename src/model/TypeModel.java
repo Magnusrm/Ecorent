@@ -6,8 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
+ * TypeModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving, deleting and editing types to the database.

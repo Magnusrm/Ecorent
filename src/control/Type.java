@@ -1,11 +1,13 @@
-/**
- * Type.java
- * @author Team007
- *
- * Class to define different bike types.
- * The type name can be changed
- */
+
  package control;
+
+ /**
+  * Type.java
+  * @author Team007
+  *
+  * Class to define different bike types.
+  * The type name can be changed
+  */
 public class Type {
     private String name;
 

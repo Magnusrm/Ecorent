@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 
 /**
  * TotalCheckoutsController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * This class handles showing information about all checkouts of each dock ever.
