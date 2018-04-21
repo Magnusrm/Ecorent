@@ -310,7 +310,8 @@ public class Factory {
                 String make = newBike.getMake();
                 double pwrUsage = newBike.getPowerUsage();
                 String typeName = newBike.getType().getName();
-                return bikeModel.editBike(bikeId,regDate,price,make,dockID,pwrUsage,typeName);
+
+                return bikeModel.editBike(bikeId,regDate,price,make,pwrUsage,typeName);
             }//end if
         }//end loop
         if(newBike.getBikeId() == -1)throw new IllegalArgumentException("The bike ID given does not exist");
@@ -443,8 +444,6 @@ public class Factory {
                        sum -= b.getPowerUsage();
                }
 
-            } else{
-                sum += 0;
             }
         }
         return sum;
