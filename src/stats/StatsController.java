@@ -4,6 +4,12 @@ import changescene.MainMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+/**
+ * StatsController.java
+ * @author Team 077
+ * @version 1.0
+ * This class changes between the views to show the different statistics in the system.
+ */
 public class StatsController extends MainMethods {
 
     @FXML
