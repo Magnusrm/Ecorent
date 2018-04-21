@@ -378,8 +378,8 @@ public class Factory {
         for (int i = 0; i < types.size(); i++) {
             if (types.get(i).equals(type)){
                 types.remove(i);
-                boolean result = deleteAllBikesWithNoType(); //Bikes with no types cannot exist
                 boolean result1 =  typeModel.deleteType(type.getName());
+                boolean result = deleteAllBikesWithoutType(); //Bikes with no types cannot exist
                 return result&&result1;
             }//end if
         }//end loop
@@ -394,10 +394,8 @@ public class Factory {
      * all bikes with no types.
      * @return true if operation is successful
      */
-    public boolean deleteAllBikesWithNoType(){
-        for(int i = 0; i<bikes.size();i++){
-            if(bikes.get(i).getType() == null)bikes.remove(i);
-        }
+    public boolean deleteAllBikesWithoutType(){
+
         return bikeModel.deleteBikesWhereTypeIsNULL();
     }//end
 
@@ -438,12 +436,13 @@ public class Factory {
         int[] docked = dockedBikes(dockName);
         double sum = dockModel.getPowerAtDock(dockName);
         for(int i = 0; i < docked.length; i++){
-           int id = docked[i];
-           if(bikeStatsModel.getChargLvl(id-1) == 100){
-               sum -= bikes.get(id).getPowerUsage();
+            int id = docked[i];
+            if(bikeStatsModel.getChargLvl(id) == 100){
+
+                sum -= bikes.get(id-1).getPowerUsage();
             } else{
-               sum += 0;
-           }
+                sum += 0;
+            }
         }
         return sum;
     }//end method
