@@ -56,7 +56,6 @@ public class StatsEconomyController implements Initializable {
        expensesTableView.setItems(getExpenses());
        netIncomeLbl.setText("" + Math.round(factory.getNetIncome() * 100.0) / 100.0);
 
-
     }
 
     /**

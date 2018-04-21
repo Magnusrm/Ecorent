@@ -4,6 +4,8 @@ import changescene.ChangeScene;
 import control.Dock;
 import control.Factory;
 import dock.dockNew.DockNewController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,6 +88,16 @@ public class DockEditController implements Initializable {
 
             dockNameComboBox.getSelectionModel().selectFirst();
         }catch (Exception e){e.printStackTrace();}
+
+
+        dockNameComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("nice: " + oldValue + ", " + newValue + " bror");
+                alert.showAndWait();
+            }//end method
+        });
 
     }
 
