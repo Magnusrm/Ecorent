@@ -15,18 +15,17 @@
    <children>
       <AnchorPane layoutX="178.0" layoutY="-5.0" prefHeight="406.0" prefWidth="535.0">
          <children>
-            <Button fx:id="showInfoBtn" layoutX="293.0" layoutY="27.0" mnemonicParsing="false" onAction="#showInfo" prefHeight="27.0" prefWidth="136.0" text="Show info" textAlignment="CENTER" />
             <Label alignment="CENTER" layoutX="35.0" layoutY="135.0" prefHeight="21.0" prefWidth="158.0" text="Power draw" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="32.0" layoutY="89.0" prefHeight="21.0" prefWidth="158.0" text="Name" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
+            <Label alignment="CENTER" layoutX="35.0" layoutY="74.0" prefHeight="21.0" prefWidth="158.0" text="Name" textFill="#e4e4e4" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <Label fx:id="nameLbl" alignment="CENTER" layoutX="32.0" layoutY="111.0" prefHeight="21.0" prefWidth="158.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+            <Label fx:id="nameLbl" alignment="CENTER" layoutX="35.0" layoutY="96.0" prefHeight="21.0" prefWidth="158.0" text="data" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
                <font>
                   <Font name="Times New Roman" size="19.0" />
                </font>
@@ -36,14 +35,14 @@
                   <Font name="Times New Roman" size="19.0" />
                </font>
             </Label>
-            <ComboBox fx:id="dockNameComboBox" layoutX="138.0" layoutY="27.0" prefHeight="27.0" prefWidth="136.0" />
+            <ComboBox fx:id="dockNameComboBox" layoutX="26.0" layoutY="24.0" prefHeight="27.0" prefWidth="176.0" />
             <ListView fx:id="bikeIdListView" layoutX="55.0" layoutY="226.0" prefHeight="152.0" prefWidth="119.0" />
             <Label layoutX="35.0" layoutY="200.0" text="Bikes currently docked" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="17.0" />
                </font>
             </Label>
-            <WebView fx:id="root" layoutX="229.0" layoutY="84.0" prefHeight="295.0" prefWidth="282.0" />
+            <WebView fx:id="root" layoutX="229.0" layoutY="24.0" prefHeight="355.0" prefWidth="282.0" />
          </children>
       </AnchorPane>
       <Line endX="80.0" layoutX="95.0" layoutY="149.0" scaleY="2.0" startX="-100.0" stroke="#34474e" style="-fx-fill: -fx-secondary;" styleClass="line" />

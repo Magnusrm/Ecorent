@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.web.WebEngine;
 import javafx.stage.Stage;
@@ -30,7 +31,12 @@ public class MainMethods {
     public WebEngine engine = new WebEngine();
     public BikeStatsModel bsm = new BikeStatsModel();
     public DockStatsModel dsm = new DockStatsModel();
-    public DockStatsModel dockStatsModel = new DockStatsModel();
+    public Button bikesBtn;
+    public Button docksBtn;
+    public Button mapBtn;
+    public Button statsBtn;
+    public Button adminBtn;
+    public Button logoutBtn;
 
     public void newInfoAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -88,12 +94,15 @@ public class MainMethods {
         Parent parent = FXMLLoader.load(getClass().getResource(fxmlname));
         Scene scene = new Scene(parent);
 
-        // hent stage info
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         window.setScene(scene);
         window.show();
     }
+
+
+
+
 
 
     // main buttons

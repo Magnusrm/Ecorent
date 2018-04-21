@@ -130,7 +130,12 @@ public class DockEditController  extends MainMethods implements Initializable {
         engine.executeScript("document.zoomOut();");
     }
 
-
+    /**
+     * Saves the changes done in the docks textfields
+     * @param event
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @FXML
     void saveChanges(ActionEvent event) throws SQLException,ClassNotFoundException{
         String dockName = dockNameComboBox.getValue();
