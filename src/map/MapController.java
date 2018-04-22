@@ -99,6 +99,7 @@ public class MapController extends MainMethods implements Initializable{
             engine.executeScript("document.createBikeMarker(" + bikeXPos + ", " + bikeYPos + ");");
         }
         engine.executeScript("document.setMapOnAllBikes(document.map);");
+        showDocks();
 
     }
 
