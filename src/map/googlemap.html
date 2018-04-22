@@ -76,7 +76,8 @@
                     position: latlngMarker,
                     map: document.map,
                     draggable: false,
-                    title: id,
+                    title: id.toString(),
+                    label : id.toString(),
                     visible: true
                 });
                 dockMarkers.push(document.marker);

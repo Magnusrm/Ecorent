@@ -14,7 +14,7 @@ import model.AdminModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminController extends MainMethods implements Initializable {
+public class AdminController extends MainMethods {
 
     AdminModel model = new AdminModel();
 
@@ -35,11 +35,6 @@ public class AdminController extends MainMethods implements Initializable {
 
     @FXML
     private TextField oldPasswordField;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("wow");
-    }
 
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {

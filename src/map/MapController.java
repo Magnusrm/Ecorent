@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.web.WebView;
 import model.BikeStatsModel;
+import model.DockModel;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -62,7 +63,20 @@ public class MapController extends MainMethods implements Initializable{
      */
     public void showDocks() {
         allDocks = factory.getDocks();
-        String dockData = arrayToString(dockToArray());
+        DockModel dm = new DockModel();
+        int dockId;
+        double[][] dockDataNrOfBikes = dockToArray();
+        for (int i = 0; i < dockDataNrOfBikes.length; i++){
+            dockId = (int)dockDataNrOfBikes[i][0];
+            for (Dock d : allDocks){
+                if (dockId == d.getDockID()){
+                    dockDataNrOfBikes[i][0] = dm.bikesAtDock(d.getName()).size();
+                }
+            }
+
+        }
+        String dockData = arrayToString(dockDataNrOfBikes);
+
         engine.executeScript("var items = " + dockData + ";" +
                 "document.setDockMarkers(items);");
     }
