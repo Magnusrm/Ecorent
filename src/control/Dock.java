@@ -10,6 +10,9 @@
 package control;
 
 /**
+ * Dock.java
+ * @author Team 007
+ *
  * Class for Dock objects
  */
 public class Dock {
@@ -50,10 +53,8 @@ public class Dock {
     //Equals-method.
     /**
      * Override of the standard equals()-method to compare objects of the class. Checks if name and position are the same.
-     * @param o
-     * @return true     if the parameters compared are equal
-     * @return false    if the parameters compared are not equal
-     * @author Team 007
+     * @param o an object of the class
+     * @return boolean     if the parameters compared are equal
      */
     @Override
     public boolean equals(Object o){
@@ -69,7 +70,6 @@ public class Dock {
     /**
      * Override of the standard toString()-method to list a docks information.
      * @return String outprint of the dock information
-     * @author Team 007
      */
     @Override
     public String toString(){

@@ -17,7 +17,7 @@ import model.AdminModel;
 
 /**
  * LoginController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * This class handles logging in as an admin, authenticating password

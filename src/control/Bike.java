@@ -3,9 +3,10 @@ package control;
 import java.time.LocalDate;
 
 /**
- * Class for Bike objects
- *
+ * Bike.java
  * @author Team 007
+ *
+ *  Class for Bike objects
  */
 public class Bike {
     private int bikeId = -1; // this will be updated after the bike is added to the database.
@@ -97,7 +98,7 @@ public class Bike {
     /**
      * Method to deactivate bike (means it is deleted,
      * still has stats). If param is true then it will deactivate.
-     * @param deactivate
+     * @param deactivate boolean
      */
     public void deactivate(boolean deactivate){active = !deactivate;}
 
@@ -110,8 +111,8 @@ public class Bike {
     /**
      * Method to update the battery percent.
      * Subtracts the battery with the argument.
-     * @param percent
-     * @return int
+     * @param percent percentage of how much the battery is drained
+     * @return int the updated battery percentage
      */
     public int updateBatteryPercent(int percent) {
         battery -= percent;
@@ -136,9 +137,8 @@ public class Bike {
 
     /**
      * Override of the equals()-method to compare objects of the class
-     * @param o
-     * @return true     if the parameters compared are equal
-     * @return false    if the parameters compared are not equal
+     * @param o an object of the class
+     * @return boolean     if the parameters compared are equal
      */
     @Override
     public boolean equals(Object o){

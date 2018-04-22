@@ -328,8 +328,8 @@ public class Factory {
      * @param dockName is an object of String.java
      * @param d is an object of Dock.java
      * @return boolean true if operation is successful.
-     * @throws SQLException
-     * @throws ClassNotFoundException
+     * @throws SQLException if error with database
+     * @throws ClassNotFoundException if the class is not found
      */
     public boolean editDocks(String dockName, Dock d)throws SQLException,ClassNotFoundException{
         if(dockName == null)throw new IllegalArgumentException("Dock Id cannot be negative or zero");
@@ -470,7 +470,7 @@ public class Factory {
 
     /**
      * Returns the dock name for a given dockID.
-     * @param dockID
+     * @param dockID ID of the dock you want the name of
      * @return dock name for a given dockID.
      */
     public String getDockName(int dockID){
@@ -597,15 +597,5 @@ public class Factory {
         }//end loop
         return numberOfTypes;
     }//end method
-
-    public static void main(String[] args){
-        Factory f = new Factory();
-        f.updateSystem();
-        for(int i = 0; i<f.getTypes().size();i++){
-            for(int j = 0; j<2; j++){
-                System.out.println(f.getTypePopularity()[i][j]);
-            }
-        }
-    }
 
 }//end class

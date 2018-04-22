@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.zip.CheckedOutputStream;
 
 /**
+ * BikeModel.java
  * @author Team 007
- *
  * @version 1.0
  *
  * The class that handles saving, deleting and editing new bikes to the database.
@@ -159,7 +159,6 @@ public class BikeModel {
      * @param regDate       the edited reg_date.
      * @param price         the edited price.
      * @param make          the edited make.
-     * @param dockID        the edited dock_id.
      * @param power        the edited price.
      * @param typeName      the edited type.name. This uses the method typeExists to return the correct type_id.
      * @return               if the edited changes has been saved.

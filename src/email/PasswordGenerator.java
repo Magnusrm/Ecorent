@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * @author StackOverflow user George Siggouroglou
+ * @author Team 007
  *
- * @version 1.0
+ * @version 1.1
  *
- * The class that generates a random password.
+ * The class that generates a random password. This class is mainly written after StackOverflow user George Siggouroglou's code.
  */
 public final class PasswordGenerator {
 
@@ -99,9 +99,6 @@ public final class PasswordGenerator {
             return this;
         }
 
-        /**
-         * Get an object to use.
-         */
         public PasswordGenerator build() {
             return new PasswordGenerator(this);
         }

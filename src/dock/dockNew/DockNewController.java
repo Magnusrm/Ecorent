@@ -20,7 +20,7 @@ import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
 
 /**
  * DockNewController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * This class handles creating new docks and DockNewView.fxml

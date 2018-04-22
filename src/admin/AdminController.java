@@ -14,6 +14,14 @@ import model.AdminModel;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * AdminController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles displaying information, canging password, deleting admins and creating new admins by using
+ * AdminChangePasswordView.fxml, AdminDeleteAdminView.fxml, AdminNewAdminView.fxml and AdminView.fxml.
+ */
 public class AdminController extends MainMethods {
 
     AdminModel model = new AdminModel();
@@ -36,32 +44,41 @@ public class AdminController extends MainMethods {
     @FXML
     private TextField oldPasswordField;
 
+    /**
+     * Opens the popup window for creating a new admin.
+     * @param event         on button click.
+     * @throws Exception    if wrong file name.
+     */
     @FXML
     void createNewAdmin(ActionEvent event) throws Exception {
         newPopup("/admin/AdminNewAdminView.fxml" ,"Create New Admin");
     }
 
+    /**
+     * Opens the popup window for deleting an existing admin.
+     * @param event         on button click.
+     */
     @FXML
-    void deleteAdmin(ActionEvent event) throws Exception {
+    void deleteAdmin(ActionEvent event){
         newPopup("/admin/AdminDeleteAdminView.fxml", "Delete Admin");
 
     }
 
+    /**
+     * Opens the popup window for changing password.
+     * @param event         on button click.
+     */
     @FXML
-    void changePassword(ActionEvent event) throws Exception {
+    void changePassword(ActionEvent event) {
         newPopup("/admin/AdminChangePasswordView.fxml", "Change Password");
     }
 
     /**
-     * @Author Team 007
-     *
      * Confirms the creation of a new admin.
-     *
-     * @param event
-     * @throws Exception
+     * @param event         on button click.
      */
     @FXML
-    void createNewAdminConfirm(ActionEvent event) throws Exception{
+    void createNewAdminConfirm(ActionEvent event) {
         if(CurrentAdmin.getInstance().getAdmin().isMainAdmin()) {
             String email = newAdminEmailField.getText();
             boolean main = mainAdminCheck.isSelected();
@@ -83,15 +100,11 @@ public class AdminController extends MainMethods {
 
 
     /**
-     * @Author
-     *
      * Confirms the deletion of the admin.
-     *
-     * @param event
-     * @throws Exception
+     * @param event     on button click
      */
     @FXML
-    void deleteAdminConfirm(ActionEvent event) throws Exception{
+    void deleteAdminConfirm(ActionEvent event) {
         String email = deleteAdminEmailField.getText();
         if(email.equals(CurrentAdmin.getInstance().getAdmin().getEmail())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -128,13 +141,10 @@ public class AdminController extends MainMethods {
     }//end
 
     /**
-     * @Author Team 007
-     *
      * Confirms the change of password.
      * The password will change if the old password is correct,
      * as well as if the new password meets the requirements.
-     *
-     * @param event
+     * @param event     on button click.
      */
     @FXML
     void changePasswordConfirm(ActionEvent event) {

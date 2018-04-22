@@ -19,7 +19,7 @@ import javafx.scene.web.WebEngine;
 
 /**
  * DockInfoController.java
- * @author Team007
+ * @author Team 007
  * @version 1.0
  *
  * This class handles displaying information about docks and DockInfoView.fxml

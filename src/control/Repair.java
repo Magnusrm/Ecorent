@@ -5,7 +5,13 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-
+/**
+ * Repair.java
+ * @author Team007
+ * @version 1.0
+ *
+ * Handles everything related to repairs.
+ */
 public class Repair {
     private int repair_id;
     private LocalDate date_sent;
@@ -15,9 +21,6 @@ public class Repair {
     private double price;
     private int bike_id;
 
-    /**
-     * Constructor for repair sent in view classes and RepairSent.java
-     */
     protected Repair(String dateSent, String beforeDesc, int bikeId){
             this.repair_id = -1; //use the database to set repairId
 
@@ -29,9 +32,6 @@ public class Repair {
             this.bike_id = bikeId;
     }//end constructor
 
-    /**
-     * Constructor for repairs returned in view
-     */
     protected Repair(String dateReceived, String afterDesc, double price, int bikeId){
             this.repair_id = -1; //use the database to set repairId
             this.date_received = toDate(dateReceived);
@@ -40,9 +40,6 @@ public class Repair {
             this.bike_id = bikeId;
     }//end constructor
 
-    /**
-     * Constructor for model classes, view classes and RepairReturned.java
-     */
     protected Repair(String dateSent, String beforeDesc, String dateReceived, String afterDesc, double price, int bikeId){
             this.repair_id = -1; //use the database to set repairId
             this.date_sent = toDate(dateSent);
@@ -110,6 +107,11 @@ public class Repair {
         this.date_received = toDate(dateReceived);
     }
 
+    /**
+     * Formats a date in string format to LocalDate.
+     * @param date This is the String that will get parsed LocalDate.
+     * @return LocalDate This is the formatted date.
+     */
     public LocalDate toDate(String date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(date, formatter);
@@ -120,9 +122,8 @@ public class Repair {
     /**
      * Override of the standard equals()-method to compare the information about two Repair-objects.
      * @param o Object.java object.
-     * @return boolean
+     * @return boolean Based on whether the object is equal or not.
      */
-
     @Override
     public boolean equals(Object o){
         if (o == null) { throw new IllegalArgumentException("The object you are comparing cannot be null"); }
@@ -139,7 +140,7 @@ public class Repair {
     }
     /**
      * Override of the standard toString()-method to make it list out the information about a repair
-     * @return
+     * @return String of the repair
      */
     @Override
     public String toString(){

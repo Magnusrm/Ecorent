@@ -23,7 +23,7 @@ import java.util.Optional;
 
 /**
  * MainMethods.java
- * @author Team007
+ * @author Team 007
  *
  * This class contains frequently used methods and object variables that all the classes inherits.
  */
@@ -45,8 +45,8 @@ public class MainMethods {
 
     /**
      * Creates an information alert window.
-     * @param title
-     * @param content
+     * @param title title of the window
+     * @param content content of the window
      */
     public void newInfoAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -58,8 +58,8 @@ public class MainMethods {
 
     /**
      * Creates a warning alert window
-     * @param title
-     * @param content
+     * @param title title of the window
+     * @param content content of the window
      */
     public void newWarningAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -70,10 +70,10 @@ public class MainMethods {
     }
 
     /**
-     * Crea
-     * @param title
-     * @param content
-     * @return
+     * Checks if user confirms or not.
+     * @param title title of the window
+     * @param content content of the window
+     * @return boolean true if user presses OK.
      */
     public boolean newConfirmationAlert(String title, String content){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -90,8 +90,8 @@ public class MainMethods {
 
     /**
      * Creates a new popup
-     * @param fxmlname
-     * @param title
+     * @param fxmlname filename
+     * @param title title of the window
      */
     public void newPopup(String fxmlname, String title){
         Stage popup;
@@ -110,11 +110,21 @@ public class MainMethods {
         }
     }
 
+    /**
+     * Closes the window if "X"-button is clicked.
+     * @param event button click
+     */
     public void closeWindow(ActionEvent event){
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
 
+    /**
+     * Changes the scene in the application.
+     * @param event button click
+     * @param fxmlname filename
+     * @throws Exception if changing scene fails
+     */
     public void changeScene(ActionEvent event, String fxmlname) throws Exception{
 
         Parent parent = FXMLLoader.load(getClass().getResource(fxmlname));

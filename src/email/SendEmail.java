@@ -11,7 +11,7 @@ import javax.mail.internet.*;
 public class SendEmail {
 
     /**
-     * @Author Team 007
+     * @author Team 007
      *
      * The method generates a password, and sends this password in an email to the new user.
      *

@@ -19,6 +19,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * BikeInfoController.java
+ * @author Team 007
+ * @version 1.0
+ *
+ * This class handles showing information about the bikes using BikeInfoView.fxml and bikemap.html.
+ */
 public class BikeInfoController   extends MainMethods implements Initializable {
 
     @FXML
